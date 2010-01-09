@@ -30,8 +30,6 @@ package org.omg.dds.infrastructure;
 
 import java.util.List;
 
-import org.omg.dds.spi.ServiceImpl;
-
 
 /**
  * DDS/WaitSet.java .
@@ -39,25 +37,7 @@ import org.omg.dds.spi.ServiceImpl;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class WaitSet {
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    public static WaitSet create() {
-        WaitSet waitSet =
-            ServiceImpl.getInstance().getConditionFactory().createWaitSet();
-        assert waitSet != null;
-        return waitSet;
-    }
-
-
-    protected WaitSet() {
-        // empty
-    }
-
-
-
+public interface WaitSet {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

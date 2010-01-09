@@ -54,7 +54,7 @@ public interface Entity<SELF extends Entity<SELF, LISTENER, QOS>,
 
     public StatusCondition<SELF> getStatusCondition();
 
-    public void getStatusChanges(Set<Status.Kind<?>> status);
+    public void getStatusChanges(Set<Status.Kind> status);
 
     public void getInstanceHandle(InstanceHandle handle);
 

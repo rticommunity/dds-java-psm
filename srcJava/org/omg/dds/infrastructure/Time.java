@@ -28,8 +28,6 @@
 
 package org.omg.dds.infrastructure;
 
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ValueType;
 
 
 /**
@@ -38,65 +36,13 @@ import org.omg.dds.util.ValueType;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class Time implements ValueType<Time> {
+public interface Time extends ValueType<Time> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 3413932502170894467L;
-
     public static final int INVALID_SEC = -1;
     public static final int INVALID_NSEC = -1;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * Create and return a new Time representing the current time.
-     */
-    public static Time now() {
-        Time time = ServiceImpl.getInstance().getSimpleDataFactory().now();
-        assert time != null;
-        return time;
-    }
-    
-    
-    public static Time create(long millis) {
-        Time time =
-            ServiceImpl.getInstance().getSimpleDataFactory().createTime(
-                    millis);
-        assert time != null;
-        return time;
-    }
-    
-    
-    public static Time create(int sec, int nanosec) {
-        Time time =
-            ServiceImpl.getInstance().getSimpleDataFactory().createTime(
-                sec, nanosec);
-        assert time != null;
-        return time;
-    }
-    
-    
-    public static Time create(Time src) {
-        Time time =
-            ServiceImpl.getInstance().getSimpleDataFactory().createTime(src);
-        assert time != null;
-        return time;
-    }
-    
-    
-    protected Time() {
-        // empty
-    }
-
-
-    @Override
-    public abstract Time clone();
 
 
 

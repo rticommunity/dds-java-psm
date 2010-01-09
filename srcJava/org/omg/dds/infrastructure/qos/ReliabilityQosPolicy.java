@@ -29,9 +29,6 @@
 package org.omg.dds.infrastructure.qos;
 
 import org.omg.dds.infrastructure.Duration;
-import org.omg.dds.spi.QosPolicyFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
 
 
 /**
@@ -69,27 +66,9 @@ extends QosPolicy<ReliabilityQosPolicy> {
     // Types
     // -----------------------------------------------------------------------
 
-    public static class Kind extends ExtensibleEnum<Kind> {
-        // --- Constants: ----------------------------------------------------
-        private static final long serialVersionUID = -8626281591510082142L;
-
-        // --- Kinds: --------------------------------------------------------
-        public static final Kind BEST_EFFORT = create("BEST_EFFORT", 0);
-
-        public static final Kind RELIABLE = create("RELIABLE", 1);
-
-        // --- Object Lifecycle: ---------------------------------------------
-        protected Kind(String name, int ordinal) {
-            super(name, ordinal);
-        }
-        
-        private static Kind create(String name, int ordinal) {
-            QosPolicyFactory factory =
-                ServiceImpl.getInstance().getQosPolicyFactory();
-            Kind kind = factory.createReliabilityQosPolicyKind(name, ordinal);
-            assert kind != null;
-            return kind;
-        }
+    public enum Kind {
+        BEST_EFFORT,
+        RELIABLE
     }
 
 }

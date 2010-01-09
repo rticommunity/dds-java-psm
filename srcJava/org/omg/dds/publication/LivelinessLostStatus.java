@@ -29,8 +29,6 @@
 package org.omg.dds.publication;
 
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -52,14 +50,6 @@ extends Status<LivelinessLostStatus, DataWriter<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static LivelinessLostStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        LivelinessLostStatus status = factory.createLivelinessLostStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected LivelinessLostStatus(DataWriter<?> source) {
         super(source);

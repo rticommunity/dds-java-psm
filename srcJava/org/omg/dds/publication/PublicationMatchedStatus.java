@@ -30,8 +30,6 @@ package org.omg.dds.publication;
 
 import org.omg.dds.infrastructure.InstanceHandle;
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -54,15 +52,6 @@ extends Status<PublicationMatchedStatus, DataWriter<?>> {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public static PublicationMatchedStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        PublicationMatchedStatus status =
-            factory.createPublicationMatchedStatus();
-        assert status != null;
-        return status;
-    }
-
-    
     protected PublicationMatchedStatus(DataWriter<?> source) {
         super(source);
     }

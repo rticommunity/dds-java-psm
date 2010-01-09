@@ -28,9 +28,6 @@
 
 package org.omg.dds.infrastructure;
 
-import org.omg.dds.spi.ConditionFactory;
-import org.omg.dds.spi.ServiceImpl;
-
 
 /**
  * DDS/GuardCondition.java .
@@ -38,26 +35,7 @@ import org.omg.dds.spi.ServiceImpl;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class GuardCondition implements Condition {
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    public static GuardCondition create() {
-        ConditionFactory factory =
-            ServiceImpl.getInstance().getConditionFactory();
-        GuardCondition cond = factory.createGuardCondition();
-        assert cond != null;
-        return cond;
-    }
-    
-    
-    protected GuardCondition() {
-        // empty
-    }
-
-
-
+public interface GuardCondition extends Condition {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

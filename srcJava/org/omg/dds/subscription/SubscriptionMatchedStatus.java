@@ -30,8 +30,6 @@ package org.omg.dds.subscription;
 
 import org.omg.dds.infrastructure.InstanceHandle;
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -54,15 +52,6 @@ extends Status<SubscriptionMatchedStatus, DataReader<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static SubscriptionMatchedStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        SubscriptionMatchedStatus status =
-            factory.createSubscriptionMatchedStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected SubscriptionMatchedStatus(DataReader<?> source) {
         super(source);

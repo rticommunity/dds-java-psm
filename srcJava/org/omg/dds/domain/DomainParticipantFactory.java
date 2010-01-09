@@ -31,7 +31,6 @@ package org.omg.dds.domain;
 import java.util.Set;
 
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
 
 
 /**
@@ -40,24 +39,7 @@ import org.omg.dds.spi.ServiceImpl;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class DomainParticipantFactory {
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    public static DomainParticipantFactory getInstance() {
-        DomainParticipantFactory factory =
-            ServiceImpl.getInstance().getParticipantFactory();
-        assert factory != null;
-        return factory;
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
+public interface DomainParticipantFactory {
     /**
      * Create a new participant in the domain with ID 0 having default QoS
      * and no listener.
@@ -71,7 +53,7 @@ public abstract class DomainParticipantFactory {
             int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
-            Set<Status.Kind<?>> status);
+            Set<Status.Kind> status);
 
     public abstract DomainParticipant lookupParticipant(int domainId);
 

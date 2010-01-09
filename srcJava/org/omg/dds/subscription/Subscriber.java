@@ -59,7 +59,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
             DataReaderListener listener,
-            Set<Status.Kind<?>> statuses);
+            Set<Status.Kind> statuses);
 
     public void closeContainedEntities();
 

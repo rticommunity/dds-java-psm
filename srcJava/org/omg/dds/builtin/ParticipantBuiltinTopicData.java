@@ -28,10 +28,8 @@
 
 package org.omg.dds.builtin;
 
+import org.omg.dds.infrastructure.ValueType;
 import org.omg.dds.infrastructure.qos.UserDataQosPolicy;
-import org.omg.dds.spi.BuiltinTopicDataFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ValueType;
 
 
 /**
@@ -40,47 +38,8 @@ import org.omg.dds.util.ValueType;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class ParticipantBuiltinTopicData
-implements ValueType<ParticipantBuiltinTopicData> {
-    // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = -2114235277693953855L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    public static ParticipantBuiltinTopicData create() {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        ParticipantBuiltinTopicData data =
-            factory.createParticipantBuiltinTopicData();
-        assert data != null;
-        return data;
-    }
-
-
-    public static ParticipantBuiltinTopicData create(
-            BuiltinTopicKey key, UserDataQosPolicy userData) {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        ParticipantBuiltinTopicData data =
-            factory.createParticipantBuiltinTopicData(
-                    key, userData);
-        assert data != null;
-        return data;
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
+public interface ParticipantBuiltinTopicData
+extends ValueType<ParticipantBuiltinTopicData> {
     /**
      * @param key the key to set
      */
@@ -94,8 +53,5 @@ implements ValueType<ParticipantBuiltinTopicData> {
     public abstract UserDataQosPolicy setUserData();
 
     public abstract UserDataQosPolicy getUserData();
-
-    @Override
-    public abstract ParticipantBuiltinTopicData clone();
 
 } // class ParticipantBuiltinTopicData

@@ -28,19 +28,23 @@
 
 package org.omg.dds.subscription;
 
-import java.util.Set;
 
-import org.omg.dds.spi.LifecycleStateFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
+public enum InstanceState {
+    // -----------------------------------------------------------------------
+    // States
+    // -----------------------------------------------------------------------
+
+    ALIVE(0x0001 << 0),
+    NOT_ALIVE_DISPOSED(0x0001 << 1),
+    NOT_ALIVE_NO_WRITERS(0x0001 << 2);
 
 
-public abstract class InstanceState extends ExtensibleEnum<InstanceState> {
+
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 5526467917118587389L;
+    public final int value;
 
 
 
@@ -48,61 +52,8 @@ public abstract class InstanceState extends ExtensibleEnum<InstanceState> {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected InstanceState(String enumName, int ordinal) {
-        super(enumName, ordinal);
+    private InstanceState(int value) {
+        this.value = value;
     }
-
-    private static InstanceState create(
-            String enumName, int ordinal, int value) {
-        LifecycleStateFactory factory =
-            ServiceImpl.getInstance().getLifecycleStateFactory();
-        InstanceState state = factory.createInstanceState(
-                enumName, ordinal, value);
-        assert state != null;
-        return state;
-    }
-
-    private static Set<InstanceState> createNotAliveStateSet() {
-        LifecycleStateFactory factory =
-            ServiceImpl.getInstance().getLifecycleStateFactory();
-        Set<InstanceState> set = factory.createNotAliveInstanceStateSet();
-        assert set != null;
-        return set;
-    }
-
-    private static Set<InstanceState> createAnyStateSet() {
-        LifecycleStateFactory factory =
-            ServiceImpl.getInstance().getLifecycleStateFactory();
-        Set<InstanceState> set = factory.createAnyInstanceStateSet();
-        assert set != null;
-        return set;
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    public abstract int getValue();
-
-
-
-    // -----------------------------------------------------------------------
-    // States
-    // -----------------------------------------------------------------------
-
-    public static final InstanceState ALIVE = create("ALIVE", 0, 0x0001 << 0);
-
-    public static final InstanceState NOT_ALIVE_DISPOSED = create(
-            "NOT_ALIVE_DISPOSED", 1, 0x0001 << 1);
-
-    public static final InstanceState NOT_ALIVE_NO_WRITERS = create(
-            "NOT_ALIVE_NO_WRITERS", 2, 0x0001 << 2);
-
-    public static final Set<InstanceState> NOT_ALIVE =
-        createNotAliveStateSet();
-
-    public static final Set<InstanceState> ANY = createAnyStateSet();
 
 }

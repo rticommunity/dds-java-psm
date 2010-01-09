@@ -28,6 +28,7 @@
 
 package org.omg.dds.builtin;
 
+import org.omg.dds.infrastructure.ValueType;
 import org.omg.dds.infrastructure.qos.DeadlineQosPolicy;
 import org.omg.dds.infrastructure.qos.DestinationOrderQosPolicy;
 import org.omg.dds.infrastructure.qos.DurabilityQosPolicy;
@@ -41,9 +42,6 @@ import org.omg.dds.infrastructure.qos.ReliabilityQosPolicy;
 import org.omg.dds.infrastructure.qos.ResourceLimitsQosPolicy;
 import org.omg.dds.infrastructure.qos.TopicDataQosPolicy;
 import org.omg.dds.infrastructure.qos.TransportPriorityQosPolicy;
-import org.omg.dds.spi.BuiltinTopicDataFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ValueType;
 
 
 /**
@@ -52,75 +50,8 @@ import org.omg.dds.util.ValueType;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class TopicBuiltinTopicData
-implements ValueType<TopicBuiltinTopicData> {
-    // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = -1842480678073679239L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    public static TopicBuiltinTopicData create() {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        TopicBuiltinTopicData data = factory.createTopicBuiltinTopicData();
-        assert data != null;
-        return data;
-    }
-
-    public static TopicBuiltinTopicData create(
-            BuiltinTopicKey key,
-            String name,
-            String typeName,
-            DurabilityQosPolicy durability,
-            DurabilityServiceQosPolicy durabilityService,
-            DeadlineQosPolicy deadline,
-            LatencyBudgetQosPolicy latencyBudget,
-            LivelinessQosPolicy liveliness,
-            ReliabilityQosPolicy reliability,
-            TransportPriorityQosPolicy transportPriority,
-            LifespanQosPolicy lifespan,
-            DestinationOrderQosPolicy destinationOrder,
-            HistoryQosPolicy history,
-            ResourceLimitsQosPolicy resourceLimits,
-            OwnershipQosPolicy ownership,
-            TopicDataQosPolicy topicDdata)
-    {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        TopicBuiltinTopicData data = factory.createTopicBuiltinTopicData(
-                key,
-                name,
-                typeName,
-                durability,
-                durabilityService,
-                deadline,
-                latencyBudget,
-                liveliness,
-                reliability,
-                transportPriority,
-                lifespan,
-                destinationOrder,
-                history,
-                resourceLimits,
-                ownership,
-                topicDdata);
-        assert data != null;
-        return data;
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
+public interface TopicBuiltinTopicData
+extends ValueType<TopicBuiltinTopicData> {
     /**
      * @param key the key to set
      */
@@ -285,8 +216,5 @@ implements ValueType<TopicBuiltinTopicData> {
      * @return the topicData
      */
     public abstract TopicDataQosPolicy getTopicData();
-
-    @Override
-    public abstract TopicBuiltinTopicData clone();
 
 } // class TopicBuiltinTopicData

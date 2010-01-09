@@ -31,14 +31,14 @@ package org.omg.dds.infrastructure.qos;
 import java.util.Map;
 
 import org.omg.dds.infrastructure.Entity;
-import org.omg.dds.util.ValueType;
+import org.omg.dds.infrastructure.ValueType;
 
 
 /**
  * An abstract base interface for all entity QoS types.
  */
 public interface Qos<SELF extends Qos<SELF>>
-extends ValueType<SELF>, Map<QosPolicy.Id<?>, QosPolicy<?>> {
+extends ValueType<SELF>, Map<QosPolicy.Id, QosPolicy<?>> {
     /**
      * @return  a reference to the corresponding policy in this
      *          <code>Qos</code>. The returned object is not a copy; changes
@@ -47,8 +47,7 @@ extends ValueType<SELF>, Map<QosPolicy.Id<?>, QosPolicy<?>> {
      *
      * @see Map#get(Object)
      */
-    public <POLICY extends QosPolicy<POLICY>> POLICY get(
-            QosPolicy.Id<POLICY> id);
+    public <POLICY extends QosPolicy<POLICY>> POLICY get(QosPolicy.Id id);
 
     /**
      * Overwrite the value of the indicated policy with the given new value.
@@ -64,7 +63,7 @@ extends ValueType<SELF>, Map<QosPolicy.Id<?>, QosPolicy<?>> {
      *                                  <code>null</code>.
      */
     public <POLICY extends QosPolicy<POLICY>> POLICY put(
-            QosPolicy.Id<POLICY> key, POLICY value);
+            QosPolicy.Id key, POLICY value);
 
     /**
      * @throws  UnsupportedOperationException   always: the <tt>remove</tt>

@@ -28,11 +28,6 @@
 
 package org.omg.dds.infrastructure.qos;
 
-import org.omg.dds.infrastructure.qos.LivelinessQosPolicy.Kind;
-import org.omg.dds.spi.QosPolicyFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
-
 
 /**
  * DDS/PresentationQosPolicy.java .
@@ -82,31 +77,10 @@ extends QosPolicy<PresentationQosPolicy> {
     // Types
     // -----------------------------------------------------------------------
 
-    public static class AccessScopeKind extends ExtensibleEnum<Kind> {
-        // --- Constants: ----------------------------------------------------
-        private static final long serialVersionUID = 2558380781334880969L;
-
-        // --- Kinds: --------------------------------------------------------
-        public static final AccessScopeKind INSTANCE = create("INSTANCE", 0);
-
-        public static final AccessScopeKind TOPIC = create("TOPIC", 1);
-
-        public static final AccessScopeKind GROUP = create("GROUP", 2);
-
-        // --- Object Lifecycle: ---------------------------------------------
-        protected AccessScopeKind(String name, int ordinal) {
-            super(name, ordinal);
-        }
-        
-        private static AccessScopeKind create(String name, int ordinal) {
-            QosPolicyFactory factory =
-                ServiceImpl.getInstance().getQosPolicyFactory();
-            AccessScopeKind kind =
-                factory.createPresentationQosPolicyAccessScopeKind(
-                        name, ordinal);
-            assert kind != null;
-            return kind;
-        }
+    public enum AccessScopeKind {
+        INSTANCE,
+        TOPIC,
+        GROUP
     }
 
 }

@@ -28,6 +28,7 @@
 
 package org.omg.dds.builtin;
 
+import org.omg.dds.infrastructure.ValueType;
 import org.omg.dds.infrastructure.qos.DeadlineQosPolicy;
 import org.omg.dds.infrastructure.qos.DestinationOrderQosPolicy;
 import org.omg.dds.infrastructure.qos.DurabilityQosPolicy;
@@ -43,9 +44,6 @@ import org.omg.dds.infrastructure.qos.PresentationQosPolicy;
 import org.omg.dds.infrastructure.qos.ReliabilityQosPolicy;
 import org.omg.dds.infrastructure.qos.TopicDataQosPolicy;
 import org.omg.dds.infrastructure.qos.UserDataQosPolicy;
-import org.omg.dds.spi.BuiltinTopicDataFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ValueType;
 
 
 /**
@@ -54,82 +52,8 @@ import org.omg.dds.util.ValueType;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class PublicationBuiltinTopicData
-implements ValueType<PublicationBuiltinTopicData> {
-    // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = 5392512100090059245L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    public static PublicationBuiltinTopicData create() {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        PublicationBuiltinTopicData data =
-            factory.createPublicationBuiltinTopicData();
-        assert data != null;
-        return data;
-    }
-
-
-    public static PublicationBuiltinTopicData create(
-            BuiltinTopicKey key,
-            BuiltinTopicKey participantKey,
-            String topicName,
-            String typeName,
-            DurabilityQosPolicy durability,
-            DurabilityServiceQosPolicy durabilityService,
-            DeadlineQosPolicy deadline,
-            LatencyBudgetQosPolicy latencyBudget,
-            LivelinessQosPolicy liveliness,
-            ReliabilityQosPolicy reliability,
-            LifespanQosPolicy lifespan,
-            UserDataQosPolicy userData,
-            OwnershipQosPolicy ownership,
-            OwnershipStrengthQosPolicy ownershipStrength,
-            DestinationOrderQosPolicy destinationOrder,
-            PresentationQosPolicy presentation,
-            PartitionQosPolicy partition,
-            TopicDataQosPolicy topicData,
-            GroupDataQosPolicy groupData) {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        PublicationBuiltinTopicData data =
-            factory.createPublicationBuiltinTopicData(key,
-                                                      participantKey,
-                                                      topicName,
-                                                      typeName,
-                                                      durability,
-                                                      durabilityService,
-                                                      deadline,
-                                                      latencyBudget,
-                                                      liveliness,
-                                                      reliability,
-                                                      lifespan,
-                                                      userData,
-                                                      ownership,
-                                                      ownershipStrength,
-                                                      destinationOrder,
-                                                      presentation,
-                                                      partition,
-                                                      topicData,
-                                                      groupData);
-        assert data != null;
-        return data;
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
+public interface PublicationBuiltinTopicData
+extends ValueType<PublicationBuiltinTopicData> {
     /**
      * @param key the key to set
      */
@@ -323,8 +247,5 @@ implements ValueType<PublicationBuiltinTopicData> {
      * @return the partition
      */
     public abstract PartitionQosPolicy getPartition();
-
-    @Override
-    public abstract PublicationBuiltinTopicData clone();
 
 } // class PublicationBuiltinTopicData

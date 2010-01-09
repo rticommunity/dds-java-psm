@@ -28,8 +28,6 @@
 
 package org.omg.dds.infrastructure;
 
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ValueType;
 
 
 /**
@@ -38,61 +36,16 @@ import org.omg.dds.util.ValueType;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class Duration implements ValueType<Duration> {
+public interface Duration extends ValueType<Duration> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = -2332895302431993362L;
 
     public static final int INFINITE_SEC = Integer.MAX_VALUE;
     public static final int INFINITE_NSEC = Integer.MAX_VALUE;
 
     public static final int ZERO_SEC = 0;
     public static final int ZERO_NSEC = 0;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * Create a Duration of zero length.
-     */
-    public static Duration create() {
-        Duration duration =
-            ServiceImpl.getInstance().getSimpleDataFactory().createDuration();
-        assert duration != null;
-        return duration;
-    }
-    
-    
-    public static Duration create(int sec, int nanosec) {
-        Duration duration =
-            ServiceImpl.getInstance().getSimpleDataFactory().createDuration(
-                    sec, nanosec);
-        assert duration != null;
-        return duration;
-    }
-    
-    
-    public static Duration create(Duration src) {
-        Duration duration =
-            ServiceImpl.getInstance().getSimpleDataFactory().createDuration(
-                    src);
-        assert duration != null;
-        return duration;
-    }
-    
-    
-    protected Duration() {
-        // empty
-    }
-
-
-    @Override
-    public abstract Duration clone();
 
 
 

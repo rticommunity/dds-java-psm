@@ -28,19 +28,22 @@
 
 package org.omg.dds.subscription;
 
-import java.util.Set;
 
-import org.omg.dds.spi.LifecycleStateFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
+public enum ViewState {
+    // -----------------------------------------------------------------------
+    // States
+    // -----------------------------------------------------------------------
+
+    NEW(0x0001 << 0),
+    NOT_NEW(0x0001 << 1);
 
 
-public abstract class ViewState extends ExtensibleEnum<ViewState> {
+
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 6229801745342015429L;
+    public final int value;
 
 
 
@@ -48,47 +51,8 @@ public abstract class ViewState extends ExtensibleEnum<ViewState> {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected ViewState(String enumName, int ordinal) {
-        super(enumName, ordinal);
+    private ViewState(int value) {
+        this.value = value;
     }
-
-    private static ViewState create(
-            String enumName, int ordinal, int value) {
-        LifecycleStateFactory factory =
-            ServiceImpl.getInstance().getLifecycleStateFactory();
-        ViewState state = factory.createViewState(
-                enumName, ordinal, value);
-        assert state != null;
-        return state;
-    }
-
-    private static Set<ViewState> createAnyStateSet() {
-        LifecycleStateFactory factory =
-            ServiceImpl.getInstance().getLifecycleStateFactory();
-        Set<ViewState> set = factory.createAnyViewStateSet();
-        assert set != null;
-        return set;
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    public abstract int getValue();
-
-
-
-    // -----------------------------------------------------------------------
-    // States
-    // -----------------------------------------------------------------------
-
-    public static final ViewState NEW = create("NEW", 0, 0x0001 << 0);
-
-    public static final ViewState NOT_NEW = create(
-            "NOT_NEW", 1, 0x0001 << 1);
-
-    public static final Set<ViewState> ANY = createAnyStateSet();
 
 }

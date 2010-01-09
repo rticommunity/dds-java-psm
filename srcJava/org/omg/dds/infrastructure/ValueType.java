@@ -26,28 +26,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.spi;
+package org.omg.dds.infrastructure;
 
-import org.omg.dds.infrastructure.Condition;
-import org.omg.dds.infrastructure.GuardCondition;
-import org.omg.dds.infrastructure.WaitSet;
+import java.io.Serializable;
 
 
 /**
- * An implementation-provided factory for classes pertaining to conditions
- * and wait sets.
+ * Implementing classes have value semantics: they can be deeply copied, and
+ * equality is determined based on their contents, not on their object
+ * identity.
  * 
- * @see Condition
- * @see WaitSet
+ * @param <SELF>  Typically, classes will parameterize their
+ *                      implementations of this interface with their own
+ *                      class.
  */
-public interface ConditionFactory {
-    // --- Guard condition: --------------------------------------------------
+public interface ValueType<SELF> extends Serializable {
+    /**
+     * Overwrite this object's state with the contents of the given object.
+     */
+    public SELF copyFrom(SELF other);
 
-    public GuardCondition createGuardCondition();
+    /**
+     * Implementing classes should override <code>equals()</code>.
+     */
+    public boolean equals(Object other);
 
+    /**
+     * Implementing classes should override <code>hashCode()</code>.
+     */
+    public int hashCode();
 
-    // --- Wait set: ---------------------------------------------------------
-
-    public WaitSet createWaitSet();
-
+    /**
+     * Extends the concept of "cloneable" defined in <code>java.lang</code> by
+     * providing an explicit public {@link #clone()} method.
+     * 
+     * @return  a new object that with state identical to that of this object.
+     */
+    public SELF clone();
 }

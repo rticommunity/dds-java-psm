@@ -28,51 +28,13 @@
 
 package org.omg.dds.infrastructure;
 
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.SimpleDataFactory;
-import org.omg.dds.util.ValueType;
 
 
-public abstract class InstanceHandle implements ValueType<InstanceHandle> {
-    // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = -250106199311205036L;
-
-    public static final InstanceHandle NIL = create();
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * Construct a new nil handle.
-     */
-    public static InstanceHandle create() {
-        SimpleDataFactory factory =
-            ServiceImpl.getInstance().getSimpleDataFactory();
-        InstanceHandle handle = factory.createInstanceHandle();
-        assert handle != null;
-        return handle;
-    }
-
-
-    protected InstanceHandle() {
-        // empty
-    }
-
-
-
+public interface InstanceHandle extends ValueType<InstanceHandle> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
 
     public abstract boolean isNil();
-
-    @Override
-    public abstract InstanceHandle clone();
 
 }

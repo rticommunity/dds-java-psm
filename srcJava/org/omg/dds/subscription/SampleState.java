@@ -28,19 +28,22 @@
 
 package org.omg.dds.subscription;
 
-import java.util.Set;
 
-import org.omg.dds.spi.LifecycleStateFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
+public enum SampleState {
+    // -----------------------------------------------------------------------
+    // States
+    // -----------------------------------------------------------------------
+
+    READ(0x0001 << 0),
+    NOT_READ(0x0001 << 1);
 
 
-public abstract class SampleState extends ExtensibleEnum<SampleState> {
+
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -252226437754749051L;
+    public final int value;
 
 
 
@@ -48,47 +51,8 @@ public abstract class SampleState extends ExtensibleEnum<SampleState> {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected SampleState(String enumName, int ordinal) {
-        super(enumName, ordinal);
+    private SampleState(int value) {
+        this.value = value;
     }
-
-    private static SampleState create(
-            String enumName, int ordinal, int value) {
-        LifecycleStateFactory factory =
-            ServiceImpl.getInstance().getLifecycleStateFactory();
-        SampleState state = factory.createSampleState(
-                enumName, ordinal, value);
-        assert state != null;
-        return state;
-    }
-
-    private static Set<SampleState> createAnyStateSet() {
-        LifecycleStateFactory factory =
-            ServiceImpl.getInstance().getLifecycleStateFactory();
-        Set<SampleState> set = factory.createAnySampleStateSet();
-        assert set != null;
-        return set;
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    public abstract int getValue();
-
-
-
-    // -----------------------------------------------------------------------
-    // States
-    // -----------------------------------------------------------------------
-
-    public static final SampleState READ = create("READ", 0, 0x0001 << 0);
-
-    public static final SampleState NOT_READ = create(
-            "NOT_READ", 1, 0x0001 << 1);
-
-    public static final Set<SampleState> ANY = createAnyStateSet();
 
 }

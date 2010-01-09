@@ -30,8 +30,6 @@ package org.omg.dds.subscription;
 
 import org.omg.dds.infrastructure.InstanceHandle;
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -53,15 +51,6 @@ extends Status<LivelinessChangedStatus, DataReader<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static LivelinessChangedStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        LivelinessChangedStatus status =
-            factory.createLivelinessChangedStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected LivelinessChangedStatus(DataReader<?> source) {
         super(source);

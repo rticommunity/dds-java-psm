@@ -29,9 +29,6 @@
 package org.omg.dds.infrastructure.qos;
 
 import org.omg.dds.infrastructure.Duration;
-import org.omg.dds.spi.QosPolicyFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
 
 
 /**
@@ -68,31 +65,10 @@ public interface LivelinessQosPolicy extends QosPolicy<LivelinessQosPolicy> {
     // Types
     // -----------------------------------------------------------------------
 
-    public static class Kind extends ExtensibleEnum<Kind> {
-        // --- Constants: ----------------------------------------------------
-        private static final long serialVersionUID = 8300545097335675366L;
-
-        // --- Kinds: --------------------------------------------------------
-        public static final Kind AUTOMATIC = create("AUTOMATIC", 0);
-
-        public static final Kind MANUAL_BY_PARTICIPANT = create(
-                "MANUAL_BY_PARTICIPANT", 1);
-
-        public static final Kind MANUAL_BY_TOPIC = create(
-                "MANUAL_BY_TOPIC", 2);
-
-        // --- Object Lifecycle: ---------------------------------------------
-        protected Kind(String name, int ordinal) {
-            super(name, ordinal);
-        }
-        
-        private static Kind create(String name, int ordinal) {
-            QosPolicyFactory factory =
-                ServiceImpl.getInstance().getQosPolicyFactory();
-            Kind kind = factory.createLivelinessQosPolicyKind(name, ordinal);
-            assert kind != null;
-            return kind;
-        }
+    public enum Kind {
+        AUTOMATIC,
+        MANUAL_BY_PARTICIPANT,
+        MANUAL_BY_TOPIC
     }
 
 }

@@ -40,10 +40,9 @@ import java.util.Set;
  */
 public interface StatusCondition<ENTITY extends Entity<ENTITY, ?, ?>>
 extends Condition {
-    public void getEnabledStatuses(
-            Collection<Status.Kind<?>> statuses);
+    public void getEnabledStatuses(Collection<Status.Kind> statuses);
 
-    public void setEnabledStatuses(Set<Status.Kind<?>> statuses);
+    public void setEnabledStatuses(Set<Status.Kind> statuses);
 
     public ENTITY getEntity();
 }

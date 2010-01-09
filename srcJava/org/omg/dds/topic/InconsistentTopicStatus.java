@@ -29,8 +29,6 @@
 package org.omg.dds.topic;
 
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -52,15 +50,6 @@ extends Status<InconsistentTopicStatus, Topic<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static InconsistentTopicStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        InconsistentTopicStatus status =
-            factory.createInconsistentTopicStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected InconsistentTopicStatus(Topic<?> source) {
         super(source);

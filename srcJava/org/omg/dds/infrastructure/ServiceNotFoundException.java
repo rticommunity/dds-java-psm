@@ -26,51 +26,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.spi;
+package org.omg.dds.infrastructure;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamException;
-
-import org.omg.dds.util.ExtensibleEnum;
+import org.omg.dds.infrastructure.DdsException;
 
 
 /**
- * A delegate object that provides an implementation for methods in the
- * {@link ExtensibleEnum} class.
+ * This exception indicates that no DDS implementation could be loaded.
  */
-public interface ExtensibleEnumImpl<ENUM> {
-    // --- State: ------------------------------------------------------------
+public class ServiceNotFoundException extends DdsException {
+    // -----------------------------------------------------------------------
+    // Constants
+    // -----------------------------------------------------------------------
 
-    public int ordinal(ExtensibleEnum<ENUM> self);
+    private static final long serialVersionUID = 323168673886924537L;
 
-    public String name(ExtensibleEnum<ENUM> self);
-
-
-    // --- Serialization support: --------------------------------------------
-
-    public void writeObject(ObjectOutputStream out, ExtensibleEnum<ENUM> self)
-    throws IOException;
-
-    public void readObject(ObjectInputStream in, ExtensibleEnum<ENUM> self)
-    throws IOException, ClassNotFoundException;
-
-    public void readObjectNoData(ExtensibleEnum<ENUM> self)
-    throws ObjectStreamException;
-
-    public Object readResolve(ExtensibleEnum<ENUM> self)
-    throws ObjectStreamException;
 
 
     // -----------------------------------------------------------------------
+    // Object Lifecycle
+    // -----------------------------------------------------------------------
 
-    public int compareTo(ExtensibleEnum<ENUM> other,
-                         ExtensibleEnumImpl<ENUM> otherImpl,
-                         ExtensibleEnum<ENUM> self);
+    public ServiceNotFoundException() {
+        super();
+    }
 
-    public String toString(ExtensibleEnum<ENUM> self);
+    public ServiceNotFoundException(String message) {
+        super(message);
+    }
 
-    public int hashCode(ExtensibleEnum<ENUM> self);
+    public ServiceNotFoundException(Throwable cause) {
+        super(cause);
+    }
+
+    public ServiceNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

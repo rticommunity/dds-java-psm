@@ -28,9 +28,7 @@
 
 package org.omg.dds.builtin;
 
-import org.omg.dds.spi.BuiltinTopicDataFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ValueType;
+import org.omg.dds.infrastructure.ValueType;
 
 
 /**
@@ -39,43 +37,7 @@ import org.omg.dds.util.ValueType;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class BuiltinTopicKey implements ValueType<BuiltinTopicKey> {
-    // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = -1531980593452613533L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    public static BuiltinTopicKey create() {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        BuiltinTopicKey key = factory.createBuiltinTopicKey();
-        assert key != null;
-        return key;
-    }
-
-
-    public static BuiltinTopicKey create(int[] value) {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        BuiltinTopicKey key = factory.createBuiltinTopicKey(value);
-        assert key != null;
-        return key;
-    }
-
-
-    protected BuiltinTopicKey() {
-        // empty
-    }
-
-
-
+public interface BuiltinTopicKey extends ValueType<BuiltinTopicKey> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
@@ -86,8 +48,5 @@ public abstract class BuiltinTopicKey implements ValueType<BuiltinTopicKey> {
     public abstract void setValue(int value[]);
 
     public abstract void getValue(int[] value);
-
-    @Override
-    public abstract BuiltinTopicKey clone();
 
 }

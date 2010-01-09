@@ -28,7 +28,7 @@
 
 package org.omg.dds.infrastructure.qos;
 
-import org.omg.dds.util.ValueType;
+import org.omg.dds.infrastructure.ValueType;
 
 
 /**
@@ -37,12 +37,11 @@ import org.omg.dds.util.ValueType;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public interface QosPolicyCount<POLICY extends QosPolicy<POLICY>>
-extends ValueType<QosPolicyCount<POLICY>> {
+public interface QosPolicyCount extends ValueType<QosPolicyCount> {
     /**
      * @return the policyId
      */
-    public QosPolicy.Id<POLICY> getPolicyId();
+    public QosPolicy.Id getPolicyId();
 
     /**
      * @return the count

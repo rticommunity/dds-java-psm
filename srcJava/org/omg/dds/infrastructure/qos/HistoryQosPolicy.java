@@ -28,10 +28,6 @@
 
 package org.omg.dds.infrastructure.qos;
 
-import org.omg.dds.spi.QosPolicyFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
-
 
 /**
  * DDS/HistoryQosPolicy.java .
@@ -70,27 +66,9 @@ public interface HistoryQosPolicy extends QosPolicy<HistoryQosPolicy> {
     // Types
     // -----------------------------------------------------------------------
 
-    public static class Kind extends ExtensibleEnum<Kind> {
-        // --- Constants: ----------------------------------------------------
-        private static final long serialVersionUID = 1214126231273605122L;
-
-        // --- Kinds: --------------------------------------------------------
-        public static final Kind KEEP_LAST = create("KEEP_LAST", 0);
-
-        public static final Kind KEEP_ALL = create("KEEP_ALL", 1);
-
-        // --- Object Lifecycle: ---------------------------------------------
-        protected Kind(String name, int ordinal) {
-            super(name, ordinal);
-        }
-        
-        private static Kind create(String name, int ordinal) {
-            QosPolicyFactory factory =
-                ServiceImpl.getInstance().getQosPolicyFactory();
-            Kind kind = factory.createHistoryQosPolicyKind(name, ordinal);
-            assert kind != null;
-            return kind;
-        }
+    public enum Kind {
+        KEEP_LAST,
+        KEEP_ALL
     }
 
 }

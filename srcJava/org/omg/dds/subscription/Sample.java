@@ -32,7 +32,7 @@ import java.util.ListIterator;
 
 import org.omg.dds.infrastructure.InstanceHandle;
 import org.omg.dds.infrastructure.Time;
-import org.omg.dds.util.ValueType;
+import org.omg.dds.infrastructure.ValueType;
 
 
 /**

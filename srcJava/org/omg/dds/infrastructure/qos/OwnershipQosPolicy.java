@@ -28,10 +28,6 @@
 
 package org.omg.dds.infrastructure.qos;
 
-import org.omg.dds.spi.QosPolicyFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
-
 
 /**
  * DDS/OwnershipQosPolicy.java .
@@ -60,27 +56,9 @@ public interface OwnershipQosPolicy extends QosPolicy<OwnershipQosPolicy> {
     // Types
     // -----------------------------------------------------------------------
 
-    public static class Kind extends ExtensibleEnum<Kind> {
-        // --- Constants: ----------------------------------------------------
-        private static final long serialVersionUID = 706074579513740206L;
-
-        // --- Kinds: --------------------------------------------------------
-        public static final Kind SHARED = create("SHARED", 0);
-
-        public static final Kind EXCLUSIVE = create("EXCLUSIVE", 1);
-
-        // --- Object Lifecycle: ---------------------------------------------
-        protected Kind(String name, int ordinal) {
-            super(name, ordinal);
-        }
-        
-        private static Kind create(String name, int ordinal) {
-            QosPolicyFactory factory =
-                ServiceImpl.getInstance().getQosPolicyFactory();
-            Kind kind = factory.createOwnershipQosPolicyKind(name, ordinal);
-            assert kind != null;
-            return kind;
-        }
+    public enum Kind {
+        SHARED,
+        EXCLUSIVE
     }
 
 }

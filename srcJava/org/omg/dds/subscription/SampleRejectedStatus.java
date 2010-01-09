@@ -30,9 +30,6 @@ package org.omg.dds.subscription;
 
 import org.omg.dds.infrastructure.InstanceHandle;
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
-import org.omg.dds.util.ExtensibleEnum;
 
 
 /**
@@ -54,14 +51,6 @@ extends Status<SampleRejectedStatus, DataReader<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static SampleRejectedStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        SampleRejectedStatus status = factory.createSampleRejectedStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected SampleRejectedStatus(DataReader<?> source) {
         super(source);
@@ -99,33 +88,11 @@ extends Status<SampleRejectedStatus, DataReader<?>> {
     // Types
     // -----------------------------------------------------------------------
 
-    public static class Kind extends ExtensibleEnum<Kind> {
-        // --- Constants: ----------------------------------------------------
-        private static final long serialVersionUID = 7164824663090687282L;
-
-        // --- Kinds: --------------------------------------------------------
-        public static final Kind NOT_REJECTED = create("NOT_REJECTED", 0);
-
-        public static final Kind REJECTED_BY_INSTANCES_LIMIT =
-            create("REJECTED_BY_INSTANCES_LIMIT", 1);
-
-        public static final Kind REJECTED_BY_SAMPLES_LIMIT =
-            create("REJECTED_BY_SAMPLES_LIMIT", 2);
-
-        public static final Kind REJECTED_BY_SAMPLES_PER_INSTANCE_LIMIT =
-            create("REJECTED_BY_SAMPLES_PER_INSTANCE_LIMIT", 3);
-
-        // --- Object Lifecycle: ---------------------------------------------
-        protected Kind(String name, int ordinal) {
-            super(name, ordinal);
-        }
-        
-        private static Kind create(String name, int ordinal) {
-            StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-            Kind kind = factory.createSampleRejectedStatusKind();
-            assert kind != null;
-            return kind;
-        }
+    public static enum Kind {
+        NOT_REJECTED,
+        REJECTED_BY_INSTANCES_LIMIT,
+        REJECTED_BY_SAMPLES_LIMIT,
+        REJECTED_BY_SAMPLES_PER_INSTANCE_LIMIT
     }
 
 }

@@ -28,10 +28,7 @@
 
 package org.omg.dds.infrastructure.qos;
 
-import org.omg.dds.spi.QosPolicyFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
-import org.omg.dds.util.ValueType;
+import org.omg.dds.infrastructure.ValueType;
 
 
 /**
@@ -43,7 +40,7 @@ extends ValueType<SELF> {
     // Methods
     // -----------------------------------------------------------------------
 
-    public Id<SELF> getId();
+    public Id getId();
 
 
 
@@ -51,120 +48,42 @@ extends ValueType<SELF> {
     // Types
     // -----------------------------------------------------------------------
     
-    public static abstract class Id<POLICY extends QosPolicy<POLICY>>
-    extends ExtensibleEnum<Id<POLICY>> {
+    public static enum Id {
+        // --- Policies: -----------------------------------------------------
+        INVALID                 ("", 0),
+        USER_DATA               ("UserData", 1),
+        DURABILITY              ("Durability", 2),
+        PRESENTATION            ("Presentation", 3),
+        DEADLINE                ("Deadline", 4),
+        LATENCY_BUDGET          ("LatencyBudget", 5),
+        OWNERSHIP               ("Ownership", 6),
+        OWNERSHIP_STRENGTH      ("OwnershipStrength", 7),
+        LIVELINESS              ("Liveliness", 8),
+        TIME_BASED_FILTER       ("TimeBasedFilter", 9),
+        PARTITION               ("Partition", 10),
+        RELIABILITY             ("Reliability", 11),
+        DESTINATION_ORDER       ("DestinationOrder", 12),
+        HISTORY                 ("History", 13),
+        RESOURCE_LIMITS         ("ResourceLimits", 14),
+        ENTITY_FACTORY          ("EntityFactory", 15),
+        WRITER_DATA_LIFECYCLE   ("WriterDataLifecycle", 16),
+        READER_DATA_LIFECYCLE   ("ReaderDataLifecycle", 17),
+        TOPIC_DATA              ("TopicData", 18),
+        GROUP_DATA              ("GroupData", 19),
+        TRANSPORT_PRIORITY      ("TransportPriority", 20),
+        LIFESPAN                ("Lifespan", 21),
+        DURABILITY_SERVICE      ("DurabilityService", 22);
+
+
         // --- Constants: ----------------------------------------------------
-        private static final long serialVersionUID = -6419631365648412883L;
+        public final int value;
+        public final String policyName;
 
 
         // --- Object Lifecycle: ---------------------------------------------
-        protected Id(String enumName, int ordinal) {
-            super(enumName, ordinal);
-        }
-
-        private static <POLICY extends QosPolicy<POLICY>> Id<POLICY> create(
-                String enumName,
-                int ordinal,
-                String policyName,
-                int value) {
-            QosPolicyFactory factory =
-                ServiceImpl.getInstance().getQosPolicyFactory();
-            Id<POLICY> id = factory.createQosPolicyId(
-                    enumName, ordinal, policyName, value);
-            assert id != null;
-            return id;
-        }
-
-
-        // --- Methods: ------------------------------------------------------
-
-        public abstract int getValue();
-
-        public abstract String getPolicyName();
-        
-        public abstract Class<POLICY> getPolicyClass();
-
-
-        // --- Policies: -----------------------------------------------------
-        public static final Id<InvalidQosPolicy> INVALID = create(
-                "INVALID", 0, "", 0);
-
-        public static final Id<UserDataQosPolicy> USER_DATA = create(
-                "USER_DATA", 1, "UserData", 1);
-
-        public static final Id<DurabilityQosPolicy> DURABILITY = create(
-                "DURABILITY", 2, "Durability", 2);
-
-        public static final Id<PresentationQosPolicy> PRESENTATION = create(
-                "PRESENTATION", 3, "Presentation", 3);
-
-        public static final Id<DeadlineQosPolicy> DEADLINE = create(
-                "DEADLINE", 4, "Deadline", 4);
-
-        public static final Id<LatencyBudgetQosPolicy> LATENCY_BUDGET =
-            create("LATENCY_BUDGET", 5, "LatencyBudget", 5);
-
-        public static final Id<OwnershipQosPolicy> OWNERSHIP = create(
-                "OWNERSHIP", 6, "Ownership", 6);
-
-        public static final Id<OwnershipStrengthQosPolicy>
-        OWNERSHIP_STRENGTH = create(
-                "OWNERSHIP_STRENGTH", 7, "OwnershipStrength", 7);
-
-        public static final Id<LivelinessQosPolicy> LIVELINESS = create(
-                "LIVELINESS", 8, "Liveliness", 8);
-
-        public static final Id<TimeBasedFilterQosPolicy> TIME_BASED_FILTER =
-            create("TIME_BASED_FILTER", 9, "TimeBasedFilter", 9);
-
-        public static final Id<PartitionQosPolicy> PARTITION = create(
-                "PARTITION", 10, "Partition", 10);
-
-        public static final Id<ReliabilityQosPolicy> RELIABILITY = create(
-                "RELIABILITY", 11, "Reliability", 11);
-
-        public static final Id<DestinationOrderQosPolicy> DESTINATION_ORDER =
-            create("DESTINATION_ORDER", 12, "DestinationOrder", 12);
-
-        public static final Id<HistoryQosPolicy> HISTORY = create(
-                "HISTORY", 13, "History", 13);
-
-        public static final Id<ResourceLimitsQosPolicy> RESOURCE_LIMITS =
-            create("RESOURCE_LIMITS", 14, "ResourceLimits", 14);
-
-        public static final Id<EntityFactoryQosPolicy> ENTITY_FACTORY =
-            create("ENTITY_FACTORY", 15, "EntityFactory", 15);
-
-        public static final Id<WriterDataLifecycleQosPolicy>
-        WRITER_DATA_LIFECYCLE = create(
-                "WRITER_DATA_LIFECYCLE", 16, "WriterDataLifecycle", 16);
-
-        public static final Id<ReaderDataLifecycleQosPolicy>
-        READER_DATA_LIFECYCLE = create(
-                "READER_DATA_LIFECYCLE", 17, "ReaderDataLifecycle", 17);
-
-        public static final Id<TopicDataQosPolicy> TOPIC_DATA = create(
-                "TOPIC_DATA", 18, "TopicData", 18);
-
-        public static final Id<GroupDataQosPolicy> GROUP_DATA = create(
-                "GROUP_DATA", 19, "GroupData", 19);
-
-        public static final Id<TransportPriorityQosPolicy>
-        TRANSPORT_PRIORITY = create(
-                "TRANSPORT_PRIORITY", 20, "TransportPriority", 20);
-
-        public static final Id<LifespanQosPolicy> LIFESPAN = create(
-                "LIFESPAN", 21, "Lifespan", 21);
-
-        public static final Id<DurabilityServiceQosPolicy>
-        DURABILITY_SERVICE = create(
-                "DURABILITY_SERVICE", 22, "DurabilityService", 22);
-
-
-        // --- Types: --------------------------------------------------------
-        private interface InvalidQosPolicy
-        extends QosPolicy<InvalidQosPolicy> {
-            // empty
+        private Id(String enumName, int value) {
+            this. policyName = enumName;
+            this.value = value;
         }
     }
 

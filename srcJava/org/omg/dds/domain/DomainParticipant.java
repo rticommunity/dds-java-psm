@@ -69,7 +69,7 @@ extends Entity<DomainParticipant,
     public Publisher createPublisher(
             PublisherQos qos,
             PublisherListener listener,
-            Set<Status.Kind<?>> status);
+            Set<Status.Kind> status);
 
     public Subscriber createSubscriber();
     public Subscriber createSubscriber(
@@ -78,7 +78,7 @@ extends Entity<DomainParticipant,
     public Subscriber createSubscriber(
             SubscriberQos qos,
             SubscriberListener listener,
-            Set<Status.Kind<?>> status);
+            Set<Status.Kind> status);
 
     public Subscriber getBuiltinSubscriber();
 
@@ -95,7 +95,7 @@ extends Entity<DomainParticipant,
             String typeName,
             TopicQos qos,
             TopicListener listener,
-            Set<Status.Kind<?>> status);
+            Set<Status.Kind> status);
 
     /**
      * Implicitly register the given type, if necessary, under its fully
@@ -114,7 +114,7 @@ extends Entity<DomainParticipant,
             Class<? super TYPE> type,
             TopicQos qos,
             TopicListener listener,
-            Set<Status.Kind<?>> status);
+            Set<Status.Kind> status);
 
     public <TYPE> Topic<TYPE> findTopic(
             String topicName,

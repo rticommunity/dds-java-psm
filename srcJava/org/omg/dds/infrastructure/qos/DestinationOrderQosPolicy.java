@@ -28,10 +28,6 @@
 
 package org.omg.dds.infrastructure.qos;
 
-import org.omg.dds.spi.QosPolicyFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ExtensibleEnum;
-
 
 /**
  * DDS/DestinationOrderQosPolicy.java .
@@ -67,30 +63,9 @@ extends QosPolicy<DestinationOrderQosPolicy> {
      * from dds_rtf2_dcps.idl
      * Wednesday, September 16, 2009 9:06:02 AM CDT
      */
-    public static class Kind extends ExtensibleEnum<Kind> {
-        // --- Constants: ----------------------------------------------------
-        private static final long serialVersionUID = 7301137409159163244L;
-
-        // --- Kinds: --------------------------------------------------------
-        public static final Kind BY_RECEPTION_TIMESTAMP = create(
-                "BY_RECEPTION_TIMESTAMP", 0);
-
-        public static final Kind BY_SOURCE_TIMESTAMP = create(
-                "BY_SOURCE_TIMESTAMP", 1);
-
-        // --- Object Lifecycle: ---------------------------------------------
-        protected Kind(String name, int ordinal) {
-            super(name, ordinal);
-        }
-        
-        private static Kind create(String name, int ordinal) {
-            QosPolicyFactory factory =
-                ServiceImpl.getInstance().getQosPolicyFactory();
-            Kind kind = factory.createDestinationOrderQosPolicyKind(
-                    name, ordinal);
-            assert kind != null;
-            return kind;
-        }
+    public enum Kind {
+        BY_RECEPTION_TIMESTAMP,
+        BY_SOURCE_TIMESTAMP
     }
 
 }

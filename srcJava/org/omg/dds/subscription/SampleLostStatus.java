@@ -29,8 +29,6 @@
 package org.omg.dds.subscription;
 
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -52,14 +50,6 @@ extends Status<SampleLostStatus, DataReader<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static SampleLostStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        SampleLostStatus status = factory.createSampleLostStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected SampleLostStatus(DataReader<?> source) {
         super(source);

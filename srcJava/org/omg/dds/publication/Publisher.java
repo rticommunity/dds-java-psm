@@ -59,7 +59,7 @@ extends DomainEntity<Publisher,
             Topic<TYPE> topic,
             DataWriterQos qos,
             DataWriterListener listener,
-            Set<Status.Kind<?>> status);
+            Set<Status.Kind> status);
 
     public <TYPE> DataWriter<TYPE> lookupDataWriter(String topicName);
 

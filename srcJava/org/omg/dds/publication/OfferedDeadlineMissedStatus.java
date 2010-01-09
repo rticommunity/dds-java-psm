@@ -30,8 +30,6 @@ package org.omg.dds.publication;
 
 import org.omg.dds.infrastructure.InstanceHandle;
 import org.omg.dds.infrastructure.Status;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -53,15 +51,6 @@ extends Status<OfferedDeadlineMissedStatus, DataWriter<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static OfferedDeadlineMissedStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        OfferedDeadlineMissedStatus status =
-            factory.createOfferedDeadlineMissedStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected OfferedDeadlineMissedStatus(DataWriter<?> source) {
         super(source);

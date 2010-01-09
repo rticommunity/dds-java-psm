@@ -33,8 +33,6 @@ import java.util.Collection;
 import org.omg.dds.infrastructure.Status;
 import org.omg.dds.infrastructure.qos.QosPolicy;
 import org.omg.dds.infrastructure.qos.QosPolicyCount;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -56,15 +54,6 @@ extends Status<OfferedIncompatibleQosStatus, DataWriter<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static OfferedIncompatibleQosStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        OfferedIncompatibleQosStatus status =
-            factory.createOfferedIncompatibleQosStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected OfferedIncompatibleQosStatus(DataWriter<?> source) {
         super(source);
@@ -89,9 +78,9 @@ extends Status<OfferedIncompatibleQosStatus, DataWriter<?>> {
     /**
      * @return the lastPolicyId
      */
-    public abstract QosPolicy.Id<?> getLastPolicyId();
+    public abstract QosPolicy.Id getLastPolicyId();
 
-    public abstract void getPolicies(Collection<QosPolicyCount<?>> policies);
+    public abstract void getPolicies(Collection<QosPolicyCount> policies);
 
     @Override
     public abstract OfferedIncompatibleQosStatus clone();

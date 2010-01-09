@@ -28,6 +28,7 @@
 
 package org.omg.dds.builtin;
 
+import org.omg.dds.infrastructure.ValueType;
 import org.omg.dds.infrastructure.qos.DeadlineQosPolicy;
 import org.omg.dds.infrastructure.qos.DestinationOrderQosPolicy;
 import org.omg.dds.infrastructure.qos.DurabilityQosPolicy;
@@ -41,9 +42,6 @@ import org.omg.dds.infrastructure.qos.ReliabilityQosPolicy;
 import org.omg.dds.infrastructure.qos.TimeBasedFilterQosPolicy;
 import org.omg.dds.infrastructure.qos.TopicDataQosPolicy;
 import org.omg.dds.infrastructure.qos.UserDataQosPolicy;
-import org.omg.dds.spi.BuiltinTopicDataFactory;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.util.ValueType;
 
 
 /**
@@ -52,78 +50,8 @@ import org.omg.dds.util.ValueType;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public abstract class SubscriptionBuiltinTopicData
-implements ValueType<SubscriptionBuiltinTopicData> {
-    // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = -2798338395102171800L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    public static SubscriptionBuiltinTopicData create() {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        SubscriptionBuiltinTopicData data =
-            factory.createSubscriptionBuiltinTopicData();
-        assert data != null;
-        return data;
-    }
-
-    public static SubscriptionBuiltinTopicData create(
-            BuiltinTopicKey key,
-            BuiltinTopicKey participantKey,
-            String topicName,
-            String typeName,
-            DurabilityQosPolicy durability,
-            DeadlineQosPolicy deadline,
-            LatencyBudgetQosPolicy latencyBudget,
-            LivelinessQosPolicy liveliness,
-            ReliabilityQosPolicy reliability,
-            OwnershipQosPolicy ownership,
-            DestinationOrderQosPolicy destinationOrder,
-            UserDataQosPolicy userData,
-            TimeBasedFilterQosPolicy timeBasedFilter,
-            PresentationQosPolicy presentation,
-            PartitionQosPolicy partition,
-            TopicDataQosPolicy topicData,
-            GroupDataQosPolicy groupData)
-    {
-        BuiltinTopicDataFactory factory =
-            ServiceImpl.getInstance().getBuiltinTopicDataFactory();
-        SubscriptionBuiltinTopicData data =
-            factory.createSubscriptionBuiltinTopicData(key,
-                                                       participantKey,
-                                                       topicName,
-                                                       typeName,
-                                                       durability,
-                                                       deadline,
-                                                       latencyBudget,
-                                                       liveliness,
-                                                       reliability,
-                                                       ownership,
-                                                       destinationOrder,
-                                                       userData,
-                                                       timeBasedFilter,
-                                                       presentation,
-                                                       partition,
-                                                       topicData,
-                                                       groupData);
-        assert data != null;
-        return data;
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
+public interface SubscriptionBuiltinTopicData
+extends ValueType<SubscriptionBuiltinTopicData> {
     /**
      * @param key the key to set
      */
@@ -296,8 +224,5 @@ implements ValueType<SubscriptionBuiltinTopicData> {
      * @return the groupData
      */
     public abstract GroupDataQosPolicy getGroupData();
-
-    @Override
-    public abstract SubscriptionBuiltinTopicData clone();
 
 } // class SubscriptionBuiltinTopicData

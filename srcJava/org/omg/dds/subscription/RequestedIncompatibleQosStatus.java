@@ -33,8 +33,6 @@ import java.util.Collection;
 import org.omg.dds.infrastructure.Status;
 import org.omg.dds.infrastructure.qos.QosPolicy;
 import org.omg.dds.infrastructure.qos.QosPolicyCount;
-import org.omg.dds.spi.ServiceImpl;
-import org.omg.dds.spi.StatusFactory;
 
 
 /**
@@ -56,15 +54,6 @@ extends Status<RequestedIncompatibleQosStatus, DataReader<?>> {
     // -----------------------------------------------------------------------
     // Object Lifecycle
     // -----------------------------------------------------------------------
-
-    public static RequestedIncompatibleQosStatus create() {
-        StatusFactory factory = ServiceImpl.getInstance().getStatusFactory();
-        RequestedIncompatibleQosStatus status =
-            factory.createRequestedIncompatibleQosStatus();
-        assert status != null;
-        return status;
-    }
-
 
     protected RequestedIncompatibleQosStatus(DataReader<?> source) {
         super(source);
@@ -92,8 +81,8 @@ extends Status<RequestedIncompatibleQosStatus, DataReader<?>> {
     /**
      * @return the lastPolicyId
      */
-    public abstract QosPolicy.Id<?> getLastPolicyId();
+    public abstract QosPolicy.Id getLastPolicyId();
 
-    public abstract void getPolicies(Collection<QosPolicyCount<?>> policies);
+    public abstract void getPolicies(Collection<QosPolicyCount> policies);
 
 } // class RequestedIncompatibleQosStatus
