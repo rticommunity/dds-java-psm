@@ -63,33 +63,64 @@ package org.omg.dds.infrastructure;
  * - RETCODE_OUT_OF_RESOURCES:     OutOfResourcesException
  *                                 (extends DdsException)
  */
-public class DdsException extends RuntimeException {
+public class DdsException extends RuntimeException implements DdsObject {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = 1147344098842712819L;
 
+    private final Context _parent;
+
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Public Methods
     // -----------------------------------------------------------------------
 
-    public DdsException() {
-        // empty
+    // --- Object Lifecycle: -------------------------------------------------
+
+    public DdsException(Context parent) {
+        checkForNull(parent);
+        _parent = parent;
     }
 
-    public DdsException(String message) {
+    public DdsException(Context parent, String message) {
         super(message);
+        checkForNull(parent);
+        _parent = parent;
     }
 
-    public DdsException(Throwable cause) {
+    public DdsException(Context parent, Throwable cause) {
         super(cause);
+        checkForNull(parent);
+        _parent = parent;
     }
 
-    public DdsException(String message, Throwable cause) {
+    public DdsException(Context parent, String message, Throwable cause) {
         super(message, cause);
+        checkForNull(parent);
+        _parent = parent;
+    }
+
+
+    // --- From DdsObject: ---------------------------------------------------
+
+    public Context getContext() {
+        assert _parent != null;
+        return _parent;
+    }
+
+
+
+    // -----------------------------------------------------------------------
+    // Private Methods
+    // -----------------------------------------------------------------------
+
+    private static void checkForNull(Context parent) {
+        if (parent == null) {
+            throw new IllegalArgumentException("null Context");
+        }
     }
 
 }

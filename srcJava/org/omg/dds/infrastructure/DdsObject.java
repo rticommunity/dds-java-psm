@@ -28,39 +28,7 @@
 
 package org.omg.dds.infrastructure;
 
-import java.io.Serializable;
 
-
-/**
- * Implementing classes have value semantics: they can be deeply copied, and
- * equality is determined based on their contents, not on their object
- * identity.
- * 
- * @param <SELF>  Typically, classes will parameterize their
- *                      implementations of this interface with their own
- *                      class.
- */
-public interface ValueType<SELF> extends DdsObject, Serializable {
-    /**
-     * Overwrite this object's state with the contents of the given object.
-     */
-    public SELF copyFrom(SELF other);
-
-    /**
-     * Implementing classes should override <code>equals()</code>.
-     */
-    public boolean equals(Object other);
-
-    /**
-     * Implementing classes should override <code>hashCode()</code>.
-     */
-    public int hashCode();
-
-    /**
-     * Extends the concept of "cloneable" defined in <code>java.lang</code> by
-     * providing an explicit public {@link #clone()} method.
-     * 
-     * @return  a new object that with state identical to that of this object.
-     */
-    public SELF clone();
+public interface DdsObject {
+    public Context getContext();
 }

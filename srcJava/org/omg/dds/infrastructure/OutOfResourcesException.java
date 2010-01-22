@@ -42,20 +42,22 @@ public class OutOfResourcesException extends DdsException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public OutOfResourcesException() {
-        // empty
+    public OutOfResourcesException(Context parent) {
+        super(parent);
     }
 
-    public OutOfResourcesException(String s) {
-        super(s);
+    public OutOfResourcesException(Context parent, String s) {
+        super(parent, s);
     }
 
-    public OutOfResourcesException(Throwable cause) {
-        super(cause);
+    public OutOfResourcesException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    public OutOfResourcesException(String message, Throwable cause) {
-        super(message, cause);
+    public OutOfResourcesException(Context parent,
+                                   String message,
+                                   Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

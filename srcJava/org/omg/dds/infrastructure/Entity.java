@@ -42,7 +42,8 @@ import org.omg.dds.infrastructure.qos.Qos;
  */
 public interface Entity<SELF extends Entity<SELF, LISTENER, QOS>,
                         LISTENER extends EventListener,
-                        QOS extends Qos<QOS>> {
+                        QOS extends Qos<QOS>>
+extends DdsObject {
     public LISTENER getListener();
     public void setListener(LISTENER listener);
 

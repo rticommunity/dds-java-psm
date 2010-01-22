@@ -29,6 +29,7 @@
 package org.omg.dds.topic;
 
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.infrastructure.DdsObject;
 
 
 /**
@@ -37,7 +38,7 @@ import org.omg.dds.domain.DomainParticipant;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public interface TopicDescription<TYPE> {
+public interface TopicDescription<TYPE> extends DdsObject {
     public String getTypeName();
     public String getName();
 

@@ -30,6 +30,7 @@ package org.omg.dds.domain;
 
 import java.util.Set;
 
+import org.omg.dds.infrastructure.DdsObject;
 import org.omg.dds.infrastructure.Status;
 
 
@@ -39,7 +40,7 @@ import org.omg.dds.infrastructure.Status;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public interface DomainParticipantFactory {
+public interface DomainParticipantFactory extends DdsObject {
     /**
      * Create a new participant in the domain with ID 0 having default QoS
      * and no listener.

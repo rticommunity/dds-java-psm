@@ -37,7 +37,7 @@ import java.util.List;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public interface WaitSet {
+public interface WaitSet extends DdsObject {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

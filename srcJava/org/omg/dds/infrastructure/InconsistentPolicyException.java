@@ -42,20 +42,22 @@ public class InconsistentPolicyException extends DdsException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public InconsistentPolicyException() {
-        // empty
+    public InconsistentPolicyException(Context parent) {
+        super(parent);
     }
 
-    public InconsistentPolicyException(String s) {
-        super(s);
+    public InconsistentPolicyException(Context parent, String s) {
+        super(parent, s);
     }
 
-    public InconsistentPolicyException(Throwable cause) {
-        super(cause);
+    public InconsistentPolicyException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    public InconsistentPolicyException(String message, Throwable cause) {
-        super(message, cause);
+    public InconsistentPolicyException(Context parent,
+                                       String message,
+                                       Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

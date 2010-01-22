@@ -42,20 +42,22 @@ public class ImmutablePolicyException extends DdsException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public ImmutablePolicyException() {
-        // empty
+    public ImmutablePolicyException(Context parent) {
+        super(parent);
     }
 
-    public ImmutablePolicyException(String s) {
-        super(s);
+    public ImmutablePolicyException(Context parent, String s) {
+        super(parent, s);
     }
 
-    public ImmutablePolicyException(Throwable cause) {
-        super(cause);
+    public ImmutablePolicyException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    public ImmutablePolicyException(String message, Throwable cause) {
-        super(message, cause);
+    public ImmutablePolicyException(Context parent,
+                                    String message,
+                                    Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

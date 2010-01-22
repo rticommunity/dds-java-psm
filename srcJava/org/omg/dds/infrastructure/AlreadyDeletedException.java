@@ -46,20 +46,22 @@ public class AlreadyDeletedException extends IllegalDdsStateException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public AlreadyDeletedException() {
-        // empty
+    public AlreadyDeletedException(Context parent) {
+        super(parent);
     }
 
-    public AlreadyDeletedException(String s) {
-        super(s);
+    public AlreadyDeletedException(Context parent, String s) {
+        super(parent, s);
     }
 
-    public AlreadyDeletedException(Throwable cause) {
-        super(cause);
+    public AlreadyDeletedException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    public AlreadyDeletedException(String message, Throwable cause) {
-        super(message, cause);
+    public AlreadyDeletedException(Context parent,
+                                   String message,
+                                   Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

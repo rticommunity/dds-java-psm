@@ -42,20 +42,22 @@ public class NotEnabledException extends IllegalDdsStateException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public NotEnabledException() {
-        // empty
+    public NotEnabledException(Context parent) {
+        super(parent);
     }
 
-    public NotEnabledException(String s) {
-        super(s);
+    public NotEnabledException(Context parent, String s) {
+        super(parent, s);
     }
 
-    public NotEnabledException(Throwable cause) {
-        super(cause);
+    public NotEnabledException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    public NotEnabledException(String message, Throwable cause) {
-        super(message, cause);
+    public NotEnabledException(Context parent,
+                               String message,
+                               Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

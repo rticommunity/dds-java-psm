@@ -35,6 +35,6 @@ package org.omg.dds.infrastructure;
  * from dds_rtf2_dcps.idl
  * Wednesday, September 16, 2009 9:06:02 AM CDT
  */
-public interface Condition {
+public interface Condition extends DdsObject {
     public boolean getTriggerValue();
 }

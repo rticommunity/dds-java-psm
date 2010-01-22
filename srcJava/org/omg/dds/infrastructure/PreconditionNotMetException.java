@@ -42,20 +42,22 @@ public class PreconditionNotMetException extends IllegalDdsStateException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public PreconditionNotMetException() {
-        // empty
+    public PreconditionNotMetException(Context parent) {
+        super(parent);
     }
 
-    public PreconditionNotMetException(String s) {
-        super(s);
+    public PreconditionNotMetException(Context parent, String s) {
+        super(parent, s);
     }
 
-    public PreconditionNotMetException(Throwable cause) {
-        super(cause);
+    public PreconditionNotMetException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    public PreconditionNotMetException(String message, Throwable cause) {
-        super(message, cause);
+    public PreconditionNotMetException(Context parent,
+                                       String message,
+                                       Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

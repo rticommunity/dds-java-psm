@@ -42,20 +42,22 @@ public class IllegalOperationException extends IllegalDdsStateException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public IllegalOperationException() {
-        // empty
+    public IllegalOperationException(Context parent) {
+        super(parent);
     }
 
-    public IllegalOperationException(String s) {
-        super(s);
+    public IllegalOperationException(Context parent, String s) {
+        super(parent, s);
     }
 
-    public IllegalOperationException(Throwable cause) {
-        super(cause);
+    public IllegalOperationException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    public IllegalOperationException(String message, Throwable cause) {
-        super(message, cause);
+    public IllegalOperationException(Context parent,
+                                     String message,
+                                     Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

@@ -34,33 +34,67 @@ package org.omg.dds.infrastructure;
  * invoked at an invalid time or when the target object is in an invalid
  * state. 
  */
-public class IllegalDdsStateException extends IllegalStateException {
+public class IllegalDdsStateException
+extends IllegalStateException implements DdsObject {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = 7024035503599957879L;
 
+    private final Context _parent;
+
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Public Methods
     // -----------------------------------------------------------------------
 
-    public IllegalDdsStateException() {
-        // empty
+    // --- Object Lifecycle: -------------------------------------------------
+
+    public IllegalDdsStateException(Context parent) {
+        checkForNull(parent);
+        _parent = parent;
     }
 
-    public IllegalDdsStateException(String s) {
+    public IllegalDdsStateException(Context parent, String s) {
         super(s);
+        checkForNull(parent);
+        _parent = parent;
     }
 
-    public IllegalDdsStateException(Throwable cause) {
+    public IllegalDdsStateException(Context parent, Throwable cause) {
         super(cause);
+        checkForNull(parent);
+        _parent = parent;
     }
 
-    public IllegalDdsStateException(String message, Throwable cause) {
+    public IllegalDdsStateException(Context parent,
+                                    String message,
+                                    Throwable cause) {
         super(message, cause);
+        checkForNull(parent);
+        _parent = parent;
+    }
+
+
+    // --- From DdsObject: ---------------------------------------------------
+
+    public Context getContext() {
+        assert _parent != null;
+        return _parent;
+    }
+
+
+
+    // -----------------------------------------------------------------------
+    // Private Methods
+    // -----------------------------------------------------------------------
+
+    private static void checkForNull(Context parent) {
+        if (parent == null) {
+            throw new IllegalArgumentException("null Context");
+        }
     }
 
 }

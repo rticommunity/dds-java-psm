@@ -28,13 +28,11 @@
 
 package org.omg.dds.infrastructure;
 
-import org.omg.dds.infrastructure.DdsException;
-
 
 /**
  * This exception indicates that no DDS implementation could be loaded.
  */
-public class ServiceNotFoundException extends DdsException {
+public class ServiceNotFoundException extends RuntimeException {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
