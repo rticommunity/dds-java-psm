@@ -30,9 +30,9 @@ package org.omg.dds.subscription;
 
 import java.util.ListIterator;
 
-import org.omg.dds.infrastructure.InstanceHandle;
-import org.omg.dds.infrastructure.Time;
-import org.omg.dds.infrastructure.ValueType;
+import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.Time;
+import org.omg.dds.core.ValueType;
 
 
 /**

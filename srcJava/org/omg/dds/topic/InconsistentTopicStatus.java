@@ -28,7 +28,7 @@
 
 package org.omg.dds.topic;
 
-import org.omg.dds.infrastructure.Status;
+import org.omg.dds.core.Status;
 
 
 /**

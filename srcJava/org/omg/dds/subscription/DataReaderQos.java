@@ -28,18 +28,18 @@
 
 package org.omg.dds.subscription;
 
-import org.omg.dds.infrastructure.qos.DeadlineQosPolicy;
-import org.omg.dds.infrastructure.qos.DestinationOrderQosPolicy;
-import org.omg.dds.infrastructure.qos.DurabilityQosPolicy;
-import org.omg.dds.infrastructure.qos.HistoryQosPolicy;
-import org.omg.dds.infrastructure.qos.LatencyBudgetQosPolicy;
-import org.omg.dds.infrastructure.qos.LivelinessQosPolicy;
-import org.omg.dds.infrastructure.qos.OwnershipQosPolicy;
-import org.omg.dds.infrastructure.qos.Qos;
-import org.omg.dds.infrastructure.qos.ReaderDataLifecycleQosPolicy;
-import org.omg.dds.infrastructure.qos.ResourceLimitsQosPolicy;
-import org.omg.dds.infrastructure.qos.TimeBasedFilterQosPolicy;
-import org.omg.dds.infrastructure.qos.UserDataQosPolicy;
+import org.omg.dds.core.qos.DeadlineQosPolicy;
+import org.omg.dds.core.qos.DestinationOrderQosPolicy;
+import org.omg.dds.core.qos.DurabilityQosPolicy;
+import org.omg.dds.core.qos.HistoryQosPolicy;
+import org.omg.dds.core.qos.LatencyBudgetQosPolicy;
+import org.omg.dds.core.qos.LivelinessQosPolicy;
+import org.omg.dds.core.qos.OwnershipQosPolicy;
+import org.omg.dds.core.qos.Qos;
+import org.omg.dds.core.qos.ReaderDataLifecycleQosPolicy;
+import org.omg.dds.core.qos.ResourceLimitsQosPolicy;
+import org.omg.dds.core.qos.TimeBasedFilterQosPolicy;
+import org.omg.dds.core.qos.UserDataQosPolicy;
 import org.omg.dds.topic.TopicQos;
 
 

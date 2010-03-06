@@ -30,8 +30,8 @@ package org.omg.dds.domain;
 
 import java.util.Set;
 
-import org.omg.dds.infrastructure.DdsObject;
-import org.omg.dds.infrastructure.Status;
+import org.omg.dds.core.DdsObject;
+import org.omg.dds.core.Status;
 
 
 /**
@@ -46,6 +46,11 @@ public interface DomainParticipantFactory extends DdsObject {
      * and no listener.
      */
     public abstract DomainParticipant createParticipant();
+    public abstract DomainParticipant createParticipant(
+            int domainId);
+    public abstract DomainParticipant createParticipant(
+            int domainId,
+            DomainParticipantQos qos);
     public abstract DomainParticipant createParticipant(
             int domainId,
             DomainParticipantQos qos,

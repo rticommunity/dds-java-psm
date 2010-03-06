@@ -29,7 +29,7 @@
 package org.omg.dds.topic;
 
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.infrastructure.DdsObject;
+import org.omg.dds.core.DdsObject;
 
 
 /**

@@ -28,11 +28,11 @@
 
 package org.omg.dds.publication;
 
-import org.omg.dds.infrastructure.qos.EntityFactoryQosPolicy;
-import org.omg.dds.infrastructure.qos.GroupDataQosPolicy;
-import org.omg.dds.infrastructure.qos.PartitionQosPolicy;
-import org.omg.dds.infrastructure.qos.PresentationQosPolicy;
-import org.omg.dds.infrastructure.qos.Qos;
+import org.omg.dds.core.qos.EntityFactoryQosPolicy;
+import org.omg.dds.core.qos.GroupDataQosPolicy;
+import org.omg.dds.core.qos.PartitionQosPolicy;
+import org.omg.dds.core.qos.PresentationQosPolicy;
+import org.omg.dds.core.qos.Qos;
 
 
 /**

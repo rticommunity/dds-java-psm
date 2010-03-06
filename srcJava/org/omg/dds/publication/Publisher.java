@@ -31,9 +31,9 @@ package org.omg.dds.publication;
 import java.util.Set;
 
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.infrastructure.DomainEntity;
-import org.omg.dds.infrastructure.Duration;
-import org.omg.dds.infrastructure.Status;
+import org.omg.dds.core.DomainEntity;
+import org.omg.dds.core.Duration;
+import org.omg.dds.core.Status;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicQos;
 
@@ -51,6 +51,9 @@ extends DomainEntity<Publisher,
                      PublisherQos> {
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic);
+    public <TYPE> DataWriter<TYPE> createDataWriter(
+            Topic<TYPE> topic,
+            DataWriterQos qos);
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic,
             DataWriterQos qos,

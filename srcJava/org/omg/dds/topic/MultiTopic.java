@@ -39,6 +39,7 @@ import java.util.List;
  */
 public interface MultiTopic<TYPE> extends TopicDescription<TYPE> {
     public String getSubscriptionExpression();
+    public List<String> cloneExpressionParameters();
     public void getExpressionParameters(List<String> expressionParameters);
     public void setExpressionParameters(List<String> expression_parameters);
     public void setExpressionParameters(String... expression_parameters);

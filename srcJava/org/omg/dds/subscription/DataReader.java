@@ -32,9 +32,9 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.omg.dds.builtin.PublicationBuiltinTopicData;
-import org.omg.dds.infrastructure.DomainEntity;
-import org.omg.dds.infrastructure.Duration;
-import org.omg.dds.infrastructure.InstanceHandle;
+import org.omg.dds.core.DomainEntity;
+import org.omg.dds.core.Duration;
+import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.topic.TopicDescription;
 
 

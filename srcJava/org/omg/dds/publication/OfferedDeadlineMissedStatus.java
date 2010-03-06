@@ -28,8 +28,8 @@
 
 package org.omg.dds.publication;
 
-import org.omg.dds.infrastructure.InstanceHandle;
-import org.omg.dds.infrastructure.Status;
+import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.Status;
 
 
 /**

@@ -30,9 +30,9 @@ package org.omg.dds.publication;
 
 import java.util.Collection;
 
-import org.omg.dds.infrastructure.Status;
-import org.omg.dds.infrastructure.qos.QosPolicy;
-import org.omg.dds.infrastructure.qos.QosPolicyCount;
+import org.omg.dds.core.Status;
+import org.omg.dds.core.qos.QosPolicy;
+import org.omg.dds.core.qos.QosPolicyCount;
 
 
 /**

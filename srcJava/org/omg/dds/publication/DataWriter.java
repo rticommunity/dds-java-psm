@@ -31,10 +31,10 @@ package org.omg.dds.publication;
 import java.util.Collection;
 
 import org.omg.dds.builtin.SubscriptionBuiltinTopicData;
-import org.omg.dds.infrastructure.DomainEntity;
-import org.omg.dds.infrastructure.Duration;
-import org.omg.dds.infrastructure.InstanceHandle;
-import org.omg.dds.infrastructure.Time;
+import org.omg.dds.core.DomainEntity;
+import org.omg.dds.core.Duration;
+import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.Time;
 import org.omg.dds.topic.Topic;
 
 

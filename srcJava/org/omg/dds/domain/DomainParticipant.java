@@ -33,11 +33,11 @@ import java.util.Set;
 
 import org.omg.dds.builtin.ParticipantBuiltinTopicData;
 import org.omg.dds.builtin.TopicBuiltinTopicData;
-import org.omg.dds.infrastructure.Duration;
-import org.omg.dds.infrastructure.Entity;
-import org.omg.dds.infrastructure.InstanceHandle;
-import org.omg.dds.infrastructure.Status;
-import org.omg.dds.infrastructure.Time;
+import org.omg.dds.core.Duration;
+import org.omg.dds.core.Entity;
+import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.Status;
+import org.omg.dds.core.Time;
 import org.omg.dds.publication.Publisher;
 import org.omg.dds.publication.PublisherListener;
 import org.omg.dds.publication.PublisherQos;
@@ -64,6 +64,8 @@ extends Entity<DomainParticipant,
                DomainParticipantQos> {
     public Publisher createPublisher();
     public Publisher createPublisher(
+            PublisherQos qos);
+    public Publisher createPublisher(
             PublisherQos qos,
             PublisherListener listener);
     public Publisher createPublisher(
@@ -72,6 +74,8 @@ extends Entity<DomainParticipant,
             Set<Status.Kind> status);
 
     public Subscriber createSubscriber();
+    public Subscriber createSubscriber(
+            SubscriberQos qos);
     public Subscriber createSubscriber(
             SubscriberQos qos,
             SubscriberListener listener);
@@ -82,9 +86,14 @@ extends Entity<DomainParticipant,
 
     public Subscriber getBuiltinSubscriber();
 
+    // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             String typeName);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            String typeName,
+            TopicQos qos);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             String typeName,
@@ -107,6 +116,10 @@ extends Entity<DomainParticipant,
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<? super TYPE> type,
+            TopicQos qos);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<? super TYPE> type,
             TopicQos qos,
             TopicListener listener);
     public <TYPE> Topic<TYPE> createTopic(
@@ -116,6 +129,7 @@ extends Entity<DomainParticipant,
             TopicListener listener,
             Set<Status.Kind> status);
 
+    // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> findTopic(
             String topicName,
             Duration timeout);
@@ -161,11 +175,15 @@ extends Entity<DomainParticipant,
 
     public void getDiscoveredParticipants(
             List<InstanceHandle> participantHandles);
+    public ParticipantBuiltinTopicData cloneDiscoveredParticipantData(
+            InstanceHandle participantHandle);
     public void getDiscoveredParticipantData(
             ParticipantBuiltinTopicData participantData,
             InstanceHandle participantHandle);
 
     public void getDiscoveredTopics(List<InstanceHandle> topicHandles);
+    public TopicBuiltinTopicData cloneDiscoveredTopicData(
+            InstanceHandle topicHandle);
     public void getDiscoveredTopicData(
             TopicBuiltinTopicData topicData,
             InstanceHandle topicHandle);

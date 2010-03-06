@@ -28,8 +28,8 @@
 
 package org.omg.dds.builtin;
 
-import org.omg.dds.infrastructure.ValueType;
-import org.omg.dds.infrastructure.qos.UserDataQosPolicy;
+import org.omg.dds.core.ValueType;
+import org.omg.dds.core.qos.UserDataQosPolicy;
 
 
 /**

@@ -32,8 +32,8 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.infrastructure.DomainEntity;
-import org.omg.dds.infrastructure.Status;
+import org.omg.dds.core.DomainEntity;
+import org.omg.dds.core.Status;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;
 
@@ -51,6 +51,9 @@ extends DomainEntity<Subscriber,
                      SubscriberQos> {
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic);
+    public <TYPE> DataReader<TYPE> createDataReader(
+            TopicDescription<TYPE> topic,
+            DataReaderQos qos);
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             DataReaderQos qos,

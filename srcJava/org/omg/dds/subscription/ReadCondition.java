@@ -30,7 +30,7 @@ package org.omg.dds.subscription;
 
 import java.util.Set;
 
-import org.omg.dds.infrastructure.Condition;
+import org.omg.dds.core.Condition;
 
 
 /**
