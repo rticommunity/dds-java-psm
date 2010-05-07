@@ -30,25 +30,25 @@ package org.omg.dds.core;
 
 import java.util.Set;
 
-import org.omg.dds.builtin.BuiltinTopicKey;
-import org.omg.dds.builtin.ParticipantBuiltinTopicData;
-import org.omg.dds.builtin.PublicationBuiltinTopicData;
-import org.omg.dds.builtin.SubscriptionBuiltinTopicData;
-import org.omg.dds.builtin.TopicBuiltinTopicData;
 import org.omg.dds.domain.DomainParticipantFactory;
-import org.omg.dds.publication.LivelinessLostStatus;
-import org.omg.dds.publication.OfferedDeadlineMissedStatus;
-import org.omg.dds.publication.OfferedIncompatibleQosStatus;
-import org.omg.dds.publication.PublicationMatchedStatus;
-import org.omg.dds.subscription.InstanceState;
-import org.omg.dds.subscription.LivelinessChangedStatus;
-import org.omg.dds.subscription.RequestedDeadlineMissedStatus;
-import org.omg.dds.subscription.RequestedIncompatibleQosStatus;
-import org.omg.dds.subscription.SampleLostStatus;
-import org.omg.dds.subscription.SampleRejectedStatus;
-import org.omg.dds.subscription.SampleState;
-import org.omg.dds.subscription.SubscriptionMatchedStatus;
-import org.omg.dds.subscription.ViewState;
+import org.omg.dds.domain.discovery.BuiltinTopicKey;
+import org.omg.dds.domain.discovery.ParticipantBuiltinTopicData;
+import org.omg.dds.domain.discovery.PublicationBuiltinTopicData;
+import org.omg.dds.domain.discovery.SubscriptionBuiltinTopicData;
+import org.omg.dds.domain.discovery.TopicBuiltinTopicData;
+import org.omg.dds.pub.LivelinessLostStatus;
+import org.omg.dds.pub.OfferedDeadlineMissedStatus;
+import org.omg.dds.pub.OfferedIncompatibleQosStatus;
+import org.omg.dds.pub.PublicationMatchedStatus;
+import org.omg.dds.sub.InstanceState;
+import org.omg.dds.sub.LivelinessChangedStatus;
+import org.omg.dds.sub.RequestedDeadlineMissedStatus;
+import org.omg.dds.sub.RequestedIncompatibleQosStatus;
+import org.omg.dds.sub.SampleLostStatus;
+import org.omg.dds.sub.SampleRejectedStatus;
+import org.omg.dds.sub.SampleState;
+import org.omg.dds.sub.SubscriptionMatchedStatus;
+import org.omg.dds.sub.ViewState;
 import org.omg.dds.topic.InconsistentTopicStatus;
 
 
@@ -56,14 +56,24 @@ import org.omg.dds.topic.InconsistentTopicStatus;
  * DDS implementations are rooted in this class, a singleton implementation
  * of which is instantiated based on a system property.
  */
-public abstract class Context {
+public abstract class Context implements DdsObject {
     // -----------------------------------------------------------------------
-    // Fields
+    // Public Fields
     // -----------------------------------------------------------------------
 
-    private static final String IMPLEMENTATION_CLASS_NAME_PROPERTY =
+    public static final String IMPLEMENTATION_CLASS_NAME_PROPERTY =
         "org.omg.dds.serviceClassName";
 
+
+
+    // -----------------------------------------------------------------------
+    // Private Fields
+    // -----------------------------------------------------------------------
+
+    /* TODO: Refactor this string into the subclass with an abstract method.
+     * We should not constrain the implementation to use English error
+     * messages or format errors in a certain way.
+     */
     private static final String ERROR_STRING =
         "Unable to load OMG DDS implementation";
 
@@ -115,7 +125,7 @@ public abstract class Context {
 
 
     // -----------------------------------------------------------------------
-    // Methods
+    // Factory Methods
     // -----------------------------------------------------------------------
 
     // --- Entities: ---------------------------------------------------------
@@ -215,5 +225,17 @@ public abstract class Context {
     public abstract Set<SampleState> getAnySampleStateSet();
 
     public abstract Set<ViewState> getAnyViewStateSet();
+
+
+
+    // -----------------------------------------------------------------------
+    // Other Methods
+    // -----------------------------------------------------------------------
+
+    // --- From DdsObject: ---------------------------------------------------
+
+    public final Context getContext() {
+        return this;
+    }
 
 }

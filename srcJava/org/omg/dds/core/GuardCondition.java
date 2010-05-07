@@ -40,6 +40,6 @@ public interface GuardCondition extends Condition {
     // Methods
     // -----------------------------------------------------------------------
 
-    public abstract void setTriggerValue (boolean value);
+    public void setTriggerValue (boolean value);
 
 }

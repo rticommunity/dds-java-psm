@@ -28,8 +28,8 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.publication.PublisherListener;
-import org.omg.dds.subscription.SubscriberListener;
+import org.omg.dds.pub.PublisherListener;
+import org.omg.dds.sub.SubscriberListener;
 import org.omg.dds.topic.TopicListener;
 
 

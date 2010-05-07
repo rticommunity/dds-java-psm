@@ -42,16 +42,20 @@ public interface WaitSet extends DdsObject {
     // Methods
     // -----------------------------------------------------------------------
 
-    public abstract void wait(List<Condition> activeConditions,
-                              Duration timeout);
-    public abstract void wait(List<Condition> activeConditions,
-                              int sec, int nsec);
-    public abstract void wait(List<Condition> activeConditions,
-                              long millis);
+    public void wait(
+            List<Condition> activeConditions,
+            Duration timeout);
+    public void wait(
+            List<Condition> activeConditions,
+            int sec,
+            int nsec);
+    public void wait(
+            List<Condition> activeConditions,
+            long millis);
 
-    public abstract void attachCondition(Condition cond);
-    public abstract void detachCondition(Condition cond);
+    public void attachCondition(Condition cond);
+    public void detachCondition(Condition cond);
 
-    public abstract void getConditions(List<Condition> attachedConditions);
+    public void getConditions(List<Condition> attachedConditions);
 
 }

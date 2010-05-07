@@ -35,6 +35,6 @@ public interface InstanceHandle extends ValueType<InstanceHandle> {
     // Methods
     // -----------------------------------------------------------------------
 
-    public abstract boolean isNil();
+    public boolean isNil();
 
 }

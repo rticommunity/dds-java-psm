@@ -28,9 +28,9 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.core.qos.EntityFactoryQosPolicy;
-import org.omg.dds.core.qos.Qos;
-import org.omg.dds.core.qos.UserDataQosPolicy;
+import org.omg.dds.core.policy.EntityFactoryQosPolicy;
+import org.omg.dds.core.Qos;
+import org.omg.dds.core.policy.UserDataQosPolicy;
 
 
 /**

@@ -55,33 +55,33 @@ public interface Time extends ValueType<Time> {
     /**
      * @param sec the sec to set
      */
-    public abstract void setSec(int sec);
+    public void setSec(int sec);
 
     /**
      * @return the sec
      */
-    public abstract int getSec();
+    public int getSec();
 
     /**
      * @param nanosec the nanosec to set
      */
-    public abstract void setNanosec(int nanosec);
+    public void setNanosec(int nanosec);
 
     /**
      * @return the nanosec
      */
-    public abstract int getNanosec();
+    public int getNanosec();
 
 
     // --- Manipulation: -----------------------------------------------------
 
-    public abstract void add(Duration duration);
+    public void add(Duration duration);
 
-    public abstract void addSec(int sec);
+    public void addSec(int sec);
 
-    public abstract void addNanosec(int nanosec);
+    public void addNanosec(int nanosec);
 
-    public abstract void addMillis(long millis);
+    public void addMillis(long millis);
 
 
     // --- Conversion: -------------------------------------------------------
@@ -89,12 +89,12 @@ public interface Time extends ValueType<Time> {
     /**
      * Set the time to the given number of milliseconds.
      */
-    public abstract void fromMillis(long millis);
+    public void fromMillis(long millis);
 
     /**
      * @return  the number of milliseconds corresponding to this time,
      *          rounded or truncated to a whole number.
      */
-    public abstract long toMillis();
+    public long toMillis();
 
 }

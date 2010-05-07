@@ -28,26 +28,25 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.publication.DataWriter;
-import org.omg.dds.publication.LivelinessLostStatus;
-import org.omg.dds.publication.OfferedDeadlineMissedStatus;
-import org.omg.dds.publication.OfferedIncompatibleQosStatus;
-import org.omg.dds.publication.PublicationMatchedStatus;
-import org.omg.dds.subscription.DataReader;
-import org.omg.dds.subscription.LivelinessChangedStatus;
-import org.omg.dds.subscription.RequestedDeadlineMissedStatus;
-import org.omg.dds.subscription.RequestedIncompatibleQosStatus;
-import org.omg.dds.subscription.SampleLostStatus;
-import org.omg.dds.subscription.SampleRejectedStatus;
-import org.omg.dds.subscription.Subscriber;
-import org.omg.dds.subscription.SubscriptionMatchedStatus;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.pub.LivelinessLostStatus;
+import org.omg.dds.pub.OfferedDeadlineMissedStatus;
+import org.omg.dds.pub.OfferedIncompatibleQosStatus;
+import org.omg.dds.pub.PublicationMatchedStatus;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.sub.LivelinessChangedStatus;
+import org.omg.dds.sub.RequestedDeadlineMissedStatus;
+import org.omg.dds.sub.RequestedIncompatibleQosStatus;
+import org.omg.dds.sub.SampleLostStatus;
+import org.omg.dds.sub.SampleRejectedStatus;
+import org.omg.dds.sub.Subscriber;
+import org.omg.dds.sub.SubscriptionMatchedStatus;
 import org.omg.dds.topic.InconsistentTopicStatus;
 import org.omg.dds.topic.Topic;
 
 
 public class DomainParticipantAdapter implements DomainParticipantListener
 {
-    @Override
     public <TYPE> void onInconsistentTopic(
             Topic<TYPE> the_topic,
             InconsistentTopicStatus status)
@@ -55,7 +54,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE, DW extends DataWriter<TYPE>> void onLivelinessLost(
             DW writer,
             LivelinessLostStatus status)
@@ -63,7 +61,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE, DW extends DataWriter<TYPE>> void onOfferedDeadlineMissed(
             DW writer,
             OfferedDeadlineMissedStatus status)
@@ -71,7 +68,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE, DW extends DataWriter<TYPE>> void onOfferedIncompatibleQos(
             DW writer,
             OfferedIncompatibleQosStatus status)
@@ -79,7 +75,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE, DW extends DataWriter<TYPE>> void onPublicationMatched(
             DW writer,
             PublicationMatchedStatus status)
@@ -87,19 +82,16 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public void onDataOnReaders(Subscriber subscriber)
     {
         // empty
     }
 
-    @Override
     public <TYPE> void onDataAvailable(DataReader<TYPE> reader)
     {
         // empty
     }
 
-    @Override
     public <TYPE> void onLivelinessChanged(
             DataReader<TYPE> reader,
             LivelinessChangedStatus status)
@@ -107,7 +99,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE> void onRequestedDeadlineMissed(
             DataReader<TYPE> reader,
             RequestedDeadlineMissedStatus status)
@@ -115,7 +106,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE> void onRequestedIncompatibleQos(
             DataReader<TYPE> reader,
             RequestedIncompatibleQosStatus status)
@@ -123,7 +113,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE> void onSampleLost(
             DataReader<TYPE> reader,
             SampleLostStatus status)
@@ -131,7 +120,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE> void onSampleRejected(
             DataReader<TYPE> reader,
             SampleRejectedStatus status)
@@ -139,7 +127,6 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    @Override
     public <TYPE> void onSubscriptionMatched(
             DataReader<TYPE> reader,
             SubscriptionMatchedStatus status)

@@ -28,20 +28,20 @@
 
 package org.omg.dds.topic;
 
-import org.omg.dds.core.qos.DeadlineQosPolicy;
-import org.omg.dds.core.qos.DestinationOrderQosPolicy;
-import org.omg.dds.core.qos.DurabilityQosPolicy;
-import org.omg.dds.core.qos.DurabilityServiceQosPolicy;
-import org.omg.dds.core.qos.HistoryQosPolicy;
-import org.omg.dds.core.qos.LatencyBudgetQosPolicy;
-import org.omg.dds.core.qos.LifespanQosPolicy;
-import org.omg.dds.core.qos.LivelinessQosPolicy;
-import org.omg.dds.core.qos.OwnershipQosPolicy;
-import org.omg.dds.core.qos.Qos;
-import org.omg.dds.core.qos.ReliabilityQosPolicy;
-import org.omg.dds.core.qos.ResourceLimitsQosPolicy;
-import org.omg.dds.core.qos.TopicDataQosPolicy;
-import org.omg.dds.core.qos.TransportPriorityQosPolicy;
+import org.omg.dds.core.policy.DeadlineQosPolicy;
+import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+import org.omg.dds.core.policy.DurabilityQosPolicy;
+import org.omg.dds.core.policy.DurabilityServiceQosPolicy;
+import org.omg.dds.core.policy.HistoryQosPolicy;
+import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
+import org.omg.dds.core.policy.LifespanQosPolicy;
+import org.omg.dds.core.policy.LivelinessQosPolicy;
+import org.omg.dds.core.policy.OwnershipQosPolicy;
+import org.omg.dds.core.Qos;
+import org.omg.dds.core.policy.ReliabilityQosPolicy;
+import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
+import org.omg.dds.core.policy.TopicDataQosPolicy;
+import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 
 
 /**
