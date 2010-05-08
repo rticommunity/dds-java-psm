@@ -30,29 +30,24 @@ package org.omg.dds.pub;
 
 
 public class DataWriterAdapter implements DataWriterListener {
-    public <TYPE, DW extends DataWriter<TYPE>> void onLivelinessLost(
-            DW writer,
-            LivelinessLostStatus status)
+    public <TYPE> void onLivelinessLost(LivelinessLostStatus<TYPE> status)
     {
         // empty
     }
 
-    public <TYPE, DW extends DataWriter<TYPE>> void onOfferedDeadlineMissed(
-            DW writer,
-            OfferedDeadlineMissedStatus status)
+    public <TYPE> void onOfferedDeadlineMissed(
+            OfferedDeadlineMissedStatus<TYPE> status)
     {
         // empty
     }
 
-    public <TYPE, DW extends DataWriter<TYPE>> void onOfferedIncompatibleQos(
-            DW writer,
-            OfferedIncompatibleQosStatus status) {
+    public <TYPE> void onOfferedIncompatibleQos(
+            OfferedIncompatibleQosStatus<TYPE> status) {
         // empty
     }
 
-    public <TYPE, DW extends DataWriter<TYPE>> void onPublicationMatched(
-            DW writer,
-            PublicationMatchedStatus status)
+    public <TYPE> void onPublicationMatched(
+            PublicationMatchedStatus<TYPE> status)
     {
         // empty
     }

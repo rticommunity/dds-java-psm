@@ -32,15 +32,6 @@ import org.omg.dds.core.ValueType;
 
 
 public interface BuiltinTopicKey extends ValueType<BuiltinTopicKey> {
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param value the value to set
-     */
-    public void setValue(int value[]);
-
-    public void getValue(int[] value);
+    public int[] getValue();
 
 }

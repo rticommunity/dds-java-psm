@@ -37,6 +37,8 @@ public interface DeadlineQosPolicy extends QosPolicy<DeadlineQosPolicy> {
      */
     public void setPeriod(Duration period);
 
-    public void getPeriod(Duration period);
+    public void setPeriod(long periodMillis);
+
+    public Duration getPeriod();
 
 }

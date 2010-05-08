@@ -63,22 +63,24 @@ extends DomainEntity<DataReader<TYPE>,
 
     public TopicDescription<TYPE> getTopicDescription();
 
-    public void getSampleRejectedStatus(SampleRejectedStatus status);
+    public void getSampleRejectedStatus(SampleRejectedStatus<TYPE> status);
 
-    public void getLivelinessChangedStatus(LivelinessChangedStatus status);
+    public void getLivelinessChangedStatus(
+            LivelinessChangedStatus<TYPE> status);
 
     public void getRequestedDeadlineMissedStatus(
-            RequestedDeadlineMissedStatus status);
+            RequestedDeadlineMissedStatus<TYPE> status);
 
     public void getRequestedIncompatibleQosStatus(
-            RequestedIncompatibleQosStatus status);
+            RequestedIncompatibleQosStatus<TYPE> status);
 
     public void getSubscriptionMatchedStatus(
-            SubscriptionMatchedStatus status);
+            SubscriptionMatchedStatus<TYPE> status);
 
-    public void getSampleLostStatus(SampleLostStatus status);
+    public void getSampleLostStatus(SampleLostStatus<TYPE> status);
 
     public void waitForHistoricalData(Duration maxWait);
+    public void waitForHistoricalData(long maxWaitMillis);
 
     public void getMatchedPublications(
             Set<InstanceHandle> publication_handles);

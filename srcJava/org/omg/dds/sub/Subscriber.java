@@ -60,6 +60,8 @@ extends DomainEntity<Subscriber,
     public void closeContainedEntities();
 
     public <TYPE> DataReader<TYPE> lookupDataReader(String topicName);
+    public <TYPE> DataReader<TYPE> lookupDataReader(
+            TopicDescription<TYPE> topicName);
 
     public void getDataReaders(
             Set<DataReader<?>> readers);

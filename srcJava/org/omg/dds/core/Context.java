@@ -139,8 +139,6 @@ public abstract class Context implements DdsObject {
 
     public abstract Duration createDuration(int sec, int nanosec);
 
-    public abstract Time now();
-
     public abstract Time createTime(long millis);
 
     public abstract Time createTime(int sec, int nanosec);
@@ -184,36 +182,40 @@ public abstract class Context implements DdsObject {
 
     public abstract Set<Status.Kind> getNoneStatusKindSet();
 
-    public abstract LivelinessLostStatus createLivelinessLostStatus();
+    public abstract <TYPE>
+    LivelinessLostStatus<TYPE> createLivelinessLostStatus();
 
-    public abstract
-    OfferedDeadlineMissedStatus createOfferedDeadlineMissedStatus();
+    public abstract <TYPE>
+    OfferedDeadlineMissedStatus<TYPE> createOfferedDeadlineMissedStatus();
 
-    public abstract
-    OfferedIncompatibleQosStatus createOfferedIncompatibleQosStatus();
+    public abstract <TYPE>
+    OfferedIncompatibleQosStatus<TYPE> createOfferedIncompatibleQosStatus();
 
-    public abstract PublicationMatchedStatus createPublicationMatchedStatus();
+    public abstract <TYPE>
+    PublicationMatchedStatus<TYPE> createPublicationMatchedStatus();
 
-    public abstract LivelinessChangedStatus createLivelinessChangedStatus();
+    public abstract <TYPE>
+    LivelinessChangedStatus<TYPE> createLivelinessChangedStatus();
 
-    public abstract
-    RequestedDeadlineMissedStatus createRequestedDeadlineMissedStatus();
+    public abstract <TYPE>
+    RequestedDeadlineMissedStatus<TYPE> createRequestedDeadlineMissedStatus();
+
+    public abstract <TYPE>
+    RequestedIncompatibleQosStatus<TYPE> createRequestedIncompatibleQosStatus();
+
+    public abstract <TYPE> SampleLostStatus<TYPE> createSampleLostStatus();
+
+    public abstract <TYPE>
+    SampleRejectedStatus<TYPE> createSampleRejectedStatus();
 
     public abstract 
-    RequestedIncompatibleQosStatus createRequestedIncompatibleQosStatus();
-
-    public abstract SampleLostStatus createSampleLostStatus();
-
-    public abstract SampleRejectedStatus createSampleRejectedStatus();
-
-    public abstract
     SampleRejectedStatus.Kind createSampleRejectedStatusKind();
 
-    public abstract
-    SubscriptionMatchedStatus createSubscriptionMatchedStatus();
+    public abstract <TYPE>
+    SubscriptionMatchedStatus<TYPE> createSubscriptionMatchedStatus();
 
-    public abstract
-    InconsistentTopicStatus createInconsistentTopicStatus();
+    public abstract <TYPE>
+    InconsistentTopicStatus<TYPE> createInconsistentTopicStatus();
 
 
     // --- Sample & Instance Lifecycle: --------------------------------------

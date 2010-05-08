@@ -28,7 +28,6 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.LivelinessLostStatus;
 import org.omg.dds.pub.OfferedDeadlineMissedStatus;
 import org.omg.dds.pub.OfferedIncompatibleQosStatus;
@@ -42,42 +41,35 @@ import org.omg.dds.sub.SampleRejectedStatus;
 import org.omg.dds.sub.Subscriber;
 import org.omg.dds.sub.SubscriptionMatchedStatus;
 import org.omg.dds.topic.InconsistentTopicStatus;
-import org.omg.dds.topic.Topic;
 
 
 public class DomainParticipantAdapter implements DomainParticipantListener
 {
     public <TYPE> void onInconsistentTopic(
-            Topic<TYPE> the_topic,
-            InconsistentTopicStatus status)
+            InconsistentTopicStatus<TYPE> status)
     {
         // empty
     }
 
-    public <TYPE, DW extends DataWriter<TYPE>> void onLivelinessLost(
-            DW writer,
-            LivelinessLostStatus status)
+    public <TYPE> void onLivelinessLost(LivelinessLostStatus<TYPE> status)
     {
         // empty
     }
 
-    public <TYPE, DW extends DataWriter<TYPE>> void onOfferedDeadlineMissed(
-            DW writer,
-            OfferedDeadlineMissedStatus status)
+    public <TYPE> void onOfferedDeadlineMissed(
+            OfferedDeadlineMissedStatus<TYPE> status)
     {
         // empty
     }
 
-    public <TYPE, DW extends DataWriter<TYPE>> void onOfferedIncompatibleQos(
-            DW writer,
-            OfferedIncompatibleQosStatus status)
+    public <TYPE> void onOfferedIncompatibleQos(
+            OfferedIncompatibleQosStatus<TYPE> status)
     {
         // empty
     }
 
-    public <TYPE, DW extends DataWriter<TYPE>> void onPublicationMatched(
-            DW writer,
-            PublicationMatchedStatus status)
+    public <TYPE> void onPublicationMatched(
+            PublicationMatchedStatus<TYPE> status)
     {
         // empty
     }
@@ -93,43 +85,37 @@ public class DomainParticipantAdapter implements DomainParticipantListener
     }
 
     public <TYPE> void onLivelinessChanged(
-            DataReader<TYPE> reader,
-            LivelinessChangedStatus status)
+            LivelinessChangedStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onRequestedDeadlineMissed(
-            DataReader<TYPE> reader,
-            RequestedDeadlineMissedStatus status)
+            RequestedDeadlineMissedStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onRequestedIncompatibleQos(
-            DataReader<TYPE> reader,
-            RequestedIncompatibleQosStatus status)
+            RequestedIncompatibleQosStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onSampleLost(
-            DataReader<TYPE> reader,
-            SampleLostStatus status)
+            SampleLostStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onSampleRejected(
-            DataReader<TYPE> reader,
-            SampleRejectedStatus status)
+            SampleRejectedStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onSubscriptionMatched(
-            DataReader<TYPE> reader,
-            SubscriptionMatchedStatus status)
+            SubscriptionMatchedStatus<TYPE> status)
     {
         // empty
     }

@@ -35,8 +35,8 @@ import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 
 
-public abstract class OfferedIncompatibleQosStatus
-extends Status<OfferedIncompatibleQosStatus, DataWriter<?>> {
+public abstract class OfferedIncompatibleQosStatus<TYPE>
+extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -49,7 +49,7 @@ extends Status<OfferedIncompatibleQosStatus, DataWriter<?>> {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected OfferedIncompatibleQosStatus(DataWriter<?> source) {
+    protected OfferedIncompatibleQosStatus(DataWriter<TYPE> source) {
         super(source);
     }
 
@@ -76,7 +76,4 @@ extends Status<OfferedIncompatibleQosStatus, DataWriter<?>> {
 
     public abstract void getPolicies(Set<QosPolicyCount> policies);
 
-    @Override
-    public abstract OfferedIncompatibleQosStatus clone();
-
-} // class OfferedIncompatibleQosStatus
+}

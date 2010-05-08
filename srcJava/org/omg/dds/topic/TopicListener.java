@@ -39,5 +39,5 @@ import java.util.EventListener;
  */
 public interface TopicListener extends EventListener {
     public <TYPE> void onInconsistentTopic(
-            Topic<TYPE> the_topic, InconsistentTopicStatus status);
+            InconsistentTopicStatus<TYPE> status);
 }

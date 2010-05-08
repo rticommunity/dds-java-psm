@@ -49,7 +49,7 @@ extends DdsObject {
 
     public void getStatusChanges(Set<Status.Kind> status);
 
-    public void getInstanceHandle(InstanceHandle handle);
+    public InstanceHandle getInstanceHandle();
 
     /**
      * Halt communication and dispose the resources held by this entity.

@@ -35,8 +35,8 @@ import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 
 
-public abstract class RequestedIncompatibleQosStatus
-extends Status<RequestedIncompatibleQosStatus, DataReader<?>> {
+public abstract class RequestedIncompatibleQosStatus<TYPE>
+extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -49,7 +49,7 @@ extends Status<RequestedIncompatibleQosStatus, DataReader<?>> {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected RequestedIncompatibleQosStatus(DataReader<?> source) {
+    protected RequestedIncompatibleQosStatus(DataReader<TYPE> source) {
         super(source);
     }
 
@@ -58,9 +58,6 @@ extends Status<RequestedIncompatibleQosStatus, DataReader<?>> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
-
-    @Override
-    public abstract RequestedIncompatibleQosStatus clone();
 
     /**
      * @return the totalCount

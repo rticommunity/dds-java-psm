@@ -40,9 +40,11 @@ import java.io.Serializable;
  *                      implementations of this interface with their own
  *                      class.
  */
-public interface ValueType<SELF> extends DdsObject, Serializable {
+public interface ValueType<SELF> extends DdsObject, Cloneable, Serializable {
     /**
      * Overwrite this object's state with the contents of the given object.
+     * 
+     * @return  this
      */
     public SELF copyFrom(SELF other);
 

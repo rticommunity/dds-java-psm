@@ -85,12 +85,8 @@ public interface Duration extends ValueType<Duration> {
     /**
      * Round or truncate this Duration to a whole number of milliseconds.
      */
-    public long toMillis();
+    public long getDuration();
 
-    public long toNanosec();
-
-    public void fromMillis(long millis);
-
-    public void fromNanosec(long nanosec);
+    public void setDuration(long millis);
 
 }

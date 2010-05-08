@@ -59,6 +59,7 @@ extends DomainEntity<Publisher,
             Set<Status.Kind> status);
 
     public <TYPE> DataWriter<TYPE> lookupDataWriter(String topicName);
+    public <TYPE> DataWriter<TYPE> lookupDataWriter(Topic<TYPE> topicName);
 
     public void closeContainedEntities();
 
@@ -69,10 +70,11 @@ extends DomainEntity<Publisher,
     public void endCoherentChanges();
 
     public void waitForAcknowledgments(Duration maxWait);
+    public void waitForAcknowledgments(long maxWaitMillis);
 
     public void cloneDefaultDataWriterQos(DataWriterQos qos);
     public void getDefaultDataWriterQos(DataWriterQos qos);
     public void setDefaultDataWriterQos(DataWriterQos qos);
 
     public void copyFromTopicQos(DataWriterQos dst, TopicQos src);
-} // interface Publisher
+}

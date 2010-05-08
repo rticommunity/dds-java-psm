@@ -46,16 +46,18 @@ extends DomainEntity<DataWriter<TYPE>,
     public Topic<TYPE> getTopic();
 
     public void waitForAcknowledgments(Duration maxWait);
+    public void waitForAcknowledgments(long maxWaitMillis);
 
-    public void getLivelinessLostStatus(LivelinessLostStatus status);
+    public void getLivelinessLostStatus(LivelinessLostStatus<TYPE> status);
 
     public void getOfferedDeadlineMissedStatus(
-            OfferedDeadlineMissedStatus status);
+            OfferedDeadlineMissedStatus<TYPE> status);
 
     public void getOfferedIncompatibleQosStatus(
-            OfferedIncompatibleQosStatus status);
+            OfferedIncompatibleQosStatus<TYPE> status);
 
-    public void getPublicationMatchedStatus(PublicationMatchedStatus status);
+    public void getPublicationMatchedStatus(
+            PublicationMatchedStatus<TYPE> status);
 
     public void assertLiveliness();
 
@@ -72,6 +74,9 @@ extends DomainEntity<DataWriter<TYPE>,
     public InstanceHandle registerInstance(
             TYPE instanceData, 
             Time sourceTimestamp);
+    public InstanceHandle registerInstance(
+            TYPE instanceData, 
+            long sourceTimestampMillis);
 
     public void unregisterInstance(
             InstanceHandle handle);
@@ -82,6 +87,10 @@ extends DomainEntity<DataWriter<TYPE>,
             InstanceHandle handle, 
             TYPE instanceData,
             Time sourceTimestamp);
+    public void unregisterInstance(
+            InstanceHandle handle, 
+            TYPE instanceData,
+            long sourceTimestampMillis);
 
     public void write(
             TYPE instanceData);
@@ -92,6 +101,10 @@ extends DomainEntity<DataWriter<TYPE>,
             TYPE instanceData, 
             InstanceHandle handle,
             Time sourceTimestamp);
+    public void write(
+            TYPE instanceData, 
+            InstanceHandle handle,
+            long sourceTimestampMillis);
 
     public void dispose(
             InstanceHandle instanceHandle);
@@ -102,6 +115,10 @@ extends DomainEntity<DataWriter<TYPE>,
             InstanceHandle instanceHandle, 
             TYPE instanceData,
             Time sourceTimestamp);
+    public void dispose(
+            InstanceHandle instanceHandle, 
+            TYPE instanceData,
+            long sourceTimestampMillis);
 
     public void getKeyValue(
             TYPE keyHolder, 

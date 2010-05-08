@@ -37,43 +37,37 @@ public class DataReaderAdapter implements DataReaderListener
     }
 
     public <TYPE> void onLivelinessChanged(
-            DataReader<TYPE> reader,
-            LivelinessChangedStatus status)
+            LivelinessChangedStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onRequestedDeadlineMissed(
-            DataReader<TYPE> reader,
-            RequestedDeadlineMissedStatus status)
+            RequestedDeadlineMissedStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onRequestedIncompatibleQos(
-            DataReader<TYPE> reader,
-            RequestedIncompatibleQosStatus status)
+            RequestedIncompatibleQosStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onSampleLost(
-            DataReader<TYPE> reader,
-            SampleLostStatus status)
+            SampleLostStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onSampleRejected(
-            DataReader<TYPE> reader,
-            SampleRejectedStatus status)
+            SampleRejectedStatus<TYPE> status)
     {
         // empty
     }
 
     public <TYPE> void onSubscriptionMatched(
-            DataReader<TYPE> reader,
-            SubscriptionMatchedStatus status)
+            SubscriptionMatchedStatus<TYPE> status)
     {
         // empty
     }

@@ -44,7 +44,9 @@ extends QosPolicy<DurabilityServiceQosPolicy> {
      */
     public void setServiceCleanupDelay(Duration serviceCleanupDelay);
 
-    public void getServiceCleanupDelay(Duration serviceCleanupDelay);
+    public void setServiceCleanupDelay(long serviceCleanupDelayMillis);
+
+    public Duration getServiceCleanupDelay();
 
     /**
      * @param historyKind the historyKind to set

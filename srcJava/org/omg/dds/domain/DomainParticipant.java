@@ -136,8 +136,18 @@ extends Entity<DomainParticipant,
             String name,
             Topic<? extends TYPE> relatedTopic,
             String filterExpression,
+            List<String> expressionParameters);
+    public <TYPE> ContentFilteredTopic<TYPE> createContentFilteredTopic(
+            String name,
+            Topic<? extends TYPE> relatedTopic,
+            String filterExpression,
             String... expressionParameters);
 
+    public <TYPE> MultiTopic<TYPE> createMultiTopic(
+            String name,
+            String typeName,
+            String subscriptionExpression,
+            List<String> expressionParameters);
     public <TYPE> MultiTopic<TYPE> createMultiTopic(
             String name,
             String typeName,
