@@ -1,4 +1,4 @@
-/* Copyright (c) 2009, Real-Time Innovations, Inc.
+/* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
