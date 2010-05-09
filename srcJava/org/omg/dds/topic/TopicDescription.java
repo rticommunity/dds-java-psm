@@ -33,6 +33,11 @@ import org.omg.dds.core.DdsObject;
 
 
 public interface TopicDescription<TYPE> extends DdsObject {
+    /**
+     * @return  the type parameter if this object's class.
+     */
+    public Class<TYPE> getType();
+
     public String getTypeName();
     public String getName();
 
@@ -40,9 +45,6 @@ public interface TopicDescription<TYPE> extends DdsObject {
 
     /**
      * Dispose the resources held by this object.
-     * 
-     * If this method is never called, it will be called implicitly when
-     * this object is garbage collected.
      */
     public void close();
 }

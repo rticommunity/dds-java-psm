@@ -43,6 +43,11 @@ extends DomainEntity<DataReader<TYPE>,
                      Subscriber,
                      DataReaderListener,
                      DataReaderQos> {
+    /**
+     * @return  the type parameter if this object's class.
+     */
+    public Class<TYPE> getType();
+
     public ReadCondition<TYPE> createReadCondition();
     public ReadCondition<TYPE> createReadCondition(
             Set<SampleState> sampleStates,
@@ -51,7 +56,16 @@ extends DomainEntity<DataReader<TYPE>,
 
     public QueryCondition<TYPE> createQueryCondition(
             String queryExpression,
+            List<String> queryParameters);
+    public QueryCondition<TYPE> createQueryCondition(
+            String queryExpression,
             String... queryParameters);
+    public QueryCondition<TYPE> createQueryCondition(
+            Set<SampleState> sampleStates,
+            Set<ViewState> viewStates,
+            Set<InstanceState> instanceStates,
+            String queryExpression,
+            List<String> queryParameters);
     public QueryCondition<TYPE> createQueryCondition(
             Set<SampleState> sampleStates,
             Set<ViewState> viewStates,
@@ -90,6 +104,20 @@ extends DomainEntity<DataReader<TYPE>,
 
 
     // --- Type-specific interface: ------------------------------------------
+
+    /**
+     * Create and return a new Sample of the same type as may be accessed by
+     * this DataReader.
+     * 
+     * Applications may use this method, for example, to preallocate samples
+     * to be overwritten by the <code>read</code> and/or <code>take</code>
+     * methods of this interface.
+     * 
+     * @see #read(List)
+     * @see #take(List)
+     */
+    public Sample<TYPE> createSample();
+
     /**
      * @return  an immutable iterator over loaned samples.
      */

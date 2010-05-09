@@ -43,6 +43,11 @@ extends DomainEntity<DataWriter<TYPE>,
                      Publisher,
                      DataWriterListener,
                      DataWriterQos> {
+    /**
+     * @return  the type parameter if this object's class.
+     */
+    public Class<TYPE> getType();
+
     public Topic<TYPE> getTopic();
 
     public void waitForAcknowledgments(Duration maxWait);

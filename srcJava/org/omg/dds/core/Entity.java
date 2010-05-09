@@ -42,6 +42,7 @@ extends DdsObject {
     public QOS cloneQos();
     public void getQos(QOS qos);
     public void setQos(QOS qos);
+    public void setQos(String qosLibraryName, String qosProfileName);
 
     public void enable();
 
@@ -53,9 +54,6 @@ extends DdsObject {
 
     /**
      * Halt communication and dispose the resources held by this entity.
-     * 
-     * If this method is never called, it will be called implicitly when
-     * this entity is garbage collected.
      */
     public void close();
 

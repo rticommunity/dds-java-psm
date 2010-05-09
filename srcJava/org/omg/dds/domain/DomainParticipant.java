@@ -66,6 +66,18 @@ extends Entity<DomainParticipant,
             PublisherQos qos,
             PublisherListener listener,
             Set<Status.Kind> status);
+    public Publisher createPublisher(
+            String qosLibraryName,
+            String qosProfileName);
+    public Publisher createPublisher(
+            String qosLibraryName,
+            String qosProfileName,
+            PublisherListener listener);
+    public Publisher createPublisher(
+            String qosLibraryName,
+            String qosProfileName,
+            PublisherListener listener,
+            Set<Status.Kind> status);
 
     public Subscriber createSubscriber();
     public Subscriber createSubscriber(
@@ -75,6 +87,18 @@ extends Entity<DomainParticipant,
             SubscriberListener listener);
     public Subscriber createSubscriber(
             SubscriberQos qos,
+            SubscriberListener listener,
+            Set<Status.Kind> status);
+    public Subscriber createSubscriber(
+            String qosLibraryName,
+            String qosProfileName);
+    public Subscriber createSubscriber(
+            String qosLibraryName,
+            String qosProfileName,
+            SubscriberListener listener);
+    public Subscriber createSubscriber(
+            String qosLibraryName,
+            String qosProfileName,
             SubscriberListener listener,
             Set<Status.Kind> status);
 
@@ -99,6 +123,24 @@ extends Entity<DomainParticipant,
             TopicQos qos,
             TopicListener listener,
             Set<Status.Kind> status);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            String typeName,
+            String qosLibraryName,
+            String qosProfileName);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            String typeName,
+            String qosLibraryName,
+            String qosProfileName,
+            TopicListener listener);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            String typeName,
+            String qosLibraryName,
+            String qosProfileName,
+            TopicListener listener,
+            Set<Status.Kind> status);
 
     /**
      * Implicitly register the given type, if necessary, under its fully
@@ -120,6 +162,24 @@ extends Entity<DomainParticipant,
             String topicName,
             Class<? super TYPE> type,
             TopicQos qos,
+            TopicListener listener,
+            Set<Status.Kind> status);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<? super TYPE> type,
+            String qosLibraryName,
+            String qosProfileName);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<? super TYPE> type,
+            String qosLibraryName,
+            String qosProfileName,
+            TopicListener listener);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<? super TYPE> type,
+            String qosLibraryName,
+            String qosProfileName,
             TopicListener listener,
             Set<Status.Kind> status);
 
@@ -168,14 +228,23 @@ extends Entity<DomainParticipant,
     public PublisherQos cloneDefaultPublisherQos();
     public void getDefaultPublisherQos(PublisherQos qos);
     public void setDefaultPublisherQos(PublisherQos qos);
+    public void setDefaultPublisherQos(
+            String qosLibraryName,
+            String qosProfileName);
 
     public SubscriberQos cloneDefaultSubscriberQos();
     public void getDefaultSubscriberQos(SubscriberQos qos);
     public void setDefaultSubscriberQos(SubscriberQos qos);
+    public void setDefaultSubscriberQos(
+            String qosLibraryName,
+            String qosProfileName);
 
     public TopicQos cloneDefaultTopicQos();
     public void getDefaultTopicQos(TopicQos qos);
     public void setDefaultTopicQos(TopicQos qos);
+    public void setDefaultTopicQos(
+            String qosLibraryName,
+            String qosProfileName);
 
     public void getDiscoveredParticipants(
             List<InstanceHandle> participantHandles);

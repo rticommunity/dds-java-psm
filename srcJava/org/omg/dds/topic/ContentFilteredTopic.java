@@ -33,9 +33,11 @@ import java.util.List;
 
 public interface ContentFilteredTopic<TYPE> extends TopicDescription<TYPE> {
     public String getFilterExpression();
-    public List<String> cloneExpressionParameters();
+
     public void getExpressionParameters(List<String> expressionParameters);
+
     public void setExpressionParameters(List<String> expressionParameters);
     public void setExpressionParameters(String... expressionParameters);
+
     public Topic<? extends TYPE> getRelatedTopic();
 }

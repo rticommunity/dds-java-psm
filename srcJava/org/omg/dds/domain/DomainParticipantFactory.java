@@ -54,6 +54,21 @@ public interface DomainParticipantFactory extends DdsObject {
             DomainParticipantQos qos,
             DomainParticipantListener listener,
             Set<Status.Kind> status);
+    public DomainParticipant createParticipant(
+            int domainId,
+            String qosLibraryName,
+            String qosProfileName);
+    public DomainParticipant createParticipant(
+            int domainId,
+            String qosLibraryName,
+            String qosProfileName,
+            DomainParticipantListener listener);
+    public DomainParticipant createParticipant(
+            int domainId,
+            String qosLibraryName,
+            String qosProfileName,
+            DomainParticipantListener listener,
+            Set<Status.Kind> status);
 
     public DomainParticipant lookupParticipant(int domainId);
 
@@ -64,5 +79,8 @@ public interface DomainParticipantFactory extends DdsObject {
     public DomainParticipantQos cloneDefaultParticipantQos();
     public void getDefaultParticipantQos(DomainParticipantQos qos);
     public void setDefaultParticipantQos(DomainParticipantQos qos);
+    public void setDefaultParticipantQos(
+            String qosLibraryName,
+            String qosProfileName);
 
 }

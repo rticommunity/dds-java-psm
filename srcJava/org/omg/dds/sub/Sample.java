@@ -42,7 +42,8 @@ public interface Sample<TYPE> extends ValueType<Sample<TYPE>> {
 
     // --- Sample data: ------------------------------------------------------
     /**
-     * @return  the data associated with this sample.
+     * @return  the data associated with this sample. This method will return
+     *          null if this sample contains no valid data.
      */
     public TYPE getData();
 
@@ -94,11 +95,6 @@ public interface Sample<TYPE> extends ValueType<Sample<TYPE>> {
      */
     public int getAbsoluteGenerationRank();
 
-    /**
-     * @return the dataValid
-     */
-    public boolean isDataValid();
-
 
 
     // -----------------------------------------------------------------------
@@ -109,12 +105,7 @@ public interface Sample<TYPE> extends ValueType<Sample<TYPE>> {
     extends ListIterator<Sample<IT_DATA>> {
         /**
          * The samples provided by this iterator have been loaned from a
-         * middleware pool; return that loan now.
-         * 
-         * If this method is never called, the loan will be returned when this
-         * iterator is finalized. However, finalization could take some time,
-         * or might never happen, so applications are strongly advised not to
-         * rely on it: {@link DataReader} resources could be exhausted.
+         * pool maintained by the Service; return that loan now.
          */
         public void returnLoan();
 

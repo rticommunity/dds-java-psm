@@ -57,6 +57,21 @@ extends DomainEntity<Publisher,
             DataWriterQos qos,
             DataWriterListener listener,
             Set<Status.Kind> status);
+    public <TYPE> DataWriter<TYPE> createDataWriter(
+            Topic<TYPE> topic,
+            String qosLibraryName,
+            String qosProfileName);
+    public <TYPE> DataWriter<TYPE> createDataWriter(
+            Topic<TYPE> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener listener);
+    public <TYPE> DataWriter<TYPE> createDataWriter(
+            Topic<TYPE> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener listener,
+            Set<Status.Kind> status);
 
     public <TYPE> DataWriter<TYPE> lookupDataWriter(String topicName);
     public <TYPE> DataWriter<TYPE> lookupDataWriter(Topic<TYPE> topicName);
@@ -75,6 +90,9 @@ extends DomainEntity<Publisher,
     public void cloneDefaultDataWriterQos(DataWriterQos qos);
     public void getDefaultDataWriterQos(DataWriterQos qos);
     public void setDefaultDataWriterQos(DataWriterQos qos);
+    public void setDefaultDataWriterQos(
+            String qosLibraryName,
+            String qosProfileName);
 
     public void copyFromTopicQos(DataWriterQos dst, TopicQos src);
 }

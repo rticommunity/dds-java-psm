@@ -56,6 +56,21 @@ extends DomainEntity<Subscriber,
             DataReaderQos qos,
             DataReaderListener listener,
             Set<Status.Kind> statuses);
+    public <TYPE> DataReader<TYPE> createDataReader(
+            TopicDescription<TYPE> topic,
+            String qosLibraryName,
+            String qosProfileName);
+    public <TYPE> DataReader<TYPE> createDataReader(
+            TopicDescription<TYPE> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataReaderListener listener);
+    public <TYPE> DataReader<TYPE> createDataReader(
+            TopicDescription<TYPE> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataReaderListener listener,
+            Set<Status.Kind> statuses);
 
     public void closeContainedEntities();
 
@@ -79,6 +94,9 @@ extends DomainEntity<Subscriber,
     public void cloneDefaultDataReaderQos(DataReaderQos qos);
     public void getDefaultDataReaderQos(DataReaderQos qos);
     public void setDefaultDataReaderQos(DataReaderQos qos);
+    public void setDefaultDataReaderQos(
+            String qosLibraryName,
+            String qosProfileName);
 
     public void copyFromTopicQos(DataReaderQos dst, TopicQos src);
 }
