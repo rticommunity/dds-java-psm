@@ -29,8 +29,7 @@
 package org.omg.dds.core;
 
 
-public interface InstanceHandle
-extends ModifiableValueType<InstanceHandle, InstanceHandle> {
+public interface InstanceHandle extends ValueType<InstanceHandle> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

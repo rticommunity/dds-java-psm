@@ -30,6 +30,7 @@ package org.omg.dds.sub;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
@@ -93,8 +94,11 @@ extends DomainEntity<DataReader<TYPE>,
 
     public void getSampleLostStatus(SampleLostStatus<TYPE> status);
 
-    public void waitForHistoricalData(Duration maxWait);
-    public void waitForHistoricalData(long maxWaitMillis);
+    public void waitForHistoricalData(Duration maxWait)
+    throws TimeoutException;
+
+    public void waitForHistoricalData(long maxWaitMillis)
+    throws TimeoutException;
 
     public void getMatchedPublications(
             Set<InstanceHandle> publication_handles);
@@ -177,10 +181,16 @@ extends DomainEntity<DataReader<TYPE>,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
-    public void read_next(
+    /**
+     * @return  true if data was read or false if no data was available.
+     */
+    public boolean read_next(
             Sample<TYPE> sample);
 
-    public void take_next(
+    /**
+     * @return  true if data was taken or false if no data was available.
+     */
+    public boolean take_next(
             Sample<TYPE> sample);
 
     public Sample.Iterator<TYPE> read(

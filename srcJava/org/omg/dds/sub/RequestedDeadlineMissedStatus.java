@@ -28,7 +28,7 @@
 
 package org.omg.dds.sub;
 
-import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.Status;
 
 
@@ -66,6 +66,6 @@ extends Status<RequestedDeadlineMissedStatus<TYPE>, DataReader<TYPE>> {
      */
     public abstract int getTotalCountChange();
 
-    public abstract InstanceHandle getLastInstanceHandle();
+    public abstract ModifiableInstanceHandle getLastInstanceHandle();
 
 }

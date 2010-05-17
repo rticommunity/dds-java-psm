@@ -28,7 +28,7 @@
 
 package org.omg.dds.sub;
 
-import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.Status;
 
 
@@ -76,6 +76,6 @@ extends Status<SubscriptionMatchedStatus<TYPE>, DataReader<TYPE>> {
      */
     public abstract int getCurrentCountChange();
 
-    public abstract InstanceHandle getLastPublicationHandle();
+    public abstract ModifiableInstanceHandle getLastPublicationHandle();
 
 }

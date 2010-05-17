@@ -135,20 +135,20 @@ public abstract class Context implements DdsObject {
 
     // --- Time: -------------------------------------------------------------
 
-    public abstract Duration createDuration();
+    public abstract ModifiableDuration createDuration();
 
-    public abstract Duration createDuration(int sec, int nanosec);
+    public abstract ModifiableDuration createDuration(int sec, int nanosec);
 
-    public abstract Time createTime(long millis);
+    public abstract ModifiableTime createTime(long millis);
 
-    public abstract Time createTime(int sec, int nanosec);
+    public abstract ModifiableTime createTime(int sec, int nanosec);
 
 
     // --- Instance handle: --------------------------------------------------
 
     public abstract InstanceHandle getNilHandle();
 
-    public abstract InstanceHandle createInstanceHandle();
+    public abstract ModifiableInstanceHandle createInstanceHandle();
 
 
     // --- Conditions & WaitSet: ---------------------------------------------
@@ -207,9 +207,6 @@ public abstract class Context implements DdsObject {
 
     public abstract <TYPE>
     SampleRejectedStatus<TYPE> createSampleRejectedStatus();
-
-    public abstract 
-    SampleRejectedStatus.Kind createSampleRejectedStatusKind();
 
     public abstract <TYPE>
     SubscriptionMatchedStatus<TYPE> createSubscriptionMatchedStatus();

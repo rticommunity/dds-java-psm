@@ -26,46 +26,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.pub;
-
-import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.Status;
+package org.omg.dds.core;
 
 
-public abstract class OfferedDeadlineMissedStatus<TYPE>
-extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
-    // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = 4639205731141958891L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Lifecycle
-    // -----------------------------------------------------------------------
-
-    protected OfferedDeadlineMissedStatus(DataWriter<TYPE> source) {
-        super(source);
-    }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    /**
-     * @return the totalCount
-     */
-    public abstract int getTotalCount();
-
-    /**
-     * @return the totalCountChange
-     */
-    public abstract int getTotalCountChange();
-
-    public abstract ModifiableInstanceHandle getLastInstanceHandle();
-
+public interface ModifiableInstanceHandle
+extends InstanceHandle,
+        ModifiableValueType<InstanceHandle, ModifiableInstanceHandle> {
+    // empty
 }

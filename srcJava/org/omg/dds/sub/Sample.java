@@ -30,9 +30,9 @@ package org.omg.dds.sub;
 
 import java.util.ListIterator;
 
-import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.core.ModifiableTime;
 import org.omg.dds.core.ModifiableValueType;
-import org.omg.dds.core.Time;
 
 
 public interface Sample<TYPE>
@@ -65,11 +65,11 @@ extends ModifiableValueType<Sample<TYPE>, Sample<TYPE>> {
      */
     public InstanceState getInstanceState();
 
-    public Time getSourceTimestamp();
+    public ModifiableTime getSourceTimestamp();
 
-    public InstanceHandle getInstanceHandle();
+    public ModifiableInstanceHandle getInstanceHandle();
 
-    public InstanceHandle getPublicationHandle();
+    public ModifiableInstanceHandle getPublicationHandle();
 
     /**
      * @return the disposedGenerationCount

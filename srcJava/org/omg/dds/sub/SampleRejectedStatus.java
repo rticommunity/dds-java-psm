@@ -28,7 +28,7 @@
 
 package org.omg.dds.sub;
 
-import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.Status;
 
 
@@ -71,7 +71,7 @@ extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
      */
     public abstract Kind getLastReason();
 
-    public abstract InstanceHandle getLastInstanceHandle();
+    public abstract ModifiableInstanceHandle getLastInstanceHandle();
 
 
 

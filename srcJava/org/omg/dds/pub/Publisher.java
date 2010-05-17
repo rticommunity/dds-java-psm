@@ -29,6 +29,7 @@
 package org.omg.dds.pub;
 
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
@@ -84,8 +85,11 @@ extends DomainEntity<Publisher,
     public void beginCoherentChanges();
     public void endCoherentChanges();
 
-    public void waitForAcknowledgments(Duration maxWait);
-    public void waitForAcknowledgments(long maxWaitMillis);
+    public void waitForAcknowledgments(Duration maxWait)
+    throws TimeoutException;
+
+    public void waitForAcknowledgments(long maxWaitMillis)
+    throws TimeoutException;
 
     public DataWriterQos getDefaultDataWriterQos();
     public void setDefaultDataWriterQos(DataWriterQos qos);

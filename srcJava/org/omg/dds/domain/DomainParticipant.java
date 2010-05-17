@@ -30,6 +30,7 @@ package org.omg.dds.domain;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.Entity;
@@ -186,10 +187,10 @@ extends Entity<DomainParticipant,
     // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> findTopic(
             String topicName,
-            Duration timeout);
+            Duration timeout) throws TimeoutException;
     public <TYPE> Topic<TYPE> findTopic(
             String topicName,
-            long millis);
+            long millis) throws TimeoutException;
     public <TYPE> TopicDescription<TYPE> lookupTopicDescription(String name);
 
     public <TYPE> ContentFilteredTopic<TYPE> createContentFilteredTopic(

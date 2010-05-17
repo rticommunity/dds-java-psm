@@ -29,6 +29,7 @@
 package org.omg.dds.pub;
 
 import java.util.Set;
+import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
@@ -50,8 +51,11 @@ extends DomainEntity<DataWriter<TYPE>,
 
     public Topic<TYPE> getTopic();
 
-    public void waitForAcknowledgments(Duration maxWait);
-    public void waitForAcknowledgments(long maxWaitMillis);
+    public void waitForAcknowledgments(Duration maxWait)
+    throws TimeoutException;
+
+    public void waitForAcknowledgments(long maxWaitMillis)
+    throws TimeoutException;
 
     public void getLivelinessLostStatus(LivelinessLostStatus<TYPE> status);
 
@@ -75,55 +79,55 @@ extends DomainEntity<DataWriter<TYPE>,
 
     // --- Type-specific interface: ------------------------------------------
     public InstanceHandle registerInstance(
-            TYPE instanceData);
+            TYPE instanceData) throws TimeoutException;
     public InstanceHandle registerInstance(
             TYPE instanceData, 
-            Time sourceTimestamp);
+            Time sourceTimestamp) throws TimeoutException;
     public InstanceHandle registerInstance(
             TYPE instanceData, 
-            long sourceTimestampMillis);
+            long sourceTimestampMillis) throws TimeoutException;
 
     public void unregisterInstance(
-            InstanceHandle handle);
+            InstanceHandle handle) throws TimeoutException;
     public void unregisterInstance(
             InstanceHandle handle, 
-            TYPE instanceData);
+            TYPE instanceData) throws TimeoutException;
     public void unregisterInstance(
             InstanceHandle handle, 
             TYPE instanceData,
-            Time sourceTimestamp);
+            Time sourceTimestamp) throws TimeoutException;
     public void unregisterInstance(
             InstanceHandle handle, 
             TYPE instanceData,
-            long sourceTimestampMillis);
+            long sourceTimestampMillis) throws TimeoutException;
 
     public void write(
-            TYPE instanceData);
+            TYPE instanceData) throws TimeoutException;
     public void write(
             TYPE instanceData, 
-            InstanceHandle handle);
+            InstanceHandle handle) throws TimeoutException;
     public void write(
             TYPE instanceData, 
             InstanceHandle handle,
-            Time sourceTimestamp);
+            Time sourceTimestamp) throws TimeoutException;
     public void write(
             TYPE instanceData, 
             InstanceHandle handle,
-            long sourceTimestampMillis);
+            long sourceTimestampMillis) throws TimeoutException;
 
     public void dispose(
-            InstanceHandle instanceHandle);
+            InstanceHandle instanceHandle) throws TimeoutException;
     public void dispose(
             InstanceHandle instanceHandle, 
-            TYPE instanceData);
-    public void dispose(
-            InstanceHandle instanceHandle, 
-            TYPE instanceData,
-            Time sourceTimestamp);
+            TYPE instanceData) throws TimeoutException;
     public void dispose(
             InstanceHandle instanceHandle, 
             TYPE instanceData,
-            long sourceTimestampMillis);
+            Time sourceTimestamp) throws TimeoutException;
+    public void dispose(
+            InstanceHandle instanceHandle, 
+            TYPE instanceData,
+            long sourceTimestampMillis) throws TimeoutException;
 
     public void getKeyValue(
             TYPE keyHolder, 
