@@ -32,13 +32,6 @@ import org.omg.dds.core.Duration;
 
 
 public interface DeadlineQosPolicy extends QosPolicy<DeadlineQosPolicy> {
-    /**
-     * @param period the period to set
-     */
-    public void setPeriod(Duration period);
-
-    public void setPeriod(long periodMillis);
-
     public Duration getPeriod();
 
 }

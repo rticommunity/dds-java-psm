@@ -32,12 +32,6 @@ package org.omg.dds.core.policy;
 public interface EntityFactoryQosPolicy
 extends QosPolicy<EntityFactoryQosPolicy> {
     /**
-     * @param autoEnableCreatedEntities the autoEnableCreatedEntities to set
-     */
-    public void setAutoEnableCreatedEntities(
-            boolean autoEnableCreatedEntities);
-
-    /**
      * @return the autoEnableCreatedEntities
      */
     public boolean isAutoEnableCreatedEntities();

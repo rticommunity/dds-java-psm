@@ -39,8 +39,7 @@ extends DdsObject {
     public LISTENER getListener();
     public void setListener(LISTENER listener);
 
-    public QOS cloneQos();
-    public void getQos(QOS qos);
+    public QOS getQos();
     public void setQos(QOS qos);
     public void setQos(String qosLibraryName, String qosProfileName);
 

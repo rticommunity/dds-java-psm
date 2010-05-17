@@ -28,8 +28,6 @@
 
 package org.omg.dds.core;
 
-import java.util.Date;
-
 
 public interface Time extends ValueType<Time> {
     // -----------------------------------------------------------------------
@@ -48,19 +46,9 @@ public interface Time extends ValueType<Time> {
     // --- Data access: ------------------------------------------------------
 
     /**
-     * @param sec the sec to set
-     */
-    public void setSec(int sec);
-
-    /**
      * @return the sec
      */
     public int getSec();
-
-    /**
-     * @param nanosec the nanosec to set
-     */
-    public void setNanosec(int nanosec);
 
     /**
      * @return the nanosec
@@ -68,31 +56,7 @@ public interface Time extends ValueType<Time> {
     public int getNanosec();
 
 
-    // --- Manipulation: -----------------------------------------------------
-
-    public void add(Duration duration);
-
-    public void addSec(int sec);
-
-    public void addNanosec(int nanosec);
-
-    public void addMillis(long millis);
-
-
     // --- Conversion: -------------------------------------------------------
-
-    /**
-     * Set this Time to the given number of milliseconds.
-     */
-    public void setTime(long timeMillis);
-
-    /**
-     * Set this Time to that described by the given Date.
-     * 
-     * This method is equivalent to calling
-     * <code>setTime(timeDate.getTime())</code>.
-     */
-    public void setTime(Date timeDate);
 
     /**
      * @return  the number of milliseconds corresponding to this time,

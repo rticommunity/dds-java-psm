@@ -35,19 +35,9 @@ import org.omg.dds.core.policy.UserDataQosPolicy;
 
 public interface DomainParticipantQos extends Qos<DomainParticipantQos> {
     /**
-     * @param userData the userData to set
-     */
-    public void setUserData(UserDataQosPolicy userData);
-
-    /**
      * @return the userData
      */
     public UserDataQosPolicy getUserData();
-
-    /**
-     * @param entityFactory the entityFactory to set
-     */
-    public void setEntityFactory(EntityFactoryQosPolicy entityFactory);
 
     /**
      * @return the entityFactory

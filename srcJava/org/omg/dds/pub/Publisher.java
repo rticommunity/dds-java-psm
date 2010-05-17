@@ -87,8 +87,7 @@ extends DomainEntity<Publisher,
     public void waitForAcknowledgments(Duration maxWait);
     public void waitForAcknowledgments(long maxWaitMillis);
 
-    public void cloneDefaultDataWriterQos(DataWriterQos qos);
-    public void getDefaultDataWriterQos(DataWriterQos qos);
+    public DataWriterQos getDefaultDataWriterQos();
     public void setDefaultDataWriterQos(DataWriterQos qos);
     public void setDefaultDataWriterQos(
             String qosLibraryName,

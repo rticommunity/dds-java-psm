@@ -28,7 +28,6 @@
 
 package org.omg.dds.domain.discovery;
 
-import org.omg.dds.core.ValueType;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.DurabilityQosPolicy;
@@ -45,12 +44,7 @@ import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 
 
 public interface TopicBuiltinTopicData
-extends ValueType<TopicBuiltinTopicData> {
-    /**
-     * @return the key
-     */
-    public BuiltinTopicKey getKey();
-
+extends BuiltinTopicData<TopicBuiltinTopicData> {
     /**
      * @return the name
      */

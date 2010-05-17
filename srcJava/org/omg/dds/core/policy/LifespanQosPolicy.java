@@ -32,13 +32,6 @@ import org.omg.dds.core.Duration;
 
 
 public interface LifespanQosPolicy extends QosPolicy<LifespanQosPolicy> {
-    /**
-     * @param duration the duration to set
-     */
-    public void setDuration(Duration duration);
-
-    public void setDuration(long durationMillis);
-
     public Duration getDuration();
 
 }

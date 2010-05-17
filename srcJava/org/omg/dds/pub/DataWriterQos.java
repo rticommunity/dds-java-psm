@@ -44,28 +44,13 @@ import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
-import org.omg.dds.topic.TopicQos;
 
 
 public interface DataWriterQos extends Qos<DataWriterQos> {
-    public DataWriterQos copyFrom(TopicQos src);
-
-
-    /**
-     * @param durability the durability to set
-     */
-    public void setDurability(DurabilityQosPolicy durability);
-
     /**
      * @return the durability
      */
     public DurabilityQosPolicy getDurability();
-
-    /**
-     * @param durabilityService the durabilityService to set
-     */
-    public void setDurabilityService(
-            DurabilityServiceQosPolicy durabilityService);
 
     /**
      * @return the durabilityService
@@ -73,19 +58,9 @@ public interface DataWriterQos extends Qos<DataWriterQos> {
     public DurabilityServiceQosPolicy getDurabilityService();
 
     /**
-     * @param deadline the deadline to set
-     */
-    public void setDeadline(DeadlineQosPolicy deadline);
-
-    /**
      * @return the deadline
      */
     public DeadlineQosPolicy getDeadline();
-
-    /**
-     * @param latencyBudget the latencyBudget to set
-     */
-    public void setLatencyBudget(LatencyBudgetQosPolicy latencyBudget);
 
     /**
      * @return the latencyBudget
@@ -93,19 +68,9 @@ public interface DataWriterQos extends Qos<DataWriterQos> {
     public LatencyBudgetQosPolicy getLatencyBudget();
 
     /**
-     * @param liveliness the liveliness to set
-     */
-    public void setLiveliness(LivelinessQosPolicy liveliness);
-
-    /**
      * @return the liveliness
      */
     public LivelinessQosPolicy getLiveliness();
-
-    /**
-     * @param reliability the reliability to set
-     */
-    public void setReliability(ReliabilityQosPolicy reliability);
 
     /**
      * @return the reliability
@@ -113,20 +78,9 @@ public interface DataWriterQos extends Qos<DataWriterQos> {
     public ReliabilityQosPolicy getReliability();
 
     /**
-     * @param destinationOrder the destinationOrder to set
-     */
-    public void setDestinationOrder(
-            DestinationOrderQosPolicy destinationOrder);
-
-    /**
      * @return the destinationOrder
      */
     public DestinationOrderQosPolicy getDestinationOrder();
-
-    /**
-     * @param history the history to set
-     */
-    public void setHistory(HistoryQosPolicy history);
 
     /**
      * @return the history
@@ -134,20 +88,9 @@ public interface DataWriterQos extends Qos<DataWriterQos> {
     public HistoryQosPolicy getHistory();
 
     /**
-     * @param resourceLimits the resourceLimits to set
-     */
-    public void setResourceLimits(ResourceLimitsQosPolicy resourceLimits);
-
-    /**
      * @return the resourceLimits
      */
     public ResourceLimitsQosPolicy getResourceLimits();
-
-    /**
-     * @param transportPriority the transportPriority to set
-     */
-    public void setTransportPriority(
-            TransportPriorityQosPolicy transportPriority);
 
     /**
      * @return the transportPriority
@@ -155,19 +98,9 @@ public interface DataWriterQos extends Qos<DataWriterQos> {
     public TransportPriorityQosPolicy getTransportPriority();
 
     /**
-     * @param lifespan the lifespan to set
-     */
-    public void setLifespan(LifespanQosPolicy lifespan);
-
-    /**
      * @return the lifespan
      */
     public LifespanQosPolicy getLifespan();
-
-    /**
-     * @param userData the userData to set
-     */
-    public void setUserData(UserDataQosPolicy userData);
 
     /**
      * @return the userData
@@ -175,31 +108,14 @@ public interface DataWriterQos extends Qos<DataWriterQos> {
     public UserDataQosPolicy getUserData();
 
     /**
-     * @param ownership the ownership to set
-     */
-    public void setOwnership(OwnershipQosPolicy ownership);
-
-    /**
      * @return the ownership
      */
     public OwnershipQosPolicy getOwnership();
 
     /**
-     * @param ownershipStrength the ownershipStrength to set
-     */
-    public void setOwnershipStrength(
-            OwnershipStrengthQosPolicy ownershipStrength);
-
-    /**
      * @return the ownershipStrength
      */
     public OwnershipStrengthQosPolicy getOwnershipStrength();
-
-    /**
-     * @param writerDataLifecycle the writerDataLifecycle to set
-     */
-    public void setWriterDataLifecycle(
-            WriterDataLifecycleQosPolicy writerDataLifecycle);
 
     /**
      * @return the writerDataLifecycle

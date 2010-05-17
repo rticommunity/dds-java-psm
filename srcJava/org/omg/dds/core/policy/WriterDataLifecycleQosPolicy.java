@@ -32,12 +32,6 @@ package org.omg.dds.core.policy;
 public interface WriterDataLifecycleQosPolicy
 extends QosPolicy<WriterDataLifecycleQosPolicy> {
     /**
-     * @param autDisposeUnregisteredInstances the autDisposeUnregisteredInstances to set
-     */
-    public void setAutDisposeUnregisteredInstances(
-            boolean autDisposeUnregisteredInstances);
-
-    /**
      * @return the autDisposeUnregisteredInstances
      */
     public boolean isAutDisposeUnregisteredInstances();

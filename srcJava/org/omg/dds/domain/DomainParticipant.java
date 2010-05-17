@@ -34,8 +34,8 @@ import java.util.Set;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableTime;
 import org.omg.dds.core.Status;
-import org.omg.dds.core.Time;
 import org.omg.dds.domain.discovery.ParticipantBuiltinTopicData;
 import org.omg.dds.domain.discovery.TopicBuiltinTopicData;
 import org.omg.dds.pub.Publisher;
@@ -225,22 +225,19 @@ extends Entity<DomainParticipant,
 
     public void assertLiveliness();
 
-    public PublisherQos cloneDefaultPublisherQos();
-    public void getDefaultPublisherQos(PublisherQos qos);
+    public PublisherQos getDefaultPublisherQos();
     public void setDefaultPublisherQos(PublisherQos qos);
     public void setDefaultPublisherQos(
             String qosLibraryName,
             String qosProfileName);
 
-    public SubscriberQos cloneDefaultSubscriberQos();
-    public void getDefaultSubscriberQos(SubscriberQos qos);
+    public SubscriberQos getDefaultSubscriberQos();
     public void setDefaultSubscriberQos(SubscriberQos qos);
     public void setDefaultSubscriberQos(
             String qosLibraryName,
             String qosProfileName);
 
-    public TopicQos cloneDefaultTopicQos();
-    public void getDefaultTopicQos(TopicQos qos);
+    public TopicQos getDefaultTopicQos();
     public void setDefaultTopicQos(TopicQos qos);
     public void setDefaultTopicQos(
             String qosLibraryName,
@@ -248,20 +245,16 @@ extends Entity<DomainParticipant,
 
     public void getDiscoveredParticipants(
             List<InstanceHandle> participantHandles);
-    public ParticipantBuiltinTopicData cloneDiscoveredParticipantData(
-            InstanceHandle participantHandle);
     public void getDiscoveredParticipantData(
             ParticipantBuiltinTopicData participantData,
             InstanceHandle participantHandle);
 
     public void getDiscoveredTopics(List<InstanceHandle> topicHandles);
-    public TopicBuiltinTopicData cloneDiscoveredTopicData(
-            InstanceHandle topicHandle);
     public void getDiscoveredTopicData(
             TopicBuiltinTopicData topicData,
             InstanceHandle topicHandle);
 
     public boolean containsEntity(InstanceHandle handle);
 
-    public void getCurrentTime(Time currentTime);
+    public void getCurrentTime(ModifiableTime currentTime);
 }

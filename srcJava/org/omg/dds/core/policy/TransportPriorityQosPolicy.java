@@ -32,11 +32,6 @@ package org.omg.dds.core.policy;
 public interface TransportPriorityQosPolicy
 extends QosPolicy<TransportPriorityQosPolicy> {
     /**
-     * @param value the value to set
-     */
-    public void setValue(int value);
-
-    /**
      * @return the value
      */
     public int getValue();

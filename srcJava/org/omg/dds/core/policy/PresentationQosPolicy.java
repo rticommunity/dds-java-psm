@@ -36,29 +36,14 @@ extends QosPolicy<PresentationQosPolicy> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param accessScope the accessScope to set
-     */
-    public void setAccessScope(AccessScopeKind accessScope);
-
-    /**
      * @return the accessScope
      */
     public AccessScopeKind getAccessScope();
 
     /**
-     * @param coherentAccess the coherentAccess to set
-     */
-    public void setCoherentAccess(boolean coherentAccess);
-
-    /**
      * @return the coherentAccess
      */
     public boolean isCoherentAccess();
-
-    /**
-     * @param orderedAccess the orderedAccess to set
-     */
-    public void setOrderedAccess(boolean orderedAccess);
 
     /**
      * @return the orderedAccess

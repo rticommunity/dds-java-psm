@@ -35,9 +35,20 @@ import org.omg.dds.core.Condition;
 
 public interface ReadCondition<TYPE>
 extends Condition {
-    public void getSampleStates(Set<SampleState> states);
-    public void getViewStates(Set<ViewState> states);
-    public void getInstanceStates(Set<InstanceState> states);
+    /**
+     * @return  an unmodifiable set.
+     */
+    public Set<SampleState> getSampleStates();
+
+    /**
+     * @return  an unmodifiable set.
+     */
+    public Set<ViewState> getViewStates();
+
+    /**
+     * @return  an unmodifiable set.
+     */
+    public Set<InstanceState> getInstanceStates();
 
     public DataReader<TYPE> getDataReader();
 

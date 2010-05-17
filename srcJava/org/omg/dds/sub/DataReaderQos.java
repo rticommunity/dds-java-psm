@@ -40,24 +40,13 @@ import org.omg.dds.core.policy.ReaderDataLifecycleQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
-import org.omg.dds.topic.TopicQos;
 
 
 public interface DataReaderQos extends Qos<DataReaderQos> {
     /**
-     * @param durability the durability to set
-     */
-    public void setDurability(DurabilityQosPolicy durability);
-
-    /**
      * @return the durability
      */
     public DurabilityQosPolicy getDurability();
-
-    /**
-     * @param deadline the deadline to set
-     */
-    public void setDeadline(DeadlineQosPolicy deadline);
 
     /**
      * @return the deadline
@@ -65,19 +54,9 @@ public interface DataReaderQos extends Qos<DataReaderQos> {
     public DeadlineQosPolicy getDeadline();
 
     /**
-     * @param latencyBudget the latencyBudget to set
-     */
-    public void setLatencyBudget(LatencyBudgetQosPolicy latencyBudget);
-
-    /**
      * @return the latencyBudget
      */
     public LatencyBudgetQosPolicy getLatencyBudget();
-
-    /**
-     * @param liveliness the liveliness to set
-     */
-    public void setLiveliness(LivelinessQosPolicy liveliness);
 
     /**
      * @return the liveliness
@@ -85,20 +64,9 @@ public interface DataReaderQos extends Qos<DataReaderQos> {
     public LivelinessQosPolicy getLiveliness();
 
     /**
-     * @param destinationOrder the destinationOrder to set
-     */
-    public void setDestinationOrder(
-            DestinationOrderQosPolicy destinationOrder);
-
-    /**
      * @return the destinationOrder
      */
     public DestinationOrderQosPolicy getDestinationOrder();
-
-    /**
-     * @param history the history to set
-     */
-    public void setHistory(HistoryQosPolicy history);
 
     /**
      * @return the history
@@ -106,19 +74,9 @@ public interface DataReaderQos extends Qos<DataReaderQos> {
     public HistoryQosPolicy getHistory();
 
     /**
-     * @param resourceLimits the resourceLimits to set
-     */
-    public void setResourceLimits(ResourceLimitsQosPolicy resourceLimits);
-
-    /**
      * @return the resourceLimits
      */
     public ResourceLimitsQosPolicy getResourceLimits();
-
-    /**
-     * @param userData the userData to set
-     */
-    public void setUserData(UserDataQosPolicy userData);
 
     /**
      * @return the userData
@@ -126,19 +84,9 @@ public interface DataReaderQos extends Qos<DataReaderQos> {
     public UserDataQosPolicy getUserData();
 
     /**
-     * @param ownership the ownership to set
-     */
-    public void setOwnership(OwnershipQosPolicy ownership);
-
-    /**
      * @return the ownership
      */
     public OwnershipQosPolicy getOwnership();
-
-    /**
-     * @param timeBasedFilter the timeBasedFilter to set
-     */
-    public void setTimeBasedFilter(TimeBasedFilterQosPolicy timeBasedFilter);
 
     /**
      * @return the timeBasedFilter
@@ -146,15 +94,7 @@ public interface DataReaderQos extends Qos<DataReaderQos> {
     public TimeBasedFilterQosPolicy getTimeBasedFilter();
 
     /**
-     * @param readerDataLifecycle the readerDataLifecycle to set
-     */
-    public void setReaderDataLifecycle(
-            ReaderDataLifecycleQosPolicy readerDataLifecycle);
-
-    /**
      * @return the readerDataLifecycle
      */
     public ReaderDataLifecycleQosPolicy getReaderDataLifecycle();
-
-    public DataReaderQos copyFrom(TopicQos src);
 }

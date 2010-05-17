@@ -50,6 +50,10 @@ public interface WaitSet extends DdsObject {
     public void attachCondition(Condition cond);
     public void detachCondition(Condition cond);
 
-    public void getConditions(List<Condition> attachedConditions);
+    /**
+     * @return  an unmodifiable list of the conditions attached to this wait
+     *          set.
+     */
+    public List<Condition> getConditions();
 
 }

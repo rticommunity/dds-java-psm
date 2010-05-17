@@ -41,12 +41,7 @@ import java.io.Serializable;
  *                      class.
  */
 public interface ValueType<SELF> extends DdsObject, Cloneable, Serializable {
-    /**
-     * Overwrite this object's state with the contents of the given object.
-     * 
-     * @return  this
-     */
-    public SELF copyFrom(SELF other);
+    // --- From Object: ------------------------------------------------------
 
     /**
      * Implementing classes should override <code>equals()</code>.
@@ -65,4 +60,18 @@ public interface ValueType<SELF> extends DdsObject, Cloneable, Serializable {
      * @return  a new object that with state identical to that of this object.
      */
     public SELF clone();
+
+
+    // --- Conversion: -------------------------------------------------------
+
+    /**
+     * If this value type is of a modifiable subtype, return this.
+     * If this value type has a modifiable subtype, return a new object
+     * of that type that is a modifiable copy of this object.
+     * Otherwise, return null.
+     * 
+     * @return  <code>this</code>, a new modifiable copy of <code>this</code>,
+     *          or <code>null</code>.
+     */
+    public SELF modify();
 }

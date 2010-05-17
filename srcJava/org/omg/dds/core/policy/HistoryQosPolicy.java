@@ -35,19 +35,9 @@ public interface HistoryQosPolicy extends QosPolicy<HistoryQosPolicy> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param kind the kind to set
-     */
-    public void setKind(Kind kind);
-
-    /**
      * @return the kind
      */
     public Kind getKind();
-
-    /**
-     * @param depth the depth to set
-     */
-    public void setDepth(int depth);
 
     /**
      * @return the depth

@@ -28,14 +28,11 @@
 
 package org.omg.dds.domain.discovery;
 
-import org.omg.dds.core.ValueType;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 
 
 public interface ParticipantBuiltinTopicData
-extends ValueType<ParticipantBuiltinTopicData> {
-    public BuiltinTopicKey getKey();
-
+extends BuiltinTopicData<ParticipantBuiltinTopicData> {
     public UserDataQosPolicy getUserData();
 
 }

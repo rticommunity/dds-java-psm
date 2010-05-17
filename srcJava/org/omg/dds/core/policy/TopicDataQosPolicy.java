@@ -31,11 +31,6 @@ package org.omg.dds.core.policy;
 
 public interface TopicDataQosPolicy extends QosPolicy<TopicDataQosPolicy> {
     /**
-     * @param value the value to set
-     */
-    public void setValue(byte value[], int offset, int length);
-
-    /**
      * Copy the data into the given array, starting at the index at the given
      * offset.
      * 

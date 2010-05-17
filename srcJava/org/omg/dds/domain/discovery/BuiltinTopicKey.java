@@ -28,10 +28,11 @@
 
 package org.omg.dds.domain.discovery;
 
-import org.omg.dds.core.ValueType;
+import org.omg.dds.core.ModifiableValueType;
 
 
-public interface BuiltinTopicKey extends ValueType<BuiltinTopicKey> {
+public interface BuiltinTopicKey
+extends ModifiableValueType<BuiltinTopicKey, BuiltinTopicKey> {
     public int[] getValue();
 
 }

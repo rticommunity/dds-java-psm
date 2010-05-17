@@ -37,21 +37,9 @@ public interface LivelinessQosPolicy extends QosPolicy<LivelinessQosPolicy> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param kind the kind to set
-     */
-    public void setKind(Kind kind);
-
-    /**
      * @return the kind
      */
     public Kind getKind();
-
-    /**
-     * @param leaseDuration the leaseDuration to set
-     */
-    public void setLeaseDuration(Duration leaseDuration);
-
-    public void setLeaseDuration(long leaseDurationMillis);
 
     public Duration getLeaseDuration();
 

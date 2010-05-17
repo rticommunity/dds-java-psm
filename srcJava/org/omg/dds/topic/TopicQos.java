@@ -46,19 +46,9 @@ import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 
 public interface TopicQos extends Qos<TopicQos> {
     /**
-     * @param topicData the topicData to set
-     */
-    public void setTopicData(TopicDataQosPolicy topicData);
-
-    /**
      * @return the topicData
      */
     public TopicDataQosPolicy getTopicData();
-
-    /**
-     * @param durability the durability to set
-     */
-    public void setDurability(DurabilityQosPolicy durability);
 
     /**
      * @return the durability
@@ -66,20 +56,9 @@ public interface TopicQos extends Qos<TopicQos> {
     public DurabilityQosPolicy getDurability();
 
     /**
-     * @param durabilityService the durabilityService to set
-     */
-    public void setDurabilityService(
-            DurabilityServiceQosPolicy durabilityService);
-
-    /**
      * @return the durabilityService
      */
     public DurabilityServiceQosPolicy getDurabilityService();
-
-    /**
-     * @param deadline the deadline to set
-     */
-    public void setDeadline(DeadlineQosPolicy deadline);
 
     /**
      * @return the deadline
@@ -87,19 +66,9 @@ public interface TopicQos extends Qos<TopicQos> {
     public DeadlineQosPolicy getDeadline();
 
     /**
-     * @param latencyBudget the latencyBudget to set
-     */
-    public void setLatencyBudget(LatencyBudgetQosPolicy latencyBudget);
-
-    /**
      * @return the latencyBudget
      */
     public LatencyBudgetQosPolicy getLatencyBudget();
-
-    /**
-     * @param liveliness the liveliness to set
-     */
-    public void setLiveliness(LivelinessQosPolicy liveliness);
 
     /**
      * @return the liveliness
@@ -107,20 +76,9 @@ public interface TopicQos extends Qos<TopicQos> {
     public LivelinessQosPolicy getLiveliness();
 
     /**
-     * @param reliability the reliability to set
-     */
-    public void setReliability(ReliabilityQosPolicy reliability);
-
-    /**
      * @return the reliability
      */
     public ReliabilityQosPolicy getReliability();
-
-    /**
-     * @param destinationOrder the destinationOrder to set
-     */
-    public void setDestinationOrder(
-            DestinationOrderQosPolicy destinationOrder);
 
     /**
      * @return the destinationOrder
@@ -128,19 +86,9 @@ public interface TopicQos extends Qos<TopicQos> {
     public DestinationOrderQosPolicy getDestinationOrder();
 
     /**
-     * @param history the history to set
-     */
-    public void setHistory(HistoryQosPolicy history);
-
-    /**
      * @return the history
      */
     public HistoryQosPolicy getHistory();
-
-    /**
-     * @param resourceLimits the resourceLimits to set
-     */
-    public void setResourceLimits(ResourceLimitsQosPolicy resourceLimits);
 
     /**
      * @return the resourceLimits
@@ -148,30 +96,14 @@ public interface TopicQos extends Qos<TopicQos> {
     public ResourceLimitsQosPolicy getResourceLimits();
 
     /**
-     * @param transportPriority the transportPriority to set
-     */
-    public void setTransportPriority(
-            TransportPriorityQosPolicy transportPriority);
-
-    /**
      * @return the transportPriority
      */
     public TransportPriorityQosPolicy getTransportPriority();
 
     /**
-     * @param lifespan the lifespan to set
-     */
-    public void setLifespan(LifespanQosPolicy lifespan);
-
-    /**
      * @return the lifespan
      */
     public LifespanQosPolicy getLifespan();
-
-    /**
-     * @param ownership the ownership to set
-     */
-    public void setOwnership(OwnershipQosPolicy ownership);
 
     /**
      * @return the ownership

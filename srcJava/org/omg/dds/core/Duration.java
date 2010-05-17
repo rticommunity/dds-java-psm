@@ -49,35 +49,14 @@ public interface Duration extends ValueType<Duration> {
     // --- Data access: ------------------------------------------------------
 
     /**
-     * @param sec the sec to set
-     */
-    public void setSec(int sec);
-
-    /**
      * @return the sec
      */
     public int getSec();
 
     /**
-     * @param nanosec the nanosec to set
-     */
-    public void setNanosec(int nanosec);
-
-    /**
      * @return the nanosec
      */
     public int getNanosec();
-
-
-    // --- Manipulation: -----------------------------------------------------
-
-    public void add(Duration duration);
-
-    public void addSec(int sec);
-
-    public void addNanosec(int nanosec);
-
-    public void addMillis(long millis);
 
 
     // --- Conversion: -------------------------------------------------------
@@ -86,7 +65,4 @@ public interface Duration extends ValueType<Duration> {
      * Round or truncate this Duration to a whole number of milliseconds.
      */
     public long getDuration();
-
-    public void setDuration(long millis);
-
 }

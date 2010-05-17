@@ -38,21 +38,9 @@ extends QosPolicy<ReliabilityQosPolicy> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param kind the kind to set
-     */
-    public void setKind(Kind kind);
-
-    /**
      * @return the kind
      */
     public Kind getKind();
-
-    /**
-     * @param maxBlockingTime the maxBlockingTime to set
-     */
-    public void setMaxBlockingTime(Duration maxBlockingTime);
-
-    public void setMaxBlockingTime(long maxBlockingTimeMillis);
 
     public Duration getMaxBlockingTime();
 

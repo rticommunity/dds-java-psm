@@ -49,20 +49,10 @@ extends ValueType<SELF>, Map<QosPolicy.Id, QosPolicy<?>> {
     public <POLICY extends QosPolicy<POLICY>> POLICY get(QosPolicy.Id id);
 
     /**
-     * Overwrite the value of the indicated policy with the given new value.
-     * Subsequent calls to {@link #get(Object)} may return the given object
-     * or a copy of it.
-     * 
-     * @return  the previous value of the indicated policy if that policy
-     *          applies to this <code>Qos</code>'s {@link Entity} or
-     *          <code>null</code> otherwise. If the returned object is not
-     *          <code>null</code>, changes to it will <em>not</em> be
-     *          reflected by subsequent calls to {@link #get(Object)}.
-     * @throws  NullPointerException    if the given key or value is
-     *                                  <code>null</code>.
+     * @throws  UnsupportedOperationException   if this <code>Qos</code> is
+     *          not a <code>ModifiableQos</code>.
      */
-    public <POLICY extends QosPolicy<POLICY>> POLICY put(
-            QosPolicy.Id key, POLICY value);
+    public QosPolicy<?> put(QosPolicy.Id key, QosPolicy<?> value);
 
     /**
      * @throws  UnsupportedOperationException   always: the <tt>remove</tt>

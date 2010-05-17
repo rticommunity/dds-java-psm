@@ -34,7 +34,10 @@ import java.util.List;
 public interface QueryCondition<TYPE> extends ReadCondition<TYPE> {
     public String getQueryExpression();
 
-    public void getQueryParameters(List<String> queryParameters);
+    /**
+     * @return  an unmodifiable list of the current query parameters.
+     */
+    public List<String> getQueryParameters();
 
     public void setQueryParameters(List<String> queryParameters);
     public void setQueryParameters(String... queryParameters);

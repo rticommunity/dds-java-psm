@@ -35,29 +35,14 @@ extends QosPolicy<ResourceLimitsQosPolicy> {
 
 
     /**
-     * @param maxSamples the maxSamples to set
-     */
-    public void setMaxSamples(int maxSamples);
-
-    /**
      * @return the maxSamples
      */
     public int getMaxSamples();
 
     /**
-     * @param maxInstances the maxInstances to set
-     */
-    public void setMaxInstances(int maxInstances);
-
-    /**
      * @return the maxInstances
      */
     public int getMaxInstances();
-
-    /**
-     * @param maxSamplesPerInstance the maxSamplesPerInstance to set
-     */
-    public void setMaxSamplesPerInstance(int maxSamplesPerInstance);
 
     /**
      * @return the maxSamplesPerInstance

@@ -31,11 +31,12 @@ package org.omg.dds.sub;
 import java.util.ListIterator;
 
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableValueType;
 import org.omg.dds.core.Time;
-import org.omg.dds.core.ValueType;
 
 
-public interface Sample<TYPE> extends ValueType<Sample<TYPE>> {
+public interface Sample<TYPE>
+extends ModifiableValueType<Sample<TYPE>, Sample<TYPE>> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

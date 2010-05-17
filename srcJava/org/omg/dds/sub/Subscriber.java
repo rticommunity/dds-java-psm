@@ -91,8 +91,7 @@ extends DomainEntity<Subscriber,
     public void beginAccess();
     public void endAccess();
 
-    public void cloneDefaultDataReaderQos(DataReaderQos qos);
-    public void getDefaultDataReaderQos(DataReaderQos qos);
+    public DataReaderQos getDefaultDataReaderQos();
     public void setDefaultDataReaderQos(DataReaderQos qos);
     public void setDefaultDataReaderQos(
             String qosLibraryName,

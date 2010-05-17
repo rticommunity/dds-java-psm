@@ -33,10 +33,8 @@ import java.util.List;
 
 public interface PartitionQosPolicy extends QosPolicy<PartitionQosPolicy> {
     /**
-     * @param name the name to set
+     * @return  an unmodifiable list of partition names.
      */
-    public void setName(List<String> name);
-
-    public void getName(List<String> name);
+    public List<String> getName();
 
 }

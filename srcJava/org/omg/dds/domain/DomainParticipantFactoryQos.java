@@ -35,11 +35,6 @@ import org.omg.dds.core.Qos;
 public interface DomainParticipantFactoryQos
 extends Qos<DomainParticipantFactoryQos> {
     /**
-     * @param entityFactory the entityFactory to set
-     */
-    public void setEntityFactory(EntityFactoryQosPolicy entityFactory);
-
-    /**
      * @return the entityFactory
      */
     public EntityFactoryQosPolicy getEntityFactory();

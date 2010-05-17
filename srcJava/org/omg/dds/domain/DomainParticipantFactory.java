@@ -72,12 +72,10 @@ public interface DomainParticipantFactory extends DdsObject {
 
     public DomainParticipant lookupParticipant(int domainId);
 
-    public DomainParticipantFactoryQos cloneQos();
-    public void getQos(DomainParticipantFactoryQos qos);
+    public DomainParticipantFactoryQos getQos();
     public void setQos(DomainParticipantFactoryQos qos);
 
-    public DomainParticipantQos cloneDefaultParticipantQos();
-    public void getDefaultParticipantQos(DomainParticipantQos qos);
+    public DomainParticipantQos getDefaultParticipantQos();
     public void setDefaultParticipantQos(DomainParticipantQos qos);
     public void setDefaultParticipantQos(
             String qosLibraryName,

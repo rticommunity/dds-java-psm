@@ -37,19 +37,9 @@ import org.omg.dds.core.policy.PresentationQosPolicy;
 
 public interface SubscriberQos extends Qos<SubscriberQos> {
     /**
-     * @param presentation the presentation to set
-     */
-    public void setPresentation(PresentationQosPolicy presentation);
-
-    /**
      * @return the presentation
      */
     public PresentationQosPolicy getPresentation();
-
-    /**
-     * @param partition the partition to set
-     */
-    public void setPartition(PartitionQosPolicy partition);
 
     /**
      * @return the partition
@@ -57,19 +47,9 @@ public interface SubscriberQos extends Qos<SubscriberQos> {
     public PartitionQosPolicy getPartition();
 
     /**
-     * @param groupData the groupData to set
-     */
-    public void setGroupData(GroupDataQosPolicy groupData);
-
-    /**
      * @return the groupData
      */
     public GroupDataQosPolicy getGroupData();
-
-    /**
-     * @param entityFactory the entityFactory to set
-     */
-    public void setEntityFactory(EntityFactoryQosPolicy entityFactory);
 
     /**
      * @return the entityFactory

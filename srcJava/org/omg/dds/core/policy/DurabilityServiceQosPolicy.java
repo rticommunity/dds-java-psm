@@ -33,19 +33,7 @@ import org.omg.dds.core.Duration;
 
 public interface DurabilityServiceQosPolicy
 extends QosPolicy<DurabilityServiceQosPolicy> {
-    /**
-     * @param serviceCleanupDelay the serviceCleanupDelay to set
-     */
-    public void setServiceCleanupDelay(Duration serviceCleanupDelay);
-
-    public void setServiceCleanupDelay(long serviceCleanupDelayMillis);
-
     public Duration getServiceCleanupDelay();
-
-    /**
-     * @param historyKind the historyKind to set
-     */
-    public void setHistoryKind(HistoryQosPolicy.Kind historyKind);
 
     /**
      * @return the historyKind
@@ -53,19 +41,9 @@ extends QosPolicy<DurabilityServiceQosPolicy> {
     public HistoryQosPolicy.Kind getHistoryKind();
 
     /**
-     * @param historyDepth the historyDepth to set
-     */
-    public void setHistoryDepth(int historyDepth);
-
-    /**
      * @return the historyDepth
      */
     public int getHistoryDepth();
-
-    /**
-     * @param maxSamples the maxSamples to set
-     */
-    public void setMaxSamples(int maxSamples);
 
     /**
      * @return the maxSamples
@@ -73,19 +51,9 @@ extends QosPolicy<DurabilityServiceQosPolicy> {
     public int getMaxSamples();
 
     /**
-     * @param maxInstances the maxInstances to set
-     */
-    public void setMaxInstances(int maxInstances);
-
-    /**
      * @return the maxInstances
      */
     public int getMaxInstances();
-
-    /**
-     * @param maxSamplesPerInstance the maxSamplesPerInstance to set
-     */
-    public void setMaxSamplesPerInstance(int maxSamplesPerInstance);
 
     /**
      * @return the maxSamplesPerInstance

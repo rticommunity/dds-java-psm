@@ -74,6 +74,9 @@ extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
      */
     public abstract QosPolicy.Id getLastPolicyId();
 
-    public abstract void getPolicies(Set<QosPolicyCount> policies);
+    /**
+     * @return  an unmodifiable set of policy counts.
+     */
+    public abstract Set<QosPolicyCount> getPolicies();
 
 }

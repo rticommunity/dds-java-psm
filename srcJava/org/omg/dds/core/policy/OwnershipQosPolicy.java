@@ -35,11 +35,6 @@ public interface OwnershipQosPolicy extends QosPolicy<OwnershipQosPolicy> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param kind the kind to set
-     */
-    public void setKind(Kind kind);
-
-    /**
      * @return the kind
      */
     public Kind getKind();

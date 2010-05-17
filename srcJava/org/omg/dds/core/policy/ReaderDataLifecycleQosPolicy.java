@@ -33,25 +33,7 @@ import org.omg.dds.core.Duration;
 
 public interface ReaderDataLifecycleQosPolicy
 extends QosPolicy<ReaderDataLifecycleQosPolicy> {
-    /**
-     * @param autoPurgeNoWriterSamplesDelay the autoPurgeNoWriterSamplesDelay to set
-     */
-    public void setAutoPurgeNoWriterSamplesDelay(
-            Duration autoPurgeNoWriterSamplesDelay);
-
-    public void setAutoPurgeNoWriterSamplesDelay(
-            long autoPurgeNoWriterSamplesDelayMillis);
-
     public Duration getAutoPurgeNoWriterSamplesDelay();
-
-    /**
-     * @param autoPurgeDisposedSamplesDelay the autoPurgeDisposedSamplesDelay to set
-     */
-    public void setAutoPurgeDisposedSamplesDelay(
-            Duration autoPurgeDisposedSamplesDelay);
-
-    public void setAutoPurgeDisposedSamplesDelay(
-            long autoPurgeDisposedSamplesDelayMillis);
 
     public Duration getAutoPurgeDisposedSamplesDelay();
 
