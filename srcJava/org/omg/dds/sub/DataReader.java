@@ -123,7 +123,7 @@ extends DomainEntity<DataReader<TYPE>,
     public Sample<TYPE> createSample();
 
     /**
-     * @return  an immutable iterator over loaned samples.
+     * @return  a non-null unmodifiable iterator over loaned samples.
      */
     public Sample.Iterator<TYPE> read();
     public Sample.Iterator<TYPE> read(
@@ -144,6 +144,9 @@ extends DomainEntity<DataReader<TYPE>,
             Set<ViewState> viewStates, 
             Set<InstanceState> instanceStates);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> take();
     public Sample.Iterator<TYPE> take(
             Set<SampleState> sampleStates, 
@@ -159,6 +162,9 @@ extends DomainEntity<DataReader<TYPE>,
             Set<ViewState> viewStates, 
             Set<InstanceState> instanceStates);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> read(
             ReadCondition<TYPE> condition);
 
@@ -170,6 +176,9 @@ extends DomainEntity<DataReader<TYPE>,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> take(
             ReadCondition<TYPE> condition);
 
@@ -193,6 +202,9 @@ extends DomainEntity<DataReader<TYPE>,
     public boolean take_next(
             Sample<TYPE> sample);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> read(
             InstanceHandle handle);
     public Sample.Iterator<TYPE> read(
@@ -212,6 +224,9 @@ extends DomainEntity<DataReader<TYPE>,
             Set<ViewState> viewStates, 
             Set<InstanceState> instanceStates);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> take(
             InstanceHandle handle);
     public Sample.Iterator<TYPE> take(
@@ -231,6 +246,9 @@ extends DomainEntity<DataReader<TYPE>,
             Set<ViewState> viewStates, 
             Set<InstanceState> instanceStates);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> read_next(
             InstanceHandle previousHandle);
     public Sample.Iterator<TYPE> read_next(
@@ -250,6 +268,9 @@ extends DomainEntity<DataReader<TYPE>,
             Set<ViewState> viewStates, 
             Set<InstanceState> instanceStates);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> take_next(
             InstanceHandle previousHandle);
     public Sample.Iterator<TYPE> take_next(
@@ -269,6 +290,9 @@ extends DomainEntity<DataReader<TYPE>,
             Set<ViewState> viewStates, 
             Set<InstanceState> instanceStates);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> read_next(
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
@@ -283,6 +307,9 @@ extends DomainEntity<DataReader<TYPE>,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
+    /**
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     */
     public Sample.Iterator<TYPE> take_next(
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
