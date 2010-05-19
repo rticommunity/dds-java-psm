@@ -31,6 +31,12 @@ package org.omg.dds.pub;
 import java.util.EventListener;
 
 
+/* TODO: The generic methods defined in this interface make it difficult to
+ * write statically type-safe code. But making the whole interface generic
+ * makes it hard to share listeners across Entities with different type
+ * parameters (e.g. as DomainParticipantListeners always do). What's the
+ * solution?
+ */
 public interface DataWriterListener extends EventListener {
     public <TYPE> void onOfferedDeadlineMissed(
             OfferedDeadlineMissedStatus<TYPE> status);
