@@ -46,11 +46,13 @@ public interface ValueType<SELF> extends DdsObject, Cloneable, Serializable {
     /**
      * Implementing classes should override <code>equals()</code>.
      */
+    @Override
     public boolean equals(Object other);
 
     /**
      * Implementing classes should override <code>hashCode()</code>.
      */
+    @Override
     public int hashCode();
 
     /**
