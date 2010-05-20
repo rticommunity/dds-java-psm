@@ -32,7 +32,7 @@ import org.omg.dds.core.DdsObject;
 import org.omg.dds.domain.DomainParticipant;
 
 
-public interface TypeSupport extends DdsObject {
+public interface TypeSupport<TYPE> extends DdsObject {
     public void registerType(
             DomainParticipant participant, 
             String typeName);
