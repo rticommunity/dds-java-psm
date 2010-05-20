@@ -29,12 +29,12 @@
 package org.omg.dds.core;
 
 
-public class InconsistentPolicyException extends DdsException {
+public abstract class InconsistentPolicyException extends DdsException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -1339083610534504006L;
+    private static final long serialVersionUID = -1993589443534857758L;
 
 
 
@@ -42,22 +42,20 @@ public class InconsistentPolicyException extends DdsException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public InconsistentPolicyException(Context parent) {
-        super(parent);
+    protected InconsistentPolicyException() {
+        super();
     }
 
-    public InconsistentPolicyException(Context parent, String s) {
-        super(parent, s);
+    protected InconsistentPolicyException(String message) {
+        super(message);
     }
 
-    public InconsistentPolicyException(Context parent, Throwable cause) {
-        super(parent, cause);
+    protected InconsistentPolicyException(Throwable cause) {
+        super(cause);
     }
 
-    public InconsistentPolicyException(Context parent,
-                                       String message,
-                                       Throwable cause) {
-        super(parent, message, cause);
+    protected InconsistentPolicyException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

@@ -29,12 +29,13 @@
 package org.omg.dds.core;
 
 
-public class IllegalOperationException extends IllegalDdsStateException {
+public abstract class IllegalOperationException
+extends IllegalDdsStateException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -808462083323064731L;
+    private static final long serialVersionUID = -6782657920034098505L;
 
 
 
@@ -42,22 +43,20 @@ public class IllegalOperationException extends IllegalDdsStateException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public IllegalOperationException(Context parent) {
-        super(parent);
+    protected IllegalOperationException() {
+        super();
     }
 
-    public IllegalOperationException(Context parent, String s) {
-        super(parent, s);
+    protected IllegalOperationException(String message) {
+        super(message);
     }
 
-    public IllegalOperationException(Context parent, Throwable cause) {
-        super(parent, cause);
+    protected IllegalOperationException(Throwable cause) {
+        super(cause);
     }
 
-    public IllegalOperationException(Context parent,
-                                     String message,
-                                     Throwable cause) {
-        super(parent, message, cause);
+    protected IllegalOperationException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

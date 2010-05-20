@@ -29,12 +29,13 @@
 package org.omg.dds.core;
 
 
-public class PreconditionNotMetException extends IllegalDdsStateException {
+public abstract class PreconditionNotMetException
+extends IllegalDdsStateException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -239470132259199547L;
+    private static final long serialVersionUID = -6204457556635480597L;
 
 
 
@@ -42,22 +43,20 @@ public class PreconditionNotMetException extends IllegalDdsStateException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public PreconditionNotMetException(Context parent) {
-        super(parent);
+    protected PreconditionNotMetException() {
+        super();
     }
 
-    public PreconditionNotMetException(Context parent, String s) {
-        super(parent, s);
+    protected PreconditionNotMetException(String message) {
+        super(message);
     }
 
-    public PreconditionNotMetException(Context parent, Throwable cause) {
-        super(parent, cause);
+    protected PreconditionNotMetException(Throwable cause) {
+        super(cause);
     }
 
-    public PreconditionNotMetException(Context parent,
-                                       String message,
-                                       Throwable cause) {
-        super(parent, message, cause);
+    protected PreconditionNotMetException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

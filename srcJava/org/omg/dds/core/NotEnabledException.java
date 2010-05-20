@@ -29,12 +29,12 @@
 package org.omg.dds.core;
 
 
-public class NotEnabledException extends IllegalDdsStateException {
+public abstract class NotEnabledException extends IllegalDdsStateException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -2444081465640694826L;
+    private static final long serialVersionUID = -1435103296817695008L;
 
 
 
@@ -42,22 +42,20 @@ public class NotEnabledException extends IllegalDdsStateException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public NotEnabledException(Context parent) {
-        super(parent);
+    protected NotEnabledException() {
+        super();
     }
 
-    public NotEnabledException(Context parent, String s) {
-        super(parent, s);
+    protected NotEnabledException(String message) {
+        super(message);
     }
 
-    public NotEnabledException(Context parent, Throwable cause) {
-        super(parent, cause);
+    protected NotEnabledException(Throwable cause) {
+        super(cause);
     }
 
-    public NotEnabledException(Context parent,
-                               String message,
-                               Throwable cause) {
-        super(parent, message, cause);
+    protected NotEnabledException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

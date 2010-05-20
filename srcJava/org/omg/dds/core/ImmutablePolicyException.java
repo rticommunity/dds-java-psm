@@ -29,12 +29,12 @@
 package org.omg.dds.core;
 
 
-public class ImmutablePolicyException extends DdsException {
+public abstract class ImmutablePolicyException extends DdsException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 7711406786141337933L;
+    private static final long serialVersionUID = -7676868650200410524L;
 
 
 
@@ -42,22 +42,20 @@ public class ImmutablePolicyException extends DdsException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public ImmutablePolicyException(Context parent) {
-        super(parent);
+    protected ImmutablePolicyException() {
+        super();
     }
 
-    public ImmutablePolicyException(Context parent, String s) {
-        super(parent, s);
+    protected ImmutablePolicyException(String message) {
+        super(message);
     }
 
-    public ImmutablePolicyException(Context parent, Throwable cause) {
-        super(parent, cause);
+    protected ImmutablePolicyException(Throwable cause) {
+        super(cause);
     }
 
-    public ImmutablePolicyException(Context parent,
-                                    String message,
-                                    Throwable cause) {
-        super(parent, message, cause);
+    protected ImmutablePolicyException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

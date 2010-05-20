@@ -63,14 +63,13 @@ package org.omg.dds.core;
  * - RETCODE_OUT_OF_RESOURCES:     OutOfResourcesException
  *                                 (extends DdsException)
  */
-public class DdsException extends RuntimeException implements DdsObject {
+public abstract class DdsException
+extends RuntimeException implements DdsObject {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 1147344098842712819L;
-
-    private final Context _parent;
+    private static final long serialVersionUID = 3593139144678443696L;
 
 
 
@@ -78,49 +77,31 @@ public class DdsException extends RuntimeException implements DdsObject {
     // Public Methods
     // -----------------------------------------------------------------------
 
-    // --- Object Lifecycle: -------------------------------------------------
-
-    public DdsException(Context parent) {
-        checkForNull(parent);
-        _parent = parent;
-    }
-
-    public DdsException(Context parent, String message) {
-        super(message);
-        checkForNull(parent);
-        _parent = parent;
-    }
-
-    public DdsException(Context parent, Throwable cause) {
-        super(cause);
-        checkForNull(parent);
-        _parent = parent;
-    }
-
-    public DdsException(Context parent, String message, Throwable cause) {
-        super(message, cause);
-        checkForNull(parent);
-        _parent = parent;
-    }
-
-
     // --- From DdsObject: ---------------------------------------------------
 
-    public Context getContext() {
-        assert _parent != null;
-        return _parent;
-    }
+    public abstract Context getContext();
 
 
 
     // -----------------------------------------------------------------------
-    // Private Methods
+    // Protected Methods
     // -----------------------------------------------------------------------
 
-    private static void checkForNull(Context parent) {
-        if (parent == null) {
-            throw new IllegalArgumentException("null Context");
-        }
+    // --- Object Lifecycle: -------------------------------------------------
+
+    protected DdsException() {
+        super();
     }
 
+    protected DdsException(String message) {
+        super(message);
+    }
+
+    protected DdsException(Throwable cause) {
+        super(cause);
+    }
+
+    protected DdsException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

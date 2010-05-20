@@ -29,12 +29,12 @@
 package org.omg.dds.core;
 
 
-public class OutOfResourcesException extends DdsException {
+public abstract class OutOfResourcesException extends DdsException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -531782273675500750L;
+    private static final long serialVersionUID = 6105570967607779945L;
 
 
 
@@ -42,22 +42,20 @@ public class OutOfResourcesException extends DdsException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public OutOfResourcesException(Context parent) {
-        super(parent);
+    protected OutOfResourcesException() {
+        super();
     }
 
-    public OutOfResourcesException(Context parent, String s) {
-        super(parent, s);
+    protected OutOfResourcesException(String message) {
+        super(message);
     }
 
-    public OutOfResourcesException(Context parent, Throwable cause) {
-        super(parent, cause);
+    protected OutOfResourcesException(Throwable cause) {
+        super(cause);
     }
 
-    public OutOfResourcesException(Context parent,
-                                   String message,
-                                   Throwable cause) {
-        super(parent, message, cause);
+    protected OutOfResourcesException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }
