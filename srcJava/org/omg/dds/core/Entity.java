@@ -28,8 +28,8 @@
 
 package org.omg.dds.core;
 
+import java.util.Collection;
 import java.util.EventListener;
-import java.util.Set;
 
 
 public interface Entity<SELF extends Entity<SELF, LISTENER, QOS>,
@@ -47,7 +47,7 @@ extends DdsObject {
 
     public StatusCondition<SELF> getStatusCondition();
 
-    public void getStatusChanges(Set<Status.Kind> status);
+    public void getStatusChanges(Collection<Status.Kind> status);
 
     public InstanceHandle getInstanceHandle();
 

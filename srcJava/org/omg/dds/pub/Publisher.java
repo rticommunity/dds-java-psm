@@ -28,7 +28,7 @@
 
 package org.omg.dds.pub;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
@@ -57,7 +57,7 @@ extends DomainEntity<Publisher,
             Topic<TYPE> topic,
             DataWriterQos qos,
             DataWriterListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic,
             String qosLibraryName,
@@ -72,7 +72,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
 
     public <TYPE> DataWriter<TYPE> lookupDataWriter(String topicName);
     public <TYPE> DataWriter<TYPE> lookupDataWriter(Topic<TYPE> topicName);

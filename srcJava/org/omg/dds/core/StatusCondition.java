@@ -28,14 +28,14 @@
 
 package org.omg.dds.core;
 
-import java.util.Set;
+import java.util.Collection;
 
 
 public interface StatusCondition<ENTITY extends Entity<ENTITY, ?, ?>>
 extends Condition {
-    public void getEnabledStatuses(Set<Status.Kind> statuses);
+    public void getEnabledStatuses(Collection<Status.Kind> statuses);
 
-    public void setEnabledStatuses(Set<Status.Kind> statuses);
+    public void setEnabledStatuses(Collection<Status.Kind> statuses);
 
     public ENTITY getEntity();
 }

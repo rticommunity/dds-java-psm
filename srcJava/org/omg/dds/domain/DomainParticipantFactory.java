@@ -28,7 +28,7 @@
 
 package org.omg.dds.domain;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.omg.dds.core.DdsObject;
 import org.omg.dds.core.Status;
@@ -53,7 +53,7 @@ public interface DomainParticipantFactory extends DdsObject {
             int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
     public DomainParticipant createParticipant(
             int domainId,
             String qosLibraryName,
@@ -68,7 +68,7 @@ public interface DomainParticipantFactory extends DdsObject {
             String qosLibraryName,
             String qosProfileName,
             DomainParticipantListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
 
     public DomainParticipant lookupParticipant(int domainId);
 

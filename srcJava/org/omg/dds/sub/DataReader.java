@@ -28,8 +28,8 @@
 
 package org.omg.dds.sub;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
@@ -51,9 +51,9 @@ extends DomainEntity<DataReader<TYPE>,
 
     public ReadCondition<TYPE> createReadCondition();
     public ReadCondition<TYPE> createReadCondition(
-            Set<SampleState> sampleStates,
-            Set<ViewState> viewStates,
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates,
+            Collection<ViewState> viewStates,
+            Collection<InstanceState> instanceStates);
 
     public QueryCondition<TYPE> createQueryCondition(
             String queryExpression,
@@ -62,15 +62,15 @@ extends DomainEntity<DataReader<TYPE>,
             String queryExpression,
             String... queryParameters);
     public QueryCondition<TYPE> createQueryCondition(
-            Set<SampleState> sampleStates,
-            Set<ViewState> viewStates,
-            Set<InstanceState> instanceStates,
+            Collection<SampleState> sampleStates,
+            Collection<ViewState> viewStates,
+            Collection<InstanceState> instanceStates,
             String queryExpression,
             List<String> queryParameters);
     public QueryCondition<TYPE> createQueryCondition(
-            Set<SampleState> sampleStates,
-            Set<ViewState> viewStates,
-            Set<InstanceState> instanceStates,
+            Collection<SampleState> sampleStates,
+            Collection<ViewState> viewStates,
+            Collection<InstanceState> instanceStates,
             String queryExpression,
             String... queryParameters);
 
@@ -101,7 +101,7 @@ extends DomainEntity<DataReader<TYPE>,
     throws TimeoutException;
 
     public void getMatchedPublications(
-            Set<InstanceHandle> publicationHandles);
+            Collection<InstanceHandle> publicationHandles);
     public void getMatchedPublicationData(
             PublicationBuiltinTopicData publicationData,
             InstanceHandle publicationHandle);
@@ -127,9 +127,9 @@ extends DomainEntity<DataReader<TYPE>,
      */
     public Sample.Iterator<TYPE> read();
     public Sample.Iterator<TYPE> read(
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     /**
      * Copy samples into the provided collection, overwriting any samples that
@@ -140,27 +140,27 @@ extends DomainEntity<DataReader<TYPE>,
     public void read(
             List<Sample<TYPE>> samples,
             int maxSamples,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
      */
     public Sample.Iterator<TYPE> take();
     public Sample.Iterator<TYPE> take(
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     public void take(
             List<Sample<TYPE>> samples);
     public void take(
             List<Sample<TYPE>> samples,
             int maxSamples,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
@@ -209,9 +209,9 @@ extends DomainEntity<DataReader<TYPE>,
             InstanceHandle handle);
     public Sample.Iterator<TYPE> read(
             InstanceHandle handle,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     public void read(
             List<Sample<TYPE>> samples,
@@ -220,9 +220,9 @@ extends DomainEntity<DataReader<TYPE>,
             List<Sample<TYPE>> samples,
             InstanceHandle handle,
             int maxSamples,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
@@ -231,9 +231,9 @@ extends DomainEntity<DataReader<TYPE>,
             InstanceHandle handle);
     public Sample.Iterator<TYPE> take(
             InstanceHandle handle,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     public void take(
             List<Sample<TYPE>> samples,
@@ -242,9 +242,9 @@ extends DomainEntity<DataReader<TYPE>,
             List<Sample<TYPE>> samples,
             InstanceHandle handle,
             int maxSamples,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
@@ -253,9 +253,9 @@ extends DomainEntity<DataReader<TYPE>,
             InstanceHandle previousHandle);
     public Sample.Iterator<TYPE> readNext(
             InstanceHandle previousHandle,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     public void readNext(
             List<Sample<TYPE>> samples,
@@ -264,9 +264,9 @@ extends DomainEntity<DataReader<TYPE>,
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
@@ -275,9 +275,9 @@ extends DomainEntity<DataReader<TYPE>,
             InstanceHandle previousHandle);
     public Sample.Iterator<TYPE> takeNext(
             InstanceHandle previousHandle,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     public void takeNext(
             List<Sample<TYPE>> samples,
@@ -286,9 +286,9 @@ extends DomainEntity<DataReader<TYPE>,
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
-            Set<SampleState> sampleStates, 
-            Set<ViewState> viewStates, 
-            Set<InstanceState> instanceStates);
+            Collection<SampleState> sampleStates, 
+            Collection<ViewState> viewStates, 
+            Collection<InstanceState> instanceStates);
 
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.

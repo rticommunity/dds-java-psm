@@ -28,13 +28,12 @@
 
 package org.omg.dds.core.policy;
 
-import java.util.List;
+import java.util.Collection;
 
 
 public interface PartitionQosPolicy extends QosPolicy<PartitionQosPolicy> {
     /**
-     * @return  an unmodifiable list of partition names.
+     * @return  an unmodifiable collection of partition names.
      */
-    public List<String> getName();
-
+    public Collection<String> getName();
 }

@@ -28,8 +28,8 @@
 
 package org.omg.dds.domain;
 
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.Duration;
@@ -66,7 +66,7 @@ extends Entity<DomainParticipant,
     public Publisher createPublisher(
             PublisherQos qos,
             PublisherListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
     public Publisher createPublisher(
             String qosLibraryName,
             String qosProfileName);
@@ -78,7 +78,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             PublisherListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
 
     public Subscriber createSubscriber();
     public Subscriber createSubscriber(
@@ -89,7 +89,7 @@ extends Entity<DomainParticipant,
     public Subscriber createSubscriber(
             SubscriberQos qos,
             SubscriberListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
     public Subscriber createSubscriber(
             String qosLibraryName,
             String qosProfileName);
@@ -101,7 +101,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             SubscriberListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
 
     public Subscriber getBuiltinSubscriber();
 
@@ -123,7 +123,7 @@ extends Entity<DomainParticipant,
             String typeName,
             TopicQos qos,
             TopicListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             String typeName,
@@ -141,7 +141,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             TopicListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
 
     /**
      * Implicitly register the given type, if necessary, under its fully
@@ -164,7 +164,7 @@ extends Entity<DomainParticipant,
             Class<? super TYPE> type,
             TopicQos qos,
             TopicListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<? super TYPE> type,
@@ -182,7 +182,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             TopicListener listener,
-            Set<Status.Kind> status);
+            Collection<Status.Kind> status);
 
     // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> findTopic(
@@ -245,12 +245,12 @@ extends Entity<DomainParticipant,
             String qosProfileName);
 
     public void getDiscoveredParticipants(
-            List<InstanceHandle> participantHandles);
+            Collection<InstanceHandle> participantHandles);
     public void getDiscoveredParticipantData(
             ParticipantBuiltinTopicData participantData,
             InstanceHandle participantHandle);
 
-    public void getDiscoveredTopics(List<InstanceHandle> topicHandles);
+    public void getDiscoveredTopics(Collection<InstanceHandle> topicHandles);
     public void getDiscoveredTopicData(
             TopicBuiltinTopicData topicData,
             InstanceHandle topicHandle);

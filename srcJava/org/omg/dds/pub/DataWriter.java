@@ -28,7 +28,7 @@
 
 package org.omg.dds.pub;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
@@ -71,7 +71,7 @@ extends DomainEntity<DataWriter<TYPE>,
     public void assertLiveliness();
 
     public void getMatchedSubscriptions(
-            Set<InstanceHandle> subscriptionHandles);
+            Collection<InstanceHandle> subscriptionHandles);
     public void getMatchedSubscriptionData(
             SubscriptionBuiltinTopicData subscriptionData,
             InstanceHandle subscriptionHandle);

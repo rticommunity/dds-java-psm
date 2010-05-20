@@ -28,7 +28,7 @@
 
 package org.omg.dds.sub;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Status;
@@ -55,7 +55,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
             DataReaderListener listener,
-            Set<Status.Kind> statuses);
+            Collection<Status.Kind> statuses);
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             String qosLibraryName,
@@ -70,7 +70,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener listener,
-            Set<Status.Kind> statuses);
+            Collection<Status.Kind> statuses);
 
     public void closeContainedEntities();
 
@@ -79,12 +79,12 @@ extends DomainEntity<Subscriber,
             TopicDescription<TYPE> topicName);
 
     public void getDataReaders(
-            Set<DataReader<?>> readers);
+            Collection<DataReader<?>> readers);
     public void getDataReaders(
-            Set<DataReader<?>> readers,
-            Set<SampleState> sampleStates,
-            Set<ViewState> viewStates,
-            Set<InstanceState> instanceStates);
+            Collection<DataReader<?>> readers,
+            Collection<SampleState> sampleStates,
+            Collection<ViewState> viewStates,
+            Collection<InstanceState> instanceStates);
 
     public void notifyDataReaders();
 

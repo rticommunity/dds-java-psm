@@ -28,7 +28,7 @@
 
 package org.omg.dds.core.policy;
 
-import java.util.List;
+import java.util.Collection;
 
 
 public interface ModifiablePartitionQosPolicy
@@ -36,12 +36,12 @@ extends PartitionQosPolicy,
         ModifiableQosPolicy<PartitionQosPolicy,
                             ModifiablePartitionQosPolicy> {
     /**
-     * @return  a modifiable list of partition names.
+     * @return  a modifiable collection of partition names.
      */
-    public List<String> getName();
+    public Collection<String> getName();
 
     /**
      * @param name the name to set
      */
-    public void setName(List<String> name);
+    public void setName(Collection<String> name);
 }

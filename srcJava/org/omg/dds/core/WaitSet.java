@@ -28,7 +28,7 @@
 
 package org.omg.dds.core;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.concurrent.TimeoutException;
 
 
@@ -39,7 +39,7 @@ public interface WaitSet extends DdsObject {
 
     public void waitForConditions() throws TimeoutException;
 
-    public void waitForConditions(List<Condition> activeConditions)
+    public void waitForConditions(Collection<Condition> activeConditions)
     throws TimeoutException;
 
     public void waitForConditions(Duration timeout) throws TimeoutException;
@@ -47,20 +47,20 @@ public interface WaitSet extends DdsObject {
     public void waitForConditions(long millis) throws TimeoutException;
 
     public void waitForConditions(
-            List<Condition> activeConditions,
+            Collection<Condition> activeConditions,
             Duration timeout) throws TimeoutException;
 
     public void waitForConditions(
-            List<Condition> activeConditions,
+            Collection<Condition> activeConditions,
             long millis) throws TimeoutException;
 
     public void attachCondition(Condition cond);
     public void detachCondition(Condition cond);
 
     /**
-     * @return  an unmodifiable list of the conditions attached to this wait
-     *          set.
+     * @return  an unmodifiable collection of the conditions attached to this
+     *          wait set.
      */
-    public List<Condition> getConditions();
+    public Collection<Condition> getConditions();
 
 }
