@@ -101,7 +101,7 @@ extends DomainEntity<DataReader<TYPE>,
     throws TimeoutException;
 
     public void getMatchedPublications(
-            Set<InstanceHandle> publication_handles);
+            Set<InstanceHandle> publicationHandles);
     public void getMatchedPublicationData(
             PublicationBuiltinTopicData publicationData,
             InstanceHandle publicationHandle);
@@ -193,13 +193,13 @@ extends DomainEntity<DataReader<TYPE>,
     /**
      * @return  true if data was read or false if no data was available.
      */
-    public boolean read_next(
+    public boolean readNext(
             Sample<TYPE> sample);
 
     /**
      * @return  true if data was taken or false if no data was available.
      */
-    public boolean take_next(
+    public boolean takeNext(
             Sample<TYPE> sample);
 
     /**
@@ -249,18 +249,18 @@ extends DomainEntity<DataReader<TYPE>,
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
      */
-    public Sample.Iterator<TYPE> read_next(
+    public Sample.Iterator<TYPE> readNext(
             InstanceHandle previousHandle);
-    public Sample.Iterator<TYPE> read_next(
+    public Sample.Iterator<TYPE> readNext(
             InstanceHandle previousHandle,
             Set<SampleState> sampleStates, 
             Set<ViewState> viewStates, 
             Set<InstanceState> instanceStates);
 
-    public void read_next(
+    public void readNext(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle);
-    public void read_next(
+    public void readNext(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
@@ -271,18 +271,18 @@ extends DomainEntity<DataReader<TYPE>,
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
      */
-    public Sample.Iterator<TYPE> take_next(
+    public Sample.Iterator<TYPE> takeNext(
             InstanceHandle previousHandle);
-    public Sample.Iterator<TYPE> take_next(
+    public Sample.Iterator<TYPE> takeNext(
             InstanceHandle previousHandle,
             Set<SampleState> sampleStates, 
             Set<ViewState> viewStates, 
             Set<InstanceState> instanceStates);
 
-    public void take_next(
+    public void takeNext(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle);
-    public void take_next(
+    public void takeNext(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
@@ -293,15 +293,15 @@ extends DomainEntity<DataReader<TYPE>,
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
      */
-    public Sample.Iterator<TYPE> read_next(
+    public Sample.Iterator<TYPE> readNext(
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
 
-    public void read_next(
+    public void readNext(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
-    public void read_next(
+    public void readNext(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
@@ -310,24 +310,24 @@ extends DomainEntity<DataReader<TYPE>,
     /**
      * @return  a non-null unmodifiable iterator over loaned samples.
      */
-    public Sample.Iterator<TYPE> take_next(
+    public Sample.Iterator<TYPE> takeNext(
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
 
-    public void take_next(
+    public void takeNext(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
-    public void take_next(
+    public void takeNext(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
     public void getKeyValue(
-            TYPE key_holder, 
+            TYPE keyHolder, 
             InstanceHandle handle);
 
     public InstanceHandle lookupInstance(
-            TYPE key_holder);
+            TYPE keyHolder);
 }
