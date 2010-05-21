@@ -30,7 +30,8 @@ package org.omg.dds.core.policy;
 
 
 public interface TransportPriorityQosPolicy
-extends QosPolicy<TransportPriorityQosPolicy> {
+extends QosPolicy<TransportPriorityQosPolicy,
+                  ModifiableTransportPriorityQosPolicy> {
     /**
      * @return the value
      */

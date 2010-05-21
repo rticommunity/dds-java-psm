@@ -32,8 +32,8 @@ import org.omg.dds.core.policy.QosPolicy;
 
 
 public interface ModifiableQos
-<UNMOD_SELF extends Qos<UNMOD_SELF>, MOD_SELF extends UNMOD_SELF>
-extends Qos<UNMOD_SELF>, ModifiableValueType<UNMOD_SELF, UNMOD_SELF> {
+<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>, MOD_SELF extends UNMOD_SELF>
+extends Qos<UNMOD_SELF, MOD_SELF>, ModifiableValueType<UNMOD_SELF, MOD_SELF> {
     /**
      * Overwrite the value of the indicated policy with the given new value.
      * Subsequent calls to {@link #get(Object)} may return the given object
@@ -47,6 +47,6 @@ extends Qos<UNMOD_SELF>, ModifiableValueType<UNMOD_SELF, UNMOD_SELF> {
      * @throws  NullPointerException    if the given key or value is
      *                                  <code>null</code>.
      */
-    public <POLICY extends QosPolicy<POLICY>> POLICY put(
+    public <POLICY extends QosPolicy<POLICY, ?>> POLICY put(
             QosPolicy.Id key, POLICY value);
 }

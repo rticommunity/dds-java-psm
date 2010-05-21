@@ -32,7 +32,8 @@ import org.omg.dds.core.Duration;
 
 
 public interface DurabilityServiceQosPolicy
-extends QosPolicy<DurabilityServiceQosPolicy> {
+extends QosPolicy<DurabilityServiceQosPolicy,
+                  ModifiableDurabilityServiceQosPolicy> {
     public Duration getServiceCleanupDelay();
 
     /**

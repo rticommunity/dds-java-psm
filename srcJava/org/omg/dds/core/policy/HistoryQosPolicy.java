@@ -29,7 +29,8 @@
 package org.omg.dds.core.policy;
 
 
-public interface HistoryQosPolicy extends QosPolicy<HistoryQosPolicy> {
+public interface HistoryQosPolicy
+extends QosPolicy<HistoryQosPolicy, ModifiableHistoryQosPolicy> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

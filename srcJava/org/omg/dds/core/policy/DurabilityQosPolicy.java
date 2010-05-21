@@ -29,7 +29,8 @@
 package org.omg.dds.core.policy;
 
 
-public interface DurabilityQosPolicy extends QosPolicy<DurabilityQosPolicy> {
+public interface DurabilityQosPolicy
+extends QosPolicy<DurabilityQosPolicy, ModifiableDurabilityQosPolicy> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

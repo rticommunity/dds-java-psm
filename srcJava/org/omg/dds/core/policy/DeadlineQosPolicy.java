@@ -31,7 +31,8 @@ package org.omg.dds.core.policy;
 import org.omg.dds.core.Duration;
 
 
-public interface DeadlineQosPolicy extends QosPolicy<DeadlineQosPolicy> {
+public interface DeadlineQosPolicy
+extends QosPolicy<DeadlineQosPolicy, ModifiableDeadlineQosPolicy> {
     public Duration getPeriod();
 
 }

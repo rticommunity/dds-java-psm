@@ -30,7 +30,8 @@ package org.omg.dds.core.policy;
 
 
 public interface OwnershipStrengthQosPolicy
-extends QosPolicy<OwnershipStrengthQosPolicy> {
+extends QosPolicy<OwnershipStrengthQosPolicy,
+                  ModifiableOwnershipStrengthQosPolicy> {
     /**
      * @return the value
      */

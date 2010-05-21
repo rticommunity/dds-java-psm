@@ -33,7 +33,8 @@ import org.omg.dds.core.Qos;
 
 
 public interface DomainParticipantFactoryQos
-extends Qos<DomainParticipantFactoryQos> {
+extends Qos<DomainParticipantFactoryQos,
+            ModifiableDomainParticipantFactoryQos> {
     /**
      * @return the entityFactory
      */

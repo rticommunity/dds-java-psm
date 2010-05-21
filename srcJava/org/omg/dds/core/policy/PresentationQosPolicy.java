@@ -30,7 +30,7 @@ package org.omg.dds.core.policy;
 
 
 public interface PresentationQosPolicy
-extends QosPolicy<PresentationQosPolicy> {
+extends QosPolicy<PresentationQosPolicy, ModifiablePresentationQosPolicy> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

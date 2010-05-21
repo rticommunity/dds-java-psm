@@ -29,7 +29,7 @@
 package org.omg.dds.core;
 
 
-public interface Time extends ValueType<Time> {
+public interface Time extends ValueType<Time, ModifiableTime> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------

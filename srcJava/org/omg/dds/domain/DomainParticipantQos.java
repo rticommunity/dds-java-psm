@@ -33,7 +33,8 @@ import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 
 
-public interface DomainParticipantQos extends Qos<DomainParticipantQos> {
+public interface DomainParticipantQos
+extends Qos<DomainParticipantQos, ModifiableDomainParticipantQos> {
     /**
      * @return the userData
      */

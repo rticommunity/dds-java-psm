@@ -46,7 +46,8 @@ import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
 
 
-public interface DataWriterQos extends Qos<DataWriterQos> {
+public interface DataWriterQos
+extends Qos<DataWriterQos, ModifiableDataWriterQos> {
     /**
      * @return the durability
      */

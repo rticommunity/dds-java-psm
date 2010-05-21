@@ -32,7 +32,8 @@ import org.omg.dds.core.Duration;
 
 
 public interface ReaderDataLifecycleQosPolicy
-extends QosPolicy<ReaderDataLifecycleQosPolicy> {
+extends QosPolicy<ReaderDataLifecycleQosPolicy,
+                  ModifiableReaderDataLifecycleQosPolicy> {
     public Duration getAutoPurgeNoWriterSamplesDelay();
 
     public Duration getAutoPurgeDisposedSamplesDelay();

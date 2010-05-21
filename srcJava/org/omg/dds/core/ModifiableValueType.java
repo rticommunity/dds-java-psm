@@ -35,8 +35,10 @@ package org.omg.dds.core;
  * @param <UNMOD_SELF>  The unmodifiable supertype of this interface.
  * @param <MOD_SELF>    This interface.
  */
-public interface ModifiableValueType<UNMOD_SELF, MOD_SELF extends UNMOD_SELF>
-extends ValueType<UNMOD_SELF> {
+public interface ModifiableValueType
+<UNMOD_SELF extends ValueType<UNMOD_SELF, MOD_SELF>,
+ MOD_SELF extends UNMOD_SELF>
+extends ValueType<UNMOD_SELF, MOD_SELF> {
     /**
      * Overwrite this object's state with the contents of the given object.
      * 
@@ -61,6 +63,4 @@ extends ValueType<UNMOD_SELF> {
     // --- From ValueType: ---------------------------------------------------
 
     public MOD_SELF clone();
-
-    public MOD_SELF modify();
 }

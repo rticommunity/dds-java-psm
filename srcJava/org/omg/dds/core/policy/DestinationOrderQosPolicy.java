@@ -30,7 +30,8 @@ package org.omg.dds.core.policy;
 
 
 public interface DestinationOrderQosPolicy
-extends QosPolicy<DestinationOrderQosPolicy> {
+extends QosPolicy<DestinationOrderQosPolicy,
+        ModifiableDestinationOrderQosPolicy> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

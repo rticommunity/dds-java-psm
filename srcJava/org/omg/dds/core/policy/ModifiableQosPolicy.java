@@ -32,7 +32,9 @@ import org.omg.dds.core.ModifiableValueType;
 
 
 public interface ModifiableQosPolicy
-<UNMOD_SELF extends QosPolicy<UNMOD_SELF>, MOD_SELF extends UNMOD_SELF>
-extends QosPolicy<UNMOD_SELF>, ModifiableValueType<UNMOD_SELF, UNMOD_SELF> {
+<UNMOD_SELF extends QosPolicy<UNMOD_SELF,
+ MOD_SELF>, MOD_SELF extends UNMOD_SELF>
+extends QosPolicy<UNMOD_SELF, MOD_SELF>,
+        ModifiableValueType<UNMOD_SELF, MOD_SELF> {
     // empty
 }

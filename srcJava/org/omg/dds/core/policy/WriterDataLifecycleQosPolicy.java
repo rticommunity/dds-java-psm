@@ -30,7 +30,8 @@ package org.omg.dds.core.policy;
 
 
 public interface WriterDataLifecycleQosPolicy
-extends QosPolicy<WriterDataLifecycleQosPolicy> {
+extends QosPolicy<WriterDataLifecycleQosPolicy,
+                  ModifiableWriterDataLifecycleQosPolicy> {
     /**
      * @return the autDisposeUnregisteredInstances
      */

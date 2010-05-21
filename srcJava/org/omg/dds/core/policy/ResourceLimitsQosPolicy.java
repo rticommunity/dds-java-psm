@@ -30,7 +30,8 @@ package org.omg.dds.core.policy;
 
 
 public interface ResourceLimitsQosPolicy
-extends QosPolicy<ResourceLimitsQosPolicy> {
+extends QosPolicy<ResourceLimitsQosPolicy,
+                  ModifiableResourceLimitsQosPolicy> {
     public static final int LENGTH_UNLIMITED = -1;
 
 

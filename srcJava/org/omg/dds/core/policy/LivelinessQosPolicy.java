@@ -31,7 +31,8 @@ package org.omg.dds.core.policy;
 import org.omg.dds.core.Duration;
 
 
-public interface LivelinessQosPolicy extends QosPolicy<LivelinessQosPolicy> {
+public interface LivelinessQosPolicy
+extends QosPolicy<LivelinessQosPolicy, ModifiableLivelinessQosPolicy> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

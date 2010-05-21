@@ -45,6 +45,8 @@ import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 
 public interface TopicBuiltinTopicData
 extends BuiltinTopicData<TopicBuiltinTopicData> {
+    // TODO: Why no getParticipantKey() here as in pub and sub topic data?
+
     /**
      * @return the name
      */

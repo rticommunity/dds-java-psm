@@ -31,7 +31,8 @@ package org.omg.dds.core.policy;
 import org.omg.dds.core.Duration;
 
 
-public interface LifespanQosPolicy extends QosPolicy<LifespanQosPolicy> {
+public interface LifespanQosPolicy
+extends QosPolicy<LifespanQosPolicy, ModifiableLifespanQosPolicy> {
     public Duration getDuration();
 
 }

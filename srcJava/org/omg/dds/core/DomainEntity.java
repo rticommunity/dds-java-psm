@@ -37,7 +37,7 @@ public interface DomainEntity<SELF extends DomainEntity<SELF,
                                                         QOS>,
                               PARENT extends Entity<?, ?, ?>,
                               LISTENER extends EventListener,
-                              QOS extends Qos<QOS>>
+                              QOS extends Qos<QOS, ? extends QOS>>
 extends Entity<SELF, LISTENER, QOS> {
     /**
      * @return  the factory object that created this entity.

@@ -30,7 +30,7 @@ package org.omg.dds.core.policy;
 
 
 public interface EntityFactoryQosPolicy
-extends QosPolicy<EntityFactoryQosPolicy> {
+extends QosPolicy<EntityFactoryQosPolicy, ModifiableEntityFactoryQosPolicy> {
     /**
      * @return the autoEnableCreatedEntities
      */

@@ -44,7 +44,7 @@ import org.omg.dds.core.policy.TopicDataQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 
 
-public interface TopicQos extends Qos<TopicQos> {
+public interface TopicQos extends Qos<TopicQos, ModifiableTopicQos> {
     /**
      * @return the topicData
      */

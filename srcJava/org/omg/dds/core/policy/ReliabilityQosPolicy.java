@@ -32,7 +32,7 @@ import org.omg.dds.core.Duration;
 
 
 public interface ReliabilityQosPolicy
-extends QosPolicy<ReliabilityQosPolicy> {
+extends QosPolicy<ReliabilityQosPolicy, ModifiableReliabilityQosPolicy> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

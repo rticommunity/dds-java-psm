@@ -35,7 +35,8 @@ import org.omg.dds.core.policy.PartitionQosPolicy;
 import org.omg.dds.core.policy.PresentationQosPolicy;
 
 
-public interface SubscriberQos extends Qos<SubscriberQos> {
+public interface SubscriberQos
+extends Qos<SubscriberQos, ModifiableSubscriberQos> {
     /**
      * @return the presentation
      */

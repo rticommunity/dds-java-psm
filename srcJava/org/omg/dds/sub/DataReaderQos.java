@@ -42,7 +42,8 @@ import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 
 
-public interface DataReaderQos extends Qos<DataReaderQos> {
+public interface DataReaderQos
+extends Qos<DataReaderQos, ModifiableDataReaderQos> {
     /**
      * @return the durability
      */

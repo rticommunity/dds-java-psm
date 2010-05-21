@@ -36,11 +36,16 @@ import java.io.Serializable;
  * equality is determined based on their contents, not on their object
  * identity.
  * 
+ * FIXME: modify() needs to return the modifiable variant.
+ * 
  * @param <SELF>  Typically, classes will parameterize their
  *                      implementations of this interface with their own
  *                      class.
  */
-public interface ValueType<SELF> extends DdsObject, Cloneable, Serializable {
+public interface ValueType
+<UNMOD_SELF extends ValueType<UNMOD_SELF, MOD_SELF>,
+ MOD_SELF extends UNMOD_SELF>
+extends DdsObject, Cloneable, Serializable {
     // --- From Object: ------------------------------------------------------
 
     /**
@@ -61,7 +66,7 @@ public interface ValueType<SELF> extends DdsObject, Cloneable, Serializable {
      * 
      * @return  a new object that with state identical to that of this object.
      */
-    public SELF clone();
+    public UNMOD_SELF clone();
 
 
     // --- Conversion: -------------------------------------------------------
@@ -75,5 +80,5 @@ public interface ValueType<SELF> extends DdsObject, Cloneable, Serializable {
      * @return  <code>this</code>, a new modifiable copy of <code>this</code>,
      *          or <code>null</code>.
      */
-    public SELF modify();
+    public MOD_SELF modify();
 }

@@ -32,7 +32,7 @@ import org.omg.dds.core.Duration;
 
 
 public interface LatencyBudgetQosPolicy
-extends QosPolicy<LatencyBudgetQosPolicy> {
+extends QosPolicy<LatencyBudgetQosPolicy, ModifiableLatencyBudgetQosPolicy> {
     public Duration getDuration();
 
 }

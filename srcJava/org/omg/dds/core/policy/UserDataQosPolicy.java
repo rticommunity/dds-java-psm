@@ -29,7 +29,8 @@
 package org.omg.dds.core.policy;
 
 
-public interface UserDataQosPolicy extends QosPolicy<UserDataQosPolicy> {
+public interface UserDataQosPolicy
+extends QosPolicy<UserDataQosPolicy, ModifiableUserDataQosPolicy> {
     /**
      * Copy the data into the given array, starting at the index at the given
      * offset.
@@ -41,4 +42,8 @@ public interface UserDataQosPolicy extends QosPolicy<UserDataQosPolicy> {
      */
     public int getValue(byte[] value, int offset);
 
+    /**
+     * @return  the length of the <code>value</code> property.
+     */
+    public int getLength();
 }

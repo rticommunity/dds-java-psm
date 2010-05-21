@@ -34,8 +34,10 @@ import org.omg.dds.core.ValueType;
 /**
  * An interface implemented by all QoS policies.
  */
-public interface QosPolicy<SELF extends QosPolicy<SELF>>
-extends ValueType<SELF> {
+public interface QosPolicy
+<UNMOD_SELF extends QosPolicy<UNMOD_SELF, MOD_SELF>,
+ MOD_SELF extends UNMOD_SELF>
+extends ValueType<UNMOD_SELF, MOD_SELF> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

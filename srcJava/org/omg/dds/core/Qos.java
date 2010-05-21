@@ -36,8 +36,9 @@ import org.omg.dds.core.policy.QosPolicy;
 /**
  * A base interface for all entity QoS types.
  */
-public interface Qos<SELF extends Qos<SELF>>
-extends ValueType<SELF>, Map<QosPolicy.Id, QosPolicy<?>> {
+public interface Qos
+<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>, MOD_SELF extends UNMOD_SELF>
+extends ValueType<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
     /**
      * @return  a reference to the corresponding policy in this
      *          <code>Qos</code>. The returned object is not a copy; changes
@@ -46,19 +47,19 @@ extends ValueType<SELF>, Map<QosPolicy.Id, QosPolicy<?>> {
      *
      * @see Map#get(Object)
      */
-    public <POLICY extends QosPolicy<POLICY>> POLICY get(QosPolicy.Id id);
+    public <POLICY extends QosPolicy<POLICY, ?>> POLICY get(QosPolicy.Id id);
 
     /**
      * @throws  UnsupportedOperationException   if this <code>Qos</code> is
      *          not a <code>ModifiableQos</code>.
      */
-    public QosPolicy<?> put(QosPolicy.Id key, QosPolicy<?> value);
+    public QosPolicy<?, ?> put(QosPolicy.Id key, QosPolicy<?, ?> value);
 
     /**
      * @throws  UnsupportedOperationException   always: the <tt>remove</tt>
      *          operation is not supported by this map.
      */
-    public QosPolicy<?> remove(Object key);
+    public QosPolicy<?, ?> remove(Object key);
 
     /**
      * @throws  UnsupportedOperationException   always: the <tt>clear</tt>

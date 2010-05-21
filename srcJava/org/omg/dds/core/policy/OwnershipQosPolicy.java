@@ -29,7 +29,8 @@
 package org.omg.dds.core.policy;
 
 
-public interface OwnershipQosPolicy extends QosPolicy<OwnershipQosPolicy> {
+public interface OwnershipQosPolicy
+extends QosPolicy<OwnershipQosPolicy, ModifiableOwnershipQosPolicy> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

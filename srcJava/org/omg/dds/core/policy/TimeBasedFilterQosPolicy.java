@@ -32,7 +32,8 @@ import org.omg.dds.core.Duration;
 
 
 public interface TimeBasedFilterQosPolicy
-extends QosPolicy<TimeBasedFilterQosPolicy> {
+extends QosPolicy<TimeBasedFilterQosPolicy,
+                  ModifiableTimeBasedFilterQosPolicy> {
     public Duration getMinimumSeparation();
 
 }
