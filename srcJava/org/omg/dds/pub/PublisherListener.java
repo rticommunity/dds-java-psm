@@ -28,7 +28,17 @@
 
 package org.omg.dds.pub;
 
+import java.util.EventListener;
 
-public interface PublisherListener extends DataWriterListener {
-    // empty
+
+public interface PublisherListener extends EventListener {
+    public void onOfferedDeadlineMissed(
+            OfferedDeadlineMissedStatus<?> status);
+
+    public void onOfferedIncompatibleQos(
+            OfferedIncompatibleQosStatus<?> status);
+
+    public void onLivelinessLost(LivelinessLostStatus<?> status);
+
+    public void onPublicationMatched(PublicationMatchedStatus<?> status);
 }

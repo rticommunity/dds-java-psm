@@ -29,8 +29,27 @@
 package org.omg.dds.pub;
 
 
-public class PublisherAdapter
-extends DataWriterAdapter implements PublisherListener
+public class PublisherAdapter implements PublisherListener
 {
-    // empty
+    public void onLivelinessLost(LivelinessLostStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onOfferedDeadlineMissed(
+            OfferedDeadlineMissedStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onOfferedIncompatibleQos(
+            OfferedIncompatibleQosStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onPublicationMatched(PublicationMatchedStatus<?> status)
+    {
+        // empty
+    }
 }

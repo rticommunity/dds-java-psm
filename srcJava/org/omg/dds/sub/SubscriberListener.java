@@ -28,7 +28,25 @@
 
 package org.omg.dds.sub;
 
+import java.util.EventListener;
 
-public interface SubscriberListener extends DataReaderListener {
+
+public interface SubscriberListener extends EventListener {
+    public void onRequestedDeadlineMissed(
+            RequestedDeadlineMissedStatus<?> status);
+
+    public void onRequestedIncompatibleQos(
+            RequestedIncompatibleQosStatus<?> status);
+
+    public void onSampleRejected(SampleRejectedStatus<?> status);
+
+    public void onLivelinessChanged(LivelinessChangedStatus<?> status);
+
+    public void onDataAvailable(DataAvailableStatus<?> status);
+
+    public void onSubscriptionMatched(SubscriptionMatchedStatus<?> status);
+
+    public void onSampleLost(SampleLostStatus<?> status);
+
     public void onDataOnReaders(DataOnReadersStatus status);
 }

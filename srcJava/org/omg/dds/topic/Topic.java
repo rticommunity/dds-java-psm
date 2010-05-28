@@ -35,7 +35,7 @@ import org.omg.dds.domain.DomainParticipant;
 public interface Topic<TYPE>
 extends TopicDescription<TYPE>, DomainEntity<Topic<TYPE>,
                                              DomainParticipant,
-                                             TopicListener,
+                                             TopicListener<TYPE>,
                                              TopicQos> {
     public void getInconsistentTopicStatus(
             InconsistentTopicStatus<TYPE> status);

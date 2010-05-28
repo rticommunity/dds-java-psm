@@ -42,7 +42,7 @@ import org.omg.dds.topic.TopicDescription;
 public interface DataReader<TYPE>
 extends DomainEntity<DataReader<TYPE>,
                      Subscriber,
-                     DataReaderListener,
+                     DataReaderListener<TYPE>,
                      DataReaderQos> {
     /**
      * @return  the type parameter if this object's class.

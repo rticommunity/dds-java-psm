@@ -117,12 +117,12 @@ extends Entity<DomainParticipant,
             String topicName,
             String typeName,
             TopicQos qos,
-            TopicListener listener);
+            TopicListener<TYPE> listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             String typeName,
             TopicQos qos,
-            TopicListener listener,
+            TopicListener<TYPE> listener,
             Collection<Status.Kind> status);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
@@ -134,13 +134,13 @@ extends Entity<DomainParticipant,
             String typeName,
             String qosLibraryName,
             String qosProfileName,
-            TopicListener listener);
+            TopicListener<TYPE> listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             String typeName,
             String qosLibraryName,
             String qosProfileName,
-            TopicListener listener,
+            TopicListener<TYPE> listener,
             Collection<Status.Kind> status);
 
     /**
@@ -158,12 +158,12 @@ extends Entity<DomainParticipant,
             String topicName,
             Class<? super TYPE> type,
             TopicQos qos,
-            TopicListener listener);
+            TopicListener<TYPE> listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<? super TYPE> type,
             TopicQos qos,
-            TopicListener listener,
+            TopicListener<TYPE> listener,
             Collection<Status.Kind> status);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
@@ -175,13 +175,13 @@ extends Entity<DomainParticipant,
             Class<? super TYPE> type,
             String qosLibraryName,
             String qosProfileName,
-            TopicListener listener);
+            TopicListener<TYPE> listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<? super TYPE> type,
             String qosLibraryName,
             String qosProfileName,
-            TopicListener listener,
+            TopicListener<TYPE> listener,
             Collection<Status.Kind> status);
 
     // TODO: How do we constrain the Topic's type parameter?

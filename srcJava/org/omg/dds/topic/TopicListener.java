@@ -31,13 +31,7 @@ package org.omg.dds.topic;
 import java.util.EventListener;
 
 
-/* TODO: The generic methods defined in this interface make it difficult to
- * write statically type-safe code. But making the whole interface generic
- * makes it hard to share listeners across Entities with different type
- * parameters (e.g. as DomainParticipantListeners always do). What's the
- * solution?
- */
-public interface TopicListener extends EventListener {
-    public <TYPE> void onInconsistentTopic(
+public interface TopicListener<TYPE> extends EventListener {
+    public void onInconsistentTopic(
             InconsistentTopicStatus<TYPE> status);
 }

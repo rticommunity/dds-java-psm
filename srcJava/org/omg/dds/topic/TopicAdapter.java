@@ -29,8 +29,8 @@
 package org.omg.dds.topic;
 
 
-public class TopicAdapter implements TopicListener {
-    public <TYPE> void onInconsistentTopic(
+public class TopicAdapter<TYPE> implements TopicListener<TYPE> {
+    public void onInconsistentTopic(
             InconsistentTopicStatus<TYPE> status)
     {
         // empty

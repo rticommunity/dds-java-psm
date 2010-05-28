@@ -30,10 +30,10 @@ package org.omg.dds.domain;
 
 import org.omg.dds.pub.PublisherListener;
 import org.omg.dds.sub.SubscriberListener;
-import org.omg.dds.topic.TopicListener;
+import org.omg.dds.topic.InconsistentTopicStatus;
 
 
 public interface DomainParticipantListener
-extends TopicListener, PublisherListener, SubscriberListener {
-    // empty
+extends PublisherListener, SubscriberListener {
+    public void onInconsistentTopic(InconsistentTopicStatus<?> status);
 }

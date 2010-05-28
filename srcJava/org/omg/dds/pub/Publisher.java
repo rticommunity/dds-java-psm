@@ -52,11 +52,11 @@ extends DomainEntity<Publisher,
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic,
             DataWriterQos qos,
-            DataWriterListener listener);
+            DataWriterListener<TYPE> listener);
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic,
             DataWriterQos qos,
-            DataWriterListener listener,
+            DataWriterListener<TYPE> listener,
             Collection<Status.Kind> status);
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic,
@@ -66,12 +66,12 @@ extends DomainEntity<Publisher,
             Topic<TYPE> topic,
             String qosLibraryName,
             String qosProfileName,
-            DataWriterListener listener);
+            DataWriterListener<TYPE> listener);
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic,
             String qosLibraryName,
             String qosProfileName,
-            DataWriterListener listener,
+            DataWriterListener<TYPE> listener,
             Collection<Status.Kind> status);
 
     public <TYPE> DataWriter<TYPE> lookupDataWriter(String topicName);

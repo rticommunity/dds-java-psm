@@ -50,11 +50,11 @@ extends DomainEntity<Subscriber,
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
-            DataReaderListener listener);
+            DataReaderListener<TYPE> listener);
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
-            DataReaderListener listener,
+            DataReaderListener<TYPE> listener,
             Collection<Status.Kind> statuses);
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
@@ -64,12 +64,12 @@ extends DomainEntity<Subscriber,
             TopicDescription<TYPE> topic,
             String qosLibraryName,
             String qosProfileName,
-            DataReaderListener listener);
+            DataReaderListener<TYPE> listener);
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             String qosLibraryName,
             String qosProfileName,
-            DataReaderListener listener,
+            DataReaderListener<TYPE> listener,
             Collection<Status.Kind> statuses);
 
     public void closeContainedEntities();

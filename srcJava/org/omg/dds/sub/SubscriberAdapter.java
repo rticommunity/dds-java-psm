@@ -29,9 +29,45 @@
 package org.omg.dds.sub;
 
 
-public class SubscriberAdapter
-extends DataReaderAdapter implements SubscriberListener
+public class SubscriberAdapter implements SubscriberListener
 {
+    public void onDataAvailable(DataAvailableStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onLivelinessChanged(LivelinessChangedStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onRequestedDeadlineMissed(
+            RequestedDeadlineMissedStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onRequestedIncompatibleQos(
+            RequestedIncompatibleQosStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onSampleLost(SampleLostStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onSampleRejected(SampleRejectedStatus<?> status)
+    {
+        // empty
+    }
+
+    public void onSubscriptionMatched(SubscriptionMatchedStatus<?> status)
+    {
+        // empty
+    }
+
     public void onDataOnReaders(DataOnReadersStatus status)
     {
         // empty

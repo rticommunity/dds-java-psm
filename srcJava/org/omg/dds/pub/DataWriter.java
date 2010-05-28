@@ -42,7 +42,7 @@ import org.omg.dds.topic.Topic;
 public interface DataWriter<TYPE>
 extends DomainEntity<DataWriter<TYPE>,
                      Publisher,
-                     DataWriterListener,
+                     DataWriterListener<TYPE>,
                      DataWriterQos> {
     /**
      * @return  the type parameter if this object's class.
