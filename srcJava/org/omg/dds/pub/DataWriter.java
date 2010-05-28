@@ -49,6 +49,17 @@ extends DomainEntity<DataWriter<TYPE>,
      */
     public Class<TYPE> getType();
 
+    /**
+     * Cast this data writer to the given type, or throw an exception if
+     * the cast fails.
+     * 
+     * @param <OTHER>   The type of the data published by this writer,
+     *                  according to the caller.
+     * @return          this data writer
+     * @throws          ClassCastException if the cast fails
+     */
+    public <OTHER> DataWriter<OTHER> cast();
+
     public Topic<TYPE> getTopic();
 
     public void waitForAcknowledgments(Duration maxWait)

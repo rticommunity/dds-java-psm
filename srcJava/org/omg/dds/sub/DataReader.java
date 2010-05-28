@@ -49,6 +49,17 @@ extends DomainEntity<DataReader<TYPE>,
      */
     public Class<TYPE> getType();
 
+    /**
+     * Cast this data reader to the given type, or throw an exception if
+     * the cast fails.
+     * 
+     * @param <OTHER>   The type of the data subscribed to by this reader,
+     *                  according to the caller.
+     * @return          this data reader
+     * @throws          ClassCastException if the cast fails
+     */
+    public <OTHER> DataReader<OTHER> cast();
+
     public ReadCondition<TYPE> createReadCondition();
     public ReadCondition<TYPE> createReadCondition(
             Collection<SampleState> sampleStates,

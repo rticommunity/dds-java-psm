@@ -38,6 +38,17 @@ public interface TopicDescription<TYPE> extends DdsObject {
      */
     public Class<TYPE> getType();
 
+    /**
+     * Cast this topic description to the given type, or throw an exception if
+     * the cast fails.
+     * 
+     * @param <OTHER>   The type of the data exchanged on this topic,
+     *                  according to the caller.
+     * @return          this topic description
+     * @throws          ClassCastException if the cast fails
+     */
+    public <OTHER> TopicDescription<OTHER> cast();
+
     public String getTypeName();
     public String getName();
 
