@@ -32,7 +32,7 @@ package org.omg.dds.sub;
 public class SubscriberAdapter
 extends DataReaderAdapter implements SubscriberListener
 {
-    public void onDataOnReaders(Subscriber subscriber)
+    public void onDataOnReaders(DataOnReadersStatus status)
     {
         // empty
     }

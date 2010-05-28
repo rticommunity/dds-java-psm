@@ -30,5 +30,5 @@ package org.omg.dds.sub;
 
 
 public interface SubscriberListener extends DataReaderListener {
-    public void onDataOnReaders(Subscriber subscriber);
+    public void onDataOnReaders(DataOnReadersStatus status);
 }

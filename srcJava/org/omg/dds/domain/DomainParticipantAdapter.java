@@ -32,13 +32,13 @@ import org.omg.dds.pub.LivelinessLostStatus;
 import org.omg.dds.pub.OfferedDeadlineMissedStatus;
 import org.omg.dds.pub.OfferedIncompatibleQosStatus;
 import org.omg.dds.pub.PublicationMatchedStatus;
-import org.omg.dds.sub.DataReader;
+import org.omg.dds.sub.DataAvailableStatus;
+import org.omg.dds.sub.DataOnReadersStatus;
 import org.omg.dds.sub.LivelinessChangedStatus;
 import org.omg.dds.sub.RequestedDeadlineMissedStatus;
 import org.omg.dds.sub.RequestedIncompatibleQosStatus;
 import org.omg.dds.sub.SampleLostStatus;
 import org.omg.dds.sub.SampleRejectedStatus;
-import org.omg.dds.sub.Subscriber;
 import org.omg.dds.sub.SubscriptionMatchedStatus;
 import org.omg.dds.topic.InconsistentTopicStatus;
 
@@ -74,12 +74,12 @@ public class DomainParticipantAdapter implements DomainParticipantListener
         // empty
     }
 
-    public void onDataOnReaders(Subscriber subscriber)
+    public void onDataOnReaders(DataOnReadersStatus status)
     {
         // empty
     }
 
-    public <TYPE> void onDataAvailable(DataReader<TYPE> reader)
+    public <TYPE> void onDataAvailable(DataAvailableStatus<TYPE> status)
     {
         // empty
     }

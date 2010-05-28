@@ -28,47 +28,24 @@
 
 package org.omg.dds.sub;
 
+import org.omg.dds.core.Status;
 
-public class DataReaderAdapter implements DataReaderListener
-{
-    public <TYPE> void onDataAvailable(DataAvailableStatus<TYPE> status)
-    {
-        // empty
-    }
 
-    public <TYPE> void onLivelinessChanged(
-            LivelinessChangedStatus<TYPE> status)
-    {
-        // empty
-    }
+public abstract class DataOnReadersStatus
+extends Status<DataOnReadersStatus, Subscriber> {
+    // -----------------------------------------------------------------------
+    // Constants
+    // -----------------------------------------------------------------------
 
-    public <TYPE> void onRequestedDeadlineMissed(
-            RequestedDeadlineMissedStatus<TYPE> status)
-    {
-        // empty
-    }
+    private static final long serialVersionUID = -770537656671131411L;
 
-    public <TYPE> void onRequestedIncompatibleQos(
-            RequestedIncompatibleQosStatus<TYPE> status)
-    {
-        // empty
-    }
 
-    public <TYPE> void onSampleLost(
-            SampleLostStatus<TYPE> status)
-    {
-        // empty
-    }
 
-    public <TYPE> void onSampleRejected(
-            SampleRejectedStatus<TYPE> status)
-    {
-        // empty
-    }
+    // -----------------------------------------------------------------------
+    // Object Lifecycle
+    // -----------------------------------------------------------------------
 
-    public <TYPE> void onSubscriptionMatched(
-            SubscriptionMatchedStatus<TYPE> status)
-    {
-        // empty
+    protected DataOnReadersStatus(Subscriber source) {
+        super(source);
     }
 }

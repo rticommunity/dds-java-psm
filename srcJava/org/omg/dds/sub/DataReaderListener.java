@@ -45,7 +45,7 @@ public interface DataReaderListener extends EventListener {
     public <TYPE> void onSampleRejected(SampleRejectedStatus<TYPE> status);
     public <TYPE> void onLivelinessChanged(
             LivelinessChangedStatus<TYPE> status);
-    public <TYPE> void onDataAvailable(DataReader<TYPE> reader);
+    public <TYPE> void onDataAvailable(DataAvailableStatus<TYPE> status);
     public <TYPE> void onSubscriptionMatched(
             SubscriptionMatchedStatus<TYPE> status);
     public <TYPE> void onSampleLost(SampleLostStatus<TYPE> status);
