@@ -35,6 +35,7 @@ import java.util.concurrent.TimeoutException;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.domain.discovery.PublicationBuiltinTopicData;
 import org.omg.dds.topic.TopicDescription;
 
@@ -339,6 +340,7 @@ extends DomainEntity<DataReader<TYPE>,
             TYPE keyHolder, 
             InstanceHandle handle);
 
-    public InstanceHandle lookupInstance(
+    public void lookupInstance(
+            ModifiableInstanceHandle handle,
             TYPE keyHolder);
 }
