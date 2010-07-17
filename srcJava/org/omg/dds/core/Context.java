@@ -50,6 +50,7 @@ import org.omg.dds.sub.SampleState;
 import org.omg.dds.sub.SubscriptionMatchedStatus;
 import org.omg.dds.sub.ViewState;
 import org.omg.dds.topic.InconsistentTopicStatus;
+import org.omg.dds.topic.TypeSupport;
 
 
 /**
@@ -75,7 +76,7 @@ public abstract class Context implements DdsObject {
      * messages or format errors in a certain way.
      */
     private static final String ERROR_STRING =
-        "Unable to load OMG DDS implementation";
+        "Unable to load OMG DDS implementation.";
 
 
 
@@ -94,7 +95,7 @@ public abstract class Context implements DdsObject {
         if (className == null || className.length() == 0) {
             // no implementation class name specified
             throw new ServiceNotFoundException(
-                    ERROR_STRING + ". Please set " +
+                    ERROR_STRING + " Please set " +
                         implClassNameProperty + " property.");
         }
 
@@ -131,6 +132,42 @@ public abstract class Context implements DdsObject {
     // --- Entities: ---------------------------------------------------------
 
     public abstract DomainParticipantFactory getParticipantFactory();
+
+    /**
+     * Create a new {@link TypeSupport} object for the given physical type.
+     * This method is equivalent to:
+     * 
+     * <code>createTypeSupport(type, type.getClass().getName())</code>
+     */
+    public abstract <TYPE> TypeSupport<TYPE> createTypeSupport(
+            Class<TYPE> type);
+
+    /**
+     * Create a new {@link TypeSupport} object for the given physical type.
+     * The Service will register this type under the given name with any
+     * participant with which the <code>TypeSupport</code> is used.
+     * 
+     * @param <TYPE>    The physical type of all samples read or written by
+     *                  any {@link org.omg.dds.sub.DataReader} or
+     *                  {@link org.omg.dds.pub.DataWriter} typed by the
+     *                  resulting <code>TypeSupport</code>.
+     * @param type      The physical type of all samples read or written by
+     *                  any {@link org.omg.dds.sub.DataReader} or
+     *                  {@link org.omg.dds.pub.DataWriter} typed by the
+     *                  resulting <code>TypeSupport</code>.
+     * @param registeredName    The logical name under which this type will
+     *                          be registered with any
+     *                          {@link org.omg.dds.domain.DomainParticipant}
+     *                          with which the resulting
+     *                          <code>TypeSupport</code> is used.
+     * @return          A new <code>TypeSupport</code> object, which can
+     *                  subsequently be used to create one or more
+     *                  {@link org.omg.dds.topic.Topic}s.
+     * 
+     * @see #createTypeSupport(Class)
+     */
+    public abstract <TYPE> TypeSupport<TYPE> createTypeSupport(
+            Class<TYPE> type, String registeredName);
 
 
     // --- Time: -------------------------------------------------------------

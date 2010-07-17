@@ -51,6 +51,7 @@ import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicListener;
 import org.omg.dds.topic.TopicQos;
+import org.omg.dds.topic.TypeSupport;
 
 
 public interface DomainParticipant
@@ -105,80 +106,38 @@ extends Entity<DomainParticipant,
 
     public Subscriber getBuiltinSubscriber();
 
-    // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            String typeName);
+            TypeSupport<TYPE> type);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            String typeName,
+            TypeSupport<TYPE> type,
             TopicQos qos);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            String typeName,
+            TypeSupport<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            String typeName,
+            TypeSupport<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
             Collection<Status.Kind> status);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            String typeName,
+            TypeSupport<TYPE> type,
             String qosLibraryName,
             String qosProfileName);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            String typeName,
+            TypeSupport<TYPE> type,
             String qosLibraryName,
             String qosProfileName,
             TopicListener<TYPE> listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            String typeName,
-            String qosLibraryName,
-            String qosProfileName,
-            TopicListener<TYPE> listener,
-            Collection<Status.Kind> status);
-
-    /**
-     * Implicitly register the given type, if necessary, under its fully
-     * qualified name and then create a topic of that type.
-     */
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<? super TYPE> type);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<? super TYPE> type,
-            TopicQos qos);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<? super TYPE> type,
-            TopicQos qos,
-            TopicListener<TYPE> listener);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<? super TYPE> type,
-            TopicQos qos,
-            TopicListener<TYPE> listener,
-            Collection<Status.Kind> status);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<? super TYPE> type,
-            String qosLibraryName,
-            String qosProfileName);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<? super TYPE> type,
-            String qosLibraryName,
-            String qosProfileName,
-            TopicListener<TYPE> listener);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<? super TYPE> type,
+            TypeSupport<TYPE> type,
             String qosLibraryName,
             String qosProfileName,
             TopicListener<TYPE> listener,
