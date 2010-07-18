@@ -117,6 +117,12 @@ extends DomainEntity<DataWriter<TYPE>,
             TYPE instanceData) throws TimeoutException;
     public void write(
             TYPE instanceData, 
+            Time sourceTimestamp) throws TimeoutException;
+    public void write(
+            TYPE instanceData, 
+            long sourceTimestampMillis) throws TimeoutException;
+    public void write(
+            TYPE instanceData, 
             InstanceHandle handle) throws TimeoutException;
     public void write(
             TYPE instanceData, 
