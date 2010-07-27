@@ -26,12 +26,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.builtintype;
+package org.omg.dds.type.builtin;
 
-import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
 
 
-public interface StringDataWriter extends DataWriter<String> 
+public interface StringDataReader extends DataReader<String> 
 {
     // empty
 }

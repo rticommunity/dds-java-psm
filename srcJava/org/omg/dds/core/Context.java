@@ -50,7 +50,7 @@ import org.omg.dds.sub.SampleState;
 import org.omg.dds.sub.SubscriptionMatchedStatus;
 import org.omg.dds.sub.ViewState;
 import org.omg.dds.topic.InconsistentTopicStatus;
-import org.omg.dds.topic.TypeSupport;
+import org.omg.dds.type.TypeSupport;
 
 
 /**

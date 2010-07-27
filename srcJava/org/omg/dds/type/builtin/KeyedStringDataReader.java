@@ -26,12 +26,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.builtintype;
+package org.omg.dds.type.builtin;
 
 import org.omg.dds.sub.DataReader;
 
 
-public interface KeyedBytesDataReader extends DataReader<KeyedBytes> 
+public interface KeyedStringDataReader extends DataReader<KeyedString> 
 {
     // empty
 }

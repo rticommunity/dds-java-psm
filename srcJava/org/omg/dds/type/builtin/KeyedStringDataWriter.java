@@ -26,12 +26,47 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.builtintype;
+package org.omg.dds.type.builtin;
 
-import org.omg.dds.sub.DataReader;
+import java.util.concurrent.TimeoutException;
+
+import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.core.Time;
+import org.omg.dds.pub.DataWriter;
 
 
-public interface BytesDataReader extends DataReader<byte[]> 
+public interface KeyedStringDataWriter extends DataWriter<KeyedString> 
 {
-    // empty
+    public InstanceHandle registerInstance(String key)
+    throws TimeoutException;
+
+    public InstanceHandle registerInstance(String key, Time sourceTimestamp)
+    throws TimeoutException;
+
+    public void unregisterInstance(String key) throws TimeoutException;
+
+    public void unregisterInstance(String key, Time sourceTimestamp)
+    throws TimeoutException;
+
+    public void write(String key, String str) throws TimeoutException;
+
+    public void write(String key, String str, InstanceHandle handle)
+    throws TimeoutException;
+
+    public void write(
+            String key,
+            String str,
+            InstanceHandle handle,
+            Time sourceTimestamp)
+    throws TimeoutException;
+
+    public void dispose(String key) throws TimeoutException;
+
+    public void dispose(String key, Time sourceTimestamp)
+    throws TimeoutException;
+
+    public void getKeyValue(StringBuilder key, InstanceHandle handle);
+
+    public void lookupInstance(ModifiableInstanceHandle handle, String key);
 }

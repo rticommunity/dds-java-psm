@@ -26,16 +26,28 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.topic;
-
-import org.omg.dds.core.DdsObject;
-import org.omg.dds.domain.DomainParticipant;
+package org.omg.dds.type.builtin;
 
 
-public interface TypeSupport<TYPE> extends DdsObject {
-    public void registerType(
-            DomainParticipant participant, 
-            String typeName);
+public interface KeyedString
+{
+    /**
+     * @param key the key to set
+     */
+    public void setKey(CharSequence key);
 
-    public String getTypeName();
+    /**
+     * @return the key
+     */
+    public String getKey();
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue(CharSequence value);
+
+    /**
+     * @return the value
+     */
+    public String getValue();
 }

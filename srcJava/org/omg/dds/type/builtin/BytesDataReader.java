@@ -26,32 +26,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.builtintype;
+package org.omg.dds.type.builtin;
 
-import java.util.concurrent.TimeoutException;
-
-import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.core.Time;
-import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
 
 
-public interface BytesDataWriter extends DataWriter<byte[]>
+public interface BytesDataReader extends DataReader<byte[]> 
 {
-    public void write(byte[] bytes, int offset, int length)
-    throws TimeoutException;
-
-    public void write(
-            byte[] bytes,
-            int offset,
-            int length,
-            InstanceHandle handle)
-    throws TimeoutException;
-
-    public void write(
-            byte[] bytes,
-            int offset,
-            int length,
-            InstanceHandle handle,
-            Time sourceTimestamp)
-    throws TimeoutException;
+    // empty
 }

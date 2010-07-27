@@ -26,28 +26,33 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.builtintype;
+package org.omg.dds.type.builtin;
 
 
-public interface KeyedString
+public interface KeyedBytes
 {
-    /**
-     * @param key the key to set
-     */
-    public void setKey(CharSequence key);
-
     /**
      * @return the key
      */
     public String getKey();
 
     /**
-     * @param value the value to set
+     * @param key the key to set
      */
-    public void setValue(CharSequence value);
+    public void setKey(CharSequence key);
 
     /**
      * @return the value
      */
-    public String getValue();
+    public byte[] getValue();
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue(byte value[]);
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue(byte value[], int offset, int length);
 }

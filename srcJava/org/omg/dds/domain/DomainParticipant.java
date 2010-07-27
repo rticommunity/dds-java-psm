@@ -51,7 +51,7 @@ import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicListener;
 import org.omg.dds.topic.TopicQos;
-import org.omg.dds.topic.TypeSupport;
+import org.omg.dds.type.TypeSupport;
 
 
 public interface DomainParticipant

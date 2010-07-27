@@ -26,12 +26,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.builtintype;
+package org.omg.dds.type;
 
-import org.omg.dds.sub.DataReader;
+import org.omg.dds.core.DdsObject;
+import org.omg.dds.domain.DomainParticipant;
 
 
-public interface KeyedStringDataReader extends DataReader<KeyedString> 
-{
-    // empty
+public interface TypeSupport<TYPE> extends DdsObject {
+    public void registerType(
+            DomainParticipant participant, 
+            String typeName);
+
+    public String getTypeName();
 }

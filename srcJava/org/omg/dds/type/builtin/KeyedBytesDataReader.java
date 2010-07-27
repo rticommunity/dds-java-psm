@@ -26,33 +26,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.builtintype;
+package org.omg.dds.type.builtin;
+
+import org.omg.dds.sub.DataReader;
 
 
-public interface KeyedBytes
+public interface KeyedBytesDataReader extends DataReader<KeyedBytes> 
 {
-    /**
-     * @return the key
-     */
-    public String getKey();
-
-    /**
-     * @param key the key to set
-     */
-    public void setKey(CharSequence key);
-
-    /**
-     * @return the value
-     */
-    public byte[] getValue();
-
-    /**
-     * @param value the value to set
-     */
-    public void setValue(byte value[]);
-
-    /**
-     * @param value the value to set
-     */
-    public void setValue(byte value[], int offset, int length);
+    // empty
 }
