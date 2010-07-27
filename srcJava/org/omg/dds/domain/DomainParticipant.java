@@ -106,6 +106,49 @@ extends Entity<DomainParticipant,
 
     public Subscriber getBuiltinSubscriber();
 
+
+    // --- Create Topic with implicit TypeSupport: ---------------------------
+
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<TYPE> type);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<TYPE> type,
+            TopicQos qos);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<TYPE> type,
+            TopicQos qos,
+            TopicListener<TYPE> listener);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<TYPE> type,
+            TopicQos qos,
+            TopicListener<TYPE> listener,
+            Collection<Status.Kind> status);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<TYPE> type,
+            String qosLibraryName,
+            String qosProfileName);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<TYPE> type,
+            String qosLibraryName,
+            String qosProfileName,
+            TopicListener<TYPE> listener);
+    public <TYPE> Topic<TYPE> createTopic(
+            String topicName,
+            Class<TYPE> type,
+            String qosLibraryName,
+            String qosProfileName,
+            TopicListener<TYPE> listener,
+            Collection<Status.Kind> status);
+
+
+    // --- Create Topic with explicit TypeSupport: ---------------------------
+
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             TypeSupport<TYPE> type);
@@ -142,6 +185,9 @@ extends Entity<DomainParticipant,
             String qosProfileName,
             TopicListener<TYPE> listener,
             Collection<Status.Kind> status);
+
+
+    // --- Other operations: -------------------------------------------------
 
     // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> findTopic(

@@ -84,12 +84,12 @@ public abstract class Context implements DdsObject {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public static Context getInstance() {
-        return getInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY);
+    public static Context createInstance() {
+        return createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY);
     }
 
 
-    public static Context getInstance(String implClassNameProperty) {
+    public static Context createInstance(String implClassNameProperty) {
         // --- Get implementation class name --- //
         String className = System.getProperty(implClassNameProperty);
         if (className == null || className.length() == 0) {
