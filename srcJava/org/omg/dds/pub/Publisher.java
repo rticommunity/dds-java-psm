@@ -37,13 +37,22 @@ import org.omg.dds.core.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicQos;
+import org.omg.dds.type.builtin.BytesDataWriter;
+import org.omg.dds.type.builtin.KeyedBytes;
+import org.omg.dds.type.builtin.KeyedBytesDataWriter;
+import org.omg.dds.type.builtin.KeyedString;
+import org.omg.dds.type.builtin.KeyedStringDataWriter;
+import org.omg.dds.type.builtin.StringDataWriter;
 
 
 public interface Publisher
 extends DomainEntity<Publisher,
                      DomainParticipant,
                      PublisherListener,
-                     PublisherQos> {
+                     PublisherQos>
+{
+    // --- Create (any) DataWriter: ------------------------------------------
+
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic);
     public <TYPE> DataWriter<TYPE> createDataWriter(
@@ -74,8 +83,151 @@ extends DomainEntity<Publisher,
             DataWriterListener<TYPE> listener,
             Collection<Status.Kind> status);
 
+
+    // --- Create DataWriter for built-in bytes type: ------------------------
+
+    public BytesDataWriter createDataWriter(
+            Topic<byte[]> topic);
+    public BytesDataWriter createDataWriter(
+            Topic<byte[]> topic,
+            DataWriterQos qos);
+    public BytesDataWriter createDataWriter(
+            Topic<byte[]> topic,
+            DataWriterQos qos,
+            DataWriterListener<byte[]> listener);
+    public BytesDataWriter createDataWriter(
+            Topic<byte[]> topic,
+            DataWriterQos qos,
+            DataWriterListener<byte[]> listener,
+            Collection<Status.Kind> status);
+    public BytesDataWriter createDataWriter(
+            Topic<byte[]> topic,
+            String qosLibraryName,
+            String qosProfileName);
+    public BytesDataWriter createDataWriter(
+            Topic<byte[]> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener<byte[]> listener);
+    public BytesDataWriter createDataWriter(
+            Topic<byte[]> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener<byte[]> listener,
+            Collection<Status.Kind> status);
+
+
+    // --- Create DataWriter for built-in KeyedBytes type: -------------------
+
+    public KeyedBytesDataWriter createDataWriter(
+            Topic<KeyedBytes> topic);
+    public KeyedBytesDataWriter createDataWriter(
+            Topic<KeyedBytes> topic,
+            DataWriterQos qos);
+    public KeyedBytesDataWriter createDataWriter(
+            Topic<KeyedBytes> topic,
+            DataWriterQos qos,
+            DataWriterListener<KeyedBytes> listener);
+    public KeyedBytesDataWriter createDataWriter(
+            Topic<KeyedBytes> topic,
+            DataWriterQos qos,
+            DataWriterListener<KeyedBytes> listener,
+            Collection<Status.Kind> status);
+    public KeyedBytesDataWriter createDataWriter(
+            Topic<KeyedBytes> topic,
+            String qosLibraryName,
+            String qosProfileName);
+    public KeyedBytesDataWriter createDataWriter(
+            Topic<KeyedBytes> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener<KeyedBytes> listener);
+    public KeyedBytesDataWriter createDataWriter(
+            Topic<KeyedBytes> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener<KeyedBytes> listener,
+            Collection<Status.Kind> status);
+
+
+    // --- Create DataWriter for built-in string type: -----------------------
+
+    public StringDataWriter createDataWriter(
+            Topic<String> topic);
+    public StringDataWriter createDataWriter(
+            Topic<String> topic,
+            DataWriterQos qos);
+    public StringDataWriter createDataWriter(
+            Topic<String> topic,
+            DataWriterQos qos,
+            DataWriterListener<String> listener);
+    public StringDataWriter createDataWriter(
+            Topic<String> topic,
+            DataWriterQos qos,
+            DataWriterListener<String> listener,
+            Collection<Status.Kind> status);
+    public StringDataWriter createDataWriter(
+            Topic<String> topic,
+            String qosLibraryName,
+            String qosProfileName);
+    public StringDataWriter createDataWriter(
+            Topic<String> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener<String> listener);
+    public StringDataWriter createDataWriter(
+            Topic<String> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener<String> listener,
+            Collection<Status.Kind> status);
+
+
+    // --- Create DataWriter for built-in KeyedString type: ------------------
+
+    public KeyedStringDataWriter createDataWriter(
+            Topic<KeyedString> topic);
+    public KeyedStringDataWriter createDataWriter(
+            Topic<KeyedString> topic,
+            DataWriterQos qos);
+    public KeyedStringDataWriter createDataWriter(
+            Topic<KeyedString> topic,
+            DataWriterQos qos,
+            DataWriterListener<KeyedString> listener);
+    public KeyedStringDataWriter createDataWriter(
+            Topic<KeyedString> topic,
+            DataWriterQos qos,
+            DataWriterListener<KeyedString> listener,
+            Collection<Status.Kind> status);
+    public KeyedStringDataWriter createDataWriter(
+            Topic<KeyedString> topic,
+            String qosLibraryName,
+            String qosProfileName);
+    public KeyedStringDataWriter createDataWriter(
+            Topic<KeyedString> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener<KeyedString> listener);
+    public KeyedStringDataWriter createDataWriter(
+            Topic<KeyedString> topic,
+            String qosLibraryName,
+            String qosProfileName,
+            DataWriterListener<KeyedString> listener,
+            Collection<Status.Kind> status);
+
+
+    // --- Lookup operations: ------------------------------------------------
+
     public <TYPE> DataWriter<TYPE> lookupDataWriter(String topicName);
     public <TYPE> DataWriter<TYPE> lookupDataWriter(Topic<TYPE> topicName);
+    public BytesDataWriter lookupDataWriter(Topic<byte[]> topicName);
+    public KeyedBytesDataWriter lookupDataWriter(Topic<KeyedBytes> topicName);
+    public StringDataWriter lookupDataWriter(Topic<String> topicName);
+    public KeyedStringDataWriter lookupDataWriter(
+            Topic<KeyedString> topicName);
+
+
+    // --- Other operations: -------------------------------------------------
 
     public void closeContainedEntities();
 
