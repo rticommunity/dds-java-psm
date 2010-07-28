@@ -29,6 +29,7 @@
 package org.omg.dds.sub;
 
 import org.omg.dds.core.Qos;
+import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.DurabilityQosPolicy;
@@ -39,6 +40,7 @@ import org.omg.dds.core.policy.OwnershipQosPolicy;
 import org.omg.dds.core.policy.ReaderDataLifecycleQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
+import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 
 
@@ -98,4 +100,8 @@ extends Qos<DataReaderQos, ModifiableDataReaderQos> {
      * @return the readerDataLifecycle
      */
     public ReaderDataLifecycleQosPolicy getReaderDataLifecycle();
+
+    public DataRepresentationQosPolicy getRepresentation();
+
+    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
 }

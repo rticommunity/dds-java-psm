@@ -29,6 +29,7 @@
 package org.omg.dds.pub;
 
 import org.omg.dds.core.ModifiableQos;
+import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.DurabilityQosPolicy;
@@ -37,6 +38,7 @@ import org.omg.dds.core.policy.HistoryQosPolicy;
 import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
 import org.omg.dds.core.policy.LifespanQosPolicy;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
+import org.omg.dds.core.policy.ModifiableDataRepresentationQosPolicy;
 import org.omg.dds.core.policy.ModifiableDeadlineQosPolicy;
 import org.omg.dds.core.policy.ModifiableDestinationOrderQosPolicy;
 import org.omg.dds.core.policy.ModifiableDurabilityQosPolicy;
@@ -50,6 +52,7 @@ import org.omg.dds.core.policy.ModifiableOwnershipStrengthQosPolicy;
 import org.omg.dds.core.policy.ModifiableReliabilityQosPolicy;
 import org.omg.dds.core.policy.ModifiableResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.ModifiableTransportPriorityQosPolicy;
+import org.omg.dds.core.policy.ModifiableTypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.ModifiableUserDataQosPolicy;
 import org.omg.dds.core.policy.ModifiableWriterDataLifecycleQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
@@ -57,6 +60,7 @@ import org.omg.dds.core.policy.OwnershipStrengthQosPolicy;
 import org.omg.dds.core.policy.ReliabilityQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
+import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
 import org.omg.dds.topic.TopicQos;
@@ -218,6 +222,15 @@ extends DataWriterQos, ModifiableQos<DataWriterQos, ModifiableDataWriterQos> {
      * @return the writerDataLifecycle
      */
     public ModifiableWriterDataLifecycleQosPolicy getWriterDataLifecycle();
+
+    public ModifiableDataRepresentationQosPolicy getRepresentation();
+
+    public void setRepresentation(DataRepresentationQosPolicy representation);
+
+    public ModifiableTypeConsistencyEnforcementQosPolicy getTypeConsistency();
+
+    public void setTypeConsistency(
+            TypeConsistencyEnforcementQosPolicy typeConsistency);
 
     public ModifiableDataWriterQos copyFrom(TopicQos src);
 }

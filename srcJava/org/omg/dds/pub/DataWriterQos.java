@@ -29,6 +29,7 @@
 package org.omg.dds.pub;
 
 import org.omg.dds.core.Qos;
+import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.DurabilityQosPolicy;
@@ -42,6 +43,7 @@ import org.omg.dds.core.policy.OwnershipStrengthQosPolicy;
 import org.omg.dds.core.policy.ReliabilityQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
+import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
 
@@ -123,4 +125,7 @@ extends Qos<DataWriterQos, ModifiableDataWriterQos> {
      */
     public WriterDataLifecycleQosPolicy getWriterDataLifecycle();
 
+    public DataRepresentationQosPolicy getRepresentation();
+
+    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
 }
