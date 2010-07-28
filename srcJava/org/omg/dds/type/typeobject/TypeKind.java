@@ -29,40 +29,78 @@
 package org.omg.dds.type.typeobject;
 
 
-public enum TypeKind {
+public enum TypeKind
+{
     // -----------------------------------------------------------------------
-    // Constants
+    // Enumerated Constants
     // -----------------------------------------------------------------------
 
-    NO_TYPE         ((short)  0), // sentinel indicating "null" value
-    BOOLEAN_TYPE    ((short)  1),
-    BYTE_TYPE       ((short)  2),
-    INT_16_TYPE     ((short)  3),
-    UINT_16_TYPE    ((short)  4),
-    INT_32_TYPE     ((short)  5),
-    UINT_32_TYPE    ((short)  6),
-    INT_64_TYPE     ((short)  7),
-    UINT_64_TYPE    ((short)  8),
-    FLOAT_32_TYPE   ((short)  9),
-    FLOAT_64_TYPE   ((short) 10),
-    FLOAT_128_TYPE  ((short) 11),
-    CHAR_8_TYPE     ((short) 12),
-    CHAR_32_TYPE    ((short) 13),
+    /** sentinel indicating "null" value */
+    NO_TYPE         (Values.NO_TYPE_VALUE),
+    BOOLEAN_TYPE    (Values.BOOLEAN_TYPE_VALUE),
+    BYTE_TYPE       (Values.BYTE_TYPE_VALUE),
+    INT_16_TYPE     (Values.INT_16_TYPE_VALUE),
+    UINT_16_TYPE    (Values.UINT_16_TYPE_VALUE),
+    INT_32_TYPE     (Values.INT_32_TYPE_VALUE),
+    UINT_32_TYPE    (Values.UINT_32_TYPE_VALUE),
+    INT_64_TYPE     (Values.INT_64_TYPE_VALUE),
+    UINT_64_TYPE    (Values.UINT_64_TYPE_VALUE),
+    FLOAT_32_TYPE   (Values.FLOAT_32_TYPE_VALUE),
+    FLOAT_64_TYPE   (Values.FLOAT_64_TYPE_VALUE),
+    FLOAT_128_TYPE  (Values.FLOAT_128_TYPE_VALUE),
+    CHAR_8_TYPE     (Values.CHAR_8_TYPE_VALUE),
+    CHAR_32_TYPE    (Values.CHAR_32_TYPE_VALUE),
 
-    ENUMERATION_TYPE((short) 14),
-    BITSET_TYPE     ((short) 15),
-    ALIAS_TYPE      ((short) 16),
+    ENUMERATION_TYPE(Values.ENUMERATION_TYPE_VALUE),
+    BITSET_TYPE     (Values.BITSET_TYPE_VALUE),
+    ALIAS_TYPE      (Values.ALIAS_TYPE_VALUE),
 
-    ARRAY_TYPE      ((short) 17),
-    SEQUENCE_TYPE   ((short) 18),
-    STRING_TYPE     ((short) 19),
-    MAP_TYPE        ((short) 20),
+    ARRAY_TYPE      (Values.ARRAY_TYPE_VALUE),
+    SEQUENCE_TYPE   (Values.SEQUENCE_TYPE_VALUE),
+    STRING_TYPE     (Values.STRING_TYPE_VALUE),
+    MAP_TYPE        (Values.MAP_TYPE_VALUE),
 
-    UNION_TYPE      ((short) 21),
-    STRUCTURE_TYPE  ((short) 22),
-    ANNOTATION_TYPE ((short) 23),
+    UNION_TYPE      (Values.UNION_TYPE_VALUE),
+    STRUCTURE_TYPE  (Values.STRUCTURE_TYPE_VALUE),
+    ANNOTATION_TYPE (Values.ANNOTATION_TYPE_VALUE),
     ;
 
+
+
+    // -----------------------------------------------------------------------
+    // Compile-TIme Constants
+    // -----------------------------------------------------------------------
+
+    public static final class Values {
+        /** sentinel indicating "null" value */
+        public static final short NO_TYPE_VALUE          =  0;
+        public static final short BOOLEAN_TYPE_VALUE     =  1;
+        public static final short BYTE_TYPE_VALUE        =  2;
+        public static final short INT_16_TYPE_VALUE      =  3;
+        public static final short UINT_16_TYPE_VALUE     =  4;
+        public static final short INT_32_TYPE_VALUE      =  5;
+        public static final short UINT_32_TYPE_VALUE     =  6;
+        public static final short INT_64_TYPE_VALUE      =  7;
+        public static final short UINT_64_TYPE_VALUE     =  8;
+        public static final short FLOAT_32_TYPE_VALUE    =  9;
+        public static final short FLOAT_64_TYPE_VALUE    = 10;
+        public static final short FLOAT_128_TYPE_VALUE   = 11;
+        public static final short CHAR_8_TYPE_VALUE      = 12;
+        public static final short CHAR_32_TYPE_VALUE     = 13;
+
+        public static final short ENUMERATION_TYPE_VALUE = 14;
+        public static final short BITSET_TYPE_VALUE      = 15;
+        public static final short ALIAS_TYPE_VALUE       = 16;
+
+        public static final short ARRAY_TYPE_VALUE       = 17;
+        public static final short SEQUENCE_TYPE_VALUE    = 18;
+        public static final short STRING_TYPE_VALUE      = 19;
+        public static final short MAP_TYPE_VALUE         = 20;
+
+        public static final short UNION_TYPE_VALUE       = 21;
+        public static final short STRUCTURE_TYPE_VALUE   = 22;
+        public static final short ANNOTATION_TYPE_VALUE  = 23;
+    }
 
 
     // -----------------------------------------------------------------------
@@ -81,4 +119,3 @@ public enum TypeKind {
         this.value = value;
     }
 }
-

@@ -28,18 +28,22 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface AliasType extends Type
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
-    //@ID(BASE_TYPE_STRUCTURETYPE_MEMBER_ID)
+    @ID(MemberId.BASE_TYPE_ALIASTYPE_MEMBER_ID)
     public int getBaseType();
 
-    //@ID(BASE_TYPE_STRUCTURETYPE_MEMBER_ID)
     public void setBaseType(int newBaseTypeId);
 
 
@@ -48,19 +52,14 @@ public interface AliasType extends Type
     // Types
     // -----------------------------------------------------------------------
 
-    public enum MemberId {
+    public static final class MemberId
+    {
         // --- Constants: ----------------------------------------------------
-        BASE_TYPE_ALIASTYPE_MEMBER_ID(0),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int BASE_TYPE_ALIASTYPE_MEMBER_ID = 100;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

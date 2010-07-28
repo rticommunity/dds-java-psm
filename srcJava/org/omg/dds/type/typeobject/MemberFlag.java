@@ -28,17 +28,29 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.type.annotation.BitBound;
+import org.omg.dds.type.annotation.BitSet;
+import org.omg.dds.type.annotation.Value;
 
-//@BitSet //@BitBound(16)
+
+@BitSet
+@BitBound(16)
 public enum MemberFlag
 {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
+    @Value(0)
     IS_KEY          ((short)  0),
+
+    @Value(1)
     IS_OPTIONAL     ((short)  1),
+
+    @Value(2)
     IS_SHAREABLE    ((short)  2),
+
+    @Value(3)
     IS_UNION_DEFAULT((short)  3),
     ;
 

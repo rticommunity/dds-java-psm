@@ -30,24 +30,27 @@ package org.omg.dds.type.typeobject;
 
 import java.util.List;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface AnnotationType extends Type
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
-    //@ID(BASE_TYPE_ANNOTATIONTYPE_MEMBER_ID)
+    @ID(MemberId.BASE_TYPE_ANNOTATIONTYPE_MEMBER_ID)
     public int getBaseType();
 
-    //@ID(BASE_TYPE_ANNOTATIONTYPE_MEMBER_ID)
     public void setBaseType(int newBaseType);
 
-    //@ID(MEMBER_ANNOTATIONTYPE_MEMBER_ID)
+    @ID(MemberId.MEMBER_ANNOTATIONTYPE_MEMBER_ID)
     public List<AnnotationMember> getMember();
 
-    //@ID(MEMBER_ANNOTATIONTYPE_MEMBER_ID)
     public void setMember(List<AnnotationMember> newMember);
 
 
@@ -56,21 +59,15 @@ public interface AnnotationType extends Type
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        BASE_TYPE_ANNOTATIONTYPE_MEMBER_ID(0),
-        MEMBER_ANNOTATIONTYPE_MEMBER_ID   (1),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int BASE_TYPE_ANNOTATIONTYPE_MEMBER_ID = 100;
+        public static final int MEMBER_ANNOTATIONTYPE_MEMBER_ID = 101;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

@@ -28,18 +28,22 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface AnnotationMember extends Member
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
-    //@ID(DEFAULT_VALUE_ANNOTATIONMEMBER_MEMBER_ID)
+    @ID(MemberId.DEFAULT_VALUE_ANNOTATIONMEMBER_MEMBER_ID)
     public AnnotationMemberValue getDefaultValue();
 
-    //@ID(DEFAULT_VALUE_ANNOTATIONMEMBER_MEMBER_ID)
     public void setDefaultValue(AnnotationMemberValue newDefaultValue);
 
 
@@ -48,20 +52,15 @@ public interface AnnotationMember extends Member
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        DEFAULT_VALUE_ANNOTATIONMEMBER_MEMBER_ID(0),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int DEFAULT_VALUE_ANNOTATIONMEMBER_MEMBER_ID =
+            100;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

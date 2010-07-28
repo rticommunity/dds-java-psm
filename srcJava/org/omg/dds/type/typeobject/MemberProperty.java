@@ -29,8 +29,12 @@
 package org.omg.dds.type.typeobject;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
 
 
+@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+@Nested
 public interface MemberProperty
 extends ModifiableValueType<MemberProperty, MemberProperty>
 {

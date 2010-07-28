@@ -37,20 +37,34 @@ public final class TypeId {
     // Constants
     // -----------------------------------------------------------------------
 
-    public static final int NO_TYPE_ID         = TypeKind.NO_TYPE.value;
-    public static final int BOOLEAN_TYPE_ID    = TypeKind.BOOLEAN_TYPE.value;
-    public static final int BYTE_TYPE_ID       = TypeKind.BYTE_TYPE.value;
-    public static final int INT_16_TYPE_ID     = TypeKind.INT_16_TYPE.value;
-    public static final int UINT_16_TYPE_ID    = TypeKind.UINT_16_TYPE.value;
-    public static final int INT_32_TYPE_ID     = TypeKind.INT_32_TYPE.value;
-    public static final int UINT_32_TYPE_ID    = TypeKind.UINT_32_TYPE.value;
-    public static final int INT_64_TYPE_ID     = TypeKind.INT_64_TYPE.value;
-    public static final int UINT_64_TYPE_ID    = TypeKind.UINT_64_TYPE.value;
-    public static final int FLOAT_32_TYPE_ID   = TypeKind.FLOAT_32_TYPE.value;
-    public static final int FLOAT_64_TYPE_ID   = TypeKind.FLOAT_64_TYPE.value;
-    public static final int FLOAT_128_TYPE_ID  = TypeKind.FLOAT_128_TYPE.value;
-    public static final int CHAR_8_TYPE_ID     = TypeKind.CHAR_8_TYPE.value;
-    public static final int CHAR_32_TYPE_ID    = TypeKind.CHAR_32_TYPE.value;
+    public static final int NO_TYPE_ID =
+        TypeKind.Values.NO_TYPE_VALUE;
+    public static final int BOOLEAN_TYPE_ID =
+        TypeKind.Values.BOOLEAN_TYPE_VALUE;
+    public static final int BYTE_TYPE_ID =
+        TypeKind.Values.BYTE_TYPE_VALUE;
+    public static final int INT_16_TYPE_ID =
+        TypeKind.Values.INT_16_TYPE_VALUE;
+    public static final int UINT_16_TYPE_ID =
+        TypeKind.Values.UINT_16_TYPE_VALUE;
+    public static final int INT_32_TYPE_ID =
+        TypeKind.Values.INT_32_TYPE_VALUE;
+    public static final int UINT_32_TYPE_ID =
+        TypeKind.Values.UINT_32_TYPE_VALUE;
+    public static final int INT_64_TYPE_ID =
+        TypeKind.Values.INT_64_TYPE_VALUE;
+    public static final int UINT_64_TYPE_ID =
+        TypeKind.Values.UINT_64_TYPE_VALUE;
+    public static final int FLOAT_32_TYPE_ID =
+        TypeKind.Values.FLOAT_32_TYPE_VALUE;
+    public static final int FLOAT_64_TYPE_ID =
+        TypeKind.Values.FLOAT_64_TYPE_VALUE;
+    public static final int FLOAT_128_TYPE_ID =
+        TypeKind.Values.FLOAT_128_TYPE_VALUE;
+    public static final int CHAR_8_TYPE_ID =
+        TypeKind.Values.CHAR_8_TYPE_VALUE;
+    public static final int CHAR_32_TYPE_ID =
+        TypeKind.Values.CHAR_32_TYPE_VALUE;
 
 
 

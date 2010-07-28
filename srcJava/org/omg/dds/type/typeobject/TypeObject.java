@@ -28,8 +28,15 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Optional;
+import org.omg.dds.type.annotation.Shared;
 
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 public interface TypeObject
+extends ModifiableValueType<TypeObject, TypeObject>
 {
     /**
      * @param library the library to set
@@ -39,6 +46,7 @@ public interface TypeObject
     /**
      * @return the library
      */
+    @Shared
     public TypeLibrary getLibrary();
 
     /**
@@ -49,5 +57,6 @@ public interface TypeObject
     /**
      * @return the the_type
      */
+    @Optional
     public int getTheType();
 }

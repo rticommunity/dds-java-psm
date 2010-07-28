@@ -31,21 +31,23 @@ package org.omg.dds.type.typeobject;
 import java.util.List;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
 
-//@Nested
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface Type extends ModifiableValueType<Type, Type>
 {
-    //@ID(PROPERTY_TYPE_MEMBER_ID)
+    @ID(MemberId.PROPERTY_TYPE_MEMBER_ID)
     public TypeProperty getProperty();
 
-    //@ID(PROPERTY_TYPE_MEMBER_ID)
     public void setProperty(TypeProperty newProperty);
 
-    //@ID(ANNOTATION_TYPE_MEMBER_ID)
+    @ID(MemberId.ANNOTATION_TYPE_MEMBER_ID)
     public List<AnnotationUsage> getAnnotation();
 
-    //@ID(ANNOTATION_TYPE_MEMBER_ID)
     public void setAnnotation(List<AnnotationUsage> newAnnotation);
     public void setAnnotation(AnnotationUsage... newAnnotation);
 
@@ -55,21 +57,15 @@ public interface Type extends ModifiableValueType<Type, Type>
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        PROPERTY_TYPE_MEMBER_ID  (0),
-        ANNOTATION_TYPE_MEMBER_ID(1),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int PROPERTY_TYPE_MEMBER_ID = 0;
+        public static final int ANNOTATION_TYPE_MEMBER_ID = 1;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

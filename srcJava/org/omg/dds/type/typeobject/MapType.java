@@ -28,24 +28,27 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface MapType extends CollectionType
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
-    //@ID(KEY_ELEMENT_TYPE_MAPTYPE_MEMBER_ID)
+    @ID(MemberId.KEY_ELEMENT_TYPE_MAPTYPE_MEMBER_ID)
     public int getKeyElementType();
 
-    //@ID(KEY_ELEMENT_TYPE_MAPTYPE_MEMBER_ID)
     public void setKeyElementType(int newKeyElementType);
 
-    //@ID(BOUND_MAPTYPE_MEMBER_ID)
+    @ID(MemberId.BOUND_MAPTYPE_MEMBER_ID)
     public long getBound();
 
-    //@ID(BOUND_MAPTYPE_MEMBER_ID)
     public void setBound(long newBound);
 
 
@@ -54,21 +57,15 @@ public interface MapType extends CollectionType
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        KEY_ELEMENT_TYPE_MAPTYPE_MEMBER_ID(0),
-        BOUND_MAPTYPE_MEMBER_ID           (1),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int KEY_ELEMENT_TYPE_MAPTYPE_MEMBER_ID = 200;
+        public static final int BOUND_MAPTYPE_MEMBER_ID = 201;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

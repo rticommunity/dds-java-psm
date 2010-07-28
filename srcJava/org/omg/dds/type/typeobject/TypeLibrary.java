@@ -31,8 +31,12 @@ package org.omg.dds.type.typeobject;
 import java.util.List;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
 
 
+@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+@Nested
 public interface TypeLibrary
 extends ModifiableValueType<TypeLibrary, TypeLibrary>
 {

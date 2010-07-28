@@ -30,18 +30,22 @@ package org.omg.dds.type.typeobject;
 
 import java.util.List;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface UnionType extends Type
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
-    //@ID(MEMBER_UNIONTYPE_MEMBER_ID)
+    @ID(MemberId.MEMBER_UNIONTYPE_MEMBER_ID)
     public List<UnionMember> getMember();
 
-    //@ID(MEMBER_UNIONTYPE_MEMBER_ID)
     public void setMember(List<UnionMember> newMember);
 
 
@@ -50,20 +54,14 @@ public interface UnionType extends Type
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        MEMBER_UNIONTYPE_MEMBER_ID(0),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int MEMBER_UNIONTYPE_MEMBER_ID = 100;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

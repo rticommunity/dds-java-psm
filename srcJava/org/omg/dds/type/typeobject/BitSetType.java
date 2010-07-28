@@ -30,20 +30,23 @@ package org.omg.dds.type.typeobject;
 
 import java.util.List;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface BitSetType extends Type
 {
-    //@ID(BIT_BOUND_BITSETTYPE_MEMBER_ID)
+    @ID(MemberId.BIT_BOUND_BITSETTYPE_MEMBER_ID)
     public int getBitBound();
 
-    //@ID(BIT_BOUND_BITSETTYPE_MEMBER_ID)
     public void setBitBound(int newBitBound);
 
-    //@ID(BIT_BITSETTYPE_MEMBER_ID)
+    @ID(MemberId.BIT_BITSETTYPE_MEMBER_ID)
     public List<Bit> getBit();
 
-    //@ID(BIT_BITSETTYPE_MEMBER_ID)
     public void setBit(List<Bit> newBit);
 
 
@@ -52,21 +55,15 @@ public interface BitSetType extends Type
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        BIT_BOUND_BITSETTYPE_MEMBER_ID(0),
-        BIT_BITSETTYPE_MEMBER_ID      (1),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int BIT_BOUND_BITSETTYPE_MEMBER_ID = 100;
+        public static final int BIT_BITSETTYPE_MEMBER_ID = 101;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

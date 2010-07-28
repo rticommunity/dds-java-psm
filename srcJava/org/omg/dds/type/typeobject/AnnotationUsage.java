@@ -31,11 +31,13 @@ package org.omg.dds.type.typeobject;
 import java.util.List;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
 
 
 // The application of an annotation to some type or type member
-//@Extensibility(EXTENSIBLE_EXTENSIBILITY)
-//@Nested
+@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+@Nested
 public interface AnnotationUsage
 extends ModifiableValueType<AnnotationUsage, AnnotationUsage> {
     /**

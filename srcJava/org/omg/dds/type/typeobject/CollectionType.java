@@ -28,8 +28,13 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface CollectionType extends Type
 {
     // -----------------------------------------------------------------------
@@ -44,10 +49,9 @@ public interface CollectionType extends Type
     // Properties
     // -----------------------------------------------------------------------
 
-    //@ID(ELEMENT_TYPE_COLLECTIONTYPE_MEMBER_ID)
+    @ID(MemberId.ELEMENT_TYPE_COLLECTIONTYPE_MEMBER_ID)
     public int getElementType();
 
-    //@ID(ELEMENT_TYPE_COLLECTIONTYPE_MEMBER_ID)
     public void setElementType(int newElementType);
 
 
@@ -56,20 +60,14 @@ public interface CollectionType extends Type
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        ELEMENT_TYPE_COLLECTIONTYPE_MEMBER_ID(0),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int ELEMENT_TYPE_COLLECTIONTYPE_MEMBER_ID = 100;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

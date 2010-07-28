@@ -28,19 +28,22 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
-public interface SequenceType
-extends CollectionType
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
+public interface SequenceType extends CollectionType
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
-    //@ID(BOUND_SEQUENCETYPE_MEMBER_ID)
+    @ID(MemberId.BOUND_SEQUENCETYPE_MEMBER_ID)
     public long getBound();
 
-    //@ID(BOUND_SEQUENCETYPE_MEMBER_ID)
     public void setBound(long newBound);
 
 
@@ -49,20 +52,14 @@ extends CollectionType
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        BOUND_SEQUENCETYPE_MEMBER_ID(0),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int BOUND_SEQUENCETYPE_MEMBER_ID = 200;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

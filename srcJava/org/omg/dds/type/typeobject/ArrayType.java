@@ -30,18 +30,22 @@ package org.omg.dds.type.typeobject;
 
 import java.util.List;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.ID;
+import org.omg.dds.type.annotation.Nested;
 
-//@Nested
+
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface ArrayType extends CollectionType
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
-    //@ID(BOUND_ARRAYTYPE_MEMBER_ID)
+    @ID(MemberId.BOUND_ARRAYTYPE_MEMBER_ID)
     public List<Long> getBound();
 
-    //@ID(BOUND_ARRAYTYPE_MEMBER_ID)
     public void setBound(List<Long> newBound);
 
 
@@ -50,20 +54,14 @@ public interface ArrayType extends CollectionType
     // Types
     // -----------------------------------------------------------------------
 
-    public static enum MemberId
+    public static final class MemberId
     {
         // --- Constants: ----------------------------------------------------
-        BOUND_ARRAYTYPE_MEMBER_ID(0),
-        ;
-
-
-        // --- Fields: -------------------------------------------------------
-        public final int value;
-
+        public static final int BOUND_ARRAYTYPE_MEMBER_ID = 200;
 
         // --- Constructor: --------------------------------------------------
-        private MemberId(int value) {
-            this.value = value;
+        private MemberId() {
+            // empty
         }
     }
 }

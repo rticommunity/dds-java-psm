@@ -29,13 +29,15 @@
 package org.omg.dds.type.typeobject;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
 
 
 /* Literal value of an annotation member: either the default value in its
  * definition or the value applied in its usage.
  */
-//@Extensibility(EXTENSIBLE_EXTENSIBILITY)
-//@Nested
+@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+@Nested
 public interface AnnotationMemberValue
 extends ModifiableValueType<AnnotationMemberValue, AnnotationMemberValue>
 {

@@ -29,11 +29,13 @@
 package org.omg.dds.type.typeobject;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
 
 
 // The assignment of a value to a member of an annotation
-//@Extensibility(EXTENSIBLE_EXTENSIBILITY)
-//@Nested
+@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+@Nested
 public interface AnnotationUsageMember
 extends ModifiableValueType<AnnotationUsageMember, AnnotationUsageMember> {
     /**

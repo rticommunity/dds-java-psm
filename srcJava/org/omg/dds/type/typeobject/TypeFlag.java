@@ -28,15 +28,23 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.type.annotation.BitBound;
+import org.omg.dds.type.annotation.BitSet;
+import org.omg.dds.type.annotation.Value;
 
-//@BitSet //@BitBound(16)
+
+@BitSet
+@BitBound(16)
 public enum TypeFlag {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
+    @Value(0)
     IS_FINAL  ((short) 0),
+    @Value(1)
     IS_MUTABLE((short) 1),
+    @Value(2)
     IS_NESTED ((short) 2),
     ;
 

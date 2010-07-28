@@ -29,8 +29,14 @@
 package org.omg.dds.type.typeobject;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.BitBound;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
+import org.omg.dds.type.annotation.Value;
 
 
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+@Nested
 public interface TypeLibraryElement
 extends ModifiableValueType<TypeLibraryElement, TypeLibraryElement>
 {
@@ -100,20 +106,42 @@ extends ModifiableValueType<TypeLibraryElement, TypeLibraryElement>
     // Types
     // -----------------------------------------------------------------------
 
-    public enum Kind
+    @BitBound(16)
+    public static enum Kind
     {
         // --- Constants: ----------------------------------------------------
-        ALIAS_TYPE_ELEMENT      ((short)  0),
-        ANNOTATION_TYPE_ELEMENT ((short)  1),
-        ARRAY_TYPE_ELEMENT      ((short)  2),
-        BITSET_TYPE_ELEMENT     ((short)  3),
-        ENUMERATION_TYPE_ELEMENT((short)  4),
-        MAP_TYPE_ELEMENT        ((short)  5),
-        SEQUENCE_TYPE_ELEMENT   ((short)  6),
-        STRING_TYPE_ELEMENT     ((short)  7),
-        STRUCTURE_TYPE_ELEMENT  ((short)  8),
-        UNION_TYPE_ELEMENT      ((short)  9),
-        MODULE_ELEMENT          ((short) 10),
+        @Value(TypeKind.Values.ALIAS_TYPE_VALUE)
+        ALIAS_TYPE_ELEMENT      (TypeKind.ALIAS_TYPE.value),
+
+        @Value(TypeKind.Values.ANNOTATION_TYPE_VALUE)
+        ANNOTATION_TYPE_ELEMENT (TypeKind.ANNOTATION_TYPE.value),
+
+        @Value(TypeKind.Values.ARRAY_TYPE_VALUE)
+        ARRAY_TYPE_ELEMENT      (TypeKind.ARRAY_TYPE.value),
+
+        @Value(TypeKind.Values.BITSET_TYPE_VALUE)
+        BITSET_TYPE_ELEMENT     (TypeKind.BITSET_TYPE.value),
+
+        @Value(TypeKind.Values.ENUMERATION_TYPE_VALUE)
+        ENUMERATION_TYPE_ELEMENT(TypeKind.ENUMERATION_TYPE.value),
+
+        @Value(TypeKind.Values.MAP_TYPE_VALUE)
+        MAP_TYPE_ELEMENT        (TypeKind.MAP_TYPE.value),
+
+        @Value(TypeKind.Values.SEQUENCE_TYPE_VALUE)
+        SEQUENCE_TYPE_ELEMENT   (TypeKind.SEQUENCE_TYPE.value),
+
+        @Value(TypeKind.Values.STRING_TYPE_VALUE)
+        STRING_TYPE_ELEMENT     (TypeKind.STRING_TYPE.value),
+
+        @Value(TypeKind.Values.STRUCTURE_TYPE_VALUE)
+        STRUCTURE_TYPE_ELEMENT  (TypeKind.STRUCTURE_TYPE.value),
+
+        @Value(TypeKind.Values.UNION_TYPE_VALUE)
+        UNION_TYPE_ELEMENT      (TypeKind.UNION_TYPE.value),
+
+        @Value(TypeKind.Values.UNION_TYPE_VALUE + 1)
+        MODULE_ELEMENT      ((short) (TypeKind.UNION_TYPE.value + 1)),
         ;
 
 
