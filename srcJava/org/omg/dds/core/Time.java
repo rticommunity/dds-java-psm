@@ -28,8 +28,14 @@
 
 package org.omg.dds.core;
 
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
 
-public interface Time extends ValueType<Time, ModifiableTime> {
+
+@Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
+@Nested
+public interface Time extends ValueType<Time, ModifiableTime>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------

@@ -29,14 +29,17 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.ValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
 
 
 /**
  * An interface implemented by all QoS policies.
  */
-public interface QosPolicy
-<UNMOD_SELF extends QosPolicy<UNMOD_SELF, MOD_SELF>,
- MOD_SELF extends UNMOD_SELF>
+@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+@Nested
+public interface QosPolicy<UNMOD_SELF extends QosPolicy<UNMOD_SELF, MOD_SELF>,
+                           MOD_SELF extends UNMOD_SELF>
 extends ValueType<UNMOD_SELF, MOD_SELF> {
     // -----------------------------------------------------------------------
     // Methods
@@ -74,7 +77,10 @@ extends ValueType<UNMOD_SELF, MOD_SELF> {
         GROUP_DATA              ("GroupData", 19),
         TRANSPORT_PRIORITY      ("TransportPriority", 20),
         LIFESPAN                ("Lifespan", 21),
-        DURABILITY_SERVICE      ("DurabilityService", 22);
+        DURABILITY_SERVICE      ("DurabilityService", 22),
+        DATA_REPRESENTATION     ("DataRepresentation", 23),
+        TYPE_CONSISTENCY_ENFORCEMENT    ("TypeConsistencyEnforcement", 24),
+        ;
 
 
         // --- Constants: ----------------------------------------------------

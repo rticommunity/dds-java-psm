@@ -29,10 +29,14 @@
 package org.omg.dds.domain.discovery;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.annotation.Nested;
 
 
+@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+@Nested
 public interface BuiltinTopicKey
-extends ModifiableValueType<BuiltinTopicKey, BuiltinTopicKey> {
-    public int[] getValue();
-
+extends ModifiableValueType<BuiltinTopicKey, BuiltinTopicKey>
+{
+    public int[/*3 or 4*/] getValue();
 }
