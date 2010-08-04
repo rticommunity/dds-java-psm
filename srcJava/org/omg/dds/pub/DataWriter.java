@@ -69,22 +69,23 @@ extends DomainEntity<DataWriter<TYPE>,
     public void waitForAcknowledgments(long maxWaitMillis)
     throws TimeoutException;
 
-    public void getLivelinessLostStatus(LivelinessLostStatus<TYPE> status);
+    public LivelinessLostStatus<TYPE> getLivelinessLostStatus(
+            LivelinessLostStatus<TYPE> status);
 
-    public void getOfferedDeadlineMissedStatus(
+    public OfferedDeadlineMissedStatus<TYPE> getOfferedDeadlineMissedStatus(
             OfferedDeadlineMissedStatus<TYPE> status);
 
-    public void getOfferedIncompatibleQosStatus(
+    public OfferedIncompatibleQosStatus<TYPE> getOfferedIncompatibleQosStatus(
             OfferedIncompatibleQosStatus<TYPE> status);
 
-    public void getPublicationMatchedStatus(
+    public PublicationMatchedStatus<TYPE> getPublicationMatchedStatus(
             PublicationMatchedStatus<TYPE> status);
 
     public void assertLiveliness();
 
-    public void getMatchedSubscriptions(
+    public Collection<InstanceHandle> getMatchedSubscriptions(
             Collection<InstanceHandle> subscriptionHandles);
-    public void getMatchedSubscriptionData(
+    public SubscriptionBuiltinTopicData getMatchedSubscriptionData(
             SubscriptionBuiltinTopicData subscriptionData,
             InstanceHandle subscriptionHandle);
 
@@ -147,11 +148,11 @@ extends DomainEntity<DataWriter<TYPE>,
             TYPE instanceData,
             long sourceTimestampMillis) throws TimeoutException;
 
-    public void getKeyValue(
+    public TYPE getKeyValue(
             TYPE keyHolder, 
             InstanceHandle handle);
 
-    public void lookupInstance(
+    public ModifiableInstanceHandle lookupInstance(
             ModifiableInstanceHandle handle,
             TYPE keyHolder);
 }

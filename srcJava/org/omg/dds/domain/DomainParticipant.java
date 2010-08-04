@@ -249,18 +249,19 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName);
 
-    public void getDiscoveredParticipants(
+    public Collection<InstanceHandle> getDiscoveredParticipants(
             Collection<InstanceHandle> participantHandles);
-    public void getDiscoveredParticipantData(
+    public ParticipantBuiltinTopicData getDiscoveredParticipantData(
             ParticipantBuiltinTopicData participantData,
             InstanceHandle participantHandle);
 
-    public void getDiscoveredTopics(Collection<InstanceHandle> topicHandles);
-    public void getDiscoveredTopicData(
+    public Collection<InstanceHandle> getDiscoveredTopics(
+            Collection<InstanceHandle> topicHandles);
+    public TopicBuiltinTopicData getDiscoveredTopicData(
             TopicBuiltinTopicData topicData,
             InstanceHandle topicHandle);
 
     public boolean containsEntity(InstanceHandle handle);
 
-    public void getCurrentTime(ModifiableTime currentTime);
+    public ModifiableTime getCurrentTime(ModifiableTime currentTime);
 }

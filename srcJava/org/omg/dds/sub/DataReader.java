@@ -90,21 +90,25 @@ extends DomainEntity<DataReader<TYPE>,
 
     public TopicDescription<TYPE> getTopicDescription();
 
-    public void getSampleRejectedStatus(SampleRejectedStatus<TYPE> status);
+    public SampleRejectedStatus<TYPE> getSampleRejectedStatus(
+            SampleRejectedStatus<TYPE> status);
 
-    public void getLivelinessChangedStatus(
+    public LivelinessChangedStatus<TYPE> getLivelinessChangedStatus(
             LivelinessChangedStatus<TYPE> status);
 
-    public void getRequestedDeadlineMissedStatus(
+    public RequestedDeadlineMissedStatus<TYPE>
+    getRequestedDeadlineMissedStatus(
             RequestedDeadlineMissedStatus<TYPE> status);
 
-    public void getRequestedIncompatibleQosStatus(
+    public RequestedIncompatibleQosStatus<TYPE>
+    getRequestedIncompatibleQosStatus(
             RequestedIncompatibleQosStatus<TYPE> status);
 
-    public void getSubscriptionMatchedStatus(
+    public SubscriptionMatchedStatus<TYPE> getSubscriptionMatchedStatus(
             SubscriptionMatchedStatus<TYPE> status);
 
-    public void getSampleLostStatus(SampleLostStatus<TYPE> status);
+    public SampleLostStatus<TYPE> getSampleLostStatus(
+            SampleLostStatus<TYPE> status);
 
     public void waitForHistoricalData(/* indefinitely */)
     throws TimeoutException;
@@ -115,9 +119,9 @@ extends DomainEntity<DataReader<TYPE>,
     public void waitForHistoricalData(long maxWaitMillis)
     throws TimeoutException;
 
-    public void getMatchedPublications(
+    public Collection<InstanceHandle> getMatchedPublications(
             Collection<InstanceHandle> publicationHandles);
-    public void getMatchedPublicationData(
+    public PublicationBuiltinTopicData getMatchedPublicationData(
             PublicationBuiltinTopicData publicationData,
             InstanceHandle publicationHandle);
 
@@ -339,11 +343,11 @@ extends DomainEntity<DataReader<TYPE>,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
-    public void getKeyValue(
+    public TYPE getKeyValue(
             TYPE keyHolder, 
             InstanceHandle handle);
 
-    public void lookupInstance(
+    public ModifiableInstanceHandle lookupInstance(
             ModifiableInstanceHandle handle,
             TYPE keyHolder);
 }

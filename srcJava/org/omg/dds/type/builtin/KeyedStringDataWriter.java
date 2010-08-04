@@ -66,7 +66,8 @@ public interface KeyedStringDataWriter extends DataWriter<KeyedString>
     public void dispose(String key, Time sourceTimestamp)
     throws TimeoutException;
 
-    public void getKeyValue(StringBuilder key, InstanceHandle handle);
+    public StringBuilder getKeyValue(StringBuilder key, InstanceHandle handle);
 
-    public void lookupInstance(ModifiableInstanceHandle handle, String key);
+    public ModifiableInstanceHandle lookupInstance(
+            ModifiableInstanceHandle handle, String key);
 }

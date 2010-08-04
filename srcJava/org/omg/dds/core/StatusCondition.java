@@ -33,7 +33,8 @@ import java.util.Collection;
 
 public interface StatusCondition<ENTITY extends Entity<ENTITY, ?, ?>>
 extends Condition {
-    public void getEnabledStatuses(Collection<Status.Kind> statuses);
+    public Collection<Status.Kind> getEnabledStatuses(
+            Collection<Status.Kind> statuses);
 
     public void setEnabledStatuses(Collection<Status.Kind> statuses);
 

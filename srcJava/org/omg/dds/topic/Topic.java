@@ -37,6 +37,6 @@ extends TopicDescription<TYPE>, DomainEntity<Topic<TYPE>,
                                              DomainParticipant,
                                              TopicListener<TYPE>,
                                              TopicQos> {
-    public void getInconsistentTopicStatus(
+    public InconsistentTopicStatus<TYPE> getInconsistentTopicStatus(
             InconsistentTopicStatus<TYPE> status);
 }

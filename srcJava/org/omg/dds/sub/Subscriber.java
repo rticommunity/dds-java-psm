@@ -233,9 +233,9 @@ extends DomainEntity<Subscriber,
 
     public void closeContainedEntities();
 
-    public void getDataReaders(
+    public Collection<DataReader<?>> getDataReaders(
             Collection<DataReader<?>> readers);
-    public void getDataReaders(
+    public Collection<DataReader<?>> getDataReaders(
             Collection<DataReader<?>> readers,
             Collection<SampleState> sampleStates,
             Collection<ViewState> viewStates,

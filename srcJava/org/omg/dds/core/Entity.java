@@ -47,7 +47,8 @@ extends DdsObject {
 
     public StatusCondition<SELF> getStatusCondition();
 
-    public void getStatusChanges(Collection<Status.Kind> status);
+    public Collection<Status.Kind> getStatusChanges(
+            Collection<Status.Kind> status);
 
     public InstanceHandle getInstanceHandle();
 
