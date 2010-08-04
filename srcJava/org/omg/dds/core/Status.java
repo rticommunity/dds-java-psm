@@ -103,11 +103,11 @@ implements ModifiableValueType<SELF, SELF> {
 
 
         // --- Constants: ----------------------------------------------------
-        public final int value;
+        public final long value;
 
 
         // --- Object Lifecycle: ---------------------------------------------
-        private Kind(int value) {
+        private Kind(long value) {
             this.value = value;
         }
     }
