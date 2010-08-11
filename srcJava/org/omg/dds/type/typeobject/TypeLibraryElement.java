@@ -29,6 +29,7 @@
 package org.omg.dds.type.typeobject;
 
 import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.type.TypeKind;
 import org.omg.dds.type.annotation.BitBound;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.Nested;

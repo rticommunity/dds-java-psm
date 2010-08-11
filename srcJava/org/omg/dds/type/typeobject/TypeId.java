@@ -28,6 +28,8 @@
 
 package org.omg.dds.type.typeobject;
 
+import org.omg.dds.type.TypeKind;
+
 
 /**
  * Every type has an ID. Those of the primitive types are predefined.

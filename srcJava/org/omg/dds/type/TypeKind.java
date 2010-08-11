@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.type.typeobject;
+package org.omg.dds.type;
 
 
 public enum TypeKind
