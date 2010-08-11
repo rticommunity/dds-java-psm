@@ -29,13 +29,9 @@
 package org.omg.dds.type;
 
 import org.omg.dds.core.DdsObject;
-import org.omg.dds.domain.DomainParticipant;
 
 
-public interface TypeSupport<TYPE> extends DdsObject {
-    public void registerType(
-            DomainParticipant participant, 
-            String typeName);
-
+public interface TypeSupport<TYPE> extends DdsObject
+{
     public String getTypeName();
 }
