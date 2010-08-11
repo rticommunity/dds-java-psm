@@ -86,30 +86,30 @@ extends DomainEntity<Publisher,
 
     // --- Create DataWriter for built-in bytes type: ------------------------
 
-    public BytesDataWriter createDataWriter(
+    public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic);
-    public BytesDataWriter createDataWriter(
+    public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             DataWriterQos qos);
-    public BytesDataWriter createDataWriter(
+    public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             DataWriterQos qos,
             DataWriterListener<byte[]> listener);
-    public BytesDataWriter createDataWriter(
+    public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             DataWriterQos qos,
             DataWriterListener<byte[]> listener,
             Collection<Status.Kind> status);
-    public BytesDataWriter createDataWriter(
+    public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             String qosLibraryName,
             String qosProfileName);
-    public BytesDataWriter createDataWriter(
+    public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<byte[]> listener);
-    public BytesDataWriter createDataWriter(
+    public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             String qosLibraryName,
             String qosProfileName,
@@ -119,30 +119,30 @@ extends DomainEntity<Publisher,
 
     // --- Create DataWriter for built-in KeyedBytes type: -------------------
 
-    public KeyedBytesDataWriter createDataWriter(
+    public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic);
-    public KeyedBytesDataWriter createDataWriter(
+    public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic,
             DataWriterQos qos);
-    public KeyedBytesDataWriter createDataWriter(
+    public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedBytes> listener);
-    public KeyedBytesDataWriter createDataWriter(
+    public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedBytes> listener,
             Collection<Status.Kind> status);
-    public KeyedBytesDataWriter createDataWriter(
+    public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic,
             String qosLibraryName,
             String qosProfileName);
-    public KeyedBytesDataWriter createDataWriter(
+    public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<KeyedBytes> listener);
-    public KeyedBytesDataWriter createDataWriter(
+    public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic,
             String qosLibraryName,
             String qosProfileName,
@@ -152,30 +152,30 @@ extends DomainEntity<Publisher,
 
     // --- Create DataWriter for built-in string type: -----------------------
 
-    public StringDataWriter createDataWriter(
+    public StringDataWriter createStringDataWriter(
             Topic<String> topic);
-    public StringDataWriter createDataWriter(
+    public StringDataWriter createStringDataWriter(
             Topic<String> topic,
             DataWriterQos qos);
-    public StringDataWriter createDataWriter(
+    public StringDataWriter createStringDataWriter(
             Topic<String> topic,
             DataWriterQos qos,
             DataWriterListener<String> listener);
-    public StringDataWriter createDataWriter(
+    public StringDataWriter createStringDataWriter(
             Topic<String> topic,
             DataWriterQos qos,
             DataWriterListener<String> listener,
             Collection<Status.Kind> status);
-    public StringDataWriter createDataWriter(
+    public StringDataWriter createStringDataWriter(
             Topic<String> topic,
             String qosLibraryName,
             String qosProfileName);
-    public StringDataWriter createDataWriter(
+    public StringDataWriter createStringDataWriter(
             Topic<String> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<String> listener);
-    public StringDataWriter createDataWriter(
+    public StringDataWriter createStringDataWriter(
             Topic<String> topic,
             String qosLibraryName,
             String qosProfileName,
@@ -185,30 +185,30 @@ extends DomainEntity<Publisher,
 
     // --- Create DataWriter for built-in KeyedString type: ------------------
 
-    public KeyedStringDataWriter createDataWriter(
+    public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic);
-    public KeyedStringDataWriter createDataWriter(
+    public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             DataWriterQos qos);
-    public KeyedStringDataWriter createDataWriter(
+    public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedString> listener);
-    public KeyedStringDataWriter createDataWriter(
+    public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedString> listener,
             Collection<Status.Kind> status);
-    public KeyedStringDataWriter createDataWriter(
+    public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             String qosLibraryName,
             String qosProfileName);
-    public KeyedStringDataWriter createDataWriter(
+    public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<KeyedString> listener);
-    public KeyedStringDataWriter createDataWriter(
+    public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             String qosLibraryName,
             String qosProfileName,
@@ -220,10 +220,12 @@ extends DomainEntity<Publisher,
 
     public <TYPE> DataWriter<TYPE> lookupDataWriter(String topicName);
     public <TYPE> DataWriter<TYPE> lookupDataWriter(Topic<TYPE> topicName);
-    public BytesDataWriter lookupDataWriter(Topic<byte[]> topicName);
-    public KeyedBytesDataWriter lookupDataWriter(Topic<KeyedBytes> topicName);
-    public StringDataWriter lookupDataWriter(Topic<String> topicName);
-    public KeyedStringDataWriter lookupDataWriter(
+
+    public BytesDataWriter lookupBytesDataWriter(Topic<byte[]> topicName);
+    public KeyedBytesDataWriter lookupKeyedBytesDataWriter(
+            Topic<KeyedBytes> topicName);
+    public StringDataWriter lookupStringDataWriter(Topic<String> topicName);
+    public KeyedStringDataWriter lookupKeyedStringDataWriter(
             Topic<KeyedString> topicName);
 
 
