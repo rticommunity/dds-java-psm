@@ -34,7 +34,7 @@ import java.util.EventListener;
 
 public interface Entity<SELF extends Entity<SELF, LISTENER, QOS>,
                         LISTENER extends EventListener,
-                        QOS extends Qos<QOS, ? extends QOS>>
+                        QOS extends Qos<?, ?>>
 extends DdsObject {
     public LISTENER getListener();
     public void setListener(LISTENER listener);
