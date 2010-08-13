@@ -51,6 +51,8 @@ import org.omg.dds.sub.SubscriptionMatchedStatus;
 import org.omg.dds.sub.ViewState;
 import org.omg.dds.topic.InconsistentTopicStatus;
 import org.omg.dds.type.TypeSupport;
+import org.omg.dds.type.dynamic.DynamicDataFactory;
+import org.omg.dds.type.dynamic.DynamicTypeFactory;
 
 
 /**
@@ -129,9 +131,16 @@ public abstract class Context implements DdsObject {
     // Factory Methods
     // -----------------------------------------------------------------------
 
-    // --- Entities: ---------------------------------------------------------
+    // --- Singleton factories: ----------------------------------------------
 
     public abstract DomainParticipantFactory getParticipantFactory();
+
+    public abstract DynamicTypeFactory getTypeFactory();
+
+    public abstract DynamicDataFactory getDataFactory();
+
+
+    // --- Types: ------------------------------------------------------------
 
     /**
      * Create a new {@link TypeSupport} object for the given physical type.
