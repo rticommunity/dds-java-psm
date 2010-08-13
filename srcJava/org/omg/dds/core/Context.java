@@ -28,6 +28,8 @@
 
 package org.omg.dds.core;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 import org.omg.dds.domain.DomainParticipantFactory;
@@ -78,7 +80,7 @@ public abstract class Context implements DdsObject {
      * messages or format errors in a certain way.
      */
     private static final String ERROR_STRING =
-        "Unable to load OMG DDS implementation.";
+        "Unable to load OMG DDS implementation. ";
 
 
 
@@ -86,38 +88,143 @@ public abstract class Context implements DdsObject {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
+    /**
+     * Create and return a new instance of a concrete implementation of this
+     * class. This method is equivalent to calling:
+     * 
+     * <code>createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY);</code>
+     * 
+     * @see     #createInstance(String)
+     * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
+     */
     public static Context createInstance() {
         return createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY);
     }
 
 
+    /**
+     * Look up the system property identified by the given string and load,
+     * then instantiate, the Context implementation class identified by its
+     * value. The class must be accessible and have a public no-argument
+     * constructor.
+     * 
+     * Note that this method propagates any exception thrown by the
+     * constructor of the identified class, including a checked exception.
+     * This method thereby effectively bypasses the compile-time exception
+     * checking that would otherwise be performed by the compiler.
+     * Subclass implementers are therefore recommended to avoid throwing
+     * checked exceptions in their constructors.
+     * 
+     * @param implClassNameProperty         The name of a system property,
+     *                                      the value of which will be taken
+     *                                      as the name of a Context
+     *                                      implementation to load.
+     * 
+     * @return  A non-null Context.
+     * 
+     * @throws  NullPointerException        If the given property name is
+     *          null.
+     * @throws  IllegalArgumentException    If the given property name
+     *          is the empty string.
+     * 
+     * @throws  ServiceConfigurationException   If the class could not be
+     *          loaded because of an issue with the the invocation of this
+     *          method or the configuration of the runtime environment. For
+     *          example, the class may not be on the class path, it may
+     *          require a native library that is not available, or an
+     *          inappropriate class may have been requested (e.g. one that is
+     *          not a Context or that doesn't have a no-argument constructor).
+     * 
+     * @throws  ServiceInitializationException  If the class was found but
+     *          could not be initialized and/or instantiated because of an
+     *          error that occurred within its implementation.
+     * 
+     * @see     #createInstance()
+     * @see     System#getProperty(String)
+     */
     public static Context createInstance(String implClassNameProperty) {
         // --- Get implementation class name --- //
+        /* System.getProperty checks the implClassNameProperty argument as
+         * described in the specification for this method and throws
+         * NullPointerException or IllegalArgumentException if necessary.
+         */
         String className = System.getProperty(implClassNameProperty);
         if (className == null || className.length() == 0) {
             // no implementation class name specified
-            throw new ServiceNotFoundException(
-                    ERROR_STRING + " Please set " +
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + "Please set " +
                         implClassNameProperty + " property.");
         }
 
         // --- Load implementation class --- //
-        Context impl = null;
         try {
-            impl = Context.class.cast(Class.forName(className));
-            assert impl != null;
+            Class<?> ctxClass = Class.forName(className);
+            /* Get the constructor and call it explicitly rather than calling
+             * Class.newInstance(). The latter propagates all exceptions,
+             * event checked ones, complicating error handling for us and
+             * the user.
+             */
+            Constructor<?> ctor = ctxClass.getConstructor((Class<?>[]) null);
+            return (Context) ctor.newInstance((Object[]) null);
+
+            // --- Initialization problems --- //
+        } catch (ExceptionInInitializerError initx) {
+            // Thrown by Class.forName (or possibly Constructor.newInstance)
+            throw new ServiceInitializationException(
+                    ERROR_STRING + "Error during static initialization.",
+                    initx.getCause());
+        } catch (InvocationTargetException itx) {
+            // Thrown by Constructor.newInstance
+            throw new ServiceInitializationException(
+                    ERROR_STRING + "Error during object initialization.",
+                    itx.getCause());
+
+            // --- Configuration problems --- //
         } catch (ClassNotFoundException cnfx) {
-            throw new ServiceNotFoundException(
-                    ERROR_STRING + ": class " + className +
-                        " could not be loaded",
+            // Thrown by Class.forName
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + className + " was not found.",
                     cnfx);
+        } catch (LinkageError linkx) {
+            // Thrown by Class.forName
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + className + " could not be loaded.",
+                    linkx);
+        } catch (NoSuchMethodException nsmx) {
+            // Thrown by Class.getConstructor
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + className +
+                        " has no appropriate constructor.",
+                    nsmx);
+        } catch (IllegalAccessException iax) {
+            // Thrown by Constructor.newInstance
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + className +
+                        " has no appropriate constructor.",
+                    iax);
+        } catch (InstantiationException ix) {
+            // Thrown by Constructor.newInstance
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + className + " could not be instantiated.",
+                    ix);
+        } catch (SecurityException sx) {
+            // Thrown by Class.getConstructor
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + "Prevented by security manager.", sx);
         } catch (ClassCastException ccx) {
-            throw new ServiceNotFoundException(
-                    ERROR_STRING + ": class " + className +
-                        " does not extend " + Context.class.getName(),
-                    ccx);
+            // Thrown by type cast
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + className + " is not a Context.", ccx);
+
+            // --- Implementation problems --- //
+        } catch (IllegalArgumentException argx) {
+            /* Thrown by Constructor.newInstance to indicate that formal
+             * parameters and provided arguments are not compatible. Since
+             * the constructor doesn't take any arguments, and we didn't
+             * provide any, we shouldn't be able to get here.
+             */
+            throw new AssertionError(argx);
         }
-        return impl;
     }
 
 

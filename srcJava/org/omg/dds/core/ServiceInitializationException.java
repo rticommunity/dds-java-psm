@@ -30,9 +30,10 @@ package org.omg.dds.core;
 
 
 /**
- * This exception indicates that no DDS implementation could be loaded.
+ * Indicates that a DDS implementation could not be initialized due to an
+ * error that occurred within that implementation.
  */
-public class ServiceNotFoundException extends RuntimeException {
+public class ServiceInitializationException extends RuntimeException {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -45,19 +46,19 @@ public class ServiceNotFoundException extends RuntimeException {
     // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public ServiceNotFoundException() {
+    public ServiceInitializationException() {
         super();
     }
 
-    public ServiceNotFoundException(String message) {
+    public ServiceInitializationException(String message) {
         super(message);
     }
 
-    public ServiceNotFoundException(Throwable cause) {
+    public ServiceInitializationException(Throwable cause) {
         super(cause);
     }
 
-    public ServiceNotFoundException(String message, Throwable cause) {
+    public ServiceInitializationException(String message, Throwable cause) {
         super(message, cause);
     }
 
