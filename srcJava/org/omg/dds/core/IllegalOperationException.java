@@ -40,7 +40,7 @@ extends IllegalDdsStateException {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected IllegalOperationException() {

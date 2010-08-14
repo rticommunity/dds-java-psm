@@ -43,7 +43,7 @@ extends Status<LivelinessChangedStatus<TYPE>, DataReader<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected LivelinessChangedStatus(DataReader<TYPE> source) {

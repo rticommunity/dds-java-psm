@@ -48,7 +48,7 @@ public enum SampleState {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     private SampleState(int value) {

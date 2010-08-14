@@ -43,7 +43,7 @@ extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected PublicationMatchedStatus(DataWriter<TYPE> source) {

@@ -42,7 +42,7 @@ extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected SampleLostStatus(DataReader<TYPE> source) {

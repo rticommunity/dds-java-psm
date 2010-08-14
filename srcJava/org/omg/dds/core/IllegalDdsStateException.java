@@ -58,7 +58,7 @@ extends IllegalStateException implements DdsObject {
     // Protected Methods
     // -----------------------------------------------------------------------
 
-    // --- Object Lifecycle: -------------------------------------------------
+    // --- Object Life Cycle: ------------------------------------------------
 
     protected IllegalDdsStateException() {
         super();

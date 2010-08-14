@@ -30,36 +30,36 @@ package org.omg.dds.core;
 
 
 /**
- * The target object was previously disposed and therefore cannot process
+ * The target object was previously closed and therefore cannot process
  * the operation.
  */
-public abstract class AlreadyDeletedException
+public abstract class AlreadyClosedException
 extends IllegalDdsStateException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -2770279089494195697L;
+    private static final long serialVersionUID = 8818392556145975401L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
-    protected AlreadyDeletedException() {
+    protected AlreadyClosedException() {
         super();
     }
 
-    protected AlreadyDeletedException(String message) {
+    protected AlreadyClosedException(String message) {
         super(message);
     }
 
-    protected AlreadyDeletedException(Throwable cause) {
+    protected AlreadyClosedException(Throwable cause) {
         super(cause);
     }
 
-    protected AlreadyDeletedException(String message, Throwable cause) {
+    protected AlreadyClosedException(String message, Throwable cause) {
         super(message, cause);
     }
 

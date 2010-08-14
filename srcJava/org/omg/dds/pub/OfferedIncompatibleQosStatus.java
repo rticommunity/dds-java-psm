@@ -46,7 +46,7 @@ extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected OfferedIncompatibleQosStatus(DataWriter<TYPE> source) {

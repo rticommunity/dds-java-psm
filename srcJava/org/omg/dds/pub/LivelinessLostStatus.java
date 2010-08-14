@@ -42,7 +42,7 @@ extends Status<LivelinessLostStatus<TYPE>, DataWriter<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected LivelinessLostStatus(DataWriter<TYPE> source) {

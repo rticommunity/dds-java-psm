@@ -39,7 +39,7 @@ public abstract class NotEnabledException extends IllegalDdsStateException {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected NotEnabledException() {

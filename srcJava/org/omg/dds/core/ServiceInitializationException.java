@@ -43,7 +43,7 @@ public class ServiceInitializationException extends RuntimeException {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     public ServiceInitializationException() {

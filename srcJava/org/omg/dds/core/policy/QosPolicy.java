@@ -88,7 +88,7 @@ extends ValueType<UNMOD_SELF, MOD_SELF> {
         public final String policyName;
 
 
-        // --- Object Lifecycle: ---------------------------------------------
+        // --- Object Life Cycle: --------------------------------------------
         private Id(String enumName, int value) {
             this. policyName = enumName;
             this.value = value;

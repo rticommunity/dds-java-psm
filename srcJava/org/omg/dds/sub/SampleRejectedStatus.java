@@ -43,7 +43,7 @@ extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected SampleRejectedStatus(DataReader<TYPE> source) {

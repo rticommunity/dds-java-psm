@@ -46,7 +46,7 @@ extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected RequestedIncompatibleQosStatus(DataReader<TYPE> source) {

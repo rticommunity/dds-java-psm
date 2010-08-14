@@ -85,7 +85,7 @@ public abstract class Context implements DdsObject {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     /**
@@ -368,7 +368,7 @@ public abstract class Context implements DdsObject {
     InconsistentTopicStatus<TYPE> createInconsistentTopicStatus();
 
 
-    // --- Sample & Instance Lifecycle: --------------------------------------
+    // --- Sample & Instance Life Cycle: -------------------------------------
 
     public abstract Set<InstanceState> getAnyInstanceStateSet();
 

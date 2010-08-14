@@ -49,7 +49,7 @@ public enum InstanceState {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     private InstanceState(int value) {

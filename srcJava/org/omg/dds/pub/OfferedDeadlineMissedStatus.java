@@ -43,7 +43,7 @@ extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected OfferedDeadlineMissedStatus(DataWriter<TYPE> source) {

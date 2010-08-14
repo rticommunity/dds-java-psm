@@ -44,7 +44,7 @@ public class ServiceConfigurationException extends RuntimeException {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     public ServiceConfigurationException() {

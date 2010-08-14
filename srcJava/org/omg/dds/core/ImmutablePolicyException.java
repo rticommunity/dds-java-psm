@@ -39,7 +39,7 @@ public abstract class ImmutablePolicyException extends DdsException {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected ImmutablePolicyException() {

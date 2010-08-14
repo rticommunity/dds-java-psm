@@ -87,7 +87,7 @@ extends RuntimeException implements DdsObject {
     // Protected Methods
     // -----------------------------------------------------------------------
 
-    // --- Object Lifecycle: -------------------------------------------------
+    // --- Object Life Cycle: ------------------------------------------------
 
     protected DdsException() {
         super();

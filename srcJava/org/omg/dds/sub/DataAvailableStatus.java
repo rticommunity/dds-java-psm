@@ -42,7 +42,7 @@ extends Status<DataAvailableStatus<TYPE>, DataReader<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected DataAvailableStatus(DataReader<TYPE> source) {

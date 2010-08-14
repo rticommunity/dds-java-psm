@@ -43,7 +43,7 @@ extends Status<SubscriptionMatchedStatus<TYPE>, DataReader<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected SubscriptionMatchedStatus(DataReader<TYPE> source) {

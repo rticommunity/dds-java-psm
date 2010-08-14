@@ -39,7 +39,7 @@ public abstract class InconsistentPolicyException extends DdsException {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected InconsistentPolicyException() {

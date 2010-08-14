@@ -43,7 +43,7 @@ extends Status<RequestedDeadlineMissedStatus<TYPE>, DataReader<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected RequestedDeadlineMissedStatus(DataReader<TYPE> source) {

@@ -42,7 +42,7 @@ extends Status<InconsistentTopicStatus<TYPE>, Topic<TYPE>> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected InconsistentTopicStatus(Topic<TYPE> source) {

@@ -47,7 +47,7 @@ implements ModifiableValueType<SELF, SELF> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected Status(SOURCE source) {
@@ -106,7 +106,7 @@ implements ModifiableValueType<SELF, SELF> {
         public final long value;
 
 
-        // --- Object Lifecycle: ---------------------------------------------
+        // --- Object Life Cycle: --------------------------------------------
         private Kind(long value) {
             this.value = value;
         }

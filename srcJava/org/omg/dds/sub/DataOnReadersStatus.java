@@ -42,7 +42,7 @@ extends Status<DataOnReadersStatus, Subscriber> {
 
 
     // -----------------------------------------------------------------------
-    // Object Lifecycle
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     protected DataOnReadersStatus(Subscriber source) {
