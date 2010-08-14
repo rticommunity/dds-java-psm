@@ -108,17 +108,9 @@ public abstract class Context implements DdsObject {
      * value. The class must be accessible and have a public no-argument
      * constructor.
      * 
-     * Note that this method propagates any exception thrown by the
-     * constructor of the identified class, including a checked exception.
-     * This method thereby effectively bypasses the compile-time exception
-     * checking that would otherwise be performed by the compiler.
-     * Subclass implementers are therefore recommended to avoid throwing
-     * checked exceptions in their constructors.
-     * 
-     * @param implClassNameProperty         The name of a system property,
-     *                                      the value of which will be taken
-     *                                      as the name of a Context
-     *                                      implementation to load.
+     * @param   implClassNameProperty       The name of a system property,
+     *          the value of which will be taken as the name of a Context
+     *          implementation class to load.
      * 
      * @return  A non-null Context.
      * 
@@ -126,7 +118,6 @@ public abstract class Context implements DdsObject {
      *          null.
      * @throws  IllegalArgumentException    If the given property name
      *          is the empty string.
-     * 
      * @throws  ServiceConfigurationException   If the class could not be
      *          loaded because of an issue with the the invocation of this
      *          method or the configuration of the runtime environment. For
@@ -134,7 +125,6 @@ public abstract class Context implements DdsObject {
      *          require a native library that is not available, or an
      *          inappropriate class may have been requested (e.g. one that is
      *          not a Context or that doesn't have a no-argument constructor).
-     * 
      * @throws  ServiceInitializationException  If the class was found but
      *          could not be initialized and/or instantiated because of an
      *          error that occurred within its implementation.
