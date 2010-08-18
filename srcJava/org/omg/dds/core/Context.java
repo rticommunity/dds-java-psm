@@ -58,8 +58,8 @@ import org.omg.dds.type.dynamic.DynamicTypeFactory;
 
 
 /**
- * DDS implementations are rooted in this class, a singleton implementation
- * of which is instantiated based on a system property.
+ * DDS implementations are rooted in this class, a concrete subclass
+ * of which can be instantiated based on a system property.
  */
 public abstract class Context implements DdsObject {
     // -----------------------------------------------------------------------
