@@ -59,4 +59,11 @@ extends DdsObject {
      */
     public void close();
 
+    /**
+     * Indicates that references to this object may go out of scope but that
+     * the application expects to look it up again later. Therefore, the
+     * Service must consider this object to be still in use and may not
+     * close it automatically.
+     */
+    public void retain();
 }
