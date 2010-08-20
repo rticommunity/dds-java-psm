@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -30,14 +28,8 @@
 
 package org.omg.dds.core;
 
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
 
-
-@Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
-@Nested
-public interface Duration extends Value<Duration, ModifiableDuration>
-{
+public interface Duration extends ValueType<Duration> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -57,14 +49,35 @@ public interface Duration extends Value<Duration, ModifiableDuration>
     // --- Data access: ------------------------------------------------------
 
     /**
+     * @param sec the sec to set
+     */
+    public void setSec(int sec);
+
+    /**
      * @return the sec
      */
     public int getSec();
 
     /**
+     * @param nanosec the nanosec to set
+     */
+    public void setNanosec(int nanosec);
+
+    /**
      * @return the nanosec
      */
     public int getNanosec();
+
+
+    // --- Manipulation: -----------------------------------------------------
+
+    public void add(Duration duration);
+
+    public void addSec(int sec);
+
+    public void addNanosec(int nanosec);
+
+    public void addMillis(long millis);
 
 
     // --- Conversion: -------------------------------------------------------
@@ -73,4 +86,7 @@ public interface Duration extends Value<Duration, ModifiableDuration>
      * Round or truncate this Duration to a whole number of milliseconds.
      */
     public long getDuration();
+
+    public void setDuration(long millis);
+
 }

@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -39,7 +37,7 @@ import java.util.EventObject;
 public abstract class Status<SELF extends Status<SELF, SOURCE>,
                              SOURCE extends Entity<SOURCE, ?, ?>>
 extends EventObject
-implements ModifiableValue<SELF, SELF> {
+implements ValueType<SELF> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -49,7 +47,7 @@ implements ModifiableValue<SELF, SELF> {
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Object Lifecycle
     // -----------------------------------------------------------------------
 
     protected Status(SOURCE source) {
@@ -105,11 +103,11 @@ implements ModifiableValue<SELF, SELF> {
 
 
         // --- Constants: ----------------------------------------------------
-        public final long value;
+        public final int value;
 
 
-        // --- Object Life Cycle: --------------------------------------------
-        private Kind(long value) {
+        // --- Object Lifecycle: ---------------------------------------------
+        private Kind(int value) {
             this.value = value;
         }
     }

@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -31,33 +29,35 @@
 package org.omg.dds.core;
 
 
-public abstract class NotEnabledException extends IllegalDdsStateException {
+public class NotEnabledException extends IllegalDdsStateException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -1435103296817695008L;
+    private static final long serialVersionUID = -2444081465640694826L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected NotEnabledException() {
-        super();
+    public NotEnabledException(Context parent) {
+        super(parent);
     }
 
-    protected NotEnabledException(String message) {
-        super(message);
+    public NotEnabledException(Context parent, String s) {
+        super(parent, s);
     }
 
-    protected NotEnabledException(Throwable cause) {
-        super(cause);
+    public NotEnabledException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    protected NotEnabledException(String message, Throwable cause) {
-        super(message, cause);
+    public NotEnabledException(Context parent,
+                               String message,
+                               Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

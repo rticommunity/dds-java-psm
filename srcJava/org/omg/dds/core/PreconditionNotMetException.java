@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -31,34 +29,35 @@
 package org.omg.dds.core;
 
 
-public abstract class PreconditionNotMetException
-extends IllegalDdsStateException {
+public class PreconditionNotMetException extends IllegalDdsStateException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -6204457556635480597L;
+    private static final long serialVersionUID = -239470132259199547L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected PreconditionNotMetException() {
-        super();
+    public PreconditionNotMetException(Context parent) {
+        super(parent);
     }
 
-    protected PreconditionNotMetException(String message) {
-        super(message);
+    public PreconditionNotMetException(Context parent, String s) {
+        super(parent, s);
     }
 
-    protected PreconditionNotMetException(Throwable cause) {
-        super(cause);
+    public PreconditionNotMetException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    protected PreconditionNotMetException(String message, Throwable cause) {
-        super(message, cause);
+    public PreconditionNotMetException(Context parent,
+                                       String message,
+                                       Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

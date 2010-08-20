@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -37,12 +35,21 @@ import org.omg.dds.core.policy.PartitionQosPolicy;
 import org.omg.dds.core.policy.PresentationQosPolicy;
 
 
-public interface PublisherQos
-extends Qos<PublisherQos, ModifiablePublisherQos> {
+public interface PublisherQos extends Qos<PublisherQos> {
+    /**
+     * @param presentation the presentation to set
+     */
+    public void setPresentation(PresentationQosPolicy presentation);
+
     /**
      * @return the presentation
      */
     public PresentationQosPolicy getPresentation();
+
+    /**
+     * @param partition the partition to set
+     */
+    public void setPartition(PartitionQosPolicy partition);
 
     /**
      * @return the partition
@@ -50,9 +57,19 @@ extends Qos<PublisherQos, ModifiablePublisherQos> {
     public PartitionQosPolicy getPartition();
 
     /**
+     * @param groupData the groupData to set
+     */
+    public void setGroupData(GroupDataQosPolicy groupData);
+
+    /**
      * @return the groupData
      */
     public GroupDataQosPolicy getGroupData();
+
+    /**
+     * @param entityFactory the entityFactory to set
+     */
+    public void setEntityFactory(EntityFactoryQosPolicy entityFactory);
 
     /**
      * @return the entityFactory

@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -30,19 +28,14 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.Value;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
+import org.omg.dds.core.ValueType;
 
 
 /**
  * An interface implemented by all QoS policies.
  */
-@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
-@Nested
-public interface QosPolicy<UNMOD_SELF extends QosPolicy<UNMOD_SELF, MOD_SELF>,
-                           MOD_SELF extends UNMOD_SELF>
-extends Value<UNMOD_SELF, MOD_SELF> {
+public interface QosPolicy<SELF extends QosPolicy<SELF>>
+extends ValueType<SELF> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
@@ -79,10 +72,7 @@ extends Value<UNMOD_SELF, MOD_SELF> {
         GROUP_DATA              ("GroupData", 19),
         TRANSPORT_PRIORITY      ("TransportPriority", 20),
         LIFESPAN                ("Lifespan", 21),
-        DURABILITY_SERVICE      ("DurabilityService", 22),
-        DATA_REPRESENTATION     ("DataRepresentation", 23),
-        TYPE_CONSISTENCY_ENFORCEMENT    ("TypeConsistencyEnforcement", 24),
-        ;
+        DURABILITY_SERVICE      ("DurabilityService", 22);
 
 
         // --- Constants: ----------------------------------------------------
@@ -90,7 +80,7 @@ extends Value<UNMOD_SELF, MOD_SELF> {
         public final String policyName;
 
 
-        // --- Object Life Cycle: --------------------------------------------
+        // --- Object Lifecycle: ---------------------------------------------
         private Id(String enumName, int value) {
             this. policyName = enumName;
             this.value = value;

@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -38,9 +36,8 @@ import org.omg.dds.core.policy.QosPolicy;
 /**
  * A base interface for all entity QoS types.
  */
-public interface Qos<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>,
-                     MOD_SELF extends UNMOD_SELF>
-extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
+public interface Qos<SELF extends Qos<SELF>>
+extends ValueType<SELF>, Map<QosPolicy.Id, QosPolicy<?>> {
     /**
      * @return  a reference to the corresponding policy in this
      *          <code>Qos</code>. The returned object is not a copy; changes
@@ -49,19 +46,29 @@ extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
      *
      * @see Map#get(Object)
      */
-    public <POLICY extends QosPolicy<POLICY, ?>> POLICY get(QosPolicy.Id id);
+    public <POLICY extends QosPolicy<POLICY>> POLICY get(QosPolicy.Id id);
 
     /**
-     * @throws  UnsupportedOperationException   if this <code>Qos</code> is
-     *          not a <code>ModifiableQos</code>.
+     * Overwrite the value of the indicated policy with the given new value.
+     * Subsequent calls to {@link #get(Object)} may return the given object
+     * or a copy of it.
+     * 
+     * @return  the previous value of the indicated policy if that policy
+     *          applies to this <code>Qos</code>'s {@link Entity} or
+     *          <code>null</code> otherwise. If the returned object is not
+     *          <code>null</code>, changes to it will <em>not</em> be
+     *          reflected by subsequent calls to {@link #get(Object)}.
+     * @throws  NullPointerException    if the given key or value is
+     *                                  <code>null</code>.
      */
-    public QosPolicy<?, ?> put(QosPolicy.Id key, QosPolicy<?, ?> value);
+    public <POLICY extends QosPolicy<POLICY>> POLICY put(
+            QosPolicy.Id key, POLICY value);
 
     /**
      * @throws  UnsupportedOperationException   always: the <tt>remove</tt>
      *          operation is not supported by this map.
      */
-    public QosPolicy<?, ?> remove(Object key);
+    public QosPolicy<?> remove(Object key);
 
     /**
      * @throws  UnsupportedOperationException   always: the <tt>clear</tt>

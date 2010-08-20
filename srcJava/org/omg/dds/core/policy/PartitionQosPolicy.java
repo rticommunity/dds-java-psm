@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -30,13 +28,15 @@
 
 package org.omg.dds.core.policy;
 
-import java.util.Collection;
+import java.util.List;
 
 
-public interface PartitionQosPolicy
-extends QosPolicy<PartitionQosPolicy, ModifiablePartitionQosPolicy> {
+public interface PartitionQosPolicy extends QosPolicy<PartitionQosPolicy> {
     /**
-     * @return  an unmodifiable collection of partition names.
+     * @param name the name to set
      */
-    public Collection<String> getName();
+    public void setName(List<String> name);
+
+    public void getName(List<String> name);
+
 }

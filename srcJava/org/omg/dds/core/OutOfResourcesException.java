@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -31,33 +29,35 @@
 package org.omg.dds.core;
 
 
-public abstract class OutOfResourcesException extends DdsException {
+public class OutOfResourcesException extends DdsException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 6105570967607779945L;
+    private static final long serialVersionUID = -531782273675500750L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected OutOfResourcesException() {
-        super();
+    public OutOfResourcesException(Context parent) {
+        super(parent);
     }
 
-    protected OutOfResourcesException(String message) {
-        super(message);
+    public OutOfResourcesException(Context parent, String s) {
+        super(parent, s);
     }
 
-    protected OutOfResourcesException(Throwable cause) {
-        super(cause);
+    public OutOfResourcesException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    protected OutOfResourcesException(String message, Throwable cause) {
-        super(message, cause);
+    public OutOfResourcesException(Context parent,
+                                   String message,
+                                   Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

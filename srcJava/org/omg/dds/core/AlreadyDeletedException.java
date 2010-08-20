@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -28,25 +26,42 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.core.policy;
+package org.omg.dds.core;
 
 
-public interface ModifiableResourceLimitsQosPolicy
-extends ResourceLimitsQosPolicy,
-        ModifiableQosPolicy<ResourceLimitsQosPolicy,
-                            ModifiableResourceLimitsQosPolicy> {
-    /**
-     * @param maxSamples the maxSamples to set
-     */
-    public void setMaxSamples(int maxSamples);
+/**
+ * The target object was previously disposed and therefore cannot process
+ * the operation.
+ */
+public class AlreadyDeletedException extends IllegalDdsStateException {
+    // -----------------------------------------------------------------------
+    // Private Fields
+    // -----------------------------------------------------------------------
 
-    /**
-     * @param maxInstances the maxInstances to set
-     */
-    public void setMaxInstances(int maxInstances);
+    private static final long serialVersionUID = 7959826139451080930L;
 
-    /**
-     * @param maxSamplesPerInstance the maxSamplesPerInstance to set
-     */
-    public void setMaxSamplesPerInstance(int maxSamplesPerInstance);
+
+
+    // -----------------------------------------------------------------------
+    // Object Lifecycle
+    // -----------------------------------------------------------------------
+
+    public AlreadyDeletedException(Context parent) {
+        super(parent);
+    }
+
+    public AlreadyDeletedException(Context parent, String s) {
+        super(parent, s);
+    }
+
+    public AlreadyDeletedException(Context parent, Throwable cause) {
+        super(parent, cause);
+    }
+
+    public AlreadyDeletedException(Context parent,
+                                   String message,
+                                   Throwable cause) {
+        super(parent, message, cause);
+    }
+
 }

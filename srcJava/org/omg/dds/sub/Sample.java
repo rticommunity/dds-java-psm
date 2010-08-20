@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -32,13 +30,12 @@ package org.omg.dds.sub;
 
 import java.util.ListIterator;
 
-import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.ModifiableTime;
-import org.omg.dds.core.ModifiableValue;
+import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.Time;
+import org.omg.dds.core.ValueType;
 
 
-public interface Sample<TYPE>
-extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
+public interface Sample<TYPE> extends ValueType<Sample<TYPE>> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
@@ -67,11 +64,11 @@ extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
      */
     public InstanceState getInstanceState();
 
-    public ModifiableTime getSourceTimestamp();
+    public Time getSourceTimestamp();
 
-    public ModifiableInstanceHandle getInstanceHandle();
+    public InstanceHandle getInstanceHandle();
 
-    public ModifiableInstanceHandle getPublicationHandle();
+    public InstanceHandle getPublicationHandle();
 
     /**
      * @return the disposedGenerationCount

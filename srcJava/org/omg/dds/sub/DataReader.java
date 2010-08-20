@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -30,14 +28,12 @@
 
 package org.omg.dds.sub;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
+import java.util.Set;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.domain.discovery.PublicationBuiltinTopicData;
 import org.omg.dds.topic.TopicDescription;
 
@@ -45,29 +41,18 @@ import org.omg.dds.topic.TopicDescription;
 public interface DataReader<TYPE>
 extends DomainEntity<DataReader<TYPE>,
                      Subscriber,
-                     DataReaderListener<TYPE>,
+                     DataReaderListener,
                      DataReaderQos> {
     /**
      * @return  the type parameter if this object's class.
      */
     public Class<TYPE> getType();
 
-    /**
-     * Cast this data reader to the given type, or throw an exception if
-     * the cast fails.
-     * 
-     * @param <OTHER>   The type of the data subscribed to by this reader,
-     *                  according to the caller.
-     * @return          this data reader
-     * @throws          ClassCastException if the cast fails
-     */
-    public <OTHER> DataReader<OTHER> cast();
-
     public ReadCondition<TYPE> createReadCondition();
     public ReadCondition<TYPE> createReadCondition(
-            Collection<SampleState> sampleStates,
-            Collection<ViewState> viewStates,
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates,
+            Set<ViewState> viewStates,
+            Set<InstanceState> instanceStates);
 
     public QueryCondition<TYPE> createQueryCondition(
             String queryExpression,
@@ -76,15 +61,15 @@ extends DomainEntity<DataReader<TYPE>,
             String queryExpression,
             String... queryParameters);
     public QueryCondition<TYPE> createQueryCondition(
-            Collection<SampleState> sampleStates,
-            Collection<ViewState> viewStates,
-            Collection<InstanceState> instanceStates,
+            Set<SampleState> sampleStates,
+            Set<ViewState> viewStates,
+            Set<InstanceState> instanceStates,
             String queryExpression,
             List<String> queryParameters);
     public QueryCondition<TYPE> createQueryCondition(
-            Collection<SampleState> sampleStates,
-            Collection<ViewState> viewStates,
-            Collection<InstanceState> instanceStates,
+            Set<SampleState> sampleStates,
+            Set<ViewState> viewStates,
+            Set<InstanceState> instanceStates,
             String queryExpression,
             String... queryParameters);
 
@@ -92,38 +77,28 @@ extends DomainEntity<DataReader<TYPE>,
 
     public TopicDescription<TYPE> getTopicDescription();
 
-    public SampleRejectedStatus<TYPE> getSampleRejectedStatus(
-            SampleRejectedStatus<TYPE> status);
+    public void getSampleRejectedStatus(SampleRejectedStatus<TYPE> status);
 
-    public LivelinessChangedStatus<TYPE> getLivelinessChangedStatus(
+    public void getLivelinessChangedStatus(
             LivelinessChangedStatus<TYPE> status);
 
-    public RequestedDeadlineMissedStatus<TYPE>
-    getRequestedDeadlineMissedStatus(
+    public void getRequestedDeadlineMissedStatus(
             RequestedDeadlineMissedStatus<TYPE> status);
 
-    public RequestedIncompatibleQosStatus<TYPE>
-    getRequestedIncompatibleQosStatus(
+    public void getRequestedIncompatibleQosStatus(
             RequestedIncompatibleQosStatus<TYPE> status);
 
-    public SubscriptionMatchedStatus<TYPE> getSubscriptionMatchedStatus(
+    public void getSubscriptionMatchedStatus(
             SubscriptionMatchedStatus<TYPE> status);
 
-    public SampleLostStatus<TYPE> getSampleLostStatus(
-            SampleLostStatus<TYPE> status);
+    public void getSampleLostStatus(SampleLostStatus<TYPE> status);
 
-    public void waitForHistoricalData(/* indefinitely */)
-    throws TimeoutException;
+    public void waitForHistoricalData(Duration maxWait);
+    public void waitForHistoricalData(long maxWaitMillis);
 
-    public void waitForHistoricalData(Duration maxWait)
-    throws TimeoutException;
-
-    public void waitForHistoricalData(long maxWaitMillis)
-    throws TimeoutException;
-
-    public Collection<InstanceHandle> getMatchedPublications(
-            Collection<InstanceHandle> publicationHandles);
-    public PublicationBuiltinTopicData getMatchedPublicationData(
+    public void getMatchedPublications(
+            Set<InstanceHandle> publication_handles);
+    public void getMatchedPublicationData(
             PublicationBuiltinTopicData publicationData,
             InstanceHandle publicationHandle);
 
@@ -144,13 +119,13 @@ extends DomainEntity<DataReader<TYPE>,
     public Sample<TYPE> createSample();
 
     /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
+     * @return  an immutable iterator over loaned samples.
      */
     public Sample.Iterator<TYPE> read();
     public Sample.Iterator<TYPE> read(
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
     /**
      * Copy samples into the provided collection, overwriting any samples that
@@ -161,31 +136,25 @@ extends DomainEntity<DataReader<TYPE>,
     public void read(
             List<Sample<TYPE>> samples,
             int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
     public Sample.Iterator<TYPE> take();
     public Sample.Iterator<TYPE> take(
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
     public void take(
             List<Sample<TYPE>> samples);
     public void take(
             List<Sample<TYPE>> samples,
             int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
     public Sample.Iterator<TYPE> read(
             ReadCondition<TYPE> condition);
 
@@ -197,9 +166,6 @@ extends DomainEntity<DataReader<TYPE>,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
     public Sample.Iterator<TYPE> take(
             ReadCondition<TYPE> condition);
 
@@ -211,28 +177,19 @@ extends DomainEntity<DataReader<TYPE>,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
-    /**
-     * @return  true if data was read or false if no data was available.
-     */
-    public boolean readNext(
+    public void read_next(
             Sample<TYPE> sample);
 
-    /**
-     * @return  true if data was taken or false if no data was available.
-     */
-    public boolean takeNext(
+    public void take_next(
             Sample<TYPE> sample);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
     public Sample.Iterator<TYPE> read(
             InstanceHandle handle);
     public Sample.Iterator<TYPE> read(
             InstanceHandle handle,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
     public void read(
             List<Sample<TYPE>> samples,
@@ -241,20 +198,17 @@ extends DomainEntity<DataReader<TYPE>,
             List<Sample<TYPE>> samples,
             InstanceHandle handle,
             int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
     public Sample.Iterator<TYPE> take(
             InstanceHandle handle);
     public Sample.Iterator<TYPE> take(
             InstanceHandle handle,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
     public void take(
             List<Sample<TYPE>> samples,
@@ -263,93 +217,80 @@ extends DomainEntity<DataReader<TYPE>,
             List<Sample<TYPE>> samples,
             InstanceHandle handle,
             int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> readNext(
+    public Sample.Iterator<TYPE> read_next(
             InstanceHandle previousHandle);
-    public Sample.Iterator<TYPE> readNext(
+    public Sample.Iterator<TYPE> read_next(
             InstanceHandle previousHandle,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
-    public void readNext(
+    public void read_next(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle);
-    public void readNext(
+    public void read_next(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> takeNext(
+    public Sample.Iterator<TYPE> take_next(
             InstanceHandle previousHandle);
-    public Sample.Iterator<TYPE> takeNext(
+    public Sample.Iterator<TYPE> take_next(
             InstanceHandle previousHandle,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
-    public void takeNext(
+    public void take_next(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle);
-    public void takeNext(
+    public void take_next(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
+            Set<SampleState> sampleStates, 
+            Set<ViewState> viewStates, 
+            Set<InstanceState> instanceStates);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> readNext(
+    public Sample.Iterator<TYPE> read_next(
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
 
-    public void readNext(
+    public void read_next(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
-    public void readNext(
+    public void read_next(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
-    /**
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> takeNext(
+    public Sample.Iterator<TYPE> take_next(
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
 
-    public void takeNext(
+    public void take_next(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             ReadCondition<TYPE> condition);
-    public void takeNext(
+    public void take_next(
             List<Sample<TYPE>> samples,
             InstanceHandle previousHandle,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
-    public TYPE getKeyValue(
-            TYPE keyHolder, 
+    public void getKeyValue(
+            TYPE key_holder, 
             InstanceHandle handle);
 
-    public ModifiableInstanceHandle lookupInstance(
-            ModifiableInstanceHandle handle,
-            TYPE keyHolder);
+    public InstanceHandle lookupInstance(
+            TYPE key_holder);
 }

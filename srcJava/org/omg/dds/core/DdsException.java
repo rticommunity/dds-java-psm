@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -43,6 +41,7 @@ package org.omg.dds.core;
  * - RETCODE_BAD_PARAMETER: java.lang.InvalidArgumentException
  *                          (no new class required)
  * - RETCODE_TIMEOUT:       java.util.concurrent.TimeoutException
+ *                          TODO: Is this the right choice?
  *                          (no new class required)
  * - RETCODE_UNSUPPORTED:   java.util.UnsupportedOperationException
  *                          (no new class required)
@@ -64,13 +63,14 @@ package org.omg.dds.core;
  * - RETCODE_OUT_OF_RESOURCES:     OutOfResourcesException
  *                                 (extends DdsException)
  */
-public abstract class DdsException
-extends RuntimeException implements DdsObject {
+public class DdsException extends RuntimeException implements DdsObject {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 3593139144678443696L;
+    private static final long serialVersionUID = 1147344098842712819L;
+
+    private final Context _parent;
 
 
 
@@ -78,31 +78,49 @@ extends RuntimeException implements DdsObject {
     // Public Methods
     // -----------------------------------------------------------------------
 
+    // --- Object Lifecycle: -------------------------------------------------
+
+    public DdsException(Context parent) {
+        checkForNull(parent);
+        _parent = parent;
+    }
+
+    public DdsException(Context parent, String message) {
+        super(message);
+        checkForNull(parent);
+        _parent = parent;
+    }
+
+    public DdsException(Context parent, Throwable cause) {
+        super(cause);
+        checkForNull(parent);
+        _parent = parent;
+    }
+
+    public DdsException(Context parent, String message, Throwable cause) {
+        super(message, cause);
+        checkForNull(parent);
+        _parent = parent;
+    }
+
+
     // --- From DdsObject: ---------------------------------------------------
 
-    public abstract Context getContext();
+    public Context getContext() {
+        assert _parent != null;
+        return _parent;
+    }
 
 
 
     // -----------------------------------------------------------------------
-    // Protected Methods
+    // Private Methods
     // -----------------------------------------------------------------------
 
-    // --- Object Life Cycle: ------------------------------------------------
-
-    protected DdsException() {
-        super();
+    private static void checkForNull(Context parent) {
+        if (parent == null) {
+            throw new IllegalArgumentException("null Context");
+        }
     }
 
-    protected DdsException(String message) {
-        super(message);
-    }
-
-    protected DdsException(Throwable cause) {
-        super(cause);
-    }
-
-    protected DdsException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

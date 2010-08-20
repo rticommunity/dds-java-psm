@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -31,33 +29,35 @@
 package org.omg.dds.core;
 
 
-public abstract class InconsistentPolicyException extends DdsException {
+public class InconsistentPolicyException extends DdsException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -1993589443534857758L;
+    private static final long serialVersionUID = -1339083610534504006L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    protected InconsistentPolicyException() {
-        super();
+    public InconsistentPolicyException(Context parent) {
+        super(parent);
     }
 
-    protected InconsistentPolicyException(String message) {
-        super(message);
+    public InconsistentPolicyException(Context parent, String s) {
+        super(parent, s);
     }
 
-    protected InconsistentPolicyException(Throwable cause) {
-        super(cause);
+    public InconsistentPolicyException(Context parent, Throwable cause) {
+        super(parent, cause);
     }
 
-    protected InconsistentPolicyException(String message, Throwable cause) {
-        super(message, cause);
+    public InconsistentPolicyException(Context parent,
+                                       String message,
+                                       Throwable cause) {
+        super(parent, message, cause);
     }
 
 }

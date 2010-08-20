@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -28,46 +26,43 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.type.typeobject;
+package org.omg.dds.core;
 
-import java.util.List;
-
-import org.omg.dds.core.ModifiableValue;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.ID;
-import org.omg.dds.type.annotation.Nested;
+import java.io.Serializable;
 
 
-@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-@Nested
-public interface Type extends ModifiableValue<Type, Type>
-{
-    @ID(MemberId.PROPERTY_TYPE_MEMBER_ID)
-    public TypeProperty getProperty();
+/**
+ * Implementing classes have value semantics: they can be deeply copied, and
+ * equality is determined based on their contents, not on their object
+ * identity.
+ * 
+ * @param <SELF>  Typically, classes will parameterize their
+ *                      implementations of this interface with their own
+ *                      class.
+ */
+public interface ValueType<SELF> extends DdsObject, Cloneable, Serializable {
+    /**
+     * Overwrite this object's state with the contents of the given object.
+     * 
+     * @return  this
+     */
+    public SELF copyFrom(SELF other);
 
-    public void setProperty(TypeProperty newProperty);
+    /**
+     * Implementing classes should override <code>equals()</code>.
+     */
+    public boolean equals(Object other);
 
-    @ID(MemberId.ANNOTATION_TYPE_MEMBER_ID)
-    public List<AnnotationUsage> getAnnotation();
+    /**
+     * Implementing classes should override <code>hashCode()</code>.
+     */
+    public int hashCode();
 
-    public void setAnnotation(List<AnnotationUsage> newAnnotation);
-    public void setAnnotation(AnnotationUsage... newAnnotation);
-
-
-
-    // -----------------------------------------------------------------------
-    // Types
-    // -----------------------------------------------------------------------
-
-    public static final class MemberId
-    {
-        // --- Constants: ----------------------------------------------------
-        public static final int PROPERTY_TYPE_MEMBER_ID = 0;
-        public static final int ANNOTATION_TYPE_MEMBER_ID = 1;
-
-        // --- Constructor: --------------------------------------------------
-        private MemberId() {
-            // empty
-        }
-    }
+    /**
+     * Extends the concept of "cloneable" defined in <code>java.lang</code> by
+     * providing an explicit public {@link #clone()} method.
+     * 
+     * @return  a new object that with state identical to that of this object.
+     */
+    public SELF clone();
 }

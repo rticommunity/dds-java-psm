@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -33,14 +31,16 @@ package org.omg.dds.pub;
 import java.util.EventListener;
 
 
-public interface DataWriterListener<TYPE> extends EventListener {
-    public void onOfferedDeadlineMissed(
+public interface DataWriterListener extends EventListener {
+    public <TYPE> void onOfferedDeadlineMissed(
             OfferedDeadlineMissedStatus<TYPE> status);
 
-    public void onOfferedIncompatibleQos(
+    public <TYPE> void onOfferedIncompatibleQos(
             OfferedIncompatibleQosStatus<TYPE> status);
 
-    public void onLivelinessLost(LivelinessLostStatus<TYPE> status);
+    public <TYPE> void onLivelinessLost(
+            LivelinessLostStatus<TYPE> status);
 
-    public void onPublicationMatched(PublicationMatchedStatus<TYPE> status);
+    public <TYPE> void onPublicationMatched(
+            PublicationMatchedStatus<TYPE> status);
 }

@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -30,8 +28,7 @@
 
 package org.omg.dds.core;
 
-import java.util.Collection;
-import java.util.concurrent.TimeoutException;
+import java.util.List;
 
 
 public interface WaitSet extends DdsObject {
@@ -39,30 +36,20 @@ public interface WaitSet extends DdsObject {
     // Methods
     // -----------------------------------------------------------------------
 
-    public void waitForConditions() throws TimeoutException;
-
-    public void waitForConditions(Collection<Condition> activeConditions)
-    throws TimeoutException;
-
-    public void waitForConditions(Duration timeout) throws TimeoutException;
-
-    public void waitForConditions(long millis) throws TimeoutException;
-
+    public void waitForConditions();
+    public void waitForConditions(List<Condition> activeConditions);
+    public void waitForConditions(Duration timeout);
+    public void waitForConditions(long millis);
     public void waitForConditions(
-            Collection<Condition> activeConditions,
-            Duration timeout) throws TimeoutException;
-
+            List<Condition> activeConditions,
+            Duration timeout);
     public void waitForConditions(
-            Collection<Condition> activeConditions,
-            long millis) throws TimeoutException;
+            List<Condition> activeConditions,
+            long millis);
 
     public void attachCondition(Condition cond);
     public void detachCondition(Condition cond);
 
-    /**
-     * @return  an unmodifiable collection of the conditions attached to this
-     *          wait set.
-     */
-    public Collection<Condition> getConditions();
+    public void getConditions(List<Condition> attachedConditions);
 
 }

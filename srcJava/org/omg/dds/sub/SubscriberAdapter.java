@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -31,46 +29,10 @@
 package org.omg.dds.sub;
 
 
-public class SubscriberAdapter implements SubscriberListener
+public class SubscriberAdapter
+extends DataReaderAdapter implements SubscriberListener
 {
-    public void onDataAvailable(DataAvailableStatus<?> status)
-    {
-        // empty
-    }
-
-    public void onLivelinessChanged(LivelinessChangedStatus<?> status)
-    {
-        // empty
-    }
-
-    public void onRequestedDeadlineMissed(
-            RequestedDeadlineMissedStatus<?> status)
-    {
-        // empty
-    }
-
-    public void onRequestedIncompatibleQos(
-            RequestedIncompatibleQosStatus<?> status)
-    {
-        // empty
-    }
-
-    public void onSampleLost(SampleLostStatus<?> status)
-    {
-        // empty
-    }
-
-    public void onSampleRejected(SampleRejectedStatus<?> status)
-    {
-        // empty
-    }
-
-    public void onSubscriptionMatched(SubscriptionMatchedStatus<?> status)
-    {
-        // empty
-    }
-
-    public void onDataOnReaders(DataOnReadersStatus status)
+    public void onDataOnReaders(Subscriber subscriber)
     {
         // empty
     }

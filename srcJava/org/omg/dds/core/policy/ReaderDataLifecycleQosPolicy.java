@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -34,9 +32,26 @@ import org.omg.dds.core.Duration;
 
 
 public interface ReaderDataLifecycleQosPolicy
-extends QosPolicy<ReaderDataLifecycleQosPolicy,
-                  ModifiableReaderDataLifecycleQosPolicy> {
+extends QosPolicy<ReaderDataLifecycleQosPolicy> {
+    /**
+     * @param autoPurgeNoWriterSamplesDelay the autoPurgeNoWriterSamplesDelay to set
+     */
+    public void setAutoPurgeNoWriterSamplesDelay(
+            Duration autoPurgeNoWriterSamplesDelay);
+
+    public void setAutoPurgeNoWriterSamplesDelay(
+            long autoPurgeNoWriterSamplesDelayMillis);
+
     public Duration getAutoPurgeNoWriterSamplesDelay();
+
+    /**
+     * @param autoPurgeDisposedSamplesDelay the autoPurgeDisposedSamplesDelay to set
+     */
+    public void setAutoPurgeDisposedSamplesDelay(
+            Duration autoPurgeDisposedSamplesDelay);
+
+    public void setAutoPurgeDisposedSamplesDelay(
+            long autoPurgeDisposedSamplesDelayMillis);
 
     public Duration getAutoPurgeDisposedSamplesDelay();
 

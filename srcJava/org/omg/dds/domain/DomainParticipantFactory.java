@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -30,7 +28,7 @@
 
 package org.omg.dds.domain;
 
-import java.util.Collection;
+import java.util.Set;
 
 import org.omg.dds.core.DdsObject;
 import org.omg.dds.core.Status;
@@ -55,7 +53,7 @@ public interface DomainParticipantFactory extends DdsObject {
             int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
-            Collection<Status.Kind> status);
+            Set<Status.Kind> status);
     public DomainParticipant createParticipant(
             int domainId,
             String qosLibraryName,
@@ -70,14 +68,16 @@ public interface DomainParticipantFactory extends DdsObject {
             String qosLibraryName,
             String qosProfileName,
             DomainParticipantListener listener,
-            Collection<Status.Kind> status);
+            Set<Status.Kind> status);
 
     public DomainParticipant lookupParticipant(int domainId);
 
-    public DomainParticipantFactoryQos getQos();
+    public DomainParticipantFactoryQos cloneQos();
+    public void getQos(DomainParticipantFactoryQos qos);
     public void setQos(DomainParticipantFactoryQos qos);
 
-    public DomainParticipantQos getDefaultParticipantQos();
+    public DomainParticipantQos cloneDefaultParticipantQos();
+    public void getDefaultParticipantQos(DomainParticipantQos qos);
     public void setDefaultParticipantQos(DomainParticipantQos qos);
     public void setDefaultParticipantQos(
             String qosLibraryName,

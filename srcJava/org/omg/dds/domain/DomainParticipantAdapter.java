@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -34,83 +32,90 @@ import org.omg.dds.pub.LivelinessLostStatus;
 import org.omg.dds.pub.OfferedDeadlineMissedStatus;
 import org.omg.dds.pub.OfferedIncompatibleQosStatus;
 import org.omg.dds.pub.PublicationMatchedStatus;
-import org.omg.dds.sub.DataAvailableStatus;
-import org.omg.dds.sub.DataOnReadersStatus;
+import org.omg.dds.sub.DataReader;
 import org.omg.dds.sub.LivelinessChangedStatus;
 import org.omg.dds.sub.RequestedDeadlineMissedStatus;
 import org.omg.dds.sub.RequestedIncompatibleQosStatus;
 import org.omg.dds.sub.SampleLostStatus;
 import org.omg.dds.sub.SampleRejectedStatus;
+import org.omg.dds.sub.Subscriber;
 import org.omg.dds.sub.SubscriptionMatchedStatus;
 import org.omg.dds.topic.InconsistentTopicStatus;
 
 
 public class DomainParticipantAdapter implements DomainParticipantListener
 {
-    public void onInconsistentTopic(InconsistentTopicStatus<?> status)
+    public <TYPE> void onInconsistentTopic(
+            InconsistentTopicStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onLivelinessLost(LivelinessLostStatus<?> status)
+    public <TYPE> void onLivelinessLost(LivelinessLostStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onOfferedDeadlineMissed(OfferedDeadlineMissedStatus<?> status)
+    public <TYPE> void onOfferedDeadlineMissed(
+            OfferedDeadlineMissedStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onOfferedIncompatibleQos(
-            OfferedIncompatibleQosStatus<?> status)
+    public <TYPE> void onOfferedIncompatibleQos(
+            OfferedIncompatibleQosStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onPublicationMatched(PublicationMatchedStatus<?> status)
+    public <TYPE> void onPublicationMatched(
+            PublicationMatchedStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onDataOnReaders(DataOnReadersStatus status)
+    public void onDataOnReaders(Subscriber subscriber)
     {
         // empty
     }
 
-    public void onDataAvailable(DataAvailableStatus<?> status)
+    public <TYPE> void onDataAvailable(DataReader<TYPE> reader)
     {
         // empty
     }
 
-    public void onLivelinessChanged(LivelinessChangedStatus<?> status)
+    public <TYPE> void onLivelinessChanged(
+            LivelinessChangedStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onRequestedDeadlineMissed(
-            RequestedDeadlineMissedStatus<?> status)
+    public <TYPE> void onRequestedDeadlineMissed(
+            RequestedDeadlineMissedStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onRequestedIncompatibleQos(
-            RequestedIncompatibleQosStatus<?> status)
+    public <TYPE> void onRequestedIncompatibleQos(
+            RequestedIncompatibleQosStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onSampleLost(SampleLostStatus<?> status)
+    public <TYPE> void onSampleLost(
+            SampleLostStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onSampleRejected(SampleRejectedStatus<?> status)
+    public <TYPE> void onSampleRejected(
+            SampleRejectedStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onSubscriptionMatched(SubscriptionMatchedStatus<?> status)
+    public <TYPE> void onSubscriptionMatched(
+            SubscriptionMatchedStatus<TYPE> status)
     {
         // empty
     }
