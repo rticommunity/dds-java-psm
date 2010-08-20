@@ -30,6 +30,8 @@
 
 package org.omg.dds.type.typeobject;
 
+import java.math.BigDecimal;
+
 import org.omg.dds.core.ModifiableValueType;
 import org.omg.dds.type.TypeKind;
 import org.omg.dds.type.annotation.Extensibility;
@@ -96,19 +98,20 @@ extends ModifiableValueType<AnnotationMemberValue, AnnotationMemberValue>
 
     public void float64Value(double value);
 
-    /* FIXME:
-    case FLOAT128_TYPE:
-        long double float128Value;
-     */
+
+    public BigDecimal float128Value();
+
+    public void float128Value(BigDecimal value);
+
 
     public char characterValue();
 
     public void characterValue(char value);
 
 
-    public char wide_characterValue();
+    public char wideCharacterValue();
 
-    public void wide_characterValue(char value);
+    public void wideCharacterValue(char value);
 
 
     public int enumerationValue();
