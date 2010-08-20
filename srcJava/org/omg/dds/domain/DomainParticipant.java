@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -53,7 +51,6 @@ import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicListener;
 import org.omg.dds.topic.TopicQos;
-import org.omg.dds.type.TypeSupport;
 
 
 public interface DomainParticipant
@@ -108,89 +105,86 @@ extends Entity<DomainParticipant,
 
     public Subscriber getBuiltinSubscriber();
 
-
-    // --- Create Topic with implicit TypeSupport: ---------------------------
-
+    // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            Class<TYPE> type);
+            String typeName);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            Class<TYPE> type,
+            String typeName,
             TopicQos qos);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            Class<TYPE> type,
+            String typeName,
             TopicQos qos,
-            TopicListener<TYPE> listener);
+            TopicListener listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            Class<TYPE> type,
+            String typeName,
             TopicQos qos,
-            TopicListener<TYPE> listener,
+            TopicListener listener,
             Collection<Status.Kind> status);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            Class<TYPE> type,
+            String typeName,
             String qosLibraryName,
             String qosProfileName);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            Class<TYPE> type,
+            String typeName,
             String qosLibraryName,
             String qosProfileName,
-            TopicListener<TYPE> listener);
+            TopicListener listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            Class<TYPE> type,
+            String typeName,
             String qosLibraryName,
             String qosProfileName,
-            TopicListener<TYPE> listener,
+            TopicListener listener,
             Collection<Status.Kind> status);
 
-
-    // --- Create Topic with explicit TypeSupport: ---------------------------
-
+    /**
+     * Implicitly register the given type, if necessary, under its fully
+     * qualified name and then create a topic of that type.
+     */
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            TypeSupport<TYPE> type);
+            Class<? super TYPE> type);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            TypeSupport<TYPE> type,
+            Class<? super TYPE> type,
             TopicQos qos);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            TypeSupport<TYPE> type,
+            Class<? super TYPE> type,
             TopicQos qos,
-            TopicListener<TYPE> listener);
+            TopicListener listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            TypeSupport<TYPE> type,
+            Class<? super TYPE> type,
             TopicQos qos,
-            TopicListener<TYPE> listener,
+            TopicListener listener,
             Collection<Status.Kind> status);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            TypeSupport<TYPE> type,
+            Class<? super TYPE> type,
             String qosLibraryName,
             String qosProfileName);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            TypeSupport<TYPE> type,
+            Class<? super TYPE> type,
             String qosLibraryName,
             String qosProfileName,
-            TopicListener<TYPE> listener);
+            TopicListener listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
-            TypeSupport<TYPE> type,
+            Class<? super TYPE> type,
             String qosLibraryName,
             String qosProfileName,
-            TopicListener<TYPE> listener,
+            TopicListener listener,
             Collection<Status.Kind> status);
 
-
-    // --- Other operations: -------------------------------------------------
-
+    // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> findTopic(
             String topicName,
             Duration timeout) throws TimeoutException;
@@ -250,19 +244,18 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName);
 
-    public Collection<InstanceHandle> getDiscoveredParticipants(
+    public void getDiscoveredParticipants(
             Collection<InstanceHandle> participantHandles);
-    public ParticipantBuiltinTopicData getDiscoveredParticipantData(
+    public void getDiscoveredParticipantData(
             ParticipantBuiltinTopicData participantData,
             InstanceHandle participantHandle);
 
-    public Collection<InstanceHandle> getDiscoveredTopics(
-            Collection<InstanceHandle> topicHandles);
-    public TopicBuiltinTopicData getDiscoveredTopicData(
+    public void getDiscoveredTopics(Collection<InstanceHandle> topicHandles);
+    public void getDiscoveredTopicData(
             TopicBuiltinTopicData topicData,
             InstanceHandle topicHandle);
 
     public boolean containsEntity(InstanceHandle handle);
 
-    public ModifiableTime getCurrentTime(ModifiableTime currentTime);
+    public void getCurrentTime(ModifiableTime currentTime);
 }

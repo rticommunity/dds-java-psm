@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -33,20 +31,22 @@ package org.omg.dds.sub;
 import java.util.EventListener;
 
 
-public interface DataReaderListener<TYPE> extends EventListener {
-    public void onRequestedDeadlineMissed(
+/* TODO: The generic methods defined in this interface make it difficult to
+ * write statically type-safe code. But making the whole interface generic
+ * makes it hard to share listeners across Entities with different type
+ * parameters (e.g. as DomainParticipantListeners always do). What's the
+ * solution?
+ */
+public interface DataReaderListener extends EventListener {
+    public <TYPE> void onRequestedDeadlineMissed(
             RequestedDeadlineMissedStatus<TYPE> status);
-
-    public void onRequestedIncompatibleQos(
+    public <TYPE> void onRequestedIncompatibleQos(
             RequestedIncompatibleQosStatus<TYPE> status);
-
-    public void onSampleRejected(SampleRejectedStatus<TYPE> status);
-
-    public void onLivelinessChanged(LivelinessChangedStatus<TYPE> status);
-
-    public void onDataAvailable(DataAvailableStatus<TYPE> status);
-
-    public void onSubscriptionMatched(SubscriptionMatchedStatus<TYPE> status);
-
-    public void onSampleLost(SampleLostStatus<TYPE> status);
+    public <TYPE> void onSampleRejected(SampleRejectedStatus<TYPE> status);
+    public <TYPE> void onLivelinessChanged(
+            LivelinessChangedStatus<TYPE> status);
+    public <TYPE> void onDataAvailable(DataReader<TYPE> reader);
+    public <TYPE> void onSubscriptionMatched(
+            SubscriptionMatchedStatus<TYPE> status);
+    public <TYPE> void onSampleLost(SampleLostStatus<TYPE> status);
 }

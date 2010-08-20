@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -36,7 +34,7 @@ import java.util.EventListener;
 
 public interface Entity<SELF extends Entity<SELF, LISTENER, QOS>,
                         LISTENER extends EventListener,
-                        QOS extends Qos<?, ?>>
+                        QOS extends Qos<QOS, ? extends QOS>>
 extends DdsObject {
     public LISTENER getListener();
     public void setListener(LISTENER listener);
@@ -49,8 +47,7 @@ extends DdsObject {
 
     public StatusCondition<SELF> getStatusCondition();
 
-    public Collection<Status.Kind> getStatusChanges(
-            Collection<Status.Kind> status);
+    public void getStatusChanges(Collection<Status.Kind> status);
 
     public InstanceHandle getInstanceHandle();
 
@@ -59,11 +56,4 @@ extends DdsObject {
      */
     public void close();
 
-    /**
-     * Indicates that references to this object may go out of scope but that
-     * the application expects to look it up again later. Therefore, the
-     * Service must consider this object to be still in use and may not
-     * close it automatically.
-     */
-    public void retain();
 }

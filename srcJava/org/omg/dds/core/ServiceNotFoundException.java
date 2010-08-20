@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -28,46 +26,39 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.type.typeobject;
-
-import java.util.List;
-
-import org.omg.dds.core.ModifiableValue;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.ID;
-import org.omg.dds.type.annotation.Nested;
+package org.omg.dds.core;
 
 
-@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-@Nested
-public interface Type extends ModifiableValue<Type, Type>
-{
-    @ID(MemberId.PROPERTY_TYPE_MEMBER_ID)
-    public TypeProperty getProperty();
+/**
+ * This exception indicates that no DDS implementation could be loaded.
+ */
+public class ServiceNotFoundException extends RuntimeException {
+    // -----------------------------------------------------------------------
+    // Constants
+    // -----------------------------------------------------------------------
 
-    public void setProperty(TypeProperty newProperty);
-
-    @ID(MemberId.ANNOTATION_TYPE_MEMBER_ID)
-    public List<AnnotationUsage> getAnnotation();
-
-    public void setAnnotation(List<AnnotationUsage> newAnnotation);
-    public void setAnnotation(AnnotationUsage... newAnnotation);
+    private static final long serialVersionUID = 323168673886924537L;
 
 
 
     // -----------------------------------------------------------------------
-    // Types
+    // Object Lifecycle
     // -----------------------------------------------------------------------
 
-    public static final class MemberId
-    {
-        // --- Constants: ----------------------------------------------------
-        public static final int PROPERTY_TYPE_MEMBER_ID = 0;
-        public static final int ANNOTATION_TYPE_MEMBER_ID = 1;
-
-        // --- Constructor: --------------------------------------------------
-        private MemberId() {
-            // empty
-        }
+    public ServiceNotFoundException() {
+        super();
     }
+
+    public ServiceNotFoundException(String message) {
+        super(message);
+    }
+
+    public ServiceNotFoundException(Throwable cause) {
+        super(cause);
+    }
+
+    public ServiceNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

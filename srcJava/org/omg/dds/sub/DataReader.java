@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -37,7 +35,6 @@ import java.util.concurrent.TimeoutException;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.domain.discovery.PublicationBuiltinTopicData;
 import org.omg.dds.topic.TopicDescription;
 
@@ -45,23 +42,12 @@ import org.omg.dds.topic.TopicDescription;
 public interface DataReader<TYPE>
 extends DomainEntity<DataReader<TYPE>,
                      Subscriber,
-                     DataReaderListener<TYPE>,
+                     DataReaderListener,
                      DataReaderQos> {
     /**
      * @return  the type parameter if this object's class.
      */
     public Class<TYPE> getType();
-
-    /**
-     * Cast this data reader to the given type, or throw an exception if
-     * the cast fails.
-     * 
-     * @param <OTHER>   The type of the data subscribed to by this reader,
-     *                  according to the caller.
-     * @return          this data reader
-     * @throws          ClassCastException if the cast fails
-     */
-    public <OTHER> DataReader<OTHER> cast();
 
     public ReadCondition<TYPE> createReadCondition();
     public ReadCondition<TYPE> createReadCondition(
@@ -92,28 +78,21 @@ extends DomainEntity<DataReader<TYPE>,
 
     public TopicDescription<TYPE> getTopicDescription();
 
-    public SampleRejectedStatus<TYPE> getSampleRejectedStatus(
-            SampleRejectedStatus<TYPE> status);
+    public void getSampleRejectedStatus(SampleRejectedStatus<TYPE> status);
 
-    public LivelinessChangedStatus<TYPE> getLivelinessChangedStatus(
+    public void getLivelinessChangedStatus(
             LivelinessChangedStatus<TYPE> status);
 
-    public RequestedDeadlineMissedStatus<TYPE>
-    getRequestedDeadlineMissedStatus(
+    public void getRequestedDeadlineMissedStatus(
             RequestedDeadlineMissedStatus<TYPE> status);
 
-    public RequestedIncompatibleQosStatus<TYPE>
-    getRequestedIncompatibleQosStatus(
+    public void getRequestedIncompatibleQosStatus(
             RequestedIncompatibleQosStatus<TYPE> status);
 
-    public SubscriptionMatchedStatus<TYPE> getSubscriptionMatchedStatus(
+    public void getSubscriptionMatchedStatus(
             SubscriptionMatchedStatus<TYPE> status);
 
-    public SampleLostStatus<TYPE> getSampleLostStatus(
-            SampleLostStatus<TYPE> status);
-
-    public void waitForHistoricalData(/* indefinitely */)
-    throws TimeoutException;
+    public void getSampleLostStatus(SampleLostStatus<TYPE> status);
 
     public void waitForHistoricalData(Duration maxWait)
     throws TimeoutException;
@@ -121,9 +100,9 @@ extends DomainEntity<DataReader<TYPE>,
     public void waitForHistoricalData(long maxWaitMillis)
     throws TimeoutException;
 
-    public Collection<InstanceHandle> getMatchedPublications(
+    public void getMatchedPublications(
             Collection<InstanceHandle> publicationHandles);
-    public PublicationBuiltinTopicData getMatchedPublicationData(
+    public void getMatchedPublicationData(
             PublicationBuiltinTopicData publicationData,
             InstanceHandle publicationHandle);
 
@@ -345,11 +324,10 @@ extends DomainEntity<DataReader<TYPE>,
             int maxSamples,
             ReadCondition<TYPE> condition);
 
-    public TYPE getKeyValue(
+    public void getKeyValue(
             TYPE keyHolder, 
             InstanceHandle handle);
 
-    public ModifiableInstanceHandle lookupInstance(
-            ModifiableInstanceHandle handle,
+    public InstanceHandle lookupInstance(
             TYPE keyHolder);
 }

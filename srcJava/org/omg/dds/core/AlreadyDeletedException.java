@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -28,34 +26,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.type.typeobject;
-
-import org.omg.dds.core.ModifiableValue;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
+package org.omg.dds.core;
 
 
-@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
-@Nested
-public interface Bit extends ModifiableValue<Bit, Bit>
-{
-    /**
-     * @param index the index to set
-     */
-    public void setIndex(int index);
+/**
+ * The target object was previously disposed and therefore cannot process
+ * the operation.
+ */
+public abstract class AlreadyDeletedException
+extends IllegalDdsStateException {
+    // -----------------------------------------------------------------------
+    // Private Fields
+    // -----------------------------------------------------------------------
 
-    /**
-     * @return the index
-     */
-    public int getIndex();
+    private static final long serialVersionUID = -2770279089494195697L;
 
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name);
 
-    /**
-     * @return the name
-     */
-    public String getName();
+
+    // -----------------------------------------------------------------------
+    // Object Lifecycle
+    // -----------------------------------------------------------------------
+
+    protected AlreadyDeletedException() {
+        super();
+    }
+
+    protected AlreadyDeletedException(String message) {
+        super(message);
+    }
+
+    protected AlreadyDeletedException(Throwable cause) {
+        super(cause);
+    }
+
+    protected AlreadyDeletedException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }

@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -28,41 +26,41 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.type.typeobject;
-
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.ID;
-import org.omg.dds.type.annotation.Nested;
+package org.omg.dds.core;
 
 
-@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-@Nested
-public interface AnnotationMember extends Member
-{
-    // -----------------------------------------------------------------------
-    // Properties
-    // -----------------------------------------------------------------------
+/**
+ * A value type that supports modification.
+ * 
+ * @param <UNMOD_SELF>  The unmodifiable supertype of this interface.
+ * @param <MOD_SELF>    This interface.
+ */
+public interface ModifiableValueType
+<UNMOD_SELF extends ValueType<UNMOD_SELF, MOD_SELF>,
+ MOD_SELF extends UNMOD_SELF>
+extends ValueType<UNMOD_SELF, MOD_SELF> {
+    /**
+     * Overwrite this object's state with the contents of the given object.
+     * 
+     * @return  this
+     */
+    public MOD_SELF copyFrom(UNMOD_SELF other);
 
-    @ID(MemberId.DEFAULT_VALUE_ANNOTATIONMEMBER_MEMBER_ID)
-    public AnnotationMemberValue getDefaultValue();
+    /**
+     * If this value type has an unmodifiable counterpart class, return a new
+     * object of that class containing a copy of the state of this object. If
+     * not return null.
+     * 
+     * Calling this method is optional in general; because modifiable
+     * interfaces extend "unmodifiable" ones, the former can typically be
+     * used wherever the latter is required.
+     * 
+     * @return  a new unmodifiable copy of this object or null.
+     */
+    public UNMOD_SELF finishModification();
 
-    public void setDefaultValue(AnnotationMemberValue newDefaultValue);
 
+    // --- From ValueType: ---------------------------------------------------
 
-
-    // -----------------------------------------------------------------------
-    // Types
-    // -----------------------------------------------------------------------
-
-    public static final class MemberId
-    {
-        // --- Constants: ----------------------------------------------------
-        public static final int DEFAULT_VALUE_ANNOTATIONMEMBER_MEMBER_ID =
-            100;
-
-        // --- Constructor: --------------------------------------------------
-        private MemberId() {
-            // empty
-        }
-    }
+    public MOD_SELF clone();
 }

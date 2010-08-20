@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -30,10 +28,6 @@
 
 package org.omg.dds.domain.discovery;
 
-import java.util.List;
-
-import org.omg.dds.core.ModifiableValue;
-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.DurabilityQosPolicy;
@@ -47,123 +41,85 @@ import org.omg.dds.core.policy.ReliabilityQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TopicDataQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.ID;
-import org.omg.dds.type.annotation.Key;
-import org.omg.dds.type.annotation.Optional;
-import org.omg.dds.type.typeobject.TypeObject;
 
 
-@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 public interface TopicBuiltinTopicData
-extends ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
-{
-    @ID(0x005A) @Key
-    public BuiltinTopicKey getKey();
+extends BuiltinTopicData<TopicBuiltinTopicData> {
+    // TODO: Why no getParticipantKey() here as in pub and sub topic data?
 
     /**
      * @return the name
      */
-    @ID(0x0005)
     public String getName();
 
     /**
      * @return the typeName
      */
-    @ID(0x0007)
     public String getTypeName();
-
-    @ID(0x0075) @Optional
-    public List<String> getEquivalentTypeName();
-
-    @ID(0x0076) @Optional
-    public List<String> getBaseTypeName();
-
-    @ID(0x0072) @Optional
-    public TypeObject getType();
 
     /**
      * @return the durability
      */
-    @ID(0x001D)
     public DurabilityQosPolicy getDurability();
 
     /**
      * @return the durabilityService
      */
-    @ID(0x001E)
     public DurabilityServiceQosPolicy getDurabilityService();
 
     /**
      * @return the deadline
      */
-    @ID(0x0023)
     public DeadlineQosPolicy getDeadline();
 
     /**
      * @return the latencyBudget
      */
-    @ID(0x0027)
     public LatencyBudgetQosPolicy getLatencyBudget();
 
     /**
      * @return the liveliness
      */
-    @ID(0x001B)
     public LivelinessQosPolicy getLiveliness();
 
     /**
      * @return the reliability
      */
-    @ID(0x001A)
     public ReliabilityQosPolicy getReliability();
 
     /**
      * @return the transportPriority
      */
-    @ID(0x0049)
     public TransportPriorityQosPolicy getTransportPriority();
 
     /**
      * @return the lifespan
      */
-    @ID(0x002B)
     public LifespanQosPolicy getLifespan();
 
     /**
      * @return the destinationOrder
      */
-    @ID(0x0025)
     public DestinationOrderQosPolicy getDestinationOrder();
 
     /**
      * @return the history
      */
-    @ID(0x0040)
     public HistoryQosPolicy getHistory();
 
     /**
      * @return the resourceLimits
      */
-    @ID(0x0041)
     public ResourceLimitsQosPolicy getResourceLimits();
 
     /**
      * @return the ownership
      */
-    @ID(0x001F)
     public OwnershipQosPolicy getOwnership();
 
     /**
      * @return the topicData
      */
-    @ID(0x002E)
     public TopicDataQosPolicy getTopicData();
 
-    @ID(0x0073)
-    public DataRepresentationQosPolicy getRepresentation();
-
-    @ID(0x0074)
-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
 }

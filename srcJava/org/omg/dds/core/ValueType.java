@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -37,9 +35,16 @@ import java.io.Serializable;
  * Implementing classes have value semantics: they can be deeply copied, and
  * equality is determined based on their contents, not on their object
  * identity.
+ * 
+ * FIXME: modify() needs to return the modifiable variant.
+ * 
+ * @param <SELF>  Typically, classes will parameterize their
+ *                      implementations of this interface with their own
+ *                      class.
  */
-public interface Value<UNMOD_SELF extends Value<UNMOD_SELF, MOD_SELF>,
-                           MOD_SELF extends UNMOD_SELF>
+public interface ValueType
+<UNMOD_SELF extends ValueType<UNMOD_SELF, MOD_SELF>,
+ MOD_SELF extends UNMOD_SELF>
 extends DdsObject, Cloneable, Serializable {
     // --- From Object: ------------------------------------------------------
 

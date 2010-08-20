@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -37,22 +35,13 @@ import org.omg.dds.core.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;
-import org.omg.dds.type.builtin.BytesDataReader;
-import org.omg.dds.type.builtin.KeyedBytes;
-import org.omg.dds.type.builtin.KeyedBytesDataReader;
-import org.omg.dds.type.builtin.KeyedString;
-import org.omg.dds.type.builtin.KeyedStringDataReader;
-import org.omg.dds.type.builtin.StringDataReader;
 
 
 public interface Subscriber
 extends DomainEntity<Subscriber,
                      DomainParticipant,
                      SubscriberListener,
-                     SubscriberQos>
-{
-    // --- Create (any) DataReader: ------------------------------------------
-
+                     SubscriberQos> {
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic);
     public <TYPE> DataReader<TYPE> createDataReader(
@@ -61,184 +50,37 @@ extends DomainEntity<Subscriber,
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
-            DataReaderListener<TYPE> listener);
+            DataReaderListener listener);
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
-            DataReaderListener<TYPE> listener,
+            DataReaderListener listener,
             Collection<Status.Kind> statuses);
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             String qosLibraryName,
             String qosProfileName);
-    public <TYPE> DataReader<TYPE> createDataReader(
-            TopicDescription<TYPE> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<TYPE> listener);
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             String qosLibraryName,
             String qosProfileName,
-            DataReaderListener<TYPE> listener,
-            Collection<Status.Kind> statuses);
-
-
-    // --- Create DataReader of built-in bytes type: -------------------------
-
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic);
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic,
-            DataReaderQos qos);
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic,
-            DataReaderQos qos,
-            DataReaderListener<byte[]> listener);
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic,
-            DataReaderQos qos,
-            DataReaderListener<byte[]> listener,
-            Collection<Status.Kind> statuses);
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic,
-            String qosLibraryName,
-            String qosProfileName);
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic,
+            DataReaderListener listener);
+    public <TYPE> DataReader<TYPE> createDataReader(
+            TopicDescription<TYPE> topic,
             String qosLibraryName,
             String qosProfileName,
-            DataReaderListener<byte[]> listener);
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<byte[]> listener,
+            DataReaderListener listener,
             Collection<Status.Kind> statuses);
 
-
-    // --- Create DataReader of built-in KeyedString type: -------------------
-
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic);
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic,
-            DataReaderQos qos);
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic,
-            DataReaderQos qos,
-            DataReaderListener<KeyedBytes> listener);
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic,
-            DataReaderQos qos,
-            DataReaderListener<KeyedBytes> listener,
-            Collection<Status.Kind> statuses);
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic,
-            String qosLibraryName,
-            String qosProfileName);
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<KeyedBytes> listener);
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<KeyedBytes> listener,
-            Collection<Status.Kind> statuses);
-
-
-    // --- Create DataReader of built-in string type: ------------------------
-
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic);
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic,
-            DataReaderQos qos);
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic,
-            DataReaderQos qos,
-            DataReaderListener<String> listener);
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic,
-            DataReaderQos qos,
-            DataReaderListener<String> listener,
-            Collection<Status.Kind> statuses);
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic,
-            String qosLibraryName,
-            String qosProfileName);
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<String> listener);
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<String> listener,
-            Collection<Status.Kind> statuses);
-
-
-    // --- Create DataReader of built-in KeyedString type: -------------------
-
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic);
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic,
-            DataReaderQos qos);
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic,
-            DataReaderQos qos,
-            DataReaderListener<KeyedString> listener);
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic,
-            DataReaderQos qos,
-            DataReaderListener<KeyedString> listener,
-            Collection<Status.Kind> statuses);
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic,
-            String qosLibraryName,
-            String qosProfileName);
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<KeyedString> listener);
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<KeyedString> listener,
-            Collection<Status.Kind> statuses);
-
-
-    // --- Lookup operations: ------------------------------------------------
+    public void closeContainedEntities();
 
     public <TYPE> DataReader<TYPE> lookupDataReader(String topicName);
     public <TYPE> DataReader<TYPE> lookupDataReader(
             TopicDescription<TYPE> topicName);
 
-    public BytesDataReader lookupBytesDataReader(
-            TopicDescription<byte[]> topicName);
-    public KeyedBytesDataReader lookupKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topicName);
-    public StringDataReader lookupStringDataReader(
-            TopicDescription<String> topicName);
-    public KeyedStringDataReader lookupKeyedStringDataReader(
-            TopicDescription<KeyedString> topicName);
-
-
-    // --- Other operations: -------------------------------------------------
-
-    public void closeContainedEntities();
-
-    public Collection<DataReader<?>> getDataReaders(
+    public void getDataReaders(
             Collection<DataReader<?>> readers);
-    public Collection<DataReader<?>> getDataReaders(
+    public void getDataReaders(
             Collection<DataReader<?>> readers,
             Collection<SampleState> sampleStates,
             Collection<ViewState> viewStates,

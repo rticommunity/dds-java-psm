@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -31,24 +29,25 @@
 package org.omg.dds.pub;
 
 
-public class DataWriterAdapter<TYPE> implements DataWriterListener<TYPE> {
-    public void onLivelinessLost(LivelinessLostStatus<TYPE> status)
+public class DataWriterAdapter implements DataWriterListener {
+    public <TYPE> void onLivelinessLost(LivelinessLostStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onOfferedDeadlineMissed(
+    public <TYPE> void onOfferedDeadlineMissed(
             OfferedDeadlineMissedStatus<TYPE> status)
     {
         // empty
     }
 
-    public void onOfferedIncompatibleQos(
+    public <TYPE> void onOfferedIncompatibleQos(
             OfferedIncompatibleQosStatus<TYPE> status) {
         // empty
     }
 
-    public void onPublicationMatched(PublicationMatchedStatus<TYPE> status)
+    public <TYPE> void onPublicationMatched(
+            PublicationMatchedStatus<TYPE> status)
     {
         // empty
     }

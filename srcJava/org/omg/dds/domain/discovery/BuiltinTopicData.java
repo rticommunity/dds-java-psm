@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -28,20 +26,12 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.omg.dds.type.dynamic;
+package org.omg.dds.domain.discovery;
 
-import org.omg.dds.core.ModifiableValue;
+import org.omg.dds.core.ModifiableValueType;
 
 
-public interface ModifiableAnnotationDescriptor
-extends AnnotationDescriptor,
-        ModifiableValue<AnnotationDescriptor,
-                            ModifiableAnnotationDescriptor>
-{
-    public int setValue(String key, String value);
-
-    /**
-     * @param type the type to set
-     */
-    public void setType(DynamicType type);
+public interface BuiltinTopicData<SELF extends BuiltinTopicData<SELF>>
+extends ModifiableValueType<SELF, SELF> {
+    public BuiltinTopicKey getKey();
 }

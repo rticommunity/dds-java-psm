@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -31,7 +29,6 @@
 package org.omg.dds.topic;
 
 import org.omg.dds.core.ModifiableQos;
-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.DurabilityQosPolicy;
@@ -40,7 +37,6 @@ import org.omg.dds.core.policy.HistoryQosPolicy;
 import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
 import org.omg.dds.core.policy.LifespanQosPolicy;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
-import org.omg.dds.core.policy.ModifiableDataRepresentationQosPolicy;
 import org.omg.dds.core.policy.ModifiableDeadlineQosPolicy;
 import org.omg.dds.core.policy.ModifiableDestinationOrderQosPolicy;
 import org.omg.dds.core.policy.ModifiableDurabilityQosPolicy;
@@ -54,13 +50,11 @@ import org.omg.dds.core.policy.ModifiableReliabilityQosPolicy;
 import org.omg.dds.core.policy.ModifiableResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.ModifiableTopicDataQosPolicy;
 import org.omg.dds.core.policy.ModifiableTransportPriorityQosPolicy;
-import org.omg.dds.core.policy.ModifiableTypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
 import org.omg.dds.core.policy.ReliabilityQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TopicDataQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 
 
 public interface ModifiableTopicQos
@@ -197,13 +191,4 @@ extends TopicQos, ModifiableQos<TopicQos, ModifiableTopicQos> {
      * @return the ownership
      */
     public ModifiableOwnershipQosPolicy getOwnership();
-
-    public ModifiableDataRepresentationQosPolicy getRepresentation();
-
-    public void setRepresentation(DataRepresentationQosPolicy representation);
-
-    public ModifiableTypeConsistencyEnforcementQosPolicy getTypeConsistency();
-
-    public void setTypeConsistency(
-            TypeConsistencyEnforcementQosPolicy typeConsistency);
 }

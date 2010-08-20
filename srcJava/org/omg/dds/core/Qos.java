@@ -1,6 +1,4 @@
 /* Copyright (c) 2009-2010, Real-Time Innovations, Inc.
- * Copyright (c) 2010, Object Management Group, Inc.
- * Copyright (c) 2010, PrismTech, Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -11,7 +9,7 @@
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the names of the above copyright holders nor the names of their
+ * - Neither the name of Real-Time Innovations, Inc. nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  * 
@@ -38,9 +36,9 @@ import org.omg.dds.core.policy.QosPolicy;
 /**
  * A base interface for all entity QoS types.
  */
-public interface Qos<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>,
-                     MOD_SELF extends UNMOD_SELF>
-extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
+public interface Qos
+<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>, MOD_SELF extends UNMOD_SELF>
+extends ValueType<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
     /**
      * @return  a reference to the corresponding policy in this
      *          <code>Qos</code>. The returned object is not a copy; changes
