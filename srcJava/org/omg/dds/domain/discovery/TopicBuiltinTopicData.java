@@ -62,8 +62,6 @@ extends ModifiableValueType<TopicBuiltinTopicData, TopicBuiltinTopicData>
     @ID(0x005A) @Key
     public BuiltinTopicKey getKey();
 
-    // TODO: Why no getParticipantKey() here as in pub and sub topic data?
-
     /**
      * @return the name
      */

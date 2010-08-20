@@ -43,7 +43,6 @@ package org.omg.dds.core;
  * - RETCODE_BAD_PARAMETER: java.lang.InvalidArgumentException
  *                          (no new class required)
  * - RETCODE_TIMEOUT:       java.util.concurrent.TimeoutException
- *                          TODO: Is this the right choice?
  *                          (no new class required)
  * - RETCODE_UNSUPPORTED:   java.util.UnsupportedOperationException
  *                          (no new class required)

@@ -77,10 +77,6 @@ public abstract class Context implements DdsObject {
     // Private Fields
     // -----------------------------------------------------------------------
 
-    /* TODO: Refactor this string into the subclass with an abstract method.
-     * We should not constrain the implementation to use English error
-     * messages or format errors in a certain way.
-     */
     private static final String ERROR_STRING =
         "Unable to load OMG DDS implementation. ";
 

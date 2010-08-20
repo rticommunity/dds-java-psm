@@ -37,16 +37,9 @@ import java.io.Serializable;
  * Implementing classes have value semantics: they can be deeply copied, and
  * equality is determined based on their contents, not on their object
  * identity.
- * 
- * FIXME: modify() needs to return the modifiable variant.
- * 
- * @param <SELF>  Typically, classes will parameterize their
- *                      implementations of this interface with their own
- *                      class.
  */
-public interface ValueType
-<UNMOD_SELF extends ValueType<UNMOD_SELF, MOD_SELF>,
- MOD_SELF extends UNMOD_SELF>
+public interface ValueType<UNMOD_SELF extends ValueType<UNMOD_SELF, MOD_SELF>,
+                           MOD_SELF extends UNMOD_SELF>
 extends DdsObject, Cloneable, Serializable {
     // --- From Object: ------------------------------------------------------
 

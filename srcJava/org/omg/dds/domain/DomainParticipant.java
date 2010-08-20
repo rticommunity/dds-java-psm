@@ -191,7 +191,6 @@ extends Entity<DomainParticipant,
 
     // --- Other operations: -------------------------------------------------
 
-    // TODO: How do we constrain the Topic's type parameter?
     public <TYPE> Topic<TYPE> findTopic(
             String topicName,
             Duration timeout) throws TimeoutException;

@@ -36,8 +36,6 @@ import java.util.Collection;
 public interface PartitionQosPolicy
 extends QosPolicy<PartitionQosPolicy, ModifiablePartitionQosPolicy> {
     /**
-     * TODO: Why is this called "name" instead of "names"?
-     * 
      * @return  an unmodifiable collection of partition names.
      */
     public Collection<String> getName();
