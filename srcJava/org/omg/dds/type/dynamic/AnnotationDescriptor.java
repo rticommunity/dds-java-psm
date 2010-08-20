@@ -32,11 +32,11 @@ package org.omg.dds.type.dynamic;
 
 import java.util.Map;
 
-import org.omg.dds.core.ValueType;
+import org.omg.dds.core.Value;
 
 
 public interface AnnotationDescriptor
-extends ValueType<AnnotationDescriptor, ModifiableAnnotationDescriptor>
+extends Value<AnnotationDescriptor, ModifiableAnnotationDescriptor>
 {
     public String getValue(String key);
 

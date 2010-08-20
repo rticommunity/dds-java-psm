@@ -34,11 +34,11 @@ import java.util.ListIterator;
 
 import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.ModifiableTime;
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 
 
 public interface Sample<TYPE>
-extends ModifiableValueType<Sample<TYPE>, Sample<TYPE>> {
+extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

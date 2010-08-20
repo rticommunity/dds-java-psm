@@ -30,12 +30,12 @@
 
 package org.omg.dds.type.dynamic;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 
 
 public interface ModifiableAnnotationDescriptor
 extends AnnotationDescriptor,
-        ModifiableValueType<AnnotationDescriptor,
+        ModifiableValue<AnnotationDescriptor,
                             ModifiableAnnotationDescriptor>
 {
     public int setValue(String key, String value);

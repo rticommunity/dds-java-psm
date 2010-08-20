@@ -30,13 +30,13 @@
 
 package org.omg.dds.type.dynamic;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.type.TypeKind;
 
 
 public interface ModifiableTypeDescriptor
 extends TypeDescriptor,
-        ModifiableValueType<TypeDescriptor, ModifiableTypeDescriptor>
+        ModifiableValue<TypeDescriptor, ModifiableTypeDescriptor>
 {
     /**
      * @param kind the kind to set

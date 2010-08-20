@@ -30,39 +30,50 @@
 
 package org.omg.dds.core;
 
+import java.io.Serializable;
+
 
 /**
- * A value type that supports modification.
- * 
- * @param <UNMOD_SELF>  The unmodifiable supertype of this interface.
- * @param <MOD_SELF>    This interface.
+ * Implementing classes have value semantics: they can be deeply copied, and
+ * equality is determined based on their contents, not on their object
+ * identity.
  */
-public interface ModifiableValueType
-<UNMOD_SELF extends ValueType<UNMOD_SELF, MOD_SELF>,
- MOD_SELF extends UNMOD_SELF>
-extends ValueType<UNMOD_SELF, MOD_SELF> {
-    /**
-     * Overwrite this object's state with the contents of the given object.
-     * 
-     * @return  this
-     */
-    public MOD_SELF copyFrom(UNMOD_SELF other);
+public interface Value<UNMOD_SELF extends Value<UNMOD_SELF, MOD_SELF>,
+                           MOD_SELF extends UNMOD_SELF>
+extends DdsObject, Cloneable, Serializable {
+    // --- From Object: ------------------------------------------------------
 
     /**
-     * If this value type has an unmodifiable counterpart class, return a new
-     * object of that class containing a copy of the state of this object. If
-     * not return null.
-     * 
-     * Calling this method is optional in general; because modifiable
-     * interfaces extend "unmodifiable" ones, the former can typically be
-     * used wherever the latter is required.
-     * 
-     * @return  a new unmodifiable copy of this object or null.
+     * Implementing classes should override <code>equals()</code>.
      */
-    public UNMOD_SELF finishModification();
+    @Override
+    public boolean equals(Object other);
+
+    /**
+     * Implementing classes should override <code>hashCode()</code>.
+     */
+    @Override
+    public int hashCode();
+
+    /**
+     * Extends the concept of "cloneable" defined in <code>java.lang</code> by
+     * providing an explicit public {@link #clone()} method.
+     * 
+     * @return  a new object that with state identical to that of this object.
+     */
+    public UNMOD_SELF clone();
 
 
-    // --- From ValueType: ---------------------------------------------------
+    // --- Conversion: -------------------------------------------------------
 
-    public MOD_SELF clone();
+    /**
+     * If this value type is of a modifiable subtype, return this.
+     * If this value type has a modifiable subtype, return a new object
+     * of that type that is a modifiable copy of this object.
+     * Otherwise, return null.
+     * 
+     * @return  <code>this</code>, a new modifiable copy of <code>this</code>,
+     *          or <code>null</code>.
+     */
+    public MOD_SELF modify();
 }

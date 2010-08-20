@@ -33,6 +33,6 @@ package org.omg.dds.core;
 
 public interface ModifiableInstanceHandle
 extends InstanceHandle,
-        ModifiableValueType<InstanceHandle, ModifiableInstanceHandle> {
+        ModifiableValue<InstanceHandle, ModifiableInstanceHandle> {
     // empty
 }

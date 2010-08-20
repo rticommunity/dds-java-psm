@@ -30,13 +30,13 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 
 
 public interface ModifiableQosPolicy
 <UNMOD_SELF extends QosPolicy<UNMOD_SELF,
  MOD_SELF>, MOD_SELF extends UNMOD_SELF>
 extends QosPolicy<UNMOD_SELF, MOD_SELF>,
-        ModifiableValueType<UNMOD_SELF, MOD_SELF> {
+        ModifiableValue<UNMOD_SELF, MOD_SELF> {
     // empty
 }

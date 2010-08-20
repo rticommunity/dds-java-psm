@@ -30,11 +30,11 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 
 
 public interface QosPolicyCount
-extends ModifiableValueType<QosPolicyCount, QosPolicyCount> {
+extends ModifiableValue<QosPolicyCount, QosPolicyCount> {
     /**
      * @return the policyId
      */

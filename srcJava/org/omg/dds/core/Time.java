@@ -36,7 +36,7 @@ import org.omg.dds.type.annotation.Nested;
 
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
-public interface Time extends ValueType<Time, ModifiableTime>
+public interface Time extends Value<Time, ModifiableTime>
 {
     // -----------------------------------------------------------------------
     // Constants

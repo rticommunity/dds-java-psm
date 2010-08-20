@@ -30,14 +30,14 @@
 
 package org.omg.dds.type.typeobject;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.Nested;
 
 
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
-public interface Bit extends ModifiableValueType<Bit, Bit>
+public interface Bit extends ModifiableValue<Bit, Bit>
 {
     /**
      * @param index the index to set

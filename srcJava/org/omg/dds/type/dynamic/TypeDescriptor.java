@@ -32,13 +32,13 @@ package org.omg.dds.type.dynamic;
 
 import java.util.List;
 
-import org.omg.dds.core.ValueType;
+import org.omg.dds.core.Value;
 import org.omg.dds.type.TypeKind;
 import org.omg.dds.type.annotation.Optional;
 
 
 public interface TypeDescriptor
-extends ValueType<TypeDescriptor, ModifiableTypeDescriptor>
+extends Value<TypeDescriptor, ModifiableTypeDescriptor>
 {
     public boolean isConsistent();
 

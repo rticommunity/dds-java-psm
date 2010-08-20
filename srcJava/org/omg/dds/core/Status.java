@@ -39,7 +39,7 @@ import java.util.EventObject;
 public abstract class Status<SELF extends Status<SELF, SOURCE>,
                              SOURCE extends Entity<SOURCE, ?, ?>>
 extends EventObject
-implements ModifiableValueType<SELF, SELF> {
+implements ModifiableValue<SELF, SELF> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------

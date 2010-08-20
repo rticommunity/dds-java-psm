@@ -32,7 +32,7 @@ package org.omg.dds.type.typeobject;
 
 import java.math.BigDecimal;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.type.TypeKind;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.Nested;
@@ -44,7 +44,7 @@ import org.omg.dds.type.annotation.Nested;
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
 public interface AnnotationMemberValue
-extends ModifiableValueType<AnnotationMemberValue, AnnotationMemberValue>
+extends ModifiableValue<AnnotationMemberValue, AnnotationMemberValue>
 {
     public TypeKind discriminator();
 

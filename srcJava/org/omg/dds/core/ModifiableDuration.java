@@ -32,7 +32,7 @@ package org.omg.dds.core;
 
 
 public interface ModifiableDuration
-extends Duration, ModifiableValueType<Duration, ModifiableDuration> {
+extends Duration, ModifiableValue<Duration, ModifiableDuration> {
     // --- Data access: ------------------------------------------------------
 
     /**

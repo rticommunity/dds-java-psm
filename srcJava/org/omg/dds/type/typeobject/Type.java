@@ -32,7 +32,7 @@ package org.omg.dds.type.typeobject;
 
 import java.util.List;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.ID;
 import org.omg.dds.type.annotation.Nested;
@@ -40,7 +40,7 @@ import org.omg.dds.type.annotation.Nested;
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 @Nested
-public interface Type extends ModifiableValueType<Type, Type>
+public interface Type extends ModifiableValue<Type, Type>
 {
     @ID(MemberId.PROPERTY_TYPE_MEMBER_ID)
     public TypeProperty getProperty();

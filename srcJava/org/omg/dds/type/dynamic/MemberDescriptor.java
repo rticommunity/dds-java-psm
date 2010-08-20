@@ -32,11 +32,11 @@ package org.omg.dds.type.dynamic;
 
 import java.util.List;
 
-import org.omg.dds.core.ValueType;
+import org.omg.dds.core.Value;
 
 
 public interface MemberDescriptor
-extends ValueType<MemberDescriptor, ModifiableMemberDescriptor>
+extends Value<MemberDescriptor, ModifiableMemberDescriptor>
 {
     public abstract boolean isConsistent();
 

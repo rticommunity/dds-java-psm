@@ -30,7 +30,7 @@
 
 package org.omg.dds.domain.discovery;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.ID;
@@ -39,7 +39,7 @@ import org.omg.dds.type.annotation.Key;
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 public interface ParticipantBuiltinTopicData
-extends ModifiableValueType<ParticipantBuiltinTopicData,
+extends ModifiableValue<ParticipantBuiltinTopicData,
                             ParticipantBuiltinTopicData>
 {
     @ID(0x0050) @Key

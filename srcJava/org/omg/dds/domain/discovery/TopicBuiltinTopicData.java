@@ -32,7 +32,7 @@ package org.omg.dds.domain.discovery;
 
 import java.util.List;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
@@ -57,7 +57,7 @@ import org.omg.dds.type.typeobject.TypeObject;
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 public interface TopicBuiltinTopicData
-extends ModifiableValueType<TopicBuiltinTopicData, TopicBuiltinTopicData>
+extends ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
 {
     @ID(0x005A) @Key
     public BuiltinTopicKey getKey();

@@ -40,7 +40,7 @@ import org.omg.dds.core.policy.QosPolicy;
  */
 public interface Qos<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>,
                      MOD_SELF extends UNMOD_SELF>
-extends ValueType<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
+extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
     /**
      * @return  a reference to the corresponding policy in this
      *          <code>Qos</code>. The returned object is not a copy; changes

@@ -30,12 +30,12 @@
 
 package org.omg.dds.type.dynamic;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 
 
 public interface ModifiableMemberDescriptor
 extends MemberDescriptor,
-        ModifiableValueType<MemberDescriptor, ModifiableMemberDescriptor>
+        ModifiableValue<MemberDescriptor, ModifiableMemberDescriptor>
 {
     /**
      * @param name the name to set

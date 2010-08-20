@@ -28,7 +28,7 @@
 
 package org.omg.dds.type.typeobject;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.type.TypeKind;
 import org.omg.dds.type.annotation.BitBound;
 import org.omg.dds.type.annotation.Extensibility;
@@ -39,7 +39,7 @@ import org.omg.dds.type.annotation.Value;
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 @Nested
 public interface TypeLibraryElement
-extends ModifiableValueType<TypeLibraryElement, TypeLibraryElement>
+extends ModifiableValue<TypeLibraryElement, TypeLibraryElement>
 {
     // -----------------------------------------------------------------------
     // Properties

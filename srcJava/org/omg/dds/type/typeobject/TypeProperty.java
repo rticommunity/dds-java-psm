@@ -30,7 +30,7 @@
 
 package org.omg.dds.type.typeobject;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.Nested;
 
@@ -38,7 +38,7 @@ import org.omg.dds.type.annotation.Nested;
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
 public interface TypeProperty
-extends ModifiableValueType<TypeProperty, TypeProperty>
+extends ModifiableValue<TypeProperty, TypeProperty>
 {
     /**
      * @param flag the flag to set

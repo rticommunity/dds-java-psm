@@ -30,7 +30,7 @@
 
 package org.omg.dds.type.typeobject;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.Nested;
 import org.omg.dds.type.annotation.Shared;
@@ -38,7 +38,7 @@ import org.omg.dds.type.annotation.Shared;
 
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
-public interface Module extends ModifiableValueType<Module, Module>
+public interface Module extends ModifiableValue<Module, Module>
 {
     /**
      * @param name the name to set

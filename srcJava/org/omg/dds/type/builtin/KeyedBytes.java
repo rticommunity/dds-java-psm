@@ -30,11 +30,11 @@
 
 package org.omg.dds.type.builtin;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 
 
 public interface KeyedBytes
-extends ModifiableValueType<KeyedBytes, KeyedBytes>
+extends ModifiableValue<KeyedBytes, KeyedBytes>
 {
     /**
      * @return the key

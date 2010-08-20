@@ -34,7 +34,7 @@ import java.util.Date;
 
 
 public interface ModifiableTime
-extends Time, ModifiableValueType<Time, ModifiableTime> {
+extends Time, ModifiableValue<Time, ModifiableTime> {
     // --- Data access: ------------------------------------------------------
 
     /**

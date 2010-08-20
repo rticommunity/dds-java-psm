@@ -30,7 +30,7 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.ValueType;
+import org.omg.dds.core.Value;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.Nested;
 
@@ -42,7 +42,7 @@ import org.omg.dds.type.annotation.Nested;
 @Nested
 public interface QosPolicy<UNMOD_SELF extends QosPolicy<UNMOD_SELF, MOD_SELF>,
                            MOD_SELF extends UNMOD_SELF>
-extends ValueType<UNMOD_SELF, MOD_SELF> {
+extends Value<UNMOD_SELF, MOD_SELF> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

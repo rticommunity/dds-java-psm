@@ -30,11 +30,11 @@
 
 package org.omg.dds.type.builtin;
 
-import org.omg.dds.core.ModifiableValueType;
+import org.omg.dds.core.ModifiableValue;
 
 
 public interface KeyedString
-extends ModifiableValueType<KeyedString, KeyedString>
+extends ModifiableValue<KeyedString, KeyedString>
 {
     /**
      * @param key the key to set
