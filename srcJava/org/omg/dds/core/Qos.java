@@ -33,11 +33,13 @@ package org.omg.dds.core;
 import java.util.Map;
 
 import org.omg.dds.core.policy.QosPolicy;
+import org.omg.dds.type.annotation.Extensibility;
 
 
 /**
  * A base interface for all entity QoS types.
  */
+@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 public interface Qos<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>,
                      MOD_SELF extends UNMOD_SELF>
 extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
