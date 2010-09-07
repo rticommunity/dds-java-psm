@@ -106,6 +106,19 @@ public abstract class Context implements DdsObject {
      * value. The class must be accessible and have a public no-argument
      * constructor.
      * 
+     * By default, the class loader for the <code>Context</code> class will
+     * be used to load the indicated class. If this class loader is null --
+     * for instance, if it is the bootstrap class loader -- then the system
+     * class loader will be used in its place. If it is also null, a
+     * <code>ServiceConfigurationException</code> will be thrown.
+     * 
+     * Neither the class loader nor the loaded class will be cached between
+     * invocations of this method. As a result, execution of this method is
+     * expected to be relatively expensive. However, as any DDS object can
+     * provide a reference to its creating context via
+     * {@link DdsObject#getContext()}, executions of this method are also
+     * expected to be rare.
+     * 
      * @param   implClassNameProperty       The name of a system property,
      *          the value of which will be taken as the name of a Context
      *          implementation class to load.
@@ -128,7 +141,11 @@ public abstract class Context implements DdsObject {
      *          error that occurred within its implementation.
      * 
      * @see     #createInstance()
+     * @see     DdsObject#getContext()
      * @see     System#getProperty(String)
+     * @see     Class#getClassLoader()
+     * @see     ClassLoader#getSystemClassLoader()
+     * @see     ClassLoader#loadClass(String)
      */
     public static Context createInstance(String implClassNameProperty) {
         // --- Get implementation class name --- //
@@ -144,12 +161,33 @@ public abstract class Context implements DdsObject {
                         implClassNameProperty + " property.");
         }
 
-        // --- Load implementation class --- //
         try {
-            Class<?> ctxClass = Class.forName(className);
+            // --- Load implementation class --- //
+            /* IMPORTANT: Load class with ClassLoader.loadClass, not with
+             * Class.forName. The latter provides insufficient control over
+             * the class loader used and also caches class references in
+             * undesirable ways, both of which can cause problems in
+             * container environments such as OSGi.
+             */
+            ClassLoader classLoader = Context.class.getClassLoader();
+            if (classLoader == null) {
+                /* The class loader is the bootstrap class loader, which
+                 * is not directly accessible. Substitute the system
+                 * class loader.
+                 */
+                classLoader = ClassLoader.getSystemClassLoader();
+                if (classLoader == null) {
+                    throw new ServiceConfigurationException(
+                        ERROR_STRING +
+                            "Incorrect system class loader configuration.");
+                }
+            }
+            Class<?> ctxClass = classLoader.loadClass(className);
+
+            // --- Instantiate new object --- //
             /* Get the constructor and call it explicitly rather than calling
              * Class.newInstance(). The latter propagates all exceptions,
-             * event checked ones, complicating error handling for us and
+             * even checked ones, complicating error handling for us and
              * the user.
              */
             Constructor<?> ctor = ctxClass.getConstructor((Class<?>[]) null);
@@ -157,7 +195,8 @@ public abstract class Context implements DdsObject {
 
             // --- Initialization problems --- //
         } catch (ExceptionInInitializerError initx) {
-            // Thrown by Class.forName (or possibly Constructor.newInstance)
+            // Presumably thrown by ClassLoader.loadClass, but not documented.
+            // Thrown by Constructor.newInstance.
             throw new ServiceInitializationException(
                     ERROR_STRING + "Error during static initialization.",
                     initx.getCause());
@@ -169,12 +208,12 @@ public abstract class Context implements DdsObject {
 
             // --- Configuration problems --- //
         } catch (ClassNotFoundException cnfx) {
-            // Thrown by Class.forName
+            // Thrown by ClassLoader.loadClass.
             throw new ServiceConfigurationException(
                     ERROR_STRING + className + " was not found.",
                     cnfx);
         } catch (LinkageError linkx) {
-            // Thrown by Class.forName
+            // Presumably thrown by ClassLoader.loadClass, but not documented.
             throw new ServiceConfigurationException(
                     ERROR_STRING + className + " could not be loaded.",
                     linkx);
@@ -190,13 +229,17 @@ public abstract class Context implements DdsObject {
                     ERROR_STRING + className +
                         " has no appropriate constructor.",
                     iax);
+        } catch (IllegalStateException isx) {
+            // Thrown by ClassLoader.getSystemClassLoader.
+            throw new ServiceConfigurationException(ERROR_STRING, isx);
         } catch (InstantiationException ix) {
             // Thrown by Constructor.newInstance
             throw new ServiceConfigurationException(
                     ERROR_STRING + className + " could not be instantiated.",
                     ix);
         } catch (SecurityException sx) {
-            // Thrown by Class.getConstructor
+            // Thrown by ClassLoader.getSystemClassLoader.
+            // Thrown by Class.getConstructor.
             throw new ServiceConfigurationException(
                     ERROR_STRING + "Prevented by security manager.", sx);
         } catch (ClassCastException ccx) {
