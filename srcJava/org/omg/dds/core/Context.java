@@ -62,6 +62,10 @@ import org.omg.dds.type.dynamic.DynamicTypeFactory;
 /**
  * DDS implementations are rooted in this class, a concrete subclass
  * of which can be instantiated based on a system property.
+ * 
+ * All public concrete and abstract methods of this class are reentrant. The
+ * reentrancy of any new methods that may be defined by subclasses is
+ * unspecified.
  */
 public abstract class Context implements DdsObject {
     // -----------------------------------------------------------------------
@@ -207,6 +211,9 @@ public abstract class Context implements DdsObject {
                     itx.getCause());
 
             // --- Configuration problems --- //
+        } catch (IllegalStateException isx) {
+            // Thrown by ClassLoader.getSystemClassLoader.
+            throw new ServiceConfigurationException(ERROR_STRING, isx);
         } catch (ClassNotFoundException cnfx) {
             // Thrown by ClassLoader.loadClass.
             throw new ServiceConfigurationException(
@@ -229,9 +236,6 @@ public abstract class Context implements DdsObject {
                     ERROR_STRING + className +
                         " has no appropriate constructor.",
                     iax);
-        } catch (IllegalStateException isx) {
-            // Thrown by ClassLoader.getSystemClassLoader.
-            throw new ServiceConfigurationException(ERROR_STRING, isx);
         } catch (InstantiationException ix) {
             // Thrown by Constructor.newInstance
             throw new ServiceConfigurationException(
@@ -256,6 +260,12 @@ public abstract class Context implements DdsObject {
              */
             throw new AssertionError(argx);
         }
+        /* If any other RuntimeException or Error gets thrown above, it's
+         * either a bug in the implementation of this method or an
+         * undocumented behavior of the Java standard library. In either
+         * case, there's not much we can do about it, so let the exception
+         * propagate up the call stack as-is.
+         */
     }
 
 
