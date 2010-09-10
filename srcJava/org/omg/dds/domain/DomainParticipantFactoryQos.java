@@ -31,12 +31,13 @@
 package org.omg.dds.domain;
 
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
-import org.omg.dds.core.Qos;
+import org.omg.dds.core.EntityQos;
 
 
 public interface DomainParticipantFactoryQos
-extends Qos<DomainParticipantFactoryQos,
-            ModifiableDomainParticipantFactoryQos> {
+extends EntityQos<DomainParticipantFactoryQos,
+                  ModifiableDomainParticipantFactoryQos>
+{
     /**
      * @return the entityFactory
      */

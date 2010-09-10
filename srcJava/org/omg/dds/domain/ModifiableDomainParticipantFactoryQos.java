@@ -30,15 +30,16 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.core.ModifiableQos;
+import org.omg.dds.core.ModifiableEntityQos;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.ModifiableEntityFactoryQosPolicy;
 
 
 public interface ModifiableDomainParticipantFactoryQos
 extends DomainParticipantFactoryQos,
-        ModifiableQos<DomainParticipantFactoryQos,
-                      ModifiableDomainParticipantFactoryQos> {
+        ModifiableEntityQos<DomainParticipantFactoryQos,
+                            ModifiableDomainParticipantFactoryQos>
+{
     /**
      * @param entityFactory the entityFactory to set
      */

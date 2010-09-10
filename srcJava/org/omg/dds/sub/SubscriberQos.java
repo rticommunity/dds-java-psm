@@ -30,7 +30,7 @@
 
 package org.omg.dds.sub;
 
-import org.omg.dds.core.Qos;
+import org.omg.dds.core.EntityQos;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.GroupDataQosPolicy;
 import org.omg.dds.core.policy.PartitionQosPolicy;
@@ -38,7 +38,8 @@ import org.omg.dds.core.policy.PresentationQosPolicy;
 
 
 public interface SubscriberQos
-extends Qos<SubscriberQos, ModifiableSubscriberQos> {
+extends EntityQos<SubscriberQos, ModifiableSubscriberQos>
+{
     /**
      * @return the presentation
      */

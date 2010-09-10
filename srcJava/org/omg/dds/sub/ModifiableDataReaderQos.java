@@ -30,7 +30,7 @@
 
 package org.omg.dds.sub;
 
-import org.omg.dds.core.ModifiableQos;
+import org.omg.dds.core.ModifiableEntityQos;
 import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
@@ -61,7 +61,9 @@ import org.omg.dds.topic.TopicQos;
 
 
 public interface ModifiableDataReaderQos
-extends DataReaderQos, ModifiableQos<DataReaderQos, ModifiableDataReaderQos> {
+extends DataReaderQos,
+        ModifiableEntityQos<DataReaderQos, ModifiableDataReaderQos>
+{
     /**
      * @param durability the durability to set
      */

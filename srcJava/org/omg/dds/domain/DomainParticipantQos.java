@@ -30,13 +30,14 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.core.Qos;
+import org.omg.dds.core.EntityQos;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 
 
 public interface DomainParticipantQos
-extends Qos<DomainParticipantQos, ModifiableDomainParticipantQos> {
+extends EntityQos<DomainParticipantQos, ModifiableDomainParticipantQos>
+{
     /**
      * @return the userData
      */

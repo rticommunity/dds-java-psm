@@ -92,7 +92,7 @@ extends Value<UNMOD_SELF, MOD_SELF> {
 
         // --- Object Life Cycle: --------------------------------------------
         private Id(String enumName, int value) {
-            this. policyName = enumName;
+            this.policyName = enumName;
             this.value = value;
         }
     }

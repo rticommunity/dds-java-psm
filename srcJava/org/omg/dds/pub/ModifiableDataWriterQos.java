@@ -30,7 +30,7 @@
 
 package org.omg.dds.pub;
 
-import org.omg.dds.core.ModifiableQos;
+import org.omg.dds.core.ModifiableEntityQos;
 import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
@@ -69,7 +69,9 @@ import org.omg.dds.topic.TopicQos;
 
 
 public interface ModifiableDataWriterQos
-extends DataWriterQos, ModifiableQos<DataWriterQos, ModifiableDataWriterQos> {
+extends DataWriterQos,
+        ModifiableEntityQos<DataWriterQos, ModifiableDataWriterQos>
+{
     /**
      * @param durability the durability to set
      */

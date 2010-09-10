@@ -33,16 +33,18 @@ package org.omg.dds.core;
 import org.omg.dds.core.policy.QosPolicy;
 
 
-public interface ModifiableQos
-<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>, MOD_SELF extends UNMOD_SELF>
-extends Qos<UNMOD_SELF, MOD_SELF>, ModifiableValue<UNMOD_SELF, MOD_SELF> {
+public interface ModifiableEntityQos<UNMOD_SELF extends EntityQos<UNMOD_SELF,
+                                                                  MOD_SELF>,
+                                     MOD_SELF extends UNMOD_SELF>
+extends EntityQos<UNMOD_SELF, MOD_SELF>, ModifiableValue<UNMOD_SELF, MOD_SELF>
+{
     /**
      * Overwrite the value of the indicated policy with the given new value.
      * Subsequent calls to {@link #get(Object)} may return the given object
      * or a copy of it.
      * 
      * @return  the previous value of the indicated policy if that policy
-     *          applies to this <code>Qos</code>'s {@link Entity} or
+     *          applies to this <code>EntityQos</code>'s {@link Entity} or
      *          <code>null</code> otherwise. If the returned object is not
      *          <code>null</code>, changes to it will <em>not</em> be
      *          reflected by subsequent calls to {@link #get(Object)}.

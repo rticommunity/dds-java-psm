@@ -30,7 +30,7 @@
 
 package org.omg.dds.topic;
 
-import org.omg.dds.core.ModifiableQos;
+import org.omg.dds.core.ModifiableEntityQos;
 import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
@@ -64,7 +64,8 @@ import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 
 
 public interface ModifiableTopicQos
-extends TopicQos, ModifiableQos<TopicQos, ModifiableTopicQos> {
+extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
+{
     /**
      * @param topicData the topicData to set
      */

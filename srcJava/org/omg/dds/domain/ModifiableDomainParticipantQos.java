@@ -30,7 +30,7 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.core.ModifiableQos;
+import org.omg.dds.core.ModifiableEntityQos;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.ModifiableEntityFactoryQosPolicy;
 import org.omg.dds.core.policy.ModifiableUserDataQosPolicy;
@@ -39,7 +39,9 @@ import org.omg.dds.core.policy.UserDataQosPolicy;
 
 public interface ModifiableDomainParticipantQos
 extends DomainParticipantQos,
-        ModifiableQos<DomainParticipantQos, ModifiableDomainParticipantQos> {
+        ModifiableEntityQos<DomainParticipantQos,
+                            ModifiableDomainParticipantQos>
+{
     /**
      * @param userData the userData to set
      */

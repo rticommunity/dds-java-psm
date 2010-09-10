@@ -30,7 +30,7 @@
 
 package org.omg.dds.pub;
 
-import org.omg.dds.core.Qos;
+import org.omg.dds.core.EntityQos;
 import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
@@ -51,7 +51,8 @@ import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
 
 
 public interface DataWriterQos
-extends Qos<DataWriterQos, ModifiableDataWriterQos> {
+extends EntityQos<DataWriterQos, ModifiableDataWriterQos>
+{
     /**
      * @return the durability
      */

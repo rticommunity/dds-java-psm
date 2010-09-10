@@ -40,12 +40,13 @@ import org.omg.dds.type.annotation.Extensibility;
  * A base interface for all entity QoS types.
  */
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public interface Qos<UNMOD_SELF extends Qos<UNMOD_SELF, MOD_SELF>,
-                     MOD_SELF extends UNMOD_SELF>
-extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
+public interface EntityQos<UNMOD_SELF extends EntityQos<UNMOD_SELF, MOD_SELF>,
+                           MOD_SELF extends UNMOD_SELF>
+extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>>
+{
     /**
      * @return  a reference to the corresponding policy in this
-     *          <code>Qos</code>. The returned object is not a copy; changes
+     *          <code>EntityQos</code>. The returned object is not a copy; changes
      *          to the returned object will be reflected in subsequent
      *          accesses.
      *
@@ -54,8 +55,8 @@ extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>> {
     public <POLICY extends QosPolicy<POLICY, ?>> POLICY get(QosPolicy.Id id);
 
     /**
-     * @throws  UnsupportedOperationException   if this <code>Qos</code> is
-     *          not a <code>ModifiableQos</code>.
+     * @throws  UnsupportedOperationException   if this <code>EntityQos</code> is
+     *          not a <code>ModifiableEntityQos</code>.
      */
     public QosPolicy<?, ?> put(QosPolicy.Id key, QosPolicy<?, ?> value);
 
