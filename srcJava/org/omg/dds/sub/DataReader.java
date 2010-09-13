@@ -112,9 +112,6 @@ extends DomainEntity<DataReader<TYPE>,
     public SampleLostStatus<TYPE> getSampleLostStatus(
             SampleLostStatus<TYPE> status);
 
-    public void waitForHistoricalData(/* indefinitely */)
-    throws TimeoutException;
-
     public void waitForHistoricalData(Duration maxWait)
     throws TimeoutException;
 
