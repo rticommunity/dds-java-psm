@@ -32,7 +32,7 @@ package org.omg.example.dds.helloworld;
 
 import java.util.concurrent.TimeoutException;
 
-import org.omg.dds.core.Context;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.sub.DataAvailableStatus;
@@ -46,9 +46,9 @@ import org.omg.dds.topic.Topic;
 
 public class GreetingSubscribingApp {
     public static void main(String[] args) {
-        Context ctx = Context.createInstance();
+        Bootstrap bstp = Bootstrap.createInstance();
         DomainParticipant dp =
-            ctx.getParticipantFactory().createParticipant();
+            bstp.getParticipantFactory().createParticipant();
 
         // Implicitly create TypeSupport and register type:
         Topic<Greeting> tp = dp.createTopic("My Topic", Greeting.class);
@@ -70,7 +70,7 @@ public class GreetingSubscribingApp {
 
         try {
             dr.waitForHistoricalData(
-                    ctx.createDuration(10, 0)); // wait up to 10 seconds
+                    bstp.createDuration(10, 0));    // wait up to 10 seconds
         } catch (TimeoutException tx) {
             /* XXX: This is how the Java-SE-standard classes indicate timeout.
              * Do we want to follow the same model, and force people to handle

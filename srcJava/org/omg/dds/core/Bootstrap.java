@@ -67,7 +67,7 @@ import org.omg.dds.type.dynamic.DynamicTypeFactory;
  * reentrancy of any new methods that may be defined by subclasses is
  * unspecified.
  */
-public abstract class Context implements DdsObject {
+public abstract class Bootstrap implements DdsObject {
     // -----------------------------------------------------------------------
     // Public Fields
     // -----------------------------------------------------------------------
@@ -99,18 +99,18 @@ public abstract class Context implements DdsObject {
      * @see     #createInstance(String)
      * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
      */
-    public static Context createInstance() {
+    public static Bootstrap createInstance() {
         return createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY);
     }
 
 
     /**
      * Look up the system property identified by the given string and load,
-     * then instantiate, the Context implementation class identified by its
+     * then instantiate, the Bootstrap implementation class identified by its
      * value. The class must be accessible and have a public no-argument
      * constructor.
      * 
-     * By default, the class loader for the <code>Context</code> class will
+     * By default, the class loader for the <code>Bootstrap</code> class will
      * be used to load the indicated class. If this class loader is null --
      * for instance, if it is the bootstrap class loader -- then the system
      * class loader will be used in its place. If it is also null, a
@@ -119,15 +119,15 @@ public abstract class Context implements DdsObject {
      * Neither the class loader nor the loaded class will be cached between
      * invocations of this method. As a result, execution of this method is
      * expected to be relatively expensive. However, as any DDS object can
-     * provide a reference to its creating context via
-     * {@link DdsObject#getContext()}, executions of this method are also
+     * provide a reference to its creating Bootstrap via
+     * {@link DdsObject#getBootstrap()}, executions of this method are also
      * expected to be rare.
      * 
      * @param   implClassNameProperty       The name of a system property,
-     *          the value of which will be taken as the name of a Context
+     *          the value of which will be taken as the name of a Bootstrap
      *          implementation class to load.
      * 
-     * @return  A non-null Context.
+     * @return  A non-null Bootstrap.
      * 
      * @throws  NullPointerException        If the given property name is
      *          null.
@@ -139,19 +139,20 @@ public abstract class Context implements DdsObject {
      *          example, the class may not be on the class path, it may
      *          require a native library that is not available, or an
      *          inappropriate class may have been requested (e.g. one that is
-     *          not a Context or that doesn't have a no-argument constructor).
+     *          not a Bootstrap or that doesn't have a no-argument
+     *          constructor).
      * @throws  ServiceInitializationException  If the class was found but
      *          could not be initialized and/or instantiated because of an
      *          error that occurred within its implementation.
      * 
      * @see     #createInstance()
-     * @see     DdsObject#getContext()
+     * @see     DdsObject#getBootstrap()
      * @see     System#getProperty(String)
      * @see     Class#getClassLoader()
      * @see     ClassLoader#getSystemClassLoader()
      * @see     ClassLoader#loadClass(String)
      */
-    public static Context createInstance(String implClassNameProperty) {
+    public static Bootstrap createInstance(String implClassNameProperty) {
         // --- Get implementation class name --- //
         /* System.getProperty checks the implClassNameProperty argument as
          * described in the specification for this method and throws
@@ -173,7 +174,7 @@ public abstract class Context implements DdsObject {
              * undesirable ways, both of which can cause problems in
              * container environments such as OSGi.
              */
-            ClassLoader classLoader = Context.class.getClassLoader();
+            ClassLoader classLoader = Bootstrap.class.getClassLoader();
             if (classLoader == null) {
                 /* The class loader is the bootstrap class loader, which
                  * is not directly accessible. Substitute the system
@@ -195,7 +196,7 @@ public abstract class Context implements DdsObject {
              * the user.
              */
             Constructor<?> ctor = ctxClass.getConstructor((Class<?>[]) null);
-            return (Context) ctor.newInstance((Object[]) null);
+            return (Bootstrap) ctor.newInstance((Object[]) null);
 
             // --- Initialization problems --- //
         } catch (ExceptionInInitializerError initx) {
@@ -249,7 +250,7 @@ public abstract class Context implements DdsObject {
         } catch (ClassCastException ccx) {
             // Thrown by type cast
             throw new ServiceConfigurationException(
-                    ERROR_STRING + className + " is not a Context.", ccx);
+                    ERROR_STRING + className + " is not a Bootstrap.", ccx);
 
             // --- Implementation problems --- //
         } catch (IllegalArgumentException argx) {
@@ -269,7 +270,7 @@ public abstract class Context implements DdsObject {
     }
 
 
-    protected Context() {
+    protected Bootstrap() {
         // empty
     }
 
@@ -427,7 +428,7 @@ public abstract class Context implements DdsObject {
 
     // --- From DdsObject: ---------------------------------------------------
 
-    public final Context getContext() {
+    public final Bootstrap getBootstrap() {
         return this;
     }
 

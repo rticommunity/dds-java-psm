@@ -30,7 +30,7 @@
 
 package org.omg.example.dds.helloworld;
 
-import org.omg.dds.core.Context;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.ModifiableEntityFactoryQosPolicy;
 import org.omg.dds.domain.DomainParticipant;
@@ -40,9 +40,9 @@ import org.omg.dds.domain.ModifiableDomainParticipantQos;
 
 public final class QosExample {
     public static void main(String[] args) {
-        Context ctx = Context.createInstance();
+        Bootstrap bstp = Bootstrap.createInstance();
         DomainParticipant dp =
-            ctx.getParticipantFactory().createParticipant();
+            bstp.getParticipantFactory().createParticipant();
 
         // Get unmodifiable QoS for inspection:
         DomainParticipantQos dpqUnmod = dp.getQos();
@@ -61,7 +61,7 @@ public final class QosExample {
         dp.setQos(dpqMod);
 
         // Restore QoS to default:
-        dp.setQos(ctx.getParticipantFactory().getDefaultParticipantQos());
+        dp.setQos(bstp.getParticipantFactory().getDefaultParticipantQos());
     }
 
 

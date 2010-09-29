@@ -32,7 +32,7 @@ package org.omg.example.dds.helloworld;
 
 import java.util.concurrent.TimeoutException;
 
-import org.omg.dds.core.Context;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
@@ -41,9 +41,9 @@ import org.omg.dds.topic.Topic;
 
 public class GreetingPublishingApp {
     public static void main(String[] args) {
-        Context ctx = Context.createInstance();
+        Bootstrap bstp = Bootstrap.createInstance();
         DomainParticipant dp =
-            ctx.getParticipantFactory().createParticipant();
+            bstp.getParticipantFactory().createParticipant();
 
         // Implicitly create TypeSupport and register type:
         Topic<Greeting> tp = dp.createTopic("My Topic", Greeting.class);

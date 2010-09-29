@@ -32,5 +32,9 @@ package org.omg.dds.core;
 
 
 public interface DdsObject {
-    public Context getContext();
+    /**
+     * @return  the {@link Bootstrap} object that directly or indirectly
+     *          created this object.
+     */
+    public Bootstrap getBootstrap();
 }
