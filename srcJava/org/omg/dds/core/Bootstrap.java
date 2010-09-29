@@ -32,6 +32,7 @@ package org.omg.dds.core;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import java.util.Set;
 
 import org.omg.dds.domain.DomainParticipantFactory;
@@ -94,21 +95,48 @@ public abstract class Bootstrap implements DdsObject {
      * Create and return a new instance of a concrete implementation of this
      * class. This method is equivalent to calling:
      * 
-     * <code>createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY);</code>
+     * <code>createInstance((Map) null);</code>
      * 
-     * @see     #createInstance(String)
+     * @see     #createInstance(Map)
+     * @see     #createInstance(String, Map)
      * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
      */
     public static Bootstrap createInstance() {
-        return createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY);
+        return createInstance(null);
+    }
+
+
+    /**
+     * Create and return a new instance of a concrete implementation of this
+     * class with the given environment. This method is equivalent to calling:
+     * 
+     * <code>
+     * createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY, environment);
+     * </code>
+     * 
+     * @see     #createInstance()
+     * @see     #createInstance(String, Map)
+     * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
+     */
+    public static Bootstrap createInstance(Map<String, Object> environment) {
+        return createInstance(
+                IMPLEMENTATION_CLASS_NAME_PROPERTY, environment);
     }
 
 
     /**
      * Look up the system property identified by the given string and load,
      * then instantiate, the Bootstrap implementation class identified by its
-     * value. The class must be accessible and have a public no-argument
-     * constructor.
+     * value. The class must be accessible and have a public constructor.
+     * 
+     * The public constructors of the implementation class will first be
+     * searched for one accepting a single argument of type {@link Map}. If
+     * one is found, it will be called with the <code>environment</code> map
+     * provided to this method as its argument. If no such constructor is
+     * found, a no-argument constructor will be used instead, and the
+     * provided <code>environment</code>, if any, will be ignored. If the
+     * implementation class provides no public constructor with either of
+     * these signatures, an exception will be thrown.
      * 
      * By default, the class loader for the <code>Bootstrap</code> class will
      * be used to load the indicated class. If this class loader is null --
@@ -126,6 +154,12 @@ public abstract class Bootstrap implements DdsObject {
      * @param   implClassNameProperty       The name of a system property,
      *          the value of which will be taken as the name of a Bootstrap
      *          implementation class to load.
+     * @param   environment                 A collection of name-value pairs
+     *          to be provided to the concrete Bootstrap subclass. If that
+     *          class does not provide a constructor that can accept this
+     *          environment, the environment will be ignored. This argument
+     *          may be null; a null environment shall be considered equivalent
+     *          to an empty map.
      * 
      * @return  A non-null Bootstrap.
      * 
@@ -152,7 +186,8 @@ public abstract class Bootstrap implements DdsObject {
      * @see     ClassLoader#getSystemClassLoader()
      * @see     ClassLoader#loadClass(String)
      */
-    public static Bootstrap createInstance(String implClassNameProperty) {
+    public static Bootstrap createInstance(
+            String implClassNameProperty, Map<String, Object> environment) {
         // --- Get implementation class name --- //
         /* System.getProperty checks the implClassNameProperty argument as
          * described in the specification for this method and throws
@@ -190,13 +225,23 @@ public abstract class Bootstrap implements DdsObject {
             Class<?> ctxClass = classLoader.loadClass(className);
 
             // --- Instantiate new object --- //
-            /* Get the constructor and call it explicitly rather than calling
-             * Class.newInstance(). The latter propagates all exceptions,
-             * even checked ones, complicating error handling for us and
-             * the user.
-             */
-            Constructor<?> ctor = ctxClass.getConstructor((Class<?>[]) null);
-            return (Bootstrap) ctor.newInstance((Object[]) null);
+            try {
+                // First, try a constructor that will accept the environment.
+                Constructor<?> ctor = ctxClass.getConstructor(Map.class);
+                return (Bootstrap) ctor.newInstance(environment);
+            } catch (NoSuchMethodException nsmx) {
+                /* No Map constructor found; try a no-argument constructor
+                 * instead.
+                 * 
+                 * Get the constructor and call it explicitly rather than
+                 * calling Class.newInstance(). The latter propagates all
+                 * exceptions, even checked ones, complicating error handling
+                 * for us and the user.
+                 */
+                Constructor<?> ctor = ctxClass.getConstructor(
+                        (Class<?>[]) null);
+                return (Bootstrap) ctor.newInstance((Object[]) null);
+            }
 
             // --- Initialization problems --- //
         } catch (ExceptionInInitializerError initx) {
@@ -226,7 +271,7 @@ public abstract class Bootstrap implements DdsObject {
                     ERROR_STRING + className + " could not be loaded.",
                     linkx);
         } catch (NoSuchMethodException nsmx) {
-            // Thrown by Class.getConstructor
+            // Thrown by Class.getConstructor: no no-argument constructor
             throw new ServiceConfigurationException(
                     ERROR_STRING + className +
                         " has no appropriate constructor.",
