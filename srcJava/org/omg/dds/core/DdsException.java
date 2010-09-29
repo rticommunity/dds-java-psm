@@ -40,11 +40,11 @@ package org.omg.dds.core;
  * - RETCODE_NO_DATA:       A status attached to a normal return; not
  *                          represented as an exception.
  * 
- * - RETCODE_BAD_PARAMETER: java.lang.InvalidArgumentException
+ * - RETCODE_BAD_PARAMETER: java.lang.IllegalArgumentException
  *                          (no new class required)
  * - RETCODE_TIMEOUT:       java.util.concurrent.TimeoutException
  *                          (no new class required)
- * - RETCODE_UNSUPPORTED:   java.util.UnsupportedOperationException
+ * - RETCODE_UNSUPPORTED:   java.lang.UnsupportedOperationException
  *                          (no new class required)
  * 
  * - IllegalDdsStateException extends java.lang.IllegalStateException
