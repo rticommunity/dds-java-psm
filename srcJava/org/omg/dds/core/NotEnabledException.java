@@ -31,7 +31,8 @@
 package org.omg.dds.core;
 
 
-public abstract class NotEnabledException extends IllegalDdsStateException {
+public abstract class NotEnabledException extends DDSException
+{
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------

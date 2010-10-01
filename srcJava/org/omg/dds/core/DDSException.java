@@ -30,39 +30,97 @@
 
 package org.omg.dds.core;
 
+import org.omg.dds.core.policy.QosPolicy;
+import org.omg.dds.sub.DataReader;
+
 
 /**
- * DDS PIM "return codes" are mostly mapped to subclasses of this exception.
+ * DDS recognizes a number of ways in which an operation may return, which
+ * are mapped to exceptions in the following way:
  * 
- * - RETCODE_ERROR:         This class.
- * 
- * - RETCODE_OK:            Normal return; not mapped to anything.
- * - RETCODE_NO_DATA:       A status attached to a normal return; not
- *                          represented as an exception.
- * 
- * - RETCODE_BAD_PARAMETER: java.lang.IllegalArgumentException
- *                          (no new class required)
- * - RETCODE_TIMEOUT:       java.util.concurrent.TimeoutException
- *                          (no new class required)
- * - RETCODE_UNSUPPORTED:   java.lang.UnsupportedOperationException
- *                          (no new class required)
- * 
- * - IllegalDdsStateException extends java.lang.IllegalStateException
- * - RETCODE_ALREADY_DELETED:      AlreadyDeletedException
- *                                 (extends IllegalDdsStateException)
- * - RETCODE_ILLEGAL_OPERATION:    IllegalOperationException
- *                                 (extends IllegalDdsStateException)
- * - RETCODE_NOT_ENABLED:          NotEnabledException
- *                                 (extends IllegalDdsStateException)
- * - RETCODE_PRECONDITION_NOT_MET: PreconditionNotMetException
- *                                 (extends IllegalDdsStateException)
- *
- * - RETCODE_IMMUTABLE_POLICY:     ImmutablePolicyException
- *                                 (extends DdsException)
- * - RETCODE_INCONSISTENT_POLICY:  InconsistentPolicyException
- *                                 (extends DdsException)
- * - RETCODE_OUT_OF_RESOURCES:     OutOfResourcesException
- *                                 (extends DdsException)
+ * <table border="1" cellspacing="0" cellpadding="2">
+ * <tr><th>Return</th><th>Description</th><th>Exception</th></tr>
+ * <tr>
+ *     <td>OK</td>
+ *     <td>Normal, successful return.</td>
+ *     <td>(<em>none</em>)</td>
+ * </tr>
+ * <tr>
+ *     <td>NO_DATA</td>
+ *     <td>Normal, successful return from a data access method such as
+ *         {@link DataReader#take()}, but no data was available.
+ *     </td>
+ *     <td>(<em>none</em>)</td>
+ * </tr>
+ * <tr>
+ *     <td>TIMEOUT</td>
+ *     <td>Blocking operation failed to complete within the specified timeout
+ *         duration.
+ *     </td>
+ *     <td>{@link java.util.concurrent.TimeoutException}</td>
+ * </tr>
+ * <tr>
+ *     <td>BAD_PARAMETER</td>
+ *     <td>An argument passed to a method was out of range or had a value
+ *         that was otherwise illegal.
+ *     </td>
+ *     <td>{@link java.lang.IllegalArgumentException}</td>
+ * </tr>
+ * <tr>
+ *     <td>UNSUPPORTED</td>
+ *     <td>The method is not supported by this DDS implementation.
+ *     </td>
+ *     <td>{@link java.lang.UnsupportedOperationException}</td>
+ * </tr>
+ * <tr>
+ *     <td>NOT_ENABLED</td>
+ *     <td>The {@link Entity} has not yet been enabled for communication.</td>
+ *     <td>{@link NotEnabledException}</td>
+ * </tr>
+ * <tr>
+ *     <td>ALREADY_DELETED</td>
+ *     <td>The object on which the method is invoked has already been closed.
+ *     </td>
+ *     <td>{@link AlreadyClosedException}</td>
+ * </tr>
+ * <tr>
+ *     <td>ILLEGAL_OPERATION</td>
+ *     <td>The method cannot be invoked in the current calling context (e.g.
+ *         from within a listener callback).
+ *     </td>
+ *     <td>{@link IllegalOperationException}</td>
+ * </tr>
+ * <tr>
+ *     <td>PRECONDITION_NOT_MET</td>
+ *     <td>The object is not in the proper state to invoke the method.</td>
+ *     <td>{@link PreconditionNotMetException}</td>
+ * </tr>
+ * <tr>
+ *     <td>IMMUTABLE_POLICY</td>
+ *     <td>An attempt was made to change a {@link QosPolicy} that cannot be
+ *         changed.</td>
+ *     <td>{@link ImmutablePolicyException}</td>
+ * </tr>
+ * <tr>
+ *     <td>INCONSISTENT_POLICY</td>
+ *     <td>Two or more {@link QosPolicy} property values have been specified
+ *         that are inconsistent with one another.
+ *     </td>
+ *     <td>{@link ImmutablePolicyException}</td>
+ * </tr>
+ * <tr>
+ *     <td>OUT_OF_RESOURCES</td>
+ *     <td>An internal resource of the DDS implementation has been exhausted,
+ *         preventing the successful completion of the method.
+ *     </td>
+ *     <td>{@link OutOfResourcesException}</td>
+ * </tr>
+ * <tr>
+ *     <td>ERROR</td>
+ *     <td>The method failed to complete successfully for another reason.</td>
+ *     <td>{@link DDSException} (this class)</td>
+ * </tr>
+ * </table>
  */
 public abstract class DDSException
 extends RuntimeException implements DDSObject {

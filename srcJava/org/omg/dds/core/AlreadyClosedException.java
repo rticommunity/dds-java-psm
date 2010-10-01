@@ -35,8 +35,8 @@ package org.omg.dds.core;
  * The target object was previously closed and therefore cannot process
  * the operation.
  */
-public abstract class AlreadyClosedException
-extends IllegalDdsStateException {
+public abstract class AlreadyClosedException extends DDSException
+{
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------

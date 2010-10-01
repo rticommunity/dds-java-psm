@@ -31,8 +31,8 @@
 package org.omg.dds.core;
 
 
-public abstract class PreconditionNotMetException
-extends IllegalDdsStateException {
+public abstract class PreconditionNotMetException extends DDSException
+{
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
