@@ -30,34 +30,40 @@
 
 package org.omg.dds.core;
 
+import java.util.concurrent.TimeUnit;
+
 
 public interface ModifiableDuration
-extends Duration, ModifiableValue<Duration, ModifiableDuration> {
+extends Duration, ModifiableValue<Duration, ModifiableDuration>
+{
+    // -----------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------
+
     // --- Data access: ------------------------------------------------------
 
-    /**
-     * @param sec the sec to set
-     */
-    public void setSec(int sec);
-
-    /**
-     * @param nanosec the nanosec to set
-     */
-    public void setNanosec(int nanosec);
+    public void setDuration(long duration, TimeUnit unit);
 
 
     // --- Manipulation: -----------------------------------------------------
 
-    public void add(ModifiableDuration duration);
+    /**
+     * Increase this duration by the given amount.
+     */
+    public void add(Duration duration);
 
-    public void addSec(int sec);
+    /**
+     * Increase this duration by the given amount.
+     */
+    public void add(long duration, TimeUnit unit);
 
-    public void addNanosec(int nanosec);
+    /**
+     * Decrease this duration by the given amount.
+     */
+    public void subtract(Duration duration);
 
-    public void addMillis(long millis);
-
-
-    // --- Conversion: -------------------------------------------------------
-
-    public void setDuration(long millis);
+    /**
+     * Decrease this duration by the given amount.
+     */
+    public void subtract(long duration, TimeUnit unit);
 }

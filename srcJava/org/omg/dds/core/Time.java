@@ -39,37 +39,66 @@ import org.omg.dds.type.annotation.Nested;
 public interface Time extends Value<Time, ModifiableTime>
 {
     // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    public static final int INVALID_SEC = -1;
-    public static final int INVALID_NSEC = -1;
-
-
-
-    // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
 
     // --- Data access: ------------------------------------------------------
 
     /**
-     * @return the sec
+     * Convert this Time to a quantity of nanoseconds.
+     * 
+     * An invalid time will be reported as a negative value.
      */
-    public int getSec();
+    public long toNanos();
 
     /**
-     * @return the nanosec
+     * Truncate this Time to a whole-number quantity of microseconds.
+     * 
+     * An invalid time will be reported as a negative value.
      */
-    public int getNanosec();
-
-
-    // --- Conversion: -------------------------------------------------------
+    public long toMicros();
 
     /**
-     * @return  the number of milliseconds corresponding to this time,
-     *          rounded or truncated to a whole number.
+     * Truncate this Time to a whole-number quantity of milliseconds.
+     * 
+     * An invalid time will be reported as a negative value.
      */
-    public long getTime();
+    public long toMillis();
+
+    /**
+     * Truncate this Time to a whole-number quantity of seconds.
+     * 
+     * An invalid time will be reported as a negative value.
+     */
+    public long toSeconds();
+
+    /**
+     * Truncate this Time to a whole-number quantity of minutes.
+     * 
+     * An invalid time will be reported as a negative value.
+     */
+    public long toMinutes();
+
+    /**
+     * Truncate this Time to a whole-number quantity of hours.
+     * 
+     * An invalid time will be reported as a negative value.
+     */
+    public long toHours();
+
+    /**
+     * Truncate this Time to a whole-number quantity of days.
+     * 
+     * An invalid time will be reported as a negative value.
+     */
+    public long toDays();
+
+
+    // --- Query: ------------------------------------------------------------
+
+    /**
+     * @return  whether this time represents a meaningful instant in time.
+     */
+    public boolean isValid();
 
 }

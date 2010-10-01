@@ -32,6 +32,7 @@ package org.omg.dds.sub;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
@@ -115,7 +116,7 @@ extends DomainEntity<DataReader<TYPE>,
     public void waitForHistoricalData(Duration maxWait)
     throws TimeoutException;
 
-    public void waitForHistoricalData(long maxWaitMillis)
+    public void waitForHistoricalData(long maxWait, TimeUnit unit)
     throws TimeoutException;
 
     public Collection<InstanceHandle> getMatchedPublications(

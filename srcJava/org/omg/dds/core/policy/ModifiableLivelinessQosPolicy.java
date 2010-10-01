@@ -30,6 +30,8 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.ModifiableDuration;
 
@@ -48,7 +50,7 @@ extends LivelinessQosPolicy,
      */
     public void setLeaseDuration(Duration leaseDuration);
 
-    public void setLeaseDuration(long leaseDurationMillis);
+    public void setLeaseDuration(long leaseDuration, TimeUnit unit);
 
     public ModifiableDuration getLeaseDuration();
 }

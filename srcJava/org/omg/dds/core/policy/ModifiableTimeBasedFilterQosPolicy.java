@@ -30,6 +30,8 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.ModifiableDuration;
 
@@ -43,7 +45,7 @@ extends TimeBasedFilterQosPolicy,
      */
     public void setMinimumSeparation(Duration minimumSeparation);
 
-    public void setMinimumSeparation(long minimumSeparationMillis);
+    public void setMinimumSeparation(long minimumSeparation, TimeUnit unit);
 
     public ModifiableDuration getMinimumSeparation();
 }

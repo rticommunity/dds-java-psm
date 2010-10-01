@@ -30,6 +30,7 @@
 
 package org.omg.dds.type.builtin;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.InstanceHandle;
@@ -46,9 +47,17 @@ public interface KeyedBytesDataWriter extends DataWriter<KeyedBytes>
     public InstanceHandle registerInstance(String key, Time sourceTimestamp)
     throws TimeoutException;
 
+    public InstanceHandle registerInstance(
+            String key, long sourceTimestamp, TimeUnit unit)
+    throws TimeoutException;
+
     public void unregisterInstance(String key) throws TimeoutException;
 
     public void unregisterInstance(String key, Time sourceTimestamp)
+    throws TimeoutException;
+
+    public void unregisterInstance(
+            String key, long sourceTimestamp, TimeUnit unit)
     throws TimeoutException;
 
     public void write(String key, byte[] bytes)
@@ -78,9 +87,22 @@ public interface KeyedBytesDataWriter extends DataWriter<KeyedBytes>
             Time sourceTimestamp)
     throws TimeoutException;
 
+    public void write(
+            String key,
+            byte[] bytes,
+            int offset,
+            int length,
+            InstanceHandle handle,
+            long sourceTimestamp,
+            TimeUnit unit)
+    throws TimeoutException;
+
     public void dispose(String key) throws TimeoutException;
 
     public void dispose(String key, Time sourceTimestamp)
+    throws TimeoutException;
+
+    public void dispose(String key, long sourceTimestamp, TimeUnit unit)
     throws TimeoutException;
 
     public StringBuilder getKeyValue(

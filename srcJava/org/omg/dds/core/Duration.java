@@ -39,38 +39,76 @@ import org.omg.dds.type.annotation.Nested;
 public interface Duration extends Value<Duration, ModifiableDuration>
 {
     // -----------------------------------------------------------------------
-    // Constants
-    // -----------------------------------------------------------------------
-
-    public static final int INFINITE_SEC = Integer.MAX_VALUE;
-    public static final int INFINITE_NSEC = Integer.MAX_VALUE;
-
-    public static final int ZERO_SEC = 0;
-    public static final int ZERO_NSEC = 0;
-
-
-
-    // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
 
     // --- Data access: ------------------------------------------------------
 
     /**
-     * @return the sec
+     * Convert this Duration to a quantity of nanoseconds.
+     * 
+     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
      */
-    public int getSec();
+    public long toNanos();
 
     /**
-     * @return the nanosec
+     * Truncate this Duration to a whole-number quantity of microseconds.
+     * 
+     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
      */
-    public int getNanosec();
-
-
-    // --- Conversion: -------------------------------------------------------
+    public long toMicros();
 
     /**
-     * Round or truncate this Duration to a whole number of milliseconds.
+     * Truncate this Duration to a whole-number quantity of milliseconds.
+     * 
+     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
      */
-    public long getDuration();
+    public long toMillis();
+
+    /**
+     * Truncate this Duration to a whole-number quantity of seconds.
+     * 
+     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
+     */
+    public long toSeconds();
+
+    /**
+     * Truncate this Duration to a whole-number quantity of minutes.
+     * 
+     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
+     */
+    public long toMinutes();
+
+    /**
+     * Truncate this Duration to a whole-number quantity of hours.
+     * 
+     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
+     */
+    public long toHours();
+
+    /**
+     * Truncate this Duration to a whole-number quantity of days.
+     * 
+     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
+     */
+    public long toDays();
+
+
+    // --- Query: ------------------------------------------------------------
+
+    /**
+     * Report whether this duration lasts no time at all. The result of this
+     * method is equivalent to the following:
+     * 
+     * <code>d.toNanos() == 0;</code>
+     */
+    public boolean isZero();
+
+    /**
+     * Report whether this duration lasts forever. The result of this method
+     * is equivalent to the following:
+     * 
+     * <code>d.toNanos() == Long.MAX_VALUE;</code>
+     */
+    public boolean isInfinite();
 }

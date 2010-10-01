@@ -30,6 +30,8 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.ModifiableDuration;
 
@@ -42,7 +44,7 @@ extends DeadlineQosPolicy,
      */
     public void setPeriod(Duration period);
 
-    public void setPeriod(long periodMillis);
+    public void setPeriod(long period, TimeUnit unit);
 
     public ModifiableDuration getPeriod();
 }

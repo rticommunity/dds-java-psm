@@ -31,6 +31,7 @@
 package org.omg.dds.pub;
 
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
@@ -68,7 +69,7 @@ extends DomainEntity<DataWriter<TYPE>,
     public void waitForAcknowledgments(Duration maxWait)
     throws TimeoutException;
 
-    public void waitForAcknowledgments(long maxWaitMillis)
+    public void waitForAcknowledgments(long maxWait, TimeUnit unit)
     throws TimeoutException;
 
     public LivelinessLostStatus<TYPE> getLivelinessLostStatus(
@@ -100,7 +101,8 @@ extends DomainEntity<DataWriter<TYPE>,
             Time sourceTimestamp) throws TimeoutException;
     public InstanceHandle registerInstance(
             TYPE instanceData, 
-            long sourceTimestampMillis) throws TimeoutException;
+            long sourceTimestamp,
+            TimeUnit unit) throws TimeoutException;
 
     public void unregisterInstance(
             InstanceHandle handle) throws TimeoutException;
@@ -114,7 +116,8 @@ extends DomainEntity<DataWriter<TYPE>,
     public void unregisterInstance(
             InstanceHandle handle, 
             TYPE instanceData,
-            long sourceTimestampMillis) throws TimeoutException;
+            long sourceTimestamp,
+            TimeUnit unit) throws TimeoutException;
 
     public void write(
             TYPE instanceData) throws TimeoutException;
@@ -123,7 +126,8 @@ extends DomainEntity<DataWriter<TYPE>,
             Time sourceTimestamp) throws TimeoutException;
     public void write(
             TYPE instanceData, 
-            long sourceTimestampMillis) throws TimeoutException;
+            long sourceTimestamp,
+            TimeUnit unit) throws TimeoutException;
     public void write(
             TYPE instanceData, 
             InstanceHandle handle) throws TimeoutException;
@@ -134,7 +138,8 @@ extends DomainEntity<DataWriter<TYPE>,
     public void write(
             TYPE instanceData, 
             InstanceHandle handle,
-            long sourceTimestampMillis) throws TimeoutException;
+            long sourceTimestamp,
+            TimeUnit unit) throws TimeoutException;
 
     public void dispose(
             InstanceHandle instanceHandle) throws TimeoutException;
@@ -148,7 +153,8 @@ extends DomainEntity<DataWriter<TYPE>,
     public void dispose(
             InstanceHandle instanceHandle, 
             TYPE instanceData,
-            long sourceTimestampMillis) throws TimeoutException;
+            long sourceTimestamp,
+            TimeUnit unit) throws TimeoutException;
 
     public TYPE getKeyValue(
             TYPE keyHolder, 

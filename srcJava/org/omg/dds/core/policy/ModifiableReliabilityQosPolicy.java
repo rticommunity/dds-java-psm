@@ -30,6 +30,8 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.ModifiableDuration;
 
@@ -48,7 +50,7 @@ extends ReliabilityQosPolicy,
      */
     public void setMaxBlockingTime(Duration maxBlockingTime);
 
-    public void setMaxBlockingTime(long maxBlockingTimeMillis);
+    public void setMaxBlockingTime(long maxBlockingTime, TimeUnit unit);
 
     public ModifiableDuration getMaxBlockingTime();
 }

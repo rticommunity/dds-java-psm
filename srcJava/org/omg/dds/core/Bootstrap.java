@@ -34,6 +34,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.domain.discovery.BuiltinTopicKey;
@@ -375,13 +376,24 @@ public abstract class Bootstrap implements DdsObject {
 
     // --- Time: -------------------------------------------------------------
 
-    public abstract ModifiableDuration createDuration();
+    /**
+     * Construct a time duration of the given magnitude.
+     * 
+     * A duration of magnitude {@link Long#MAX_VALUE} indicates an infinite
+     * duration, regardless of the units specified.
+     */
+    public abstract ModifiableDuration createDuration(
+            long duration, TimeUnit unit);
 
-    public abstract ModifiableDuration createDuration(int sec, int nanosec);
-
-    public abstract ModifiableTime createTime(long millis);
-
-    public abstract ModifiableTime createTime(int sec, int nanosec);
+    /**
+     * Construct a specific instant in time.
+     * 
+     * Negative values are considered invalid and will result in the
+     * construction of a time <code>t</code> such that:
+     * 
+     * <code>t.isValid() == false</code>
+     */
+    public abstract ModifiableTime createTime(long time, TimeUnit units);
 
 
     // --- Instance handle: --------------------------------------------------

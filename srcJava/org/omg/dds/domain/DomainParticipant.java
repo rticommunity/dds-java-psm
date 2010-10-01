@@ -32,6 +32,7 @@ package org.omg.dds.domain;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.Duration;
@@ -196,7 +197,9 @@ extends Entity<DomainParticipant,
             Duration timeout) throws TimeoutException;
     public <TYPE> Topic<TYPE> findTopic(
             String topicName,
-            long millis) throws TimeoutException;
+            long timeout,
+            TimeUnit unit)
+            throws TimeoutException;
     public <TYPE> TopicDescription<TYPE> lookupTopicDescription(String name);
 
     public <TYPE> ContentFilteredTopic<TYPE> createContentFilteredTopic(

@@ -30,6 +30,7 @@
 
 package org.omg.example.dds.helloworld;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.Bootstrap;
@@ -70,7 +71,7 @@ public class GreetingSubscribingApp {
 
         try {
             dr.waitForHistoricalData(
-                    bstp.createDuration(10, 0));    // wait up to 10 seconds
+                    bstp.createDuration(10, TimeUnit.SECONDS));
         } catch (TimeoutException tx) {
             /* XXX: This is how the Java-SE-standard classes indicate timeout.
              * Do we want to follow the same model, and force people to handle

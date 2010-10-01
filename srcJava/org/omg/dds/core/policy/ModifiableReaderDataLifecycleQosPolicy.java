@@ -30,6 +30,8 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.ModifiableDuration;
 
@@ -45,7 +47,7 @@ extends ReaderDataLifecycleQosPolicy,
             Duration autoPurgeNoWriterSamplesDelay);
 
     public void setAutoPurgeNoWriterSamplesDelay(
-            long autoPurgeNoWriterSamplesDelayMillis);
+            long autoPurgeNoWriterSamplesDelay, TimeUnit unit);
 
     public ModifiableDuration getAutoPurgeNoWriterSamplesDelay();
 
@@ -56,7 +58,7 @@ extends ReaderDataLifecycleQosPolicy,
             Duration autoPurgeDisposedSamplesDelay);
 
     public void setAutoPurgeDisposedSamplesDelay(
-            long autoPurgeDisposedSamplesDelayMillis);
+            long autoPurgeDisposedSamplesDelay, TimeUnit unit);
 
     public ModifiableDuration getAutoPurgeDisposedSamplesDelay();
 }

@@ -30,47 +30,40 @@
 
 package org.omg.dds.core;
 
-import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 
 public interface ModifiableTime
-extends Time, ModifiableValue<Time, ModifiableTime> {
+extends Time, ModifiableValue<Time, ModifiableTime>
+{
+    // -----------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------
+
     // --- Data access: ------------------------------------------------------
 
-    /**
-     * @param sec the sec to set
-     */
-    public void setSec(int sec);
-
-    /**
-     * @param nanosec the nanosec to set
-     */
-    public void setNanosec(int nanosec);
+    public void setTime(long time, TimeUnit unit);
 
 
     // --- Manipulation: -----------------------------------------------------
 
+    /**
+     * Increment this time by the given amount.
+     */
     public void add(Duration duration);
 
-    public void addSec(int sec);
-
-    public void addNanosec(int nanosec);
-
-    public void addMillis(long millis);
-
-
-    // --- Conversion: -------------------------------------------------------
+    /**
+     * Increment this time by the given amount.
+     */
+    public void add(long duration, TimeUnit unit);
 
     /**
-     * Set this Time to the given number of milliseconds.
+     * Decrement this time by the given amount.
      */
-    public void setTime(long timeMillis);
+    public void subtract(Duration duration);
 
     /**
-     * Set this Time to that described by the given Date.
-     * 
-     * This method is equivalent to calling
-     * <code>setTime(timeDate.getTime())</code>.
+     * Decrement this time by the given amount.
      */
-    public void setTime(Date timeDate);
+    public void subtract(long duration, TimeUnit unit);
 }

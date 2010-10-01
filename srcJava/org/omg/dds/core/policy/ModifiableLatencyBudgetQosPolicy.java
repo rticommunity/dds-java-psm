@@ -30,6 +30,8 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.ModifiableDuration;
 
@@ -43,7 +45,7 @@ extends LatencyBudgetQosPolicy,
      */
     public void setDuration(Duration duration);
 
-    public void setDuration(long durationMillis);
+    public void setDuration(long duration, TimeUnit unit);
 
     public ModifiableDuration getDuration();
 

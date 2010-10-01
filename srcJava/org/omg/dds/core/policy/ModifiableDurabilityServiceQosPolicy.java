@@ -30,6 +30,8 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.ModifiableDuration;
 
@@ -43,7 +45,8 @@ extends DurabilityServiceQosPolicy,
      */
     public void setServiceCleanupDelay(Duration serviceCleanupDelay);
 
-    public void setServiceCleanupDelay(long serviceCleanupDelayMillis);
+    public void setServiceCleanupDelay(
+            long serviceCleanupDelay, TimeUnit unit);
 
     public ModifiableDuration getServiceCleanupDelay();
 
