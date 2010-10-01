@@ -31,7 +31,7 @@
 package org.omg.dds.core;
 
 
-public abstract class OutOfResourcesException extends DdsException {
+public abstract class OutOfResourcesException extends DDSException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------

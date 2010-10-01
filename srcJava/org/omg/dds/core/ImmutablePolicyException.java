@@ -31,7 +31,7 @@
 package org.omg.dds.core;
 
 
-public abstract class ImmutablePolicyException extends DdsException {
+public abstract class ImmutablePolicyException extends DDSException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------

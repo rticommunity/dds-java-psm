@@ -64,13 +64,13 @@ package org.omg.dds.core;
  * - RETCODE_OUT_OF_RESOURCES:     OutOfResourcesException
  *                                 (extends DdsException)
  */
-public abstract class DdsException
+public abstract class DDSException
 extends RuntimeException implements DdsObject {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 3593139144678443696L;
+    private static final long serialVersionUID = -157595187039427362L;
 
 
 
@@ -80,19 +80,19 @@ extends RuntimeException implements DdsObject {
 
     // --- Object Life Cycle: ------------------------------------------------
 
-    protected DdsException() {
+    protected DDSException() {
         super();
     }
 
-    protected DdsException(String message) {
+    protected DDSException(String message) {
         super(message);
     }
 
-    protected DdsException(Throwable cause) {
+    protected DDSException(Throwable cause) {
         super(cause);
     }
 
-    protected DdsException(String message, Throwable cause) {
+    protected DDSException(String message, Throwable cause) {
         super(message, cause);
     }
 }

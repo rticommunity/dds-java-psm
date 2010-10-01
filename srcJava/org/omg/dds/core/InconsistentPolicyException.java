@@ -31,12 +31,12 @@
 package org.omg.dds.core;
 
 
-public abstract class InconsistentPolicyException extends DdsException {
+public abstract class InconsistentPolicyException extends DDSException {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -1993589443534857758L;
+    private static final long serialVersionUID = 5264713016409453514L;
 
 
 
