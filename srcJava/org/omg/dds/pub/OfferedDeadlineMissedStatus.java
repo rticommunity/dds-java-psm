@@ -40,7 +40,7 @@ extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 4639205731141958891L;
+    private static final long serialVersionUID = 7958557115889148585L;
 
 
 

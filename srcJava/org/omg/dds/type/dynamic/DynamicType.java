@@ -33,11 +33,11 @@ package org.omg.dds.type.dynamic;
 import java.util.List;
 import java.util.Map;
 
-import org.omg.dds.core.DdsObject;
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.type.TypeKind;
 
 
-public interface DynamicType extends DdsObject, Cloneable
+public interface DynamicType extends DDSObject, Cloneable
 {
     public TypeDescriptor getDescriptor();
 

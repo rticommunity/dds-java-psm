@@ -41,10 +41,10 @@ import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
 import java.util.List;
 
-import org.omg.dds.core.DdsObject;
+import org.omg.dds.core.DDSObject;
 
 
-public interface DynamicData extends DdsObject, Cloneable
+public interface DynamicData extends DDSObject, Cloneable
 {
     public DynamicType getType();
 

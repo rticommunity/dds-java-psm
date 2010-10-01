@@ -39,7 +39,7 @@ extends Status<InconsistentTopicStatus<TYPE>, Topic<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -2624774463760603715L;
+    private static final long serialVersionUID = 4436349983298916816L;
 
 
 

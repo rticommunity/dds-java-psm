@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 
-public interface WaitSet extends DdsObject {
+public interface WaitSet extends DDSObject {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

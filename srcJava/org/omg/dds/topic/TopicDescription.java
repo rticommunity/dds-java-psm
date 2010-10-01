@@ -30,11 +30,11 @@
 
 package org.omg.dds.topic;
 
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.core.DdsObject;
 
 
-public interface TopicDescription<TYPE> extends DdsObject {
+public interface TopicDescription<TYPE> extends DDSObject {
     /**
      * @return  the type parameter if this object's class.
      */

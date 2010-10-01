@@ -31,6 +31,6 @@
 package org.omg.dds.core;
 
 
-public interface Condition extends DdsObject {
+public interface Condition extends DDSObject {
     public boolean getTriggerValue();
 }

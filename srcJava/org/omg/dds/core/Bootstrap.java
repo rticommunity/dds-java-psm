@@ -69,7 +69,7 @@ import org.omg.dds.type.dynamic.DynamicTypeFactory;
  * reentrancy of any new methods that may be defined by subclasses is
  * unspecified.
  */
-public abstract class Bootstrap implements DdsObject {
+public abstract class Bootstrap implements DDSObject {
     // -----------------------------------------------------------------------
     // Public Fields
     // -----------------------------------------------------------------------

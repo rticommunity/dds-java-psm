@@ -39,7 +39,7 @@ extends Status<LivelinessLostStatus<TYPE>, DataWriter<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 707966852477008961L;
+    private static final long serialVersionUID = -3741038559289576020L;
 
 
 

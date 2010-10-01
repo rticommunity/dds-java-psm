@@ -32,11 +32,11 @@ package org.omg.dds.domain;
 
 import java.util.Collection;
 
-import org.omg.dds.core.DdsObject;
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Status;
 
 
-public interface DomainParticipantFactory extends DdsObject {
+public interface DomainParticipantFactory extends DDSObject {
     /**
      * Create a new participant in the domain with ID 0 having default QoS
      * and no listener.

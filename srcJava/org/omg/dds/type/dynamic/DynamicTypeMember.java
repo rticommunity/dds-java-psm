@@ -32,10 +32,10 @@ package org.omg.dds.type.dynamic;
 
 import java.util.List;
 
-import org.omg.dds.core.DdsObject;
+import org.omg.dds.core.DDSObject;
 
 
-public interface DynamicTypeMember extends DdsObject 
+public interface DynamicTypeMember extends DDSObject 
 {
     public MemberDescriptor getDescriptor();
 

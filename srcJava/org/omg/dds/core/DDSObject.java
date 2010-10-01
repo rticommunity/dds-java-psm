@@ -31,7 +31,7 @@
 package org.omg.dds.core;
 
 
-public interface DdsObject {
+public interface DDSObject {
     /**
      * @return  the {@link Bootstrap} object that directly or indirectly
      *          created this object.

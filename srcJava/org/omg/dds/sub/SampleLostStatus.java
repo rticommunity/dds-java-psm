@@ -39,7 +39,7 @@ extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 1617579384975160841L;
+    private static final long serialVersionUID = -520330521363610833L;
 
 
 

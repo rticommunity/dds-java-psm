@@ -40,7 +40,7 @@ extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 7250955717675322203L;
+    private static final long serialVersionUID = -2133794660702966974L;
 
 
 

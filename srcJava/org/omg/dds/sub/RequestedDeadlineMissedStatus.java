@@ -40,7 +40,7 @@ extends Status<RequestedDeadlineMissedStatus<TYPE>, DataReader<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -1392057553015728559L;
+    private static final long serialVersionUID = 8571367679700186607L;
 
 
 

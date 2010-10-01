@@ -37,12 +37,12 @@ package org.omg.dds.core;
  * state. 
  */
 public abstract class IllegalDdsStateException
-extends IllegalStateException implements DdsObject {
+extends IllegalStateException implements DDSObject {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 2081698257134331180L;
+    private static final long serialVersionUID = 1375709010330954270L;
 
 
 

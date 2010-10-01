@@ -43,7 +43,7 @@ extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -8666816525655802935L;
+    private static final long serialVersionUID = 4709309312402183531L;
 
 
 

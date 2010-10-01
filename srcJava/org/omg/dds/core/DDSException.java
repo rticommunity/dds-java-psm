@@ -65,12 +65,12 @@ package org.omg.dds.core;
  *                                 (extends DdsException)
  */
 public abstract class DDSException
-extends RuntimeException implements DdsObject {
+extends RuntimeException implements DDSObject {
     // -----------------------------------------------------------------------
     // Private Fields
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -157595187039427362L;
+    private static final long serialVersionUID = -7560788483511488746L;
 
 
 

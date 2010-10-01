@@ -40,7 +40,7 @@ extends Status<SubscriptionMatchedStatus<TYPE>, DataReader<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -7106977048456814833L;
+    private static final long serialVersionUID = -8311789136391541797L;
 
 
 

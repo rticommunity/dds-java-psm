@@ -30,11 +30,11 @@
 
 package org.omg.dds.type.dynamic;
 
-import org.omg.dds.core.DdsObject;
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.type.TypeKind;
 
 
-public interface DynamicTypeFactory extends DdsObject
+public interface DynamicTypeFactory extends DDSObject
 {
     public DynamicType getPrimitiveType(TypeKind kind);
 

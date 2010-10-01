@@ -40,7 +40,7 @@ extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 7496281826481953260L;
+    private static final long serialVersionUID = -3473343064305797468L;
 
 
 

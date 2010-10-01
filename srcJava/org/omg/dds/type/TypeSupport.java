@@ -30,10 +30,10 @@
 
 package org.omg.dds.type;
 
-import org.omg.dds.core.DdsObject;
+import org.omg.dds.core.DDSObject;
 
 
-public interface TypeSupport<TYPE> extends DdsObject
+public interface TypeSupport<TYPE> extends DDSObject
 {
     public String getTypeName();
 }

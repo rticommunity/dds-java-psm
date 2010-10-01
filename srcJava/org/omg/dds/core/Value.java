@@ -39,8 +39,9 @@ import java.io.Serializable;
  * identity.
  */
 public interface Value<UNMOD_SELF extends Value<UNMOD_SELF, MOD_SELF>,
-                           MOD_SELF extends UNMOD_SELF>
-extends DdsObject, Cloneable, Serializable {
+                       MOD_SELF extends UNMOD_SELF>
+extends DDSObject, Cloneable, Serializable
+{
     // --- From Object: ------------------------------------------------------
 
     /**

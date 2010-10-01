@@ -44,7 +44,7 @@ implements ModifiableValue<SELF, SELF> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -1690742728528299945L;
+    private static final long serialVersionUID = 1989817719529565165L;
 
 
 

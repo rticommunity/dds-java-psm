@@ -40,7 +40,7 @@ extends Status<LivelinessChangedStatus<TYPE>, DataReader<TYPE>> {
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -2646782323276659024L;
+    private static final long serialVersionUID = -6569834894650163848L;
 
 
 
