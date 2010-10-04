@@ -32,13 +32,6 @@ package org.omg.dds.type.dynamic;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.DoubleBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.nio.LongBuffer;
-import java.nio.ShortBuffer;
 import java.util.List;
 
 import org.omg.dds.core.DDSObject;
@@ -107,27 +100,21 @@ public interface DynamicData extends DDSObject, Cloneable
 
     public int getInt32Values(
             int[] value, int offset, int length, int id);
-    public IntBuffer getInt32Values(IntBuffer value, int id);
     public void setInt32Values(
             int id, int[] value, int offset, int length);
     public void setInt32Values(int id, int... value);
-    public void setInt32Values(int id, IntBuffer value);
 
     public int getInt16Values(
             short[] value, int offset, int length, int id);
-    public ShortBuffer getInt16Values(ShortBuffer value, int id);
     public void setInt16Values(
             int id, short[] value, int offset, int length);
     public void setInt16Values(int id, short... value);
-    public void setInt16Values(int id, ShortBuffer value);
 
     public int getInt64Values(
             long[] value, int offset, int length, int id);
-    public LongBuffer getInt64Values(LongBuffer value, int id);
     public void setInt64Values(
             int id, long[] value, int offset, int length);
     public void setInt64Values(int id, long... value);
-    public void setInt64Values(int id, LongBuffer value);
 
     public int getBigIntegerValues(
             BigInteger[] value, int offset, int length, int id);
@@ -139,17 +126,15 @@ public interface DynamicData extends DDSObject, Cloneable
 
     public int getFloat32Values(
             float[] value, int offset, int length, int id);
-    public FloatBuffer getFloat32Values(FloatBuffer value, int id);
     public void setFloat32Values(
             int id, float[] value, int offset, int length);
-    public void setFloat32Values(int id, FloatBuffer value);
+    public void setFloat32Values(int id, float... value);
 
     public int getFloat64Values(
             double[] value, int offset, int length, int id);
-    public DoubleBuffer getFloat64Values(DoubleBuffer value, int id);
     public void setFloat64Values(
             int id, double[] value, int offset, int length);
-    public void setFloat64Values(int id, DoubleBuffer value);
+    public void setFloat64Values(int id, double... value);
 
     public int getBigDecimalValues(
             BigDecimal[] value, int offset, int length, int id);
@@ -162,23 +147,22 @@ public interface DynamicData extends DDSObject, Cloneable
     public int getCharValues(
             char[] value, int offset, int length, int id);
     public StringBuilder getCharValues(StringBuilder value, int id);
-    public CharBuffer getCharValues(CharBuffer value, int id);
     public void setCharValues(
             int id, char[] value, int offset, int length);
+    public void setCharValues(int id, char... value);
     public void setCharValues(int id, CharSequence value);
 
     public int getByteValues(
             byte[] value, int offset, int length, int id);
-    public ByteBuffer getByteValues(ByteBuffer value, int id);
     public void setByteValues(
             int id, byte[] value, int offset, int length);
-    public void setByteValues(int id, ByteBuffer value);
 
     public int getBooleanValues(
             boolean[] value, int offset, int length, int id);
     public void getBooleanValues(List<Boolean> value, int id);
     public void setBooleanValues(
             int id, boolean[] value, int offset, int length);
+    public void setBooleanValues(int id, boolean... value);
     public void setBooleanValues(int id, List<Boolean> value);
 
     public int getStringValues(
@@ -186,6 +170,7 @@ public interface DynamicData extends DDSObject, Cloneable
     public void getStringValues(List<String> value, int id);
     public void setStringValues(
             int id, String[] value, int offset, int length);
+    public void setStringValues(int id, String... value);
     public void setStringValues(int id, List<String> value);
 
 
