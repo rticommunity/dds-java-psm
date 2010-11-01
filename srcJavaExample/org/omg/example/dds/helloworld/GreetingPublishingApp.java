@@ -22,6 +22,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
 import org.omg.dds.topic.Topic;
@@ -29,9 +30,9 @@ import org.omg.dds.topic.Topic;
 
 public class GreetingPublishingApp {
     public static void main(String[] args) {
-        Bootstrap bstp = Bootstrap.createInstance();
-        DomainParticipant dp =
-            bstp.getParticipantFactory().createParticipant();
+        DomainParticipantFactory factory =
+            DomainParticipantFactory.getInstance(Bootstrap.createInstance());
+        DomainParticipant dp = factory.createParticipant();
 
         // Implicitly create TypeSupport and register type:
         Topic<Greeting> tp = dp.createTopic("My Topic", Greeting.class);

@@ -18,25 +18,46 @@
 
 package org.omg.dds.type.dynamic;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.type.TypeKind;
 
 
-public interface DynamicTypeFactory extends DDSObject
+public abstract class DynamicTypeFactory implements DDSObject
 {
-    public DynamicType getPrimitiveType(TypeKind kind);
+    // -----------------------------------------------------------------------
+    // Singleton Access
+    // -----------------------------------------------------------------------
 
-    public DynamicType createType(TypeDescriptor descriptor);
-    public DynamicType createStringType(int bound);
-    public DynamicType createWStringType(int bound);
-    public DynamicType createSequenceType(DynamicType elementType, int bound);
-    public DynamicType createArrayType(DynamicType elementType, int... bound);
-    public DynamicType createMapType(
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static DynamicTypeFactory getInstance(Bootstrap bootstrap) {
+        return bootstrap.getSPI().getTypeFactory();
+    }
+
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
+    public abstract DynamicType getPrimitiveType(TypeKind kind);
+
+    public abstract DynamicType createType(TypeDescriptor descriptor);
+    public abstract DynamicType createStringType(int bound);
+    public abstract DynamicType createWStringType(int bound);
+    public abstract DynamicType createSequenceType(
+            DynamicType elementType, int bound);
+    public abstract DynamicType createArrayType(
+            DynamicType elementType, int... bound);
+    public abstract DynamicType createMapType(
             DynamicType keyElementType, DynamicType elementType, int bound);
-    public DynamicType createBitSetType(int bound);
+    public abstract DynamicType createBitSetType(int bound);
 
-    public DynamicType loadTypeFromUrl(
+    public abstract DynamicType loadTypeFromUrl(
             String documentUrl, String typeName, String... includePaths);
-    public DynamicType loadTypeFromDocument(
+    public abstract DynamicType loadTypeFromDocument(
             String document, String typeName, String... includePaths);
 }

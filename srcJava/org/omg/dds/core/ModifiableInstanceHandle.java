@@ -19,8 +19,24 @@
 package org.omg.dds.core;
 
 
-public interface ModifiableInstanceHandle
-extends InstanceHandle,
-        ModifiableValue<InstanceHandle, ModifiableInstanceHandle> {
-    // empty
+public abstract class ModifiableInstanceHandle
+extends InstanceHandle
+implements ModifiableValue<InstanceHandle, ModifiableInstanceHandle>
+{
+    // -----------------------------------------------------------------------
+    // Private Constants
+    // -----------------------------------------------------------------------
+
+    private static final long serialVersionUID = 4589938527533296265L;
+
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract ModifiableInstanceHandle clone();
 }

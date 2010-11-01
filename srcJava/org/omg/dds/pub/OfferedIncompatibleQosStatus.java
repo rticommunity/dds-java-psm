@@ -20,6 +20,7 @@ package org.omg.dds.pub;
 
 import java.util.Set;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Status;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
@@ -37,6 +38,18 @@ extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
 
     // -----------------------------------------------------------------------
     // Object Life Cycle
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static <TYPE> OfferedIncompatibleQosStatus<TYPE>
+    newOfferedIncompatibleQosStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newOfferedIncompatibleQosStatus();
+    }
+
+
     // -----------------------------------------------------------------------
 
     protected OfferedIncompatibleQosStatus(DataWriter<TYPE> source) {

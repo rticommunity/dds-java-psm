@@ -21,16 +21,24 @@ package org.omg.dds.core;
 import java.util.concurrent.TimeUnit;
 
 
-public interface ModifiableTime
-extends Time, ModifiableValue<Time, ModifiableTime>
+public abstract class ModifiableTime
+extends Time implements ModifiableValue<Time, ModifiableTime>
 {
+    // -----------------------------------------------------------------------
+    // Private Constants
+    // -----------------------------------------------------------------------
+
+    private static final long serialVersionUID = -881589038981141796L;
+
+
+
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
 
     // --- Data access: ------------------------------------------------------
 
-    public void setTime(long time, TimeUnit unit);
+    public abstract void setTime(long time, TimeUnit unit);
 
 
     // --- Manipulation: -----------------------------------------------------
@@ -38,20 +46,26 @@ extends Time, ModifiableValue<Time, ModifiableTime>
     /**
      * Increment this time by the given amount.
      */
-    public void add(Duration duration);
+    public abstract void add(Duration duration);
 
     /**
      * Increment this time by the given amount.
      */
-    public void add(long duration, TimeUnit unit);
+    public abstract void add(long duration, TimeUnit unit);
 
     /**
      * Decrement this time by the given amount.
      */
-    public void subtract(Duration duration);
+    public abstract void subtract(Duration duration);
 
     /**
      * Decrement this time by the given amount.
      */
-    public void subtract(long duration, TimeUnit unit);
+    public abstract void subtract(long duration, TimeUnit unit);
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract ModifiableTime clone();
 }

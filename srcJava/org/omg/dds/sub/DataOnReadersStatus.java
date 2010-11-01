@@ -18,6 +18,7 @@
 
 package org.omg.dds.sub;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Status;
 
 
@@ -33,6 +34,18 @@ extends Status<DataOnReadersStatus, Subscriber> {
 
     // -----------------------------------------------------------------------
     // Object Life Cycle
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static DataOnReadersStatus newDataOnReadersStatus(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newDataOnReadersStatus();
+    }
+
+
     // -----------------------------------------------------------------------
 
     protected DataOnReadersStatus(Subscriber source) {

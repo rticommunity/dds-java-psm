@@ -18,8 +18,28 @@
 
 package org.omg.dds.type.dynamic;
 
+import org.omg.dds.core.Bootstrap;
 
-public interface DynamicDataFactory 
+
+public abstract class DynamicDataFactory 
 {
-    public DynamicData createData();
+    // -----------------------------------------------------------------------
+    // Singleton Access
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static DynamicDataFactory getInstance(Bootstrap bootstrap) {
+        return bootstrap.getSPI().getDataFactory();
+    }
+
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
+    public abstract DynamicData createData();
 }

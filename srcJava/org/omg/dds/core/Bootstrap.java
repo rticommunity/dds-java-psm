@@ -34,6 +34,8 @@ import org.omg.dds.pub.LivelinessLostStatus;
 import org.omg.dds.pub.OfferedDeadlineMissedStatus;
 import org.omg.dds.pub.OfferedIncompatibleQosStatus;
 import org.omg.dds.pub.PublicationMatchedStatus;
+import org.omg.dds.sub.DataAvailableStatus;
+import org.omg.dds.sub.DataOnReadersStatus;
 import org.omg.dds.sub.InstanceState;
 import org.omg.dds.sub.LivelinessChangedStatus;
 import org.omg.dds.sub.RequestedDeadlineMissedStatus;
@@ -311,165 +313,11 @@ public abstract class Bootstrap implements DDSObject {
 
 
     // -----------------------------------------------------------------------
-    // Factory Methods
+    // Instance Methods
     // -----------------------------------------------------------------------
 
-    // --- Singleton factories: ----------------------------------------------
+    public abstract SPI getSPI();
 
-    public abstract DomainParticipantFactory getParticipantFactory();
-
-    public abstract DynamicTypeFactory getTypeFactory();
-
-    public abstract DynamicDataFactory getDataFactory();
-
-
-    // --- Types: ------------------------------------------------------------
-
-    /**
-     * Create a new {@link TypeSupport} object for the given physical type.
-     * This method is equivalent to:
-     * 
-     * <code>createTypeSupport(type, type.getClass().getName())</code>
-     */
-    public abstract <TYPE> TypeSupport<TYPE> createTypeSupport(
-            Class<TYPE> type);
-
-    /**
-     * Create a new {@link TypeSupport} object for the given physical type.
-     * The Service will register this type under the given name with any
-     * participant with which the <code>TypeSupport</code> is used.
-     * 
-     * @param <TYPE>    The physical type of all samples read or written by
-     *                  any {@link org.omg.dds.sub.DataReader} or
-     *                  {@link org.omg.dds.pub.DataWriter} typed by the
-     *                  resulting <code>TypeSupport</code>.
-     * @param type      The physical type of all samples read or written by
-     *                  any {@link org.omg.dds.sub.DataReader} or
-     *                  {@link org.omg.dds.pub.DataWriter} typed by the
-     *                  resulting <code>TypeSupport</code>.
-     * @param registeredName    The logical name under which this type will
-     *                          be registered with any
-     *                          {@link org.omg.dds.domain.DomainParticipant}
-     *                          with which the resulting
-     *                          <code>TypeSupport</code> is used.
-     * @return          A new <code>TypeSupport</code> object, which can
-     *                  subsequently be used to create one or more
-     *                  {@link org.omg.dds.topic.Topic}s.
-     * 
-     * @see #createTypeSupport(Class)
-     */
-    public abstract <TYPE> TypeSupport<TYPE> createTypeSupport(
-            Class<TYPE> type, String registeredName);
-
-
-    // --- Time: -------------------------------------------------------------
-
-    /**
-     * Construct a time duration of the given magnitude.
-     * 
-     * A duration of magnitude {@link Long#MAX_VALUE} indicates an infinite
-     * duration, regardless of the units specified.
-     */
-    public abstract ModifiableDuration createDuration(
-            long duration, TimeUnit unit);
-
-    /**
-     * Construct a specific instant in time.
-     * 
-     * Negative values are considered invalid and will result in the
-     * construction of a time <code>t</code> such that:
-     * 
-     * <code>t.isValid() == false</code>
-     */
-    public abstract ModifiableTime createTime(long time, TimeUnit units);
-
-
-    // --- Instance handle: --------------------------------------------------
-
-    public abstract InstanceHandle getNilHandle();
-
-    public abstract ModifiableInstanceHandle createInstanceHandle();
-
-
-    // --- Conditions & WaitSet: ---------------------------------------------
-
-    public abstract GuardCondition createGuardCondition();
-
-    public abstract WaitSet createWaitSet();
-
-
-    // --- Built-in topics: --------------------------------------------------
-
-    public abstract BuiltinTopicKey createBuiltinTopicKey();
-
-    public abstract BuiltinTopicKey createBuiltinTopicKey(int[] value);
-
-    public abstract
-    ParticipantBuiltinTopicData createParticipantBuiltinTopicData();
-
-    public abstract
-    PublicationBuiltinTopicData createPublicationBuiltinTopicData();
-
-    public abstract
-    SubscriptionBuiltinTopicData createSubscriptionBuiltinTopicData();
-
-    public abstract TopicBuiltinTopicData createTopicBuiltinTopicData();
-
-
-    // --- Status: -----------------------------------------------------------
-
-    public abstract Set<Status.Kind> getAllStatusKindSet();
-
-    public abstract Set<Status.Kind> getNoneStatusKindSet();
-
-    public abstract <TYPE>
-    LivelinessLostStatus<TYPE> createLivelinessLostStatus();
-
-    public abstract <TYPE>
-    OfferedDeadlineMissedStatus<TYPE> createOfferedDeadlineMissedStatus();
-
-    public abstract <TYPE>
-    OfferedIncompatibleQosStatus<TYPE> createOfferedIncompatibleQosStatus();
-
-    public abstract <TYPE>
-    PublicationMatchedStatus<TYPE> createPublicationMatchedStatus();
-
-    public abstract <TYPE>
-    LivelinessChangedStatus<TYPE> createLivelinessChangedStatus();
-
-    public abstract <TYPE>
-    RequestedDeadlineMissedStatus<TYPE> createRequestedDeadlineMissedStatus();
-
-    public abstract <TYPE>
-    RequestedIncompatibleQosStatus<TYPE> createRequestedIncompatibleQosStatus();
-
-    public abstract <TYPE> SampleLostStatus<TYPE> createSampleLostStatus();
-
-    public abstract <TYPE>
-    SampleRejectedStatus<TYPE> createSampleRejectedStatus();
-
-    public abstract <TYPE>
-    SubscriptionMatchedStatus<TYPE> createSubscriptionMatchedStatus();
-
-    public abstract <TYPE>
-    InconsistentTopicStatus<TYPE> createInconsistentTopicStatus();
-
-
-    // --- Sample & Instance Life Cycle: -------------------------------------
-
-    public abstract Set<InstanceState> getAnyInstanceStateSet();
-
-    public abstract Set<InstanceState> getNotAliveInstanceStateSet();
-
-    public abstract Set<SampleState> getAnySampleStateSet();
-
-    public abstract Set<ViewState> getAnyViewStateSet();
-
-
-
-    // -----------------------------------------------------------------------
-    // Other Methods
-    // -----------------------------------------------------------------------
 
     // --- From DdsObject: ---------------------------------------------------
 
@@ -477,4 +325,176 @@ public abstract class Bootstrap implements DDSObject {
         return this;
     }
 
+
+
+    // -----------------------------------------------------------------------
+    // Service-Provider Interface
+    // -----------------------------------------------------------------------
+
+    /**
+     * This interface simplifies the creation of certain value types in the
+     * DDS API. It is for the use of the DDS implementation, not of DDS
+     * applications.
+     */
+    public static interface SPI {
+        // --- Singleton factories: ------------------------------------------
+
+        public abstract DomainParticipantFactory getParticipantFactory();
+
+        public abstract DynamicTypeFactory getTypeFactory();
+
+        public abstract DynamicDataFactory getDataFactory();
+
+
+        // --- Types: --------------------------------------------------------
+
+        /**
+         * Create a new {@link TypeSupport} object for the given physical
+         * type. The Service will register this type under the given name
+         * with any participant with which the <code>TypeSupport</code> is
+         * used.
+         * 
+         * @param <TYPE>    The physical type of all samples read or written
+         *                  by any {@link org.omg.dds.sub.DataReader} or
+         *                  {@link org.omg.dds.pub.DataWriter} typed by the
+         *                  resulting <code>TypeSupport</code>.
+         * @param type      The physical type of all samples read or written
+         *                  by any {@link org.omg.dds.sub.DataReader} or
+         *                  {@link org.omg.dds.pub.DataWriter} typed by the
+         *                  resulting <code>TypeSupport</code>.
+         * @param registeredName    The logical name under which this type
+         *                  will be registered with any
+         *                  {@link org.omg.dds.domain.DomainParticipant}
+         *                  with which the resulting
+         *                  <code>TypeSupport</code> is used.
+         * @return          A new <code>TypeSupport</code> object, which can
+         *                  subsequently be used to create one or more
+         *                  {@link org.omg.dds.topic.Topic}s.
+         */
+        public abstract <TYPE> TypeSupport<TYPE> newTypeSupport(
+                Class<TYPE> type, String registeredName);
+
+
+        // --- Time & Duration: ----------------------------------------------
+
+        /**
+         * Construct a {@link Duration} of the given magnitude.
+         * 
+         * A duration of magnitude {@link Long#MAX_VALUE} indicates an
+         * infinite duration, regardless of the units specified.
+         */
+        public abstract ModifiableDuration newDuration(
+                long duration, TimeUnit unit);
+
+        /**
+         * @return      A {@link Duration} of infinite length.
+         */
+        public abstract Duration infiniteDuration();
+
+        /**
+         * @return      A {@link Duration} of zero length.
+         */
+        public abstract Duration zeroDuration();
+
+        /**
+         * Construct a specific instant in time.
+         * 
+         * Negative values are considered invalid and will result in the
+         * construction of a time <code>t</code> such that:
+         * 
+         * <code>t.isValid() == false</code>
+         */
+        public abstract ModifiableTime newTime(long time, TimeUnit units);
+
+        /**
+         * @return      A {@link Time} that is not valid.
+         */
+        public abstract Time invalidTime();
+
+
+        // --- Instance handle: ----------------------------------------------
+
+        public abstract ModifiableInstanceHandle newInstanceHandle();
+
+        public abstract InstanceHandle nilHandle();
+
+
+        // --- Conditions & WaitSet: -----------------------------------------
+
+        public abstract GuardCondition newGuardCondition();
+
+        public abstract WaitSet newWaitSet();
+
+
+        // --- Built-in topics: ----------------------------------------------
+
+        public abstract BuiltinTopicKey newBuiltinTopicKey();
+
+        public abstract ParticipantBuiltinTopicData
+        newParticipantBuiltinTopicData();
+
+        public abstract PublicationBuiltinTopicData
+        newPublicationBuiltinTopicData();
+
+        public abstract SubscriptionBuiltinTopicData
+        newSubscriptionBuiltinTopicData();
+
+        public abstract TopicBuiltinTopicData
+        newTopicBuiltinTopicData();
+
+
+        // --- Status: -------------------------------------------------------
+
+        public abstract Set<Status.Kind> allStatusKinds();
+
+        public abstract Set<Status.Kind> noStatusKinds();
+
+        public abstract <TYPE> LivelinessLostStatus<TYPE>
+        newLivelinessLostStatus();
+
+        public abstract <TYPE> OfferedDeadlineMissedStatus<TYPE>
+        newOfferedDeadlineMissedStatus();
+
+        public abstract <TYPE> OfferedIncompatibleQosStatus<TYPE>
+        newOfferedIncompatibleQosStatus();
+
+        public abstract <TYPE> PublicationMatchedStatus<TYPE>
+        newPublicationMatchedStatus();
+
+        public abstract <TYPE> LivelinessChangedStatus<TYPE>
+        newLivelinessChangedStatus();
+
+        public abstract <TYPE> RequestedDeadlineMissedStatus<TYPE>
+        newRequestedDeadlineMissedStatus();
+
+        public abstract <TYPE> RequestedIncompatibleQosStatus<TYPE>
+        newRequestedIncompatibleQosStatus();
+
+        public abstract <TYPE> SampleLostStatus<TYPE> newSampleLostStatus();
+
+        public abstract <TYPE> SampleRejectedStatus<TYPE>
+        newSampleRejectedStatus();
+
+        public abstract <TYPE> SubscriptionMatchedStatus<TYPE>
+        newSubscriptionMatchedStatus();
+
+        public abstract <TYPE> DataAvailableStatus<TYPE>
+        newDataAvailableStatus();
+
+        public abstract DataOnReadersStatus newDataOnReadersStatus();
+
+        public abstract <TYPE> InconsistentTopicStatus<TYPE>
+        newInconsistentTopicStatus();
+
+
+        // --- Sample & Instance Life Cycle: ---------------------------------
+
+        public abstract Set<InstanceState> anyInstanceStateSet();
+
+        public abstract Set<InstanceState> notAliveInstanceStateSet();
+
+        public abstract Set<SampleState> anySampleStateSet();
+
+        public abstract Set<ViewState> anyViewStateSet();
+    }
 }

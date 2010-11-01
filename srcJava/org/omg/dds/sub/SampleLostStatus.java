@@ -18,6 +18,7 @@
 
 package org.omg.dds.sub;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Status;
 
 
@@ -33,6 +34,18 @@ extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
 
     // -----------------------------------------------------------------------
     // Object Life Cycle
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static <TYPE> SampleLostStatus<TYPE>
+    newSampleLostStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newSampleLostStatus();
+    }
+
+
     // -----------------------------------------------------------------------
 
     protected SampleLostStatus(DataReader<TYPE> source) {

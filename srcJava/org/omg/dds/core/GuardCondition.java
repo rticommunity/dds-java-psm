@@ -19,11 +19,25 @@
 package org.omg.dds.core;
 
 
-public interface GuardCondition extends Condition {
+public abstract class GuardCondition implements Condition
+{
     // -----------------------------------------------------------------------
-    // Methods
+    // Factory Methods
     // -----------------------------------------------------------------------
 
-    public void setTriggerValue (boolean value);
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static GuardCondition newGuardCondition(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newGuardCondition();
+    }
 
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
+    public abstract void setTriggerValue(boolean value);
 }

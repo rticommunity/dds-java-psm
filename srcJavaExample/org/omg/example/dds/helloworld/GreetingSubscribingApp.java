@@ -23,7 +23,9 @@ import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.Status;
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.sub.DataAvailableStatus;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.sub.DataReaderAdapter;
@@ -37,7 +39,7 @@ public class GreetingSubscribingApp {
     public static void main(String[] args) {
         Bootstrap bstp = Bootstrap.createInstance();
         DomainParticipant dp =
-            bstp.getParticipantFactory().createParticipant();
+            DomainParticipantFactory.getInstance(bstp).createParticipant();
 
         // Implicitly create TypeSupport and register type:
         Topic<Greeting> tp = dp.createTopic("My Topic", Greeting.class);
@@ -56,7 +58,7 @@ public class GreetingSubscribingApp {
                 tp,
                 sub.getDefaultDataReaderQos(),
                 ls,
-                bstp.getAllStatusKindSet());
+                Status.allStatusKinds(bstp));
 
         try {
             dr.waitForHistoricalData(10, TimeUnit.SECONDS);

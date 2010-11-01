@@ -19,6 +19,7 @@
 package org.omg.dds.core;
 
 import java.util.EventObject;
+import java.util.Set;
 
 
 /**
@@ -38,6 +39,26 @@ implements ModifiableValue<SELF, SELF> {
 
     // -----------------------------------------------------------------------
     // Object Life Cycle
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static Set<Status.Kind> allStatusKinds(Bootstrap bootstrap) {
+        return bootstrap.getSPI().allStatusKinds();
+    }
+
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static Set<Status.Kind> noStatusKinds(Bootstrap bootstrap) {
+        return bootstrap.getSPI().noStatusKinds();
+    }
+
+
     // -----------------------------------------------------------------------
 
     protected Status(SOURCE source) {

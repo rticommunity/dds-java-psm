@@ -20,38 +20,58 @@ package org.omg.dds.domain;
 
 import java.util.Collection;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Status;
 
 
-public interface DomainParticipantFactory extends DDSObject {
+public abstract class DomainParticipantFactory implements DDSObject
+{
+    // -----------------------------------------------------------------------
+    // Singleton Access
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static DomainParticipantFactory getInstance(Bootstrap bootstrap) {
+        return bootstrap.getSPI().getParticipantFactory();
+    }
+
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
     /**
      * Create a new participant in the domain with ID 0 having default QoS
      * and no listener.
      */
-    public DomainParticipant createParticipant();
-    public DomainParticipant createParticipant(
+    public abstract DomainParticipant createParticipant();
+    public abstract DomainParticipant createParticipant(
             int domainId);
-    public DomainParticipant createParticipant(
+    public abstract DomainParticipant createParticipant(
             int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
             Collection<Status.Kind> status);
-    public DomainParticipant createParticipant(
+    public abstract DomainParticipant createParticipant(
             int domainId,
             String qosLibraryName,
             String qosProfileName,
             DomainParticipantListener listener,
             Collection<Status.Kind> status);
 
-    public DomainParticipant lookupParticipant(int domainId);
+    public abstract DomainParticipant lookupParticipant(int domainId);
 
-    public DomainParticipantFactoryQos getQos();
-    public void setQos(DomainParticipantFactoryQos qos);
+    public abstract DomainParticipantFactoryQos getQos();
+    public abstract void setQos(DomainParticipantFactoryQos qos);
 
-    public DomainParticipantQos getDefaultParticipantQos();
-    public void setDefaultParticipantQos(DomainParticipantQos qos);
-    public void setDefaultParticipantQos(
+    public abstract DomainParticipantQos getDefaultParticipantQos();
+    public abstract void setDefaultParticipantQos(DomainParticipantQos qos);
+    public abstract void setDefaultParticipantQos(
             String qosLibraryName,
             String qosProfileName);
 

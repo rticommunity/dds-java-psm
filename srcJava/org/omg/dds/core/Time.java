@@ -18,16 +18,59 @@
 
 package org.omg.dds.core;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.Nested;
 
 
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
-public interface Time extends Value<Time, ModifiableTime>
+public abstract class Time implements Value<Time, ModifiableTime>
 {
     // -----------------------------------------------------------------------
-    // Methods
+    // Private Constants
+    // -----------------------------------------------------------------------
+
+    private static final long serialVersionUID = -132361141453190372L;
+
+
+
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * Construct a specific instant in time.
+     * 
+     * Negative values are considered invalid and will result in the
+     * construction of a time <code>t</code> such that:
+     * 
+     * <code>t.isValid() == false</code>
+     * 
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static ModifiableTime newTime(
+            long time, TimeUnit units, Bootstrap bootstrap) {
+        return bootstrap.getSPI().newTime(time, units);
+    }
+
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     *                  
+     * @return      An unmodifiable {@link Time} that is not valid.
+     */
+    public static Time invalidTime(Bootstrap bootstrap) {
+        return bootstrap.getSPI().invalidTime();
+    }
+
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
     // -----------------------------------------------------------------------
 
     // --- Data access: ------------------------------------------------------
@@ -37,49 +80,49 @@ public interface Time extends Value<Time, ModifiableTime>
      * 
      * An invalid time will be reported as a negative value.
      */
-    public long toNanos();
+    public abstract long toNanos();
 
     /**
      * Truncate this Time to a whole-number quantity of microseconds.
      * 
      * An invalid time will be reported as a negative value.
      */
-    public long toMicros();
+    public abstract long toMicros();
 
     /**
      * Truncate this Time to a whole-number quantity of milliseconds.
      * 
      * An invalid time will be reported as a negative value.
      */
-    public long toMillis();
+    public abstract long toMillis();
 
     /**
      * Truncate this Time to a whole-number quantity of seconds.
      * 
      * An invalid time will be reported as a negative value.
      */
-    public long toSeconds();
+    public abstract long toSeconds();
 
     /**
      * Truncate this Time to a whole-number quantity of minutes.
      * 
      * An invalid time will be reported as a negative value.
      */
-    public long toMinutes();
+    public abstract long toMinutes();
 
     /**
      * Truncate this Time to a whole-number quantity of hours.
      * 
      * An invalid time will be reported as a negative value.
      */
-    public long toHours();
+    public abstract long toHours();
 
     /**
      * Truncate this Time to a whole-number quantity of days.
      * 
      * An invalid time will be reported as a negative value.
      */
-    public long toDays();
+    public abstract long toDays();
 
 
     // --- Query: ------------------------------------------------------------
@@ -87,6 +130,11 @@ public interface Time extends Value<Time, ModifiableTime>
     /**
      * @return  whether this time represents a meaningful instant in time.
      */
-    public boolean isValid();
+    public abstract boolean isValid();
 
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract Time clone();
 }

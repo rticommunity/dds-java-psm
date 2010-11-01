@@ -20,6 +20,7 @@ package org.omg.dds.domain.discovery;
 
 import java.util.List;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
@@ -44,114 +45,146 @@ import org.omg.dds.type.typeobject.TypeObject;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public interface TopicBuiltinTopicData
-extends ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
+public abstract class TopicBuiltinTopicData
+implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
 {
+    // -----------------------------------------------------------------------
+    // Private Constants
+    // -----------------------------------------------------------------------
+
+    private static final long serialVersionUID = -3621587724397579935L;
+
+
+
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static TopicBuiltinTopicData newTopicBuiltinTopicData(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newTopicBuiltinTopicData();
+    }
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
     @ID(0x005A) @Key
-    public BuiltinTopicKey getKey();
+    public abstract BuiltinTopicKey getKey();
 
     /**
      * @return the name
      */
     @ID(0x0005)
-    public String getName();
+    public abstract String getName();
 
     /**
      * @return the typeName
      */
     @ID(0x0007)
-    public String getTypeName();
+    public abstract String getTypeName();
 
     @ID(0x0075) @Optional
-    public List<String> getEquivalentTypeName();
+    public abstract List<String> getEquivalentTypeName();
 
     @ID(0x0076) @Optional
-    public List<String> getBaseTypeName();
+    public abstract List<String> getBaseTypeName();
 
     @ID(0x0072) @Optional
-    public TypeObject getType();
+    public abstract TypeObject getType();
 
     /**
      * @return the durability
      */
     @ID(0x001D)
-    public DurabilityQosPolicy getDurability();
+    public abstract DurabilityQosPolicy getDurability();
 
     /**
      * @return the durabilityService
      */
     @ID(0x001E)
-    public DurabilityServiceQosPolicy getDurabilityService();
+    public abstract DurabilityServiceQosPolicy getDurabilityService();
 
     /**
      * @return the deadline
      */
     @ID(0x0023)
-    public DeadlineQosPolicy getDeadline();
+    public abstract DeadlineQosPolicy getDeadline();
 
     /**
      * @return the latencyBudget
      */
     @ID(0x0027)
-    public LatencyBudgetQosPolicy getLatencyBudget();
+    public abstract LatencyBudgetQosPolicy getLatencyBudget();
 
     /**
      * @return the liveliness
      */
     @ID(0x001B)
-    public LivelinessQosPolicy getLiveliness();
+    public abstract LivelinessQosPolicy getLiveliness();
 
     /**
      * @return the reliability
      */
     @ID(0x001A)
-    public ReliabilityQosPolicy getReliability();
+    public abstract ReliabilityQosPolicy getReliability();
 
     /**
      * @return the transportPriority
      */
     @ID(0x0049)
-    public TransportPriorityQosPolicy getTransportPriority();
+    public abstract TransportPriorityQosPolicy getTransportPriority();
 
     /**
      * @return the lifespan
      */
     @ID(0x002B)
-    public LifespanQosPolicy getLifespan();
+    public abstract LifespanQosPolicy getLifespan();
 
     /**
      * @return the destinationOrder
      */
     @ID(0x0025)
-    public DestinationOrderQosPolicy getDestinationOrder();
+    public abstract DestinationOrderQosPolicy getDestinationOrder();
 
     /**
      * @return the history
      */
     @ID(0x0040)
-    public HistoryQosPolicy getHistory();
+    public abstract HistoryQosPolicy getHistory();
 
     /**
      * @return the resourceLimits
      */
     @ID(0x0041)
-    public ResourceLimitsQosPolicy getResourceLimits();
+    public abstract ResourceLimitsQosPolicy getResourceLimits();
 
     /**
      * @return the ownership
      */
     @ID(0x001F)
-    public OwnershipQosPolicy getOwnership();
+    public abstract OwnershipQosPolicy getOwnership();
 
     /**
      * @return the topicData
      */
     @ID(0x002E)
-    public TopicDataQosPolicy getTopicData();
+    public abstract TopicDataQosPolicy getTopicData();
 
     @ID(0x0073)
-    public DataRepresentationQosPolicy getRepresentation();
+    public abstract DataRepresentationQosPolicy getRepresentation();
 
     @ID(0x0074)
-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
+    public abstract TypeConsistencyEnforcementQosPolicy getTypeConsistency();
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract TopicBuiltinTopicData clone();
 }

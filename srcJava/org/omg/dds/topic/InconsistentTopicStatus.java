@@ -18,6 +18,7 @@
 
 package org.omg.dds.topic;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Status;
 
 
@@ -33,6 +34,18 @@ extends Status<InconsistentTopicStatus<TYPE>, Topic<TYPE>> {
 
     // -----------------------------------------------------------------------
     // Object Life Cycle
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static <TYPE> InconsistentTopicStatus<TYPE>
+    newInconsistentTopicStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newInconsistentTopicStatus();
+    }
+
+
     // -----------------------------------------------------------------------
 
     protected InconsistentTopicStatus(Topic<TYPE> source) {

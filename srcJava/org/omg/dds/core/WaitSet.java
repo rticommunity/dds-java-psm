@@ -23,39 +23,54 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 
-public interface WaitSet extends DDSObject {
+public abstract class WaitSet implements DDSObject {
     // -----------------------------------------------------------------------
-    // Methods
+    // Factory Methods
     // -----------------------------------------------------------------------
 
-    public void waitForConditions() throws TimeoutException;
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static WaitSet newWaitSet(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newWaitSet();
+    }
 
-    public void waitForConditions(Collection<Condition> activeConditions)
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
+    public abstract void waitForConditions() throws TimeoutException;
+
+    public abstract void waitForConditions(
+            Collection<Condition> activeConditions)
     throws TimeoutException;
 
-    public void waitForConditions(Duration timeout) throws TimeoutException;
-
-    public void waitForConditions(long timeout, TimeUnit unit)
+    public abstract void waitForConditions(Duration timeout)
     throws TimeoutException;
 
-    public void waitForConditions(
+    public abstract void waitForConditions(long timeout, TimeUnit unit)
+    throws TimeoutException;
+
+    public abstract void waitForConditions(
             Collection<Condition> activeConditions,
             Duration timeout)
     throws TimeoutException;
 
-    public void waitForConditions(
+    public abstract void waitForConditions(
             Collection<Condition> activeConditions,
             long timeout,
             TimeUnit unit)
     throws TimeoutException;
 
-    public void attachCondition(Condition cond);
-    public void detachCondition(Condition cond);
+    public abstract void attachCondition(Condition cond);
+    public abstract void detachCondition(Condition cond);
 
     /**
      * @return  an unmodifiable collection of the conditions attached to this
      *          wait set.
      */
-    public Collection<Condition> getConditions();
-
+    public abstract Collection<Condition> getConditions();
 }

@@ -22,15 +22,16 @@ import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.ModifiableEntityFactoryQosPolicy;
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.domain.DomainParticipantQos;
 import org.omg.dds.domain.ModifiableDomainParticipantQos;
 
 
 public final class QosExample {
     public static void main(String[] args) {
-        Bootstrap bstp = Bootstrap.createInstance();
-        DomainParticipant dp =
-            bstp.getParticipantFactory().createParticipant();
+        DomainParticipantFactory factory =
+            DomainParticipantFactory.getInstance(Bootstrap.createInstance());
+        DomainParticipant dp = factory.createParticipant();
 
         // Get unmodifiable QoS for inspection:
         DomainParticipantQos dpqUnmod = dp.getQos();
@@ -49,7 +50,7 @@ public final class QosExample {
         dp.setQos(dpqMod);
 
         // Restore QoS to default:
-        dp.setQos(bstp.getParticipantFactory().getDefaultParticipantQos());
+        dp.setQos(factory.getDefaultParticipantQos());
     }
 
 

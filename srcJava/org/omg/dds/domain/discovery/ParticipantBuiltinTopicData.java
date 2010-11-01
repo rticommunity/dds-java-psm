@@ -18,6 +18,7 @@
 
 package org.omg.dds.domain.discovery;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.ModifiableValue;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.type.annotation.Extensibility;
@@ -26,13 +27,46 @@ import org.omg.dds.type.annotation.Key;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public interface ParticipantBuiltinTopicData
-extends ModifiableValue<ParticipantBuiltinTopicData,
-                            ParticipantBuiltinTopicData>
+public abstract class ParticipantBuiltinTopicData
+implements ModifiableValue<ParticipantBuiltinTopicData,
+                           ParticipantBuiltinTopicData>
 {
+    // -----------------------------------------------------------------------
+    // Private Constants
+    // -----------------------------------------------------------------------
+
+    private static final long serialVersionUID = -1531303601733890381L;
+
+
+
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static ParticipantBuiltinTopicData newParticipantBuiltinTopicData(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newParticipantBuiltinTopicData();
+    }
+
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
     @ID(0x0050) @Key
-    public BuiltinTopicKey getKey();
+    public abstract BuiltinTopicKey getKey();
 
     @ID(0x002C)
-    public UserDataQosPolicy getUserData();
+    public abstract UserDataQosPolicy getUserData();
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract ParticipantBuiltinTopicData clone();
 }

@@ -19,12 +19,52 @@
 package org.omg.dds.core;
 
 
-public interface InstanceHandle
-extends Value<InstanceHandle, ModifiableInstanceHandle> {
+public abstract class InstanceHandle
+implements Value<InstanceHandle, ModifiableInstanceHandle>
+{
     // -----------------------------------------------------------------------
-    // Methods
+    // Private Constants
     // -----------------------------------------------------------------------
 
-    public boolean isNil();
+    private static final long serialVersionUID = 4987266126475078295L;
 
+
+
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static ModifiableInstanceHandle newInstanceHandle(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newInstanceHandle();
+    }
+
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     * 
+     * @return  An unmodifiable nil instance handle.
+     */
+    public static InstanceHandle nilHandle(Bootstrap bootstrap) {
+        return bootstrap.getSPI().nilHandle();
+    }
+
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
+    public abstract boolean isNil();
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract InstanceHandle clone();
 }

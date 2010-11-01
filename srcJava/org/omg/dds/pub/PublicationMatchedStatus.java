@@ -18,6 +18,7 @@
 
 package org.omg.dds.pub;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.Status;
 
@@ -34,6 +35,18 @@ extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
 
     // -----------------------------------------------------------------------
     // Object Life Cycle
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static <TYPE> PublicationMatchedStatus<TYPE>
+    newPublicationMatchedStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newPublicationMatchedStatus();
+    }
+
+
     // -----------------------------------------------------------------------
 
     protected PublicationMatchedStatus(DataWriter<TYPE> source) {
