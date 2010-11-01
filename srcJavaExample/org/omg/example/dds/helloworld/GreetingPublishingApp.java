@@ -50,19 +50,6 @@ public class GreetingPublishingApp {
         try {
             dw.write(new Greeting("Hello, World"));
         } catch (TimeoutException tx) {
-            /* XXX: This is how the Java-SE-standard classes indicate timeout.
-             * Do we want to follow the same model, and force people to handle
-             * this condition? Or do we want to define our own (unchecked)
-             * timeout exception?
-             * 
-             * ON ONE HAND: Writing may not block, depending on QoS and
-             * network conditions. Handling this exception here is annoying.
-             * 
-             * ON THE OTHER HAND: Users may not have a full understanding of
-             * whether a given invocation is likely to block or not. If they
-             * get it wrong, the result could be bad. We can help by forcing
-             * them to think about this.
-             */
             tx.printStackTrace();
         }
 
