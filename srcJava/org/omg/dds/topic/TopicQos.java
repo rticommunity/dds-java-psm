@@ -34,6 +34,7 @@ import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TopicDataQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
+import org.omg.dds.topic.modifiable.ModifiableTopicQos;
 
 
 public interface TopicQos extends EntityQos<TopicQos, ModifiableTopicQos>

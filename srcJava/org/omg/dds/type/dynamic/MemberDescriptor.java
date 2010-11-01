@@ -21,6 +21,7 @@ package org.omg.dds.type.dynamic;
 import java.util.List;
 
 import org.omg.dds.core.Value;
+import org.omg.dds.type.dynamic.modifiable.ModifiableMemberDescriptor;
 
 
 public interface MemberDescriptor

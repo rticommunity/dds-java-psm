@@ -20,11 +20,11 @@ package org.omg.example.dds.helloworld;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
-import org.omg.dds.core.policy.ModifiableEntityFactoryQosPolicy;
+import org.omg.dds.core.policy.modifiable.ModifiableEntityFactoryQosPolicy;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.domain.DomainParticipantQos;
-import org.omg.dds.domain.ModifiableDomainParticipantQos;
+import org.omg.dds.domain.modifiable.ModifiableDomainParticipantQos;
 
 
 public final class QosExample {

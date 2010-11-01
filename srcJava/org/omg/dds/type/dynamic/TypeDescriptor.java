@@ -23,6 +23,7 @@ import java.util.List;
 import org.omg.dds.core.Value;
 import org.omg.dds.type.TypeKind;
 import org.omg.dds.type.annotation.Optional;
+import org.omg.dds.type.dynamic.modifiable.ModifiableTypeDescriptor;
 
 
 public interface TypeDescriptor

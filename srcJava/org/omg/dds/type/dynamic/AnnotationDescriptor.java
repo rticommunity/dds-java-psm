@@ -21,6 +21,7 @@ package org.omg.dds.type.dynamic;
 import java.util.Map;
 
 import org.omg.dds.core.Value;
+import org.omg.dds.type.dynamic.modifiable.ModifiableAnnotationDescriptor;
 
 
 public interface AnnotationDescriptor

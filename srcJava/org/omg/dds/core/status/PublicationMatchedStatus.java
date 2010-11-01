@@ -19,7 +19,7 @@
 package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.pub.DataWriter;
 
 

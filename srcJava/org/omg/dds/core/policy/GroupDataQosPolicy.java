@@ -18,6 +18,8 @@
 
 package org.omg.dds.core.policy;
 
+import org.omg.dds.core.policy.modifiable.ModifiableGroupDataQosPolicy;
+
 
 public interface GroupDataQosPolicy
 extends QosPolicy<GroupDataQosPolicy, ModifiableGroupDataQosPolicy> {

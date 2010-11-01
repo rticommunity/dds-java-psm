@@ -20,6 +20,8 @@ package org.omg.dds.core.policy;
 
 import java.util.Collection;
 
+import org.omg.dds.core.policy.modifiable.ModifiablePartitionQosPolicy;
+
 
 public interface PartitionQosPolicy
 extends QosPolicy<PartitionQosPolicy, ModifiablePartitionQosPolicy> {

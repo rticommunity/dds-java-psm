@@ -18,6 +18,8 @@
 
 package org.omg.dds.core;
 
+import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+
 
 public abstract class InstanceHandle
 implements Value<InstanceHandle, ModifiableInstanceHandle>

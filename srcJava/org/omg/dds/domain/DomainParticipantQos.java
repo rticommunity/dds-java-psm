@@ -21,6 +21,7 @@ package org.omg.dds.domain;
 import org.omg.dds.core.EntityQos;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
+import org.omg.dds.domain.modifiable.ModifiableDomainParticipantQos;
 
 
 public interface DomainParticipantQos

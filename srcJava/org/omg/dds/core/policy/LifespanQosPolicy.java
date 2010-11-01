@@ -19,6 +19,7 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Duration;
+import org.omg.dds.core.policy.modifiable.ModifiableLifespanQosPolicy;
 
 
 public interface LifespanQosPolicy

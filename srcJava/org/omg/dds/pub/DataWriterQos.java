@@ -36,6 +36,7 @@ import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
+import org.omg.dds.pub.modifiable.ModifiableDataWriterQos;
 
 
 public interface DataWriterQos

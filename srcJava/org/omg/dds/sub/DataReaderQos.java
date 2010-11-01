@@ -32,6 +32,7 @@ import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
+import org.omg.dds.sub.modifiable.ModifiableDataReaderQos;
 
 
 public interface DataReaderQos

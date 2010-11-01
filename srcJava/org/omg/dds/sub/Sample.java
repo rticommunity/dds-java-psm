@@ -20,9 +20,9 @@ package org.omg.dds.sub;
 
 import java.util.ListIterator;
 
-import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.ModifiableTime;
-import org.omg.dds.core.ModifiableValue;
+import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.modifiable.ModifiableTime;
+import org.omg.dds.core.modifiable.ModifiableValue;
 import org.omg.dds.core.status.InstanceState;
 import org.omg.dds.core.status.SampleState;
 import org.omg.dds.core.status.ViewState;

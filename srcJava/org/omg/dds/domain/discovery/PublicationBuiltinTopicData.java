@@ -21,7 +21,7 @@ package org.omg.dds.domain.discovery;
 import java.util.List;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.ModifiableValue;
+import org.omg.dds.core.modifiable.ModifiableValue;
 import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;

@@ -20,6 +20,7 @@ package org.omg.dds.core;
 
 import java.util.concurrent.TimeUnit;
 
+import org.omg.dds.core.modifiable.ModifiableDuration;
 import org.omg.dds.type.annotation.Extensibility;
 import org.omg.dds.type.annotation.Nested;
 

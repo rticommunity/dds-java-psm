@@ -20,6 +20,8 @@ package org.omg.dds.core.policy;
 
 import java.util.List;
 
+import org.omg.dds.core.policy.modifiable.ModifiableDataRepresentationQosPolicy;
+
 
 public interface DataRepresentationQosPolicy
 extends QosPolicy<DataRepresentationQosPolicy,

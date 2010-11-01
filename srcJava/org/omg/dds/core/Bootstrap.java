@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.omg.dds.core.modifiable.ModifiableDuration;
+import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.modifiable.ModifiableTime;
 import org.omg.dds.core.status.DataAvailableStatus;
 import org.omg.dds.core.status.DataOnReadersStatus;
 import org.omg.dds.core.status.InconsistentTopicStatus;

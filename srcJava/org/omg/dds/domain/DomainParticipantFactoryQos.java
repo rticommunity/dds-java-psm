@@ -20,6 +20,7 @@ package org.omg.dds.domain;
 
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.EntityQos;
+import org.omg.dds.domain.modifiable.ModifiableDomainParticipantFactoryQos;
 
 
 public interface DomainParticipantFactoryQos

@@ -23,6 +23,7 @@ import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.GroupDataQosPolicy;
 import org.omg.dds.core.policy.PartitionQosPolicy;
 import org.omg.dds.core.policy.PresentationQosPolicy;
+import org.omg.dds.sub.modifiable.ModifiableSubscriberQos;
 
 
 public interface SubscriberQos

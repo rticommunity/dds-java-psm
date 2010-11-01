@@ -23,7 +23,7 @@ import java.util.Set;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.ModifiableValue;
+import org.omg.dds.core.modifiable.ModifiableValue;
 
 
 /**

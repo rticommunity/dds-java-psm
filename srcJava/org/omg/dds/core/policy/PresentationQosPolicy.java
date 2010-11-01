@@ -18,6 +18,8 @@
 
 package org.omg.dds.core.policy;
 
+import org.omg.dds.core.policy.modifiable.ModifiablePresentationQosPolicy;
+
 
 public interface PresentationQosPolicy
 extends QosPolicy<PresentationQosPolicy, ModifiablePresentationQosPolicy> {

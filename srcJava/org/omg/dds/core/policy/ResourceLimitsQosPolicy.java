@@ -18,6 +18,8 @@
 
 package org.omg.dds.core.policy;
 
+import org.omg.dds.core.policy.modifiable.ModifiableResourceLimitsQosPolicy;
+
 
 public interface ResourceLimitsQosPolicy
 extends QosPolicy<ResourceLimitsQosPolicy,

@@ -18,7 +18,7 @@
 
 package org.omg.dds.type.builtin;
 
-import org.omg.dds.core.ModifiableValue;
+import org.omg.dds.core.modifiable.ModifiableValue;
 
 
 public interface KeyedString
