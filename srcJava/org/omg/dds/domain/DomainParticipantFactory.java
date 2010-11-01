@@ -34,25 +34,9 @@ public interface DomainParticipantFactory extends DDSObject {
             int domainId);
     public DomainParticipant createParticipant(
             int domainId,
-            DomainParticipantQos qos);
-    public DomainParticipant createParticipant(
-            int domainId,
-            DomainParticipantQos qos,
-            DomainParticipantListener listener);
-    public DomainParticipant createParticipant(
-            int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
             Collection<Status.Kind> status);
-    public DomainParticipant createParticipant(
-            int domainId,
-            String qosLibraryName,
-            String qosProfileName);
-    public DomainParticipant createParticipant(
-            int domainId,
-            String qosLibraryName,
-            String qosProfileName,
-            DomainParticipantListener listener);
     public DomainParticipant createParticipant(
             int domainId,
             String qosLibraryName,

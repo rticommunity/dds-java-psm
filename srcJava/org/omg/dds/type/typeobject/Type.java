@@ -39,7 +39,6 @@ public interface Type extends ModifiableValue<Type, Type>
     public List<AnnotationUsage> getAnnotation();
 
     public void setAnnotation(List<AnnotationUsage> newAnnotation);
-    public void setAnnotation(AnnotationUsage... newAnnotation);
 
 
 

@@ -53,7 +53,6 @@ public interface Member extends ModifiableValue<Member, Member>
 
     @ID(MemberId.ANNOTATION_MEMBER_MEMBER_ID)
     public void setAnnotation(List<AnnotationUsage> newAnnotation);
-    public void setAnnotation(AnnotationUsage... newAnnotation);
 
 
 

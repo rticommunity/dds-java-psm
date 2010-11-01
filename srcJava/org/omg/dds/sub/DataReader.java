@@ -62,20 +62,11 @@ extends DomainEntity<DataReader<TYPE>,
             String queryExpression,
             List<String> queryParameters);
     public QueryCondition<TYPE> createQueryCondition(
-            String queryExpression,
-            String... queryParameters);
-    public QueryCondition<TYPE> createQueryCondition(
             Collection<SampleState> sampleStates,
             Collection<ViewState> viewStates,
             Collection<InstanceState> instanceStates,
             String queryExpression,
             List<String> queryParameters);
-    public QueryCondition<TYPE> createQueryCondition(
-            Collection<SampleState> sampleStates,
-            Collection<ViewState> viewStates,
-            Collection<InstanceState> instanceStates,
-            String queryExpression,
-            String... queryParameters);
 
     public void closeContainedEntities();
 

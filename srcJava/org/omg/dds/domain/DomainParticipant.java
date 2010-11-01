@@ -51,21 +51,9 @@ extends Entity<DomainParticipant,
                DomainParticipantQos> {
     public Publisher createPublisher();
     public Publisher createPublisher(
-            PublisherQos qos);
-    public Publisher createPublisher(
-            PublisherQos qos,
-            PublisherListener listener);
-    public Publisher createPublisher(
             PublisherQos qos,
             PublisherListener listener,
             Collection<Status.Kind> status);
-    public Publisher createPublisher(
-            String qosLibraryName,
-            String qosProfileName);
-    public Publisher createPublisher(
-            String qosLibraryName,
-            String qosProfileName,
-            PublisherListener listener);
     public Publisher createPublisher(
             String qosLibraryName,
             String qosProfileName,
@@ -74,21 +62,9 @@ extends Entity<DomainParticipant,
 
     public Subscriber createSubscriber();
     public Subscriber createSubscriber(
-            SubscriberQos qos);
-    public Subscriber createSubscriber(
-            SubscriberQos qos,
-            SubscriberListener listener);
-    public Subscriber createSubscriber(
             SubscriberQos qos,
             SubscriberListener listener,
             Collection<Status.Kind> status);
-    public Subscriber createSubscriber(
-            String qosLibraryName,
-            String qosProfileName);
-    public Subscriber createSubscriber(
-            String qosLibraryName,
-            String qosProfileName,
-            SubscriberListener listener);
     public Subscriber createSubscriber(
             String qosLibraryName,
             String qosProfileName,
@@ -106,29 +82,9 @@ extends Entity<DomainParticipant,
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<TYPE> type,
-            TopicQos qos);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<TYPE> type,
-            TopicQos qos,
-            TopicListener<TYPE> listener);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
             Collection<Status.Kind> status);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<TYPE> type,
-            String qosLibraryName,
-            String qosProfileName);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<TYPE> type,
-            String qosLibraryName,
-            String qosProfileName,
-            TopicListener<TYPE> listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<TYPE> type,
@@ -146,29 +102,9 @@ extends Entity<DomainParticipant,
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             TypeSupport<TYPE> type,
-            TopicQos qos);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            TypeSupport<TYPE> type,
-            TopicQos qos,
-            TopicListener<TYPE> listener);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            TypeSupport<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
             Collection<Status.Kind> status);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            TypeSupport<TYPE> type,
-            String qosLibraryName,
-            String qosProfileName);
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            TypeSupport<TYPE> type,
-            String qosLibraryName,
-            String qosProfileName,
-            TopicListener<TYPE> listener);
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             TypeSupport<TYPE> type,
@@ -195,22 +131,12 @@ extends Entity<DomainParticipant,
             Topic<? extends TYPE> relatedTopic,
             String filterExpression,
             List<String> expressionParameters);
-    public <TYPE> ContentFilteredTopic<TYPE> createContentFilteredTopic(
-            String name,
-            Topic<? extends TYPE> relatedTopic,
-            String filterExpression,
-            String... expressionParameters);
 
     public <TYPE> MultiTopic<TYPE> createMultiTopic(
             String name,
             String typeName,
             String subscriptionExpression,
             List<String> expressionParameters);
-    public <TYPE> MultiTopic<TYPE> createMultiTopic(
-            String name,
-            String typeName,
-            String subscriptionExpression,
-            String... expressionParameters);
 
     public void closeContainedEntities();
 

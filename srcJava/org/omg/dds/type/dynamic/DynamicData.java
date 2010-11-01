@@ -151,7 +151,6 @@ public interface DynamicData extends DDSObject, Cloneable
     public void setBooleanValues(
             int id, boolean[] value, int offset, int length);
     public void setBooleanValues(int id, boolean... value);
-    public void setBooleanValues(int id, List<Boolean> value);
 
     public int getStringValues(
             String[] value, int offset, int length, int id);

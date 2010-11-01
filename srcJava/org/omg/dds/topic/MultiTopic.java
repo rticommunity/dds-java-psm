@@ -30,5 +30,4 @@ public interface MultiTopic<TYPE> extends TopicDescription<TYPE> {
     public List<String> getExpressionParameters();
 
     public void setExpressionParameters(List<String> expressionParameters);
-    public void setExpressionParameters(String... expressionParameters);
 }

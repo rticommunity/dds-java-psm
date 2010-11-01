@@ -30,5 +30,4 @@ public interface QueryCondition<TYPE> extends ReadCondition<TYPE> {
     public List<String> getQueryParameters();
 
     public void setQueryParameters(List<String> queryParameters);
-    public void setQueryParameters(String... queryParameters);
 }
