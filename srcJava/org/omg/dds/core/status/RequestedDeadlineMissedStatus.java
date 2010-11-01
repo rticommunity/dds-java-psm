@@ -16,28 +16,20 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
-
-import java.util.Set;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.sub.DataReader;
 
 
-public enum SampleState {
-    // -----------------------------------------------------------------------
-    // States
-    // -----------------------------------------------------------------------
-
-    READ(0x0001 << 0),
-    NOT_READ(0x0001 << 1);
-
-
-
+public abstract class RequestedDeadlineMissedStatus<TYPE>
+extends Status<RequestedDeadlineMissedStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    public final int value;
+    private static final long serialVersionUID = 8571367679700186607L;
 
 
 
@@ -46,18 +38,37 @@ public enum SampleState {
     // -----------------------------------------------------------------------
 
     /**
-     * @param bootstrap Identifies the Service instance to which the
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static Set<SampleState> anySampleStateSet(Bootstrap bootstrap) {
-        return bootstrap.getSPI().anySampleStateSet();
+    public static <TYPE> RequestedDeadlineMissedStatus<TYPE>
+    newRequestedDeadlineMissedStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newRequestedDeadlineMissedStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    private SampleState(int value) {
-        this.value = value;
+    protected RequestedDeadlineMissedStatus(DataReader<TYPE> source) {
+        super(source);
     }
+
+
+
+    // -----------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @return the totalCount
+     */
+    public abstract int getTotalCount();
+
+    /**
+     * @return the totalCountChange
+     */
+    public abstract int getTotalCountChange();
+
+    public abstract ModifiableInstanceHandle getLastInstanceHandle();
 
 }

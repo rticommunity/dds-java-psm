@@ -21,6 +21,8 @@ package org.omg.dds.core;
 import java.util.Collection;
 import java.util.EventListener;
 
+import org.omg.dds.core.status.Status;
+
 
 public interface Entity<SELF extends Entity<SELF, LISTENER, QOS>,
                         LISTENER extends EventListener,

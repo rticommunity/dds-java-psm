@@ -16,23 +16,20 @@
  * limitations under the License.
  */
 
-package org.omg.dds.pub;
-
-import java.util.Set;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.Status;
-import org.omg.dds.core.policy.QosPolicy;
-import org.omg.dds.core.policy.QosPolicyCount;
+import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.sub.DataReader;
 
 
-public abstract class OfferedIncompatibleQosStatus<TYPE>
-extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
+public abstract class SampleRejectedStatus<TYPE>
+extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 8389878229396890980L;
+    private static final long serialVersionUID = -3473343064305797468L;
 
 
 
@@ -44,15 +41,15 @@ extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> OfferedIncompatibleQosStatus<TYPE>
-    newOfferedIncompatibleQosStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newOfferedIncompatibleQosStatus();
+    public static <TYPE> SampleRejectedStatus<TYPE>
+    newSampleRejectedStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newSampleRejectedStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected OfferedIncompatibleQosStatus(DataWriter<TYPE> source) {
+    protected SampleRejectedStatus(DataReader<TYPE> source) {
         super(source);
     }
 
@@ -73,13 +70,23 @@ extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
     public abstract int getTotalCountChange();
 
     /**
-     * @return the lastPolicyId
+     * @return the lastReason
      */
-    public abstract QosPolicy.Id getLastPolicyId();
+    public abstract Kind getLastReason();
 
-    /**
-     * @return  an unmodifiable set of policy counts.
-     */
-    public abstract Set<QosPolicyCount> getPolicies();
+    public abstract ModifiableInstanceHandle getLastInstanceHandle();
+
+
+
+    // -----------------------------------------------------------------------
+    // Types
+    // -----------------------------------------------------------------------
+
+    public static enum Kind {
+        NOT_REJECTED,
+        REJECTED_BY_INSTANCES_LIMIT,
+        REJECTED_BY_SAMPLES_LIMIT,
+        REJECTED_BY_SAMPLES_PER_INSTANCE_LIMIT
+    }
 
 }

@@ -18,19 +18,19 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.pub.LivelinessLostStatus;
-import org.omg.dds.pub.OfferedDeadlineMissedStatus;
-import org.omg.dds.pub.OfferedIncompatibleQosStatus;
-import org.omg.dds.pub.PublicationMatchedStatus;
-import org.omg.dds.sub.DataAvailableStatus;
-import org.omg.dds.sub.DataOnReadersStatus;
-import org.omg.dds.sub.LivelinessChangedStatus;
-import org.omg.dds.sub.RequestedDeadlineMissedStatus;
-import org.omg.dds.sub.RequestedIncompatibleQosStatus;
-import org.omg.dds.sub.SampleLostStatus;
-import org.omg.dds.sub.SampleRejectedStatus;
-import org.omg.dds.sub.SubscriptionMatchedStatus;
-import org.omg.dds.topic.InconsistentTopicStatus;
+import org.omg.dds.core.status.DataAvailableStatus;
+import org.omg.dds.core.status.DataOnReadersStatus;
+import org.omg.dds.core.status.InconsistentTopicStatus;
+import org.omg.dds.core.status.LivelinessChangedStatus;
+import org.omg.dds.core.status.LivelinessLostStatus;
+import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
+import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
+import org.omg.dds.core.status.PublicationMatchedStatus;
+import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
+import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
+import org.omg.dds.core.status.SampleLostStatus;
+import org.omg.dds.core.status.SampleRejectedStatus;
+import org.omg.dds.core.status.SubscriptionMatchedStatus;
 
 
 public class DomainParticipantAdapter implements DomainParticipantListener

@@ -16,19 +16,20 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.Status;
+import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.pub.DataWriter;
 
 
-public abstract class SampleLostStatus<TYPE>
-extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
+public abstract class PublicationMatchedStatus<TYPE>
+extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -520330521363610833L;
+    private static final long serialVersionUID = -2133794660702966974L;
 
 
 
@@ -40,15 +41,15 @@ extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> SampleLostStatus<TYPE>
-    newSampleLostStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newSampleLostStatus();
+    public static <TYPE> PublicationMatchedStatus<TYPE>
+    newPublicationMatchedStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newPublicationMatchedStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected SampleLostStatus(DataReader<TYPE> source) {
+    protected PublicationMatchedStatus(DataWriter<TYPE> source) {
         super(source);
     }
 
@@ -67,5 +68,17 @@ extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
      * @return the totalCountChange
      */
     public abstract int getTotalCountChange();
+
+    /**
+     * @return the currentCount
+     */
+    public abstract int getCurrentCount();
+
+    /**
+     * @return the currentCountChange
+     */
+    public abstract int getCurrentCountChange();
+
+    public abstract ModifiableInstanceHandle getLastSubscriptionHandle();
 
 }

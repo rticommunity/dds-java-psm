@@ -16,20 +16,20 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.Status;
+import org.omg.dds.pub.DataWriter;
 
 
-public abstract class SampleRejectedStatus<TYPE>
-extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
+public abstract class OfferedDeadlineMissedStatus<TYPE>
+extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -3473343064305797468L;
+    private static final long serialVersionUID = 7958557115889148585L;
 
 
 
@@ -41,15 +41,15 @@ extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> SampleRejectedStatus<TYPE>
-    newSampleRejectedStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newSampleRejectedStatus();
+    public static <TYPE> OfferedDeadlineMissedStatus<TYPE>
+    newOfferedDeadlineMissedStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newOfferedDeadlineMissedStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected SampleRejectedStatus(DataReader<TYPE> source) {
+    protected OfferedDeadlineMissedStatus(DataWriter<TYPE> source) {
         super(source);
     }
 
@@ -69,24 +69,6 @@ extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
      */
     public abstract int getTotalCountChange();
 
-    /**
-     * @return the lastReason
-     */
-    public abstract Kind getLastReason();
-
     public abstract ModifiableInstanceHandle getLastInstanceHandle();
-
-
-
-    // -----------------------------------------------------------------------
-    // Types
-    // -----------------------------------------------------------------------
-
-    public static enum Kind {
-        NOT_REJECTED,
-        REJECTED_BY_INSTANCES_LIMIT,
-        REJECTED_BY_SAMPLES_LIMIT,
-        REJECTED_BY_SAMPLES_PER_INSTANCE_LIMIT
-    }
 
 }

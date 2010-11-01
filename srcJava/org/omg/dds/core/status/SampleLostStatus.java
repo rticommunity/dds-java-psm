@@ -16,20 +16,19 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.Status;
+import org.omg.dds.sub.DataReader;
 
 
-public abstract class SubscriptionMatchedStatus<TYPE>
-extends Status<SubscriptionMatchedStatus<TYPE>, DataReader<TYPE>> {
+public abstract class SampleLostStatus<TYPE>
+extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -8311789136391541797L;
+    private static final long serialVersionUID = -520330521363610833L;
 
 
 
@@ -41,15 +40,15 @@ extends Status<SubscriptionMatchedStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> SubscriptionMatchedStatus<TYPE>
-    newSubscriptionMatchedStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newSubscriptionMatchedStatus();
+    public static <TYPE> SampleLostStatus<TYPE>
+    newSampleLostStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newSampleLostStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected SubscriptionMatchedStatus(DataReader<TYPE> source) {
+    protected SampleLostStatus(DataReader<TYPE> source) {
         super(source);
     }
 
@@ -68,17 +67,5 @@ extends Status<SubscriptionMatchedStatus<TYPE>, DataReader<TYPE>> {
      * @return the totalCountChange
      */
     public abstract int getTotalCountChange();
-
-    /**
-     * @return the currentCount
-     */
-    public abstract int getCurrentCount();
-
-    /**
-     * @return the currentCountChange
-     */
-    public abstract int getCurrentCountChange();
-
-    public abstract ModifiableInstanceHandle getLastPublicationHandle();
 
 }

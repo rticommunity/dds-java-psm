@@ -27,6 +27,10 @@ import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.Time;
+import org.omg.dds.core.status.LivelinessLostStatus;
+import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
+import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
+import org.omg.dds.core.status.PublicationMatchedStatus;
 import org.omg.dds.domain.discovery.SubscriptionBuiltinTopicData;
 import org.omg.dds.topic.Topic;
 

@@ -16,10 +16,14 @@
  * limitations under the License.
  */
 
-package org.omg.dds.core;
+package org.omg.dds.core.status;
 
 import java.util.EventObject;
 import java.util.Set;
+
+import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.Entity;
+import org.omg.dds.core.ModifiableValue;
 
 
 /**

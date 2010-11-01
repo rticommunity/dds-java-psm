@@ -27,6 +27,15 @@ import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.core.status.InstanceState;
+import org.omg.dds.core.status.LivelinessChangedStatus;
+import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
+import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
+import org.omg.dds.core.status.SampleLostStatus;
+import org.omg.dds.core.status.SampleRejectedStatus;
+import org.omg.dds.core.status.SampleState;
+import org.omg.dds.core.status.SubscriptionMatchedStatus;
+import org.omg.dds.core.status.ViewState;
 import org.omg.dds.domain.discovery.PublicationBuiltinTopicData;
 import org.omg.dds.topic.TopicDescription;
 

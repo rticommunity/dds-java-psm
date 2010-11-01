@@ -27,7 +27,7 @@ import org.omg.dds.core.Duration;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ModifiableTime;
-import org.omg.dds.core.Status;
+import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.discovery.ParticipantBuiltinTopicData;
 import org.omg.dds.domain.discovery.TopicBuiltinTopicData;
 import org.omg.dds.pub.Publisher;

@@ -22,7 +22,7 @@ import java.util.Collection;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.Status;
+import org.omg.dds.core.status.Status;
 
 
 public abstract class DomainParticipantFactory implements DDSObject

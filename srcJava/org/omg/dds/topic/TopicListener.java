@@ -20,6 +20,8 @@ package org.omg.dds.topic;
 
 import java.util.EventListener;
 
+import org.omg.dds.core.status.InconsistentTopicStatus;
+
 
 public interface TopicListener<TYPE> extends EventListener {
     public void onInconsistentTopic(

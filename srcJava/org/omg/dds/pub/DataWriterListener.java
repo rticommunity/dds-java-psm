@@ -20,6 +20,11 @@ package org.omg.dds.pub;
 
 import java.util.EventListener;
 
+import org.omg.dds.core.status.LivelinessLostStatus;
+import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
+import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
+import org.omg.dds.core.status.PublicationMatchedStatus;
+
 
 public interface DataWriterListener<TYPE> extends EventListener {
     public void onOfferedDeadlineMissed(

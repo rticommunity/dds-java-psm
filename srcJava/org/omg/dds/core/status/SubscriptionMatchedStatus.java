@@ -16,19 +16,20 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.Status;
+import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.sub.DataReader;
 
 
-public abstract class DataAvailableStatus<TYPE>
-extends Status<DataAvailableStatus<TYPE>, DataReader<TYPE>> {
+public abstract class SubscriptionMatchedStatus<TYPE>
+extends Status<SubscriptionMatchedStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -865384611703927431L;
+    private static final long serialVersionUID = -8311789136391541797L;
 
 
 
@@ -40,15 +41,44 @@ extends Status<DataAvailableStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> DataAvailableStatus<TYPE>
-    newDataAvailableStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDataAvailableStatus();
+    public static <TYPE> SubscriptionMatchedStatus<TYPE>
+    newSubscriptionMatchedStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newSubscriptionMatchedStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected DataAvailableStatus(DataReader<TYPE> source) {
+    protected SubscriptionMatchedStatus(DataReader<TYPE> source) {
         super(source);
     }
+
+
+
+    // -----------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @return the totalCount
+     */
+    public abstract int getTotalCount();
+
+    /**
+     * @return the totalCountChange
+     */
+    public abstract int getTotalCountChange();
+
+    /**
+     * @return the currentCount
+     */
+    public abstract int getCurrentCount();
+
+    /**
+     * @return the currentCountChange
+     */
+    public abstract int getCurrentCountChange();
+
+    public abstract ModifiableInstanceHandle getLastPublicationHandle();
+
 }

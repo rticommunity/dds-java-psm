@@ -16,28 +16,19 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
-
-import java.util.Set;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
+import org.omg.dds.sub.DataReader;
 
 
-public enum ViewState {
-    // -----------------------------------------------------------------------
-    // States
-    // -----------------------------------------------------------------------
-
-    NEW(0x0001 << 0),
-    NOT_NEW(0x0001 << 1);
-
-
-
+public abstract class DataAvailableStatus<TYPE>
+extends Status<DataAvailableStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    public final int value;
+    private static final long serialVersionUID = -865384611703927431L;
 
 
 
@@ -46,18 +37,18 @@ public enum ViewState {
     // -----------------------------------------------------------------------
 
     /**
-     * @param bootstrap Identifies the Service instance to which the
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static Set<ViewState> anyViewStateSet(Bootstrap bootstrap) {
-        return bootstrap.getSPI().anyViewStateSet();
+    public static <TYPE> DataAvailableStatus<TYPE>
+    newDataAvailableStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newDataAvailableStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    private ViewState(int value) {
-        this.value = value;
+    protected DataAvailableStatus(DataReader<TYPE> source) {
+        super(source);
     }
-
 }

@@ -16,20 +16,19 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.Status;
+import org.omg.dds.topic.Topic;
 
 
-public abstract class LivelinessChangedStatus<TYPE>
-extends Status<LivelinessChangedStatus<TYPE>, DataReader<TYPE>> {
+public abstract class InconsistentTopicStatus<TYPE>
+extends Status<InconsistentTopicStatus<TYPE>, Topic<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -6569834894650163848L;
+    private static final long serialVersionUID = 4436349983298916816L;
 
 
 
@@ -41,15 +40,15 @@ extends Status<LivelinessChangedStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> LivelinessChangedStatus<TYPE>
-    newLivelinessChangedStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newLivelinessChangedStatus();
+    public static <TYPE> InconsistentTopicStatus<TYPE>
+    newInconsistentTopicStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newInconsistentTopicStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected LivelinessChangedStatus(DataReader<TYPE> source) {
+    protected InconsistentTopicStatus(Topic<TYPE> source) {
         super(source);
     }
 
@@ -60,25 +59,13 @@ extends Status<LivelinessChangedStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
 
     /**
-     * @return the aliveCount
+     * @return the totalCount
      */
-    public abstract int getAliveCount();
+    public abstract int getTotalCount();
 
     /**
-     * @return the notAliveCount
+     * @return the totalCountChange
      */
-    public abstract int getNotAliveCount();
-
-    /**
-     * @return the aliveCountChange
-     */
-    public abstract int getAliveCountChange();
-
-    /**
-     * @return the notAliveCountChange
-     */
-    public abstract int getNotAliveCountChange();
-
-    public abstract ModifiableInstanceHandle getLastPublicationHandle();
+    public abstract int getTotalCountChange();
 
 }

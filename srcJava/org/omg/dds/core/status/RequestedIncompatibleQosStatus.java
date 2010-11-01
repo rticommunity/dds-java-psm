@@ -16,20 +16,23 @@
  * limitations under the License.
  */
 
-package org.omg.dds.pub;
+package org.omg.dds.core.status;
+
+import java.util.Set;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.Status;
+import org.omg.dds.core.policy.QosPolicy;
+import org.omg.dds.core.policy.QosPolicyCount;
+import org.omg.dds.sub.DataReader;
 
 
-public abstract class OfferedDeadlineMissedStatus<TYPE>
-extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
+public abstract class RequestedIncompatibleQosStatus<TYPE>
+extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 7958557115889148585L;
+    private static final long serialVersionUID = 4709309312402183531L;
 
 
 
@@ -41,15 +44,15 @@ extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> OfferedDeadlineMissedStatus<TYPE>
-    newOfferedDeadlineMissedStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newOfferedDeadlineMissedStatus();
+    public static <TYPE> RequestedIncompatibleQosStatus<TYPE>
+    newRequestedIncompatibleQosStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newRequestedIncompatibleQosStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected OfferedDeadlineMissedStatus(DataWriter<TYPE> source) {
+    protected RequestedIncompatibleQosStatus(DataReader<TYPE> source) {
         super(source);
     }
 
@@ -69,6 +72,14 @@ extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
      */
     public abstract int getTotalCountChange();
 
-    public abstract ModifiableInstanceHandle getLastInstanceHandle();
+    /**
+     * @return the lastPolicyId
+     */
+    public abstract QosPolicy.Id getLastPolicyId();
+
+    /**
+     * @return  an unmodifiable set.
+     */
+    public abstract Set<QosPolicyCount> getPolicies();
 
 }

@@ -18,6 +18,11 @@
 
 package org.omg.dds.pub;
 
+import org.omg.dds.core.status.LivelinessLostStatus;
+import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
+import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
+import org.omg.dds.core.status.PublicationMatchedStatus;
+
 
 public class PublisherAdapter implements PublisherListener
 {

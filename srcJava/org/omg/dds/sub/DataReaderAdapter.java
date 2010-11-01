@@ -18,6 +18,14 @@
 
 package org.omg.dds.sub;
 
+import org.omg.dds.core.status.DataAvailableStatus;
+import org.omg.dds.core.status.LivelinessChangedStatus;
+import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
+import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
+import org.omg.dds.core.status.SampleLostStatus;
+import org.omg.dds.core.status.SampleRejectedStatus;
+import org.omg.dds.core.status.SubscriptionMatchedStatus;
+
 
 public class DataReaderAdapter<TYPE> implements DataReaderListener<TYPE>
 {

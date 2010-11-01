@@ -16,19 +16,19 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.Status;
+import org.omg.dds.pub.DataWriter;
 
 
-public abstract class DataOnReadersStatus
-extends Status<DataOnReadersStatus, Subscriber> {
+public abstract class LivelinessLostStatus<TYPE>
+extends Status<LivelinessLostStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -770537656671131411L;
+    private static final long serialVersionUID = -3741038559289576020L;
 
 
 
@@ -40,15 +40,32 @@ extends Status<DataOnReadersStatus, Subscriber> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static DataOnReadersStatus newDataOnReadersStatus(
-            Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDataOnReadersStatus();
+    public static <TYPE> LivelinessLostStatus<TYPE>
+    newLivelinessLostStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newLivelinessLostStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected DataOnReadersStatus(Subscriber source) {
+    protected LivelinessLostStatus(DataWriter<TYPE> source) {
         super(source);
     }
+
+
+
+    // -----------------------------------------------------------------------
+    // Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @return the totalCount
+     */
+    public abstract int getTotalCount();
+
+    /**
+     * @return the totalCountChange
+     */
+    public abstract int getTotalCountChange();
+
 }

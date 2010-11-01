@@ -21,6 +21,9 @@ package org.omg.dds.sub;
 import java.util.Set;
 
 import org.omg.dds.core.Condition;
+import org.omg.dds.core.status.InstanceState;
+import org.omg.dds.core.status.SampleState;
+import org.omg.dds.core.status.ViewState;
 
 
 public interface ReadCondition<TYPE>

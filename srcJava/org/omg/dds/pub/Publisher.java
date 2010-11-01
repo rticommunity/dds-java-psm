@@ -24,7 +24,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.Status;
+import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicQos;

@@ -16,23 +16,19 @@
  * limitations under the License.
  */
 
-package org.omg.dds.sub;
-
-import java.util.Set;
+package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.Status;
-import org.omg.dds.core.policy.QosPolicy;
-import org.omg.dds.core.policy.QosPolicyCount;
+import org.omg.dds.sub.Subscriber;
 
 
-public abstract class RequestedIncompatibleQosStatus<TYPE>
-extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
+public abstract class DataOnReadersStatus
+extends Status<DataOnReadersStatus, Subscriber> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 4709309312402183531L;
+    private static final long serialVersionUID = -770537656671131411L;
 
 
 
@@ -44,42 +40,15 @@ extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> RequestedIncompatibleQosStatus<TYPE>
-    newRequestedIncompatibleQosStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newRequestedIncompatibleQosStatus();
+    public static DataOnReadersStatus newDataOnReadersStatus(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newDataOnReadersStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected RequestedIncompatibleQosStatus(DataReader<TYPE> source) {
+    protected DataOnReadersStatus(Subscriber source) {
         super(source);
     }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    /**
-     * @return the totalCount
-     */
-    public abstract int getTotalCount();
-
-    /**
-     * @return the totalCountChange
-     */
-    public abstract int getTotalCountChange();
-
-    /**
-     * @return the lastPolicyId
-     */
-    public abstract QosPolicy.Id getLastPolicyId();
-
-    /**
-     * @return  an unmodifiable set.
-     */
-    public abstract Set<QosPolicyCount> getPolicies();
-
 }

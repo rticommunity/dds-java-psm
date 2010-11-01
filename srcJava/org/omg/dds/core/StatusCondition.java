@@ -20,6 +20,8 @@ package org.omg.dds.core;
 
 import java.util.Collection;
 
+import org.omg.dds.core.status.Status;
+
 
 public interface StatusCondition<ENTITY extends Entity<ENTITY, ?, ?>>
 extends Condition {

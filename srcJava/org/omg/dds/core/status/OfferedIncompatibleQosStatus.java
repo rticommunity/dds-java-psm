@@ -16,19 +16,23 @@
  * limitations under the License.
  */
 
-package org.omg.dds.pub;
+package org.omg.dds.core.status;
+
+import java.util.Set;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.core.Status;
+import org.omg.dds.core.policy.QosPolicy;
+import org.omg.dds.core.policy.QosPolicyCount;
+import org.omg.dds.pub.DataWriter;
 
 
-public abstract class LivelinessLostStatus<TYPE>
-extends Status<LivelinessLostStatus<TYPE>, DataWriter<TYPE>> {
+public abstract class OfferedIncompatibleQosStatus<TYPE>
+extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -3741038559289576020L;
+    private static final long serialVersionUID = 8389878229396890980L;
 
 
 
@@ -40,15 +44,15 @@ extends Status<LivelinessLostStatus<TYPE>, DataWriter<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> LivelinessLostStatus<TYPE>
-    newLivelinessLostStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newLivelinessLostStatus();
+    public static <TYPE> OfferedIncompatibleQosStatus<TYPE>
+    newOfferedIncompatibleQosStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newOfferedIncompatibleQosStatus();
     }
 
 
     // -----------------------------------------------------------------------
 
-    protected LivelinessLostStatus(DataWriter<TYPE> source) {
+    protected OfferedIncompatibleQosStatus(DataWriter<TYPE> source) {
         super(source);
     }
 
@@ -67,5 +71,15 @@ extends Status<LivelinessLostStatus<TYPE>, DataWriter<TYPE>> {
      * @return the totalCountChange
      */
     public abstract int getTotalCountChange();
+
+    /**
+     * @return the lastPolicyId
+     */
+    public abstract QosPolicy.Id getLastPolicyId();
+
+    /**
+     * @return  an unmodifiable set of policy counts.
+     */
+    public abstract Set<QosPolicyCount> getPolicies();
 
 }

@@ -19,6 +19,7 @@
 package org.omg.dds.topic;
 
 import org.omg.dds.core.DomainEntity;
+import org.omg.dds.core.status.InconsistentTopicStatus;
 import org.omg.dds.domain.DomainParticipant;
 
 

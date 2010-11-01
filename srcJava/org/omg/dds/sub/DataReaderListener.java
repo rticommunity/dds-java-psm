@@ -20,6 +20,14 @@ package org.omg.dds.sub;
 
 import java.util.EventListener;
 
+import org.omg.dds.core.status.DataAvailableStatus;
+import org.omg.dds.core.status.LivelinessChangedStatus;
+import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
+import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
+import org.omg.dds.core.status.SampleLostStatus;
+import org.omg.dds.core.status.SampleRejectedStatus;
+import org.omg.dds.core.status.SubscriptionMatchedStatus;
+
 
 public interface DataReaderListener<TYPE> extends EventListener {
     public void onRequestedDeadlineMissed(
