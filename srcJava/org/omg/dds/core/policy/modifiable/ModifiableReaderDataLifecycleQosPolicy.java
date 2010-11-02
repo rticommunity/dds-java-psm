@@ -30,23 +30,36 @@ extends ReaderDataLifecycleQosPolicy,
         ModifiableQosPolicy<ReaderDataLifecycleQosPolicy,
                             ModifiableReaderDataLifecycleQosPolicy> {
     /**
-     * @param autoPurgeNoWriterSamplesDelay the autoPurgeNoWriterSamplesDelay to set
+     * @param autoPurgeNoWriterSamplesDelay the autoPurgeNoWriterSamplesDelay
+     *                                      to set
+     * 
+     * @return  this
      */
-    public void setAutoPurgeNoWriterSamplesDelay(
-            Duration autoPurgeNoWriterSamplesDelay);
+    public ModifiableReaderDataLifecycleQosPolicy
+    setAutoPurgeNoWriterSamplesDelay(Duration autoPurgeNoWriterSamplesDelay);
 
-    public void setAutoPurgeNoWriterSamplesDelay(
+    /**
+     * @return  this
+     */
+    public ModifiableReaderDataLifecycleQosPolicy
+    setAutoPurgeNoWriterSamplesDelay(
             long autoPurgeNoWriterSamplesDelay, TimeUnit unit);
 
     public ModifiableDuration getAutoPurgeNoWriterSamplesDelay();
 
     /**
      * @param autoPurgeDisposedSamplesDelay the autoPurgeDisposedSamplesDelay to set
+     * 
+     * @return  this
      */
-    public void setAutoPurgeDisposedSamplesDelay(
-            Duration autoPurgeDisposedSamplesDelay);
+    public ModifiableReaderDataLifecycleQosPolicy
+    setAutoPurgeDisposedSamplesDelay(Duration autoPurgeDisposedSamplesDelay);
 
-    public void setAutoPurgeDisposedSamplesDelay(
+    /**
+     * @return  this
+     */
+    public ModifiableReaderDataLifecycleQosPolicy
+    setAutoPurgeDisposedSamplesDelay(
             long autoPurgeDisposedSamplesDelay, TimeUnit unit);
 
     public ModifiableDuration getAutoPurgeDisposedSamplesDelay();

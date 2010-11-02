@@ -30,8 +30,10 @@ extends ModifiableValue<TypeProperty, TypeProperty>
 {
     /**
      * @param flag the flag to set
+     * 
+     * @return  this
      */
-    public void setFlag(TypeFlag flag);
+    public TypeProperty setFlag(TypeFlag flag);
 
     /**
      * @return the flag
@@ -40,8 +42,10 @@ extends ModifiableValue<TypeProperty, TypeProperty>
 
     /**
      * @param typeId the typeId to set
+     * 
+     * @return  this
      */
-    public void setTypeId(int typeId);
+    public TypeProperty setTypeId(int typeId);
 
     /**
      * @return the typeId
@@ -50,8 +54,10 @@ extends ModifiableValue<TypeProperty, TypeProperty>
 
     /**
      * @param name the name to set
+     * 
+     * @return  this
      */
-    public void setName(String name);
+    public TypeProperty setName(String name);
 
     /**
      * @return the name

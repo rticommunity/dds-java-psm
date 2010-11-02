@@ -27,16 +27,24 @@ extends ResourceLimitsQosPolicy,
                             ModifiableResourceLimitsQosPolicy> {
     /**
      * @param maxSamples the maxSamples to set
+     * 
+     * @return  this
      */
-    public void setMaxSamples(int maxSamples);
+    public ModifiableResourceLimitsQosPolicy setMaxSamples(int maxSamples);
 
     /**
      * @param maxInstances the maxInstances to set
+     * 
+     * @return  this
      */
-    public void setMaxInstances(int maxInstances);
+    public ModifiableResourceLimitsQosPolicy setMaxInstances(
+            int maxInstances);
 
     /**
      * @param maxSamplesPerInstance the maxSamplesPerInstance to set
+     * 
+     * @return  this
      */
-    public void setMaxSamplesPerInstance(int maxSamplesPerInstance);
+    public ModifiableResourceLimitsQosPolicy setMaxSamplesPerInstance(
+            int maxSamplesPerInstance);
 }

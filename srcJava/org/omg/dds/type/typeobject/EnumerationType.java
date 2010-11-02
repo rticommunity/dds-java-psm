@@ -32,12 +32,18 @@ public interface EnumerationType extends Type
     @ID(MemberId.BIT_BOUND_ENUMERATIONTYPE_MEMBER_ID)
     public int getBitBound();
 
-    public void setBitBound(int newBitBound);
+    /**
+     * @return  this
+     */
+    public EnumerationType setBitBound(int newBitBound);
 
     @ID(MemberId.CONSTANT_ENUMERATIONTYPE_MEMBER_ID)
     public List<EnumeratedConstant> getConstant();
 
-    public void setConstant(List<EnumeratedConstant> newConstant);
+    /**
+     * @return  this
+     */
+    public EnumerationType setConstant(List<EnumeratedConstant> newConstant);
 
 
 

@@ -34,6 +34,8 @@ extends PartitionQosPolicy,
 
     /**
      * @param name the name to set
+     * 
+     * @return  this
      */
-    public void setName(Collection<String> name);
+    public ModifiablePartitionQosPolicy setName(Collection<String> name);
 }

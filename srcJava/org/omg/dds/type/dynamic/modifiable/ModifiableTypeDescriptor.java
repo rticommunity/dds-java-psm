@@ -30,36 +30,52 @@ extends TypeDescriptor,
 {
     /**
      * @param kind the kind to set
+     * 
+     * @return  this
      */
-    public void setKind(TypeKind kind);
+    public ModifiableTypeDescriptor setKind(TypeKind kind);
 
     /**
      * @param name the name to set
+     * 
+     * @return  this
      */
-    public void setName(String name);
+    public ModifiableTypeDescriptor setName(String name);
 
     /**
      * @param baseType the baseType to set
+     * 
+     * @return  this
      */
-    public void setBaseType(DynamicType baseType);
+    public ModifiableTypeDescriptor setBaseType(DynamicType baseType);
 
     /**
      * @param discriminatorType the discriminatorType to set
+     * 
+     * @return  this
      */
-    public void setDiscriminatorType(DynamicType discriminatorType);
+    public ModifiableTypeDescriptor setDiscriminatorType(
+            DynamicType discriminatorType);
 
     /**
      * @param bound the bound to set
+     * 
+     * @return  this
      */
-    public void setBound(int... bound);
+    public ModifiableTypeDescriptor setBound(int... bound);
 
     /**
      * @param elementType the elementType to set
+     * 
+     * @return  this
      */
-    public void setElementType(DynamicType elementType);
+    public ModifiableTypeDescriptor setElementType(DynamicType elementType);
 
     /**
      * @param keyElementType the keyElementType to set
+     * 
+     * @return  this
      */
-    public void setKeyElementType(DynamicType keyElementType);
+    public ModifiableTypeDescriptor setKeyElementType(
+            DynamicType keyElementType);
 }

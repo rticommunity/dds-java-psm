@@ -29,8 +29,10 @@ public interface Bit extends ModifiableValue<Bit, Bit>
 {
     /**
      * @param index the index to set
+     * 
+     * @return  this
      */
-    public void setIndex(int index);
+    public Bit setIndex(int index);
 
     /**
      * @return the index
@@ -39,8 +41,10 @@ public interface Bit extends ModifiableValue<Bit, Bit>
 
     /**
      * @param name the name to set
+     * 
+     * @return  this
      */
-    public void setName(String name);
+    public Bit setName(String name);
 
     /**
      * @return the name

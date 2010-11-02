@@ -31,15 +31,24 @@ extends LivelinessQosPolicy,
                             ModifiableLivelinessQosPolicy> {
     /**
      * @param kind the kind to set
+     * 
+     * @return  this
      */
-    public void setKind(Kind kind);
+    public ModifiableLivelinessQosPolicy setKind(Kind kind);
 
     /**
      * @param leaseDuration the leaseDuration to set
+     * 
+     * @return  this
      */
-    public void setLeaseDuration(Duration leaseDuration);
+    public ModifiableLivelinessQosPolicy setLeaseDuration(
+            Duration leaseDuration);
 
-    public void setLeaseDuration(long leaseDuration, TimeUnit unit);
+    /**
+     * @return  this
+     */
+    public ModifiableLivelinessQosPolicy setLeaseDuration(
+            long leaseDuration, TimeUnit unit);
 
     public ModifiableDuration getLeaseDuration();
 }

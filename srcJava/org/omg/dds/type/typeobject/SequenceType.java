@@ -34,7 +34,10 @@ public interface SequenceType extends CollectionType
     @ID(MemberId.BOUND_SEQUENCETYPE_MEMBER_ID)
     public long getBound();
 
-    public void setBound(long newBound);
+    /**
+     * @return  this
+     */
+    public SequenceType setBound(long newBound);
 
 
 

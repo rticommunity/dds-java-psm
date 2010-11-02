@@ -32,8 +32,10 @@ public interface AnnotationUsage
 extends ModifiableValue<AnnotationUsage, AnnotationUsage> {
     /**
      * @param typeId the typeId to set
+     * 
+     * @return  this
      */
-    public void setTypeId(int typeId);
+    public AnnotationUsage setTypeId(int typeId);
 
     /**
      * @return the typeId
@@ -42,8 +44,10 @@ extends ModifiableValue<AnnotationUsage, AnnotationUsage> {
 
     /**
      * @param member the member to set
+     * 
+     * @return  this
      */
-    public void setMember(List<AnnotationUsageMember> member);
+    public AnnotationUsage setMember(List<AnnotationUsageMember> member);
 
     /**
      * @return the member

@@ -32,12 +32,18 @@ public interface BitSetType extends Type
     @ID(MemberId.BIT_BOUND_BITSETTYPE_MEMBER_ID)
     public int getBitBound();
 
-    public void setBitBound(int newBitBound);
+    /**
+     * @return  this
+     */
+    public BitSetType setBitBound(int newBitBound);
 
     @ID(MemberId.BIT_BITSETTYPE_MEMBER_ID)
     public List<Bit> getBit();
 
-    public void setBit(List<Bit> newBit);
+    /**
+     * @return  this
+     */
+    public BitSetType setBit(List<Bit> newBit);
 
 
 

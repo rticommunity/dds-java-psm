@@ -30,8 +30,10 @@ extends ModifiableValue<TypeObject, TypeObject>
 {
     /**
      * @param library the library to set
+     * 
+     * @return  this
      */
-    public void setLibrary(TypeLibrary library);
+    public TypeObject setLibrary(TypeLibrary library);
 
     /**
      * @return the library
@@ -41,8 +43,10 @@ extends ModifiableValue<TypeObject, TypeObject>
 
     /**
      * @param the_type the the_type to set
+     * 
+     * @return  this
      */
-    public void setTheType(int the_type);
+    public TypeObject setTheType(int the_type);
 
     /**
      * @return the the_type

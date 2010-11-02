@@ -36,8 +36,11 @@ extends PublisherQos,
 {
     /**
      * @param presentation the presentation to set
+     * 
+     * @return  this
      */
-    public void setPresentation(PresentationQosPolicy presentation);
+    public ModifiablePublisherQos setPresentation(
+            PresentationQosPolicy presentation);
 
     /**
      * @return the presentation
@@ -46,8 +49,10 @@ extends PublisherQos,
 
     /**
      * @param partition the partition to set
+     * 
+     * @return  this
      */
-    public void setPartition(PartitionQosPolicy partition);
+    public ModifiablePublisherQos setPartition(PartitionQosPolicy partition);
 
     /**
      * @return the partition
@@ -56,8 +61,10 @@ extends PublisherQos,
 
     /**
      * @param groupData the groupData to set
+     * 
+     * @return  this
      */
-    public void setGroupData(GroupDataQosPolicy groupData);
+    public ModifiablePublisherQos setGroupData(GroupDataQosPolicy groupData);
 
     /**
      * @return the groupData
@@ -66,8 +73,11 @@ extends PublisherQos,
 
     /**
      * @param entityFactory the entityFactory to set
+     * 
+     * @return  this
      */
-    public void setEntityFactory(EntityFactoryQosPolicy entityFactory);
+    public ModifiablePublisherQos setEntityFactory(
+            EntityFactoryQosPolicy entityFactory);
 
     /**
      * @return the entityFactory

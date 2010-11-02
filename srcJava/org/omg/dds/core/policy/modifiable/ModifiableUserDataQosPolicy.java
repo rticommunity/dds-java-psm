@@ -26,6 +26,9 @@ extends UserDataQosPolicy,
         ModifiableQosPolicy<UserDataQosPolicy, ModifiableUserDataQosPolicy> {
     /**
      * @param value the value to set
+     * 
+     * @return  this
      */
-    public void setValue(byte value[], int offset, int length);
+    public ModifiableUserDataQosPolicy setValue(
+            byte value[], int offset, int length);
 }

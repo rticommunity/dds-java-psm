@@ -36,12 +36,18 @@ public interface AnnotationType extends Type
     @ID(MemberId.BASE_TYPE_ANNOTATIONTYPE_MEMBER_ID)
     public int getBaseType();
 
-    public void setBaseType(int newBaseType);
+    /**
+     * @return  this
+     */
+    public AnnotationType setBaseType(int newBaseType);
 
     @ID(MemberId.MEMBER_ANNOTATIONTYPE_MEMBER_ID)
     public List<AnnotationMember> getMember();
 
-    public void setMember(List<AnnotationMember> newMember);
+    /**
+     * @return  this
+     */
+    public AnnotationType setMember(List<AnnotationMember> newMember);
 
 
 

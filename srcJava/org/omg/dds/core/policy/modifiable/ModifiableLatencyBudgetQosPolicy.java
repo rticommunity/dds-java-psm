@@ -31,10 +31,16 @@ extends LatencyBudgetQosPolicy,
                             ModifiableLatencyBudgetQosPolicy> {
     /**
      * @param duration the duration to set
+     * 
+     * @return  this
      */
-    public void setDuration(Duration duration);
+    public ModifiableLatencyBudgetQosPolicy setDuration(Duration duration);
 
-    public void setDuration(long duration, TimeUnit unit);
+    /**
+     * @return  this
+     */
+    public ModifiableLatencyBudgetQosPolicy setDuration(
+            long duration, TimeUnit unit);
 
     public ModifiableDuration getDuration();
 

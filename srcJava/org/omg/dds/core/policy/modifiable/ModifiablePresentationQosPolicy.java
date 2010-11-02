@@ -27,16 +27,25 @@ extends PresentationQosPolicy,
                             ModifiablePresentationQosPolicy> {
     /**
      * @param accessScope the accessScope to set
+     * 
+     * @return  this
      */
-    public void setAccessScope(AccessScopeKind accessScope);
+    public ModifiablePresentationQosPolicy setAccessScope(
+            AccessScopeKind accessScope);
 
     /**
      * @param coherentAccess the coherentAccess to set
+     * 
+     * @return  this
      */
-    public void setCoherentAccess(boolean coherentAccess);
+    public ModifiablePresentationQosPolicy setCoherentAccess(
+            boolean coherentAccess);
 
     /**
      * @param orderedAccess the orderedAccess to set
+     * 
+     * @return  this
      */
-    public void setOrderedAccess(boolean orderedAccess);
+    public ModifiablePresentationQosPolicy setOrderedAccess(
+            boolean orderedAccess);
 }

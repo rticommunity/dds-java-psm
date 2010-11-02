@@ -45,14 +45,20 @@ public interface Member extends ModifiableValue<Member, Member>
     @ID(MemberId.PROPERTY_MEMBER_MEMBER_ID)
     public MemberProperty getProperty();
 
+    /**
+     * @return  this
+     */
     @ID(MemberId.PROPERTY_MEMBER_MEMBER_ID)
-    public void setProperty(MemberProperty newProperty);
+    public Member setProperty(MemberProperty newProperty);
 
     @ID(MemberId.ANNOTATION_MEMBER_MEMBER_ID)
     public List<AnnotationUsage> getAnnotation();
 
+    /**
+     * @return  this
+     */
     @ID(MemberId.ANNOTATION_MEMBER_MEMBER_ID)
-    public void setAnnotation(List<AnnotationUsage> newAnnotation);
+    public Member setAnnotation(List<AnnotationUsage> newAnnotation);
 
 
 

@@ -57,8 +57,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 {
     /**
      * @param topicData the topicData to set
+     * 
+     * @return  this
      */
-    public void setTopicData(TopicDataQosPolicy topicData);
+    public ModifiableTopicQos setTopicData(TopicDataQosPolicy topicData);
 
     /**
      * @return the topicData
@@ -67,8 +69,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param durability the durability to set
+     * 
+     * @return  this
      */
-    public void setDurability(DurabilityQosPolicy durability);
+    public ModifiableTopicQos setDurability(DurabilityQosPolicy durability);
 
     /**
      * @return the durability
@@ -77,8 +81,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param durabilityService the durabilityService to set
+     * 
+     * @return  this
      */
-    public void setDurabilityService(
+    public ModifiableTopicQos setDurabilityService(
             DurabilityServiceQosPolicy durabilityService);
 
     /**
@@ -88,8 +94,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param deadline the deadline to set
+     * 
+     * @return  this
      */
-    public void setDeadline(DeadlineQosPolicy deadline);
+    public ModifiableTopicQos setDeadline(DeadlineQosPolicy deadline);
 
     /**
      * @return the deadline
@@ -98,8 +106,11 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param latencyBudget the latencyBudget to set
+     * 
+     * @return  this
      */
-    public void setLatencyBudget(LatencyBudgetQosPolicy latencyBudget);
+    public ModifiableTopicQos setLatencyBudget(
+            LatencyBudgetQosPolicy latencyBudget);
 
     /**
      * @return the latencyBudget
@@ -108,8 +119,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param liveliness the liveliness to set
+     * 
+     * @return  this
      */
-    public void setLiveliness(LivelinessQosPolicy liveliness);
+    public ModifiableTopicQos setLiveliness(LivelinessQosPolicy liveliness);
 
     /**
      * @return the liveliness
@@ -118,8 +131,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param reliability the reliability to set
+     * 
+     * @return  this
      */
-    public void setReliability(ReliabilityQosPolicy reliability);
+    public ModifiableTopicQos setReliability(ReliabilityQosPolicy reliability);
 
     /**
      * @return the reliability
@@ -128,8 +143,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param destinationOrder the destinationOrder to set
+     * 
+     * @return  this
      */
-    public void setDestinationOrder(
+    public ModifiableTopicQos setDestinationOrder(
             DestinationOrderQosPolicy destinationOrder);
 
     /**
@@ -139,8 +156,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param history the history to set
+     * 
+     * @return  this
      */
-    public void setHistory(HistoryQosPolicy history);
+    public ModifiableTopicQos setHistory(HistoryQosPolicy history);
 
     /**
      * @return the history
@@ -149,8 +168,11 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param resourceLimits the resourceLimits to set
+     * 
+     * @return  this
      */
-    public void setResourceLimits(ResourceLimitsQosPolicy resourceLimits);
+    public ModifiableTopicQos setResourceLimits(
+            ResourceLimitsQosPolicy resourceLimits);
 
     /**
      * @return the resourceLimits
@@ -159,8 +181,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param transportPriority the transportPriority to set
+     * 
+     * @return  this
      */
-    public void setTransportPriority(
+    public ModifiableTopicQos setTransportPriority(
             TransportPriorityQosPolicy transportPriority);
 
     /**
@@ -170,8 +194,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param lifespan the lifespan to set
+     * 
+     * @return  this
      */
-    public void setLifespan(LifespanQosPolicy lifespan);
+    public ModifiableTopicQos setLifespan(LifespanQosPolicy lifespan);
 
     /**
      * @return the lifespan
@@ -180,8 +206,10 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     /**
      * @param ownership the ownership to set
+     * 
+     * @return  this
      */
-    public void setOwnership(OwnershipQosPolicy ownership);
+    public ModifiableTopicQos setOwnership(OwnershipQosPolicy ownership);
 
     /**
      * @return the ownership
@@ -190,10 +218,17 @@ extends TopicQos, ModifiableEntityQos<TopicQos, ModifiableTopicQos>
 
     public ModifiableDataRepresentationQosPolicy getRepresentation();
 
-    public void setRepresentation(DataRepresentationQosPolicy representation);
+    /**
+     * @return  this
+     */
+    public ModifiableTopicQos setRepresentation(
+            DataRepresentationQosPolicy representation);
 
     public ModifiableTypeConsistencyEnforcementQosPolicy getTypeConsistency();
 
-    public void setTypeConsistency(
+    /**
+     * @return  this
+     */
+    public ModifiableTopicQos setTypeConsistency(
             TypeConsistencyEnforcementQosPolicy typeConsistency);
 }

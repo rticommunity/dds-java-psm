@@ -41,30 +41,41 @@ extends Time implements ModifiableValue<Time, ModifiableTime>
 
     // --- Data access: ------------------------------------------------------
 
-    public abstract void setTime(long time, TimeUnit unit);
+    /**
+     * @return  this
+     */
+    public abstract ModifiableTime setTime(long time, TimeUnit unit);
 
 
     // --- Manipulation: -----------------------------------------------------
 
     /**
      * Increment this time by the given amount.
+     * 
+     * @return  this
      */
-    public abstract void add(Duration duration);
+    public abstract ModifiableTime add(Duration duration);
 
     /**
      * Increment this time by the given amount.
+     * 
+     * @return  this
      */
-    public abstract void add(long duration, TimeUnit unit);
+    public abstract ModifiableTime add(long duration, TimeUnit unit);
 
     /**
      * Decrement this time by the given amount.
+     * 
+     * @return  this
      */
-    public abstract void subtract(Duration duration);
+    public abstract ModifiableTime subtract(Duration duration);
 
     /**
      * Decrement this time by the given amount.
+     * 
+     * @return  this
      */
-    public abstract void subtract(long duration, TimeUnit unit);
+    public abstract ModifiableTime subtract(long duration, TimeUnit unit);
 
 
     // --- From Object: ------------------------------------------------------

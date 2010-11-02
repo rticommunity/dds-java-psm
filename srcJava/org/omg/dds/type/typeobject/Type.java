@@ -33,12 +33,18 @@ public interface Type extends ModifiableValue<Type, Type>
     @ID(MemberId.PROPERTY_TYPE_MEMBER_ID)
     public TypeProperty getProperty();
 
-    public void setProperty(TypeProperty newProperty);
+    /**
+     * @return  this
+     */
+    public Type setProperty(TypeProperty newProperty);
 
     @ID(MemberId.ANNOTATION_TYPE_MEMBER_ID)
     public List<AnnotationUsage> getAnnotation();
 
-    public void setAnnotation(List<AnnotationUsage> newAnnotation);
+    /**
+     * @return  this
+     */
+    public Type setAnnotation(List<AnnotationUsage> newAnnotation);
 
 
 

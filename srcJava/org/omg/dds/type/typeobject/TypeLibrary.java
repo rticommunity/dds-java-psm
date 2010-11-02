@@ -32,8 +32,10 @@ extends ModifiableValue<TypeLibrary, TypeLibrary>
 {
     /**
      * @param element the element to set
+     * 
+     * @return  this
      */
-    public void setElement(List<TypeLibraryElement> element);
+    public TypeLibrary setElement(List<TypeLibraryElement> element);
 
     /**
      * @return the element

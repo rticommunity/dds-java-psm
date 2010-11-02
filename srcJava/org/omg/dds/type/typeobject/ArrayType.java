@@ -36,7 +36,10 @@ public interface ArrayType extends CollectionType
     @ID(MemberId.BOUND_ARRAYTYPE_MEMBER_ID)
     public List<Long> getBound();
 
-    public void setBound(List<Long> newBound);
+    /**
+     * @return  this
+     */
+    public ArrayType setBound(List<Long> newBound);
 
 
 

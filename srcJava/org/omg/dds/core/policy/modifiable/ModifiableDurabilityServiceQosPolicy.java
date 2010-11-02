@@ -32,36 +32,56 @@ extends DurabilityServiceQosPolicy,
                             ModifiableDurabilityServiceQosPolicy> {
     /**
      * @param serviceCleanupDelay the serviceCleanupDelay to set
+     * 
+     * @return  this
      */
-    public void setServiceCleanupDelay(Duration serviceCleanupDelay);
+    public ModifiableDurabilityServiceQosPolicy setServiceCleanupDelay(
+            Duration serviceCleanupDelay);
 
-    public void setServiceCleanupDelay(
+    /**
+     * @return  this
+     */
+    public ModifiableDurabilityServiceQosPolicy setServiceCleanupDelay(
             long serviceCleanupDelay, TimeUnit unit);
 
     public ModifiableDuration getServiceCleanupDelay();
 
     /**
      * @param historyKind the historyKind to set
+     * 
+     * @return  this
      */
-    public void setHistoryKind(HistoryQosPolicy.Kind historyKind);
+    public ModifiableDurabilityServiceQosPolicy setHistoryKind(
+            HistoryQosPolicy.Kind historyKind);
 
     /**
      * @param historyDepth the historyDepth to set
+     * 
+     * @return  this
      */
-    public void setHistoryDepth(int historyDepth);
+    public ModifiableDurabilityServiceQosPolicy setHistoryDepth(
+            int historyDepth);
 
     /**
      * @param maxSamples the maxSamples to set
+     * 
+     * @return  this
      */
-    public void setMaxSamples(int maxSamples);
+    public ModifiableDurabilityServiceQosPolicy setMaxSamples(int maxSamples);
 
     /**
      * @param maxInstances the maxInstances to set
+     * 
+     * @return  this
      */
-    public void setMaxInstances(int maxInstances);
+    public ModifiableDurabilityServiceQosPolicy setMaxInstances(
+            int maxInstances);
 
     /**
      * @param maxSamplesPerInstance the maxSamplesPerInstance to set
+     * 
+     * @return  this
      */
-    public void setMaxSamplesPerInstance(int maxSamplesPerInstance);
+    public ModifiableDurabilityServiceQosPolicy setMaxSamplesPerInstance(
+            int maxSamplesPerInstance);
 }

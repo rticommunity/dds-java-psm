@@ -34,7 +34,11 @@ public interface AnnotationMember extends Member
     @ID(MemberId.DEFAULT_VALUE_ANNOTATIONMEMBER_MEMBER_ID)
     public AnnotationMemberValue getDefaultValue();
 
-    public void setDefaultValue(AnnotationMemberValue newDefaultValue);
+    /**
+     * @return  this
+     */
+    public AnnotationMember setDefaultValue(
+            AnnotationMemberValue newDefaultValue);
 
 
 

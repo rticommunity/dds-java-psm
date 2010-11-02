@@ -26,11 +26,15 @@ extends HistoryQosPolicy,
         ModifiableQosPolicy<HistoryQosPolicy, ModifiableHistoryQosPolicy> {
     /**
      * @param kind the kind to set
+     * 
+     * @return  this
      */
-    public void setKind(Kind kind);
+    public ModifiableHistoryQosPolicy setKind(Kind kind);
 
     /**
      * @param depth the depth to set
+     * 
+     * @return  this
      */
-    public void setDepth(int depth);
+    public ModifiableHistoryQosPolicy setDepth(int depth);
 }

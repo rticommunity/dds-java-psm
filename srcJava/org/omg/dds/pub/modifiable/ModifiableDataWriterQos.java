@@ -63,8 +63,11 @@ extends DataWriterQos,
 {
     /**
      * @param durability the durability to set
+     * 
+     * @return  this
      */
-    public void setDurability(DurabilityQosPolicy durability);
+    public ModifiableDataWriterQos setDurability(
+            DurabilityQosPolicy durability);
 
     /**
      * @return the durability
@@ -73,8 +76,10 @@ extends DataWriterQos,
 
     /**
      * @param durabilityService the durabilityService to set
+     * 
+     * @return  this
      */
-    public void setDurabilityService(
+    public ModifiableDataWriterQos setDurabilityService(
             DurabilityServiceQosPolicy durabilityService);
 
     /**
@@ -84,8 +89,10 @@ extends DataWriterQos,
 
     /**
      * @param deadline the deadline to set
+     * 
+     * @return  this
      */
-    public void setDeadline(DeadlineQosPolicy deadline);
+    public ModifiableDataWriterQos setDeadline(DeadlineQosPolicy deadline);
 
     /**
      * @return the deadline
@@ -94,8 +101,11 @@ extends DataWriterQos,
 
     /**
      * @param latencyBudget the latencyBudget to set
+     * 
+     * @return  this
      */
-    public void setLatencyBudget(LatencyBudgetQosPolicy latencyBudget);
+    public ModifiableDataWriterQos setLatencyBudget(
+            LatencyBudgetQosPolicy latencyBudget);
 
     /**
      * @return the latencyBudget
@@ -104,8 +114,11 @@ extends DataWriterQos,
 
     /**
      * @param liveliness the liveliness to set
+     * 
+     * @return  this
      */
-    public void setLiveliness(LivelinessQosPolicy liveliness);
+    public ModifiableDataWriterQos setLiveliness(
+            LivelinessQosPolicy liveliness);
 
     /**
      * @return the liveliness
@@ -114,8 +127,11 @@ extends DataWriterQos,
 
     /**
      * @param reliability the reliability to set
+     * 
+     * @return  this
      */
-    public void setReliability(ReliabilityQosPolicy reliability);
+    public ModifiableDataWriterQos setReliability(
+            ReliabilityQosPolicy reliability);
 
     /**
      * @return the reliability
@@ -124,8 +140,10 @@ extends DataWriterQos,
 
     /**
      * @param destinationOrder the destinationOrder to set
+     * 
+     * @return  this
      */
-    public void setDestinationOrder(
+    public ModifiableDataWriterQos setDestinationOrder(
             DestinationOrderQosPolicy destinationOrder);
 
     /**
@@ -135,8 +153,10 @@ extends DataWriterQos,
 
     /**
      * @param history the history to set
+     * 
+     * @return  this
      */
-    public void setHistory(HistoryQosPolicy history);
+    public ModifiableDataWriterQos setHistory(HistoryQosPolicy history);
 
     /**
      * @return the history
@@ -145,8 +165,11 @@ extends DataWriterQos,
 
     /**
      * @param resourceLimits the resourceLimits to set
+     * 
+     * @return  this
      */
-    public void setResourceLimits(ResourceLimitsQosPolicy resourceLimits);
+    public ModifiableDataWriterQos setResourceLimits(
+            ResourceLimitsQosPolicy resourceLimits);
 
     /**
      * @return the resourceLimits
@@ -155,8 +178,10 @@ extends DataWriterQos,
 
     /**
      * @param transportPriority the transportPriority to set
+     * 
+     * @return  this
      */
-    public void setTransportPriority(
+    public ModifiableDataWriterQos setTransportPriority(
             TransportPriorityQosPolicy transportPriority);
 
     /**
@@ -166,8 +191,10 @@ extends DataWriterQos,
 
     /**
      * @param lifespan the lifespan to set
+     * 
+     * @return  this
      */
-    public void setLifespan(LifespanQosPolicy lifespan);
+    public ModifiableDataWriterQos setLifespan(LifespanQosPolicy lifespan);
 
     /**
      * @return the lifespan
@@ -176,8 +203,10 @@ extends DataWriterQos,
 
     /**
      * @param userData the userData to set
+     * 
+     * @return  this
      */
-    public void setUserData(UserDataQosPolicy userData);
+    public ModifiableDataWriterQos setUserData(UserDataQosPolicy userData);
 
     /**
      * @return the userData
@@ -186,8 +215,10 @@ extends DataWriterQos,
 
     /**
      * @param ownership the ownership to set
+     * 
+     * @return  this
      */
-    public void setOwnership(OwnershipQosPolicy ownership);
+    public ModifiableDataWriterQos setOwnership(OwnershipQosPolicy ownership);
 
     /**
      * @return the ownership
@@ -196,8 +227,10 @@ extends DataWriterQos,
 
     /**
      * @param ownershipStrength the ownershipStrength to set
+     * 
+     * @return  this
      */
-    public void setOwnershipStrength(
+    public ModifiableDataWriterQos setOwnershipStrength(
             OwnershipStrengthQosPolicy ownershipStrength);
 
     /**
@@ -207,8 +240,10 @@ extends DataWriterQos,
 
     /**
      * @param writerDataLifecycle the writerDataLifecycle to set
+     * 
+     * @return  this
      */
-    public void setWriterDataLifecycle(
+    public ModifiableDataWriterQos setWriterDataLifecycle(
             WriterDataLifecycleQosPolicy writerDataLifecycle);
 
     /**
@@ -218,11 +253,18 @@ extends DataWriterQos,
 
     public ModifiableDataRepresentationQosPolicy getRepresentation();
 
-    public void setRepresentation(DataRepresentationQosPolicy representation);
+    /**
+     * @return  this
+     */
+    public ModifiableDataWriterQos setRepresentation(
+            DataRepresentationQosPolicy representation);
 
     public ModifiableTypeConsistencyEnforcementQosPolicy getTypeConsistency();
 
-    public void setTypeConsistency(
+    /**
+     * @return  this
+     */
+    public ModifiableDataWriterQos setTypeConsistency(
             TypeConsistencyEnforcementQosPolicy typeConsistency);
 
     public ModifiableDataWriterQos copyFrom(TopicQos src);

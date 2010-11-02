@@ -27,7 +27,9 @@ extends EntityFactoryQosPolicy,
                             ModifiableEntityFactoryQosPolicy> {
     /**
      * @param autoEnableCreatedEntities the autoEnableCreatedEntities to set
+     * 
+     * @return  this
      */
-    public void setAutoEnableCreatedEntities(
+    public ModifiableEntityFactoryQosPolicy setAutoEnableCreatedEntities(
             boolean autoEnableCreatedEntities);
 }

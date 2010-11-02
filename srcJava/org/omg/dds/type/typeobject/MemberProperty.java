@@ -30,8 +30,10 @@ extends ModifiableValue<MemberProperty, MemberProperty>
 {
     /**
      * @param flag the flag to set
+     * 
+     * @return  this
      */
-    public void setFlag(MemberFlag flag);
+    public MemberProperty setFlag(MemberFlag flag);
 
     /**
      * @return the flag
@@ -40,8 +42,10 @@ extends ModifiableValue<MemberProperty, MemberProperty>
 
     /**
      * @param memberId the memberId to set
+     * 
+     * @return  this
      */
-    public void setMemberId(int memberId);
+    public MemberProperty setMemberId(int memberId);
 
     /**
      * @return the memberId
@@ -50,8 +54,10 @@ extends ModifiableValue<MemberProperty, MemberProperty>
 
     /**
      * @param type the type to set
+     * 
+     * @return  this
      */
-    public void setType(int type);
+    public MemberProperty setType(int type);
 
     /**
      * @return the type
@@ -60,8 +66,10 @@ extends ModifiableValue<MemberProperty, MemberProperty>
 
     /**
      * @param name the name to set
+     * 
+     * @return  this
      */
-    public void setName(String name);
+    public MemberProperty setName(String name);
 
     /**
      * @return the name

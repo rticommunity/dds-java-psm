@@ -30,8 +30,10 @@ public interface Module extends ModifiableValue<Module, Module>
 {
     /**
      * @param name the name to set
+     * 
+     * @return  this
      */
-    public void setName(String name);
+    public Module setName(String name);
 
     /**
      * @return the name
@@ -41,5 +43,8 @@ public interface Module extends ModifiableValue<Module, Module>
     @Shared
     public TypeLibrary getLibrary();
 
-    public void setLibrary(TypeLibrary newLibrary);
+    /**
+     * @return  this
+     */
+    public Module setLibrary(TypeLibrary newLibrary);
 }

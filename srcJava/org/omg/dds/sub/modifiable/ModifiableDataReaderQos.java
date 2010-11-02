@@ -55,8 +55,11 @@ extends DataReaderQos,
 {
     /**
      * @param durability the durability to set
+     * 
+     * @return  this
      */
-    public void setDurability(DurabilityQosPolicy durability);
+    public ModifiableDataReaderQos setDurability(
+            DurabilityQosPolicy durability);
 
     /**
      * @return the durability
@@ -65,8 +68,10 @@ extends DataReaderQos,
 
     /**
      * @param deadline the deadline to set
+     * 
+     * @return  this
      */
-    public void setDeadline(DeadlineQosPolicy deadline);
+    public ModifiableDataReaderQos setDeadline(DeadlineQosPolicy deadline);
 
     /**
      * @return the deadline
@@ -75,8 +80,11 @@ extends DataReaderQos,
 
     /**
      * @param latencyBudget the latencyBudget to set
+     * 
+     * @return  this
      */
-    public void setLatencyBudget(LatencyBudgetQosPolicy latencyBudget);
+    public ModifiableDataReaderQos setLatencyBudget(
+            LatencyBudgetQosPolicy latencyBudget);
 
     /**
      * @return the latencyBudget
@@ -85,8 +93,11 @@ extends DataReaderQos,
 
     /**
      * @param liveliness the liveliness to set
+     * 
+     * @return  this
      */
-    public void setLiveliness(LivelinessQosPolicy liveliness);
+    public ModifiableDataReaderQos setLiveliness(
+            LivelinessQosPolicy liveliness);
 
     /**
      * @return the liveliness
@@ -95,8 +106,10 @@ extends DataReaderQos,
 
     /**
      * @param destinationOrder the destinationOrder to set
+     * 
+     * @return  this
      */
-    public void setDestinationOrder(
+    public ModifiableDataReaderQos setDestinationOrder(
             DestinationOrderQosPolicy destinationOrder);
 
     /**
@@ -106,8 +119,10 @@ extends DataReaderQos,
 
     /**
      * @param history the history to set
+     * 
+     * @return  this
      */
-    public void setHistory(HistoryQosPolicy history);
+    public ModifiableDataReaderQos setHistory(HistoryQosPolicy history);
 
     /**
      * @return the history
@@ -116,8 +131,11 @@ extends DataReaderQos,
 
     /**
      * @param resourceLimits the resourceLimits to set
+     * 
+     * @return  this
      */
-    public void setResourceLimits(ResourceLimitsQosPolicy resourceLimits);
+    public ModifiableDataReaderQos setResourceLimits(
+            ResourceLimitsQosPolicy resourceLimits);
 
     /**
      * @return the resourceLimits
@@ -126,8 +144,10 @@ extends DataReaderQos,
 
     /**
      * @param userData the userData to set
+     * 
+     * @return  this
      */
-    public void setUserData(UserDataQosPolicy userData);
+    public ModifiableDataReaderQos setUserData(UserDataQosPolicy userData);
 
     /**
      * @return the userData
@@ -136,8 +156,10 @@ extends DataReaderQos,
 
     /**
      * @param ownership the ownership to set
+     * 
+     * @return  this
      */
-    public void setOwnership(OwnershipQosPolicy ownership);
+    public ModifiableDataReaderQos setOwnership(OwnershipQosPolicy ownership);
 
     /**
      * @return the ownership
@@ -146,8 +168,11 @@ extends DataReaderQos,
 
     /**
      * @param timeBasedFilter the timeBasedFilter to set
+     * 
+     * @return  this
      */
-    public void setTimeBasedFilter(TimeBasedFilterQosPolicy timeBasedFilter);
+    public ModifiableDataReaderQos setTimeBasedFilter(
+            TimeBasedFilterQosPolicy timeBasedFilter);
 
     /**
      * @return the timeBasedFilter
@@ -156,8 +181,10 @@ extends DataReaderQos,
 
     /**
      * @param readerDataLifecycle the readerDataLifecycle to set
+     * 
+     * @return  this
      */
-    public void setReaderDataLifecycle(
+    public ModifiableDataReaderQos setReaderDataLifecycle(
             ReaderDataLifecycleQosPolicy readerDataLifecycle);
 
     /**
@@ -167,11 +194,18 @@ extends DataReaderQos,
 
     public ModifiableDataRepresentationQosPolicy getRepresentation();
 
-    public void setRepresentation(DataRepresentationQosPolicy representation);
+    /**
+     * @return  this
+     */
+    public ModifiableDataReaderQos setRepresentation(
+            DataRepresentationQosPolicy representation);
 
     public ModifiableTypeConsistencyEnforcementQosPolicy getTypeConsistency();
 
-    public void setTypeConsistency(
+    /**
+     * @return  this
+     */
+    public ModifiableDataReaderQos setTypeConsistency(
             TypeConsistencyEnforcementQosPolicy typeConsistency);
 
     public ModifiableDataReaderQos copyFrom(TopicQos src);

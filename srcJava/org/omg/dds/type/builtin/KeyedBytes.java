@@ -31,8 +31,10 @@ extends ModifiableValue<KeyedBytes, KeyedBytes>
 
     /**
      * @param key the key to set
+     * 
+     * @return  this
      */
-    public void setKey(CharSequence key);
+    public KeyedBytes setKey(CharSequence key);
 
     /**
      * @return the value
@@ -41,11 +43,15 @@ extends ModifiableValue<KeyedBytes, KeyedBytes>
 
     /**
      * @param value the value to set
+     * 
+     * @return  this
      */
-    public void setValue(byte value[]);
+    public KeyedBytes setValue(byte value[]);
 
     /**
      * @param value the value to set
+     * 
+     * @return  this
      */
-    public void setValue(byte value[], int offset, int length);
+    public KeyedBytes setValue(byte value[], int offset, int length);
 }

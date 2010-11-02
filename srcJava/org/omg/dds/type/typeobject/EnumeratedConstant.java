@@ -30,8 +30,10 @@ extends ModifiableValue<EnumeratedConstant, EnumeratedConstant>
 {
     /**
      * @param value the value to set
+     * 
+     * @return  this
      */
-    public void setValue(int value);
+    public EnumeratedConstant setValue(int value);
 
     /**
      * @return the value
@@ -40,8 +42,10 @@ extends ModifiableValue<EnumeratedConstant, EnumeratedConstant>
 
     /**
      * @param name the name to set
+     * 
+     * @return  this
      */
-    public void setName(String name);
+    public EnumeratedConstant setName(String name);
 
     /**
      * @return the name

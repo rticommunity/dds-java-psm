@@ -36,8 +36,10 @@ extends SubscriberQos,
 {
     /**
      * @param presentation the presentation to set
+     * 
+     * @return  this
      */
-    public void setPresentation(PresentationQosPolicy presentation);
+    public ModifiableSubscriberQos setPresentation(PresentationQosPolicy presentation);
 
     /**
      * @return the presentation
@@ -46,8 +48,10 @@ extends SubscriberQos,
 
     /**
      * @param partition the partition to set
+     * 
+     * @return  this
      */
-    public void setPartition(PartitionQosPolicy partition);
+    public ModifiableSubscriberQos setPartition(PartitionQosPolicy partition);
 
     /**
      * @return the partition
@@ -56,8 +60,10 @@ extends SubscriberQos,
 
     /**
      * @param groupData the groupData to set
+     * 
+     * @return  this
      */
-    public void setGroupData(GroupDataQosPolicy groupData);
+    public ModifiableSubscriberQos setGroupData(GroupDataQosPolicy groupData);
 
     /**
      * @return the groupData
@@ -66,8 +72,10 @@ extends SubscriberQos,
 
     /**
      * @param entityFactory the entityFactory to set
+     * 
+     * @return  this
      */
-    public void setEntityFactory(EntityFactoryQosPolicy entityFactory);
+    public ModifiableSubscriberQos setEntityFactory(EntityFactoryQosPolicy entityFactory);
 
     /**
      * @return the entityFactory

@@ -29,36 +29,50 @@ extends MemberDescriptor,
 {
     /**
      * @param name the name to set
+     * 
+     * @return  this
      */
-    public void setName(String name);
+    public ModifiableMemberDescriptor setName(String name);
 
     /**
      * @param id the id to set
+     * 
+     * @return  this
      */
-    public void setId(int id);
+    public ModifiableMemberDescriptor setId(int id);
 
     /**
      * @param type the type to set
+     * 
+     * @return  this
      */
-    public void setType(DynamicType type);
+    public ModifiableMemberDescriptor setType(DynamicType type);
 
     /**
      * @param defaultValue the defaultValue to set
+     * 
+     * @return  this
      */
-    public void setDefaultValue(String defaultValue);
+    public ModifiableMemberDescriptor setDefaultValue(String defaultValue);
 
     /**
      * @param index the index to set
+     * 
+     * @return  this
      */
-    public void setIndex(int index);
+    public ModifiableMemberDescriptor setIndex(int index);
 
     /**
      * @param label the label to set
+     * 
+     * @return  this
      */
-    public void setLabel(int... label);
+    public ModifiableMemberDescriptor setLabel(int... label);
 
     /**
      * @param defaultLabel the defaultLabel to set
+     * 
+     * @return  this
      */
-    public void setDefaultLabel(boolean defaultLabel);
+    public ModifiableMemberDescriptor setDefaultLabel(boolean defaultLabel);
 }

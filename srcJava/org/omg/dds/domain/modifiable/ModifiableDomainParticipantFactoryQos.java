@@ -31,8 +31,11 @@ extends DomainParticipantFactoryQos,
 {
     /**
      * @param entityFactory the entityFactory to set
+     * 
+     * @return  this
      */
-    public void setEntityFactory(EntityFactoryQosPolicy entityFactory);
+    public ModifiableDomainParticipantFactoryQos setEntityFactory(
+            EntityFactoryQosPolicy entityFactory);
 
     /**
      * @return the entityFactory

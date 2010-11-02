@@ -34,7 +34,10 @@ public interface AliasType extends Type
     @ID(MemberId.BASE_TYPE_ALIASTYPE_MEMBER_ID)
     public int getBaseType();
 
-    public void setBaseType(int newBaseTypeId);
+    /**
+     * @return  this
+     */
+    public AliasType setBaseType(int newBaseTypeId);
 
 
 

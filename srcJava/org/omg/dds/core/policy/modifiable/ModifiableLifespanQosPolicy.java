@@ -30,10 +30,16 @@ extends LifespanQosPolicy,
         ModifiableQosPolicy<LifespanQosPolicy, ModifiableLifespanQosPolicy> {
     /**
      * @param duration the duration to set
+     * 
+     * @return  this
      */
-    public void setDuration(Duration duration);
+    public ModifiableLifespanQosPolicy setDuration(Duration duration);
 
-    public void setDuration(long duration, TimeUnit unit);
+    /**
+     * @return  this
+     */
+    public ModifiableLifespanQosPolicy setDuration(
+            long duration, TimeUnit unit);
 
     public ModifiableDuration getDuration();
 }

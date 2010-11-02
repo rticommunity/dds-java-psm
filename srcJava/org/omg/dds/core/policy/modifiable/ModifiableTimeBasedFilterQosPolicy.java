@@ -31,10 +31,17 @@ extends TimeBasedFilterQosPolicy,
                             ModifiableTimeBasedFilterQosPolicy> {
     /**
      * @param minimumSeparation the minimumSeparation to set
+     * 
+     * @return  this
      */
-    public void setMinimumSeparation(Duration minimumSeparation);
+    public ModifiableTimeBasedFilterQosPolicy setMinimumSeparation(
+            Duration minimumSeparation);
 
-    public void setMinimumSeparation(long minimumSeparation, TimeUnit unit);
+    /**
+     * @return  this
+     */
+    public ModifiableTimeBasedFilterQosPolicy setMinimumSeparation(
+            long minimumSeparation, TimeUnit unit);
 
     public ModifiableDuration getMinimumSeparation();
 }

@@ -30,8 +30,10 @@ public interface AnnotationUsageMember
 extends ModifiableValue<AnnotationUsageMember, AnnotationUsageMember> {
     /**
      * @param memberId the memberId to set
+     * 
+     * @return  this
      */
-    public void setMemberId(int memberId);
+    public AnnotationUsageMember setMemberId(int memberId);
 
     /**
      * @return the memberId
@@ -40,8 +42,10 @@ extends ModifiableValue<AnnotationUsageMember, AnnotationUsageMember> {
 
     /**
      * @param value the value to set
+     * 
+     * @return  this
      */
-    public void setValue(AnnotationMemberValue value);
+    public AnnotationUsageMember setValue(AnnotationMemberValue value);
 
     /**
      * @return the value

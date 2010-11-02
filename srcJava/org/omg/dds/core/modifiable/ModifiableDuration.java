@@ -40,30 +40,42 @@ extends Duration implements ModifiableValue<Duration, ModifiableDuration>
 
     // --- Data access: ------------------------------------------------------
 
-    public abstract void setDuration(long duration, TimeUnit unit);
+    /**
+     * @return  this
+     */
+    public abstract ModifiableDuration setDuration(
+            long duration, TimeUnit unit);
 
 
     // --- Manipulation: -----------------------------------------------------
 
     /**
      * Increase this duration by the given amount.
+     * 
+     * @return  this
      */
-    public abstract void add(Duration duration);
+    public abstract ModifiableDuration add(Duration duration);
 
     /**
      * Increase this duration by the given amount.
+     * 
+     * @return  this
      */
-    public abstract void add(long duration, TimeUnit unit);
+    public abstract ModifiableDuration add(long duration, TimeUnit unit);
 
     /**
      * Decrease this duration by the given amount.
+     * 
+     * @return  this
      */
-    public abstract void subtract(Duration duration);
+    public abstract ModifiableDuration subtract(Duration duration);
 
     /**
      * Decrease this duration by the given amount.
+     * 
+     * @return  this
      */
-    public abstract void subtract(long duration, TimeUnit unit);
+    public abstract ModifiableDuration subtract(long duration, TimeUnit unit);
 
 
     // --- From Object: ------------------------------------------------------

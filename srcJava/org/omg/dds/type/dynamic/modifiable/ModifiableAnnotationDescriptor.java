@@ -32,6 +32,8 @@ extends AnnotationDescriptor,
 
     /**
      * @param type the type to set
+     * 
+     * @return  this
      */
-    public void setType(DynamicType type);
+    public ModifiableAnnotationDescriptor setType(DynamicType type);
 }

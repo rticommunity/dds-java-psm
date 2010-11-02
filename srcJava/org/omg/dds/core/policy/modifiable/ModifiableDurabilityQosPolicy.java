@@ -27,6 +27,8 @@ extends DurabilityQosPolicy,
                             ModifiableDurabilityQosPolicy> {
     /**
      * @param kind the kind to set
+     * 
+     * @return  this
      */
-    public void setKind(Kind kind);
+    public ModifiableDurabilityQosPolicy setKind(Kind kind);
 }

@@ -31,15 +31,24 @@ extends ReliabilityQosPolicy,
                             ModifiableReliabilityQosPolicy> {
     /**
      * @param kind the kind to set
+     * 
+     * @return  this
      */
-    public void setKind(Kind kind);
+    public ModifiableReliabilityQosPolicy setKind(Kind kind);
 
     /**
      * @param maxBlockingTime the maxBlockingTime to set
+     * 
+     * @return  this
      */
-    public void setMaxBlockingTime(Duration maxBlockingTime);
+    public ModifiableReliabilityQosPolicy setMaxBlockingTime(
+            Duration maxBlockingTime);
 
-    public void setMaxBlockingTime(long maxBlockingTime, TimeUnit unit);
+    /**
+     * @return  this
+     */
+    public ModifiableReliabilityQosPolicy setMaxBlockingTime(
+            long maxBlockingTime, TimeUnit unit);
 
     public ModifiableDuration getMaxBlockingTime();
 }

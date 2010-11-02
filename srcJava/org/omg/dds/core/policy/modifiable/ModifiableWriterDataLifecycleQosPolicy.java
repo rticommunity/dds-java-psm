@@ -26,8 +26,11 @@ extends WriterDataLifecycleQosPolicy,
         ModifiableQosPolicy<WriterDataLifecycleQosPolicy,
                             ModifiableWriterDataLifecycleQosPolicy> {
     /**
-     * @param autDisposeUnregisteredInstances the autDisposeUnregisteredInstances to set
+     * @param autDisposeUnregisteredInstances   the value to set
+     * 
+     * @return  this
      */
-    public void setAutDisposeUnregisteredInstances(
+    public ModifiableWriterDataLifecycleQosPolicy
+    setAutDisposeUnregisteredInstances(
             boolean autDisposeUnregisteredInstances);
 }

@@ -27,6 +27,8 @@ extends DestinationOrderQosPolicy,
                             ModifiableDestinationOrderQosPolicy> {
     /**
      * @param kind the kind to set
+     * 
+     * @return  this
      */
-    public void setKind(Kind kind);
+    public ModifiableDestinationOrderQosPolicy setKind(Kind kind);
 }

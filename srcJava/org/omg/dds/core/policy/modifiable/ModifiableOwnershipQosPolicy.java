@@ -27,6 +27,8 @@ extends OwnershipQosPolicy,
                             ModifiableOwnershipQosPolicy> {
     /**
      * @param kind the kind to set
+     * 
+     * @return  this
      */
-    public void setKind(Kind kind);
+    public ModifiableOwnershipQosPolicy setKind(Kind kind);
 }

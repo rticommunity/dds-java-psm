@@ -37,59 +37,93 @@ extends ModifiableValue<TypeLibraryElement, TypeLibraryElement>
 
     public Kind discriminator();
 
+
     public AliasType getAliasType();
 
-    public void setAliasType(AliasType value);
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setAliasType(AliasType value);
 
 
-    public AnnotationType annotationType();
+    public AnnotationType getAnnotationType();
 
-    public void annotationType(AnnotationType value);
-
-
-    public ArrayType arrayType();
-
-    public void arrayType(ArrayType value);
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setAnnotationType(AnnotationType value);
 
 
-    public BitSetType bitsetType();
+    public ArrayType getArrayType();
 
-    public void bitsetType(BitSetType value);
-
-
-    public EnumerationType enumerationType();
-
-    public void enumerationType(EnumerationType value);
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setArrayType(ArrayType value);
 
 
-    public MapType mapType();
+    public BitSetType getBitsetType();
 
-    public void mapType(MapType value);
-
-
-    public SequenceType sequenceType();
-
-    public void sequenceType(SequenceType value);
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setBitsetType(BitSetType value);
 
 
-    public StringType stringType();
+    public EnumerationType getEnumerationType();
 
-    public void stringType(StringType value);
-
-
-    public StructureType structureType();
-
-    public void structureType(StructureType value);
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setEnumerationType(EnumerationType value);
 
 
-    public UnionType unionType();
+    public MapType getMapType();
 
-    public void unionType(UnionType value);
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setMapType(MapType value);
 
 
-    public Module module();
+    public SequenceType getSequenceType();
 
-    public void module(Module value);
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setSequenceType(SequenceType value);
+
+
+    public StringType getStringType();
+
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setStringType(StringType value);
+
+
+    public StructureType getStructureType();
+
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setStructureType(StructureType value);
+
+
+    public UnionType getUnionType();
+
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setUnionType(UnionType value);
+
+
+    public Module getModule();
+
+    /**
+     * @return  this
+     */
+    public TypeLibraryElement setModule(Module value);
 
 
 

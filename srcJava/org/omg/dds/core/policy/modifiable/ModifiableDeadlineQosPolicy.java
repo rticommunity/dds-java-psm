@@ -30,10 +30,15 @@ extends DeadlineQosPolicy,
         ModifiableQosPolicy<DeadlineQosPolicy, ModifiableDeadlineQosPolicy> {
     /**
      * @param period the period to set
+     * 
+     * @return  this
      */
-    public void setPeriod(Duration period);
+    public ModifiableDeadlineQosPolicy setPeriod(Duration period);
 
-    public void setPeriod(long period, TimeUnit unit);
+    /**
+     * @return  this
+     */
+    public ModifiableDeadlineQosPolicy setPeriod(long period, TimeUnit unit);
 
     public ModifiableDuration getPeriod();
 }

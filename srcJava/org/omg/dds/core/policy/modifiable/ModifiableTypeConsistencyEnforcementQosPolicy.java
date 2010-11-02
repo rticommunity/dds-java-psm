@@ -26,5 +26,9 @@ extends TypeConsistencyEnforcementQosPolicy,
         ModifiableQosPolicy<TypeConsistencyEnforcementQosPolicy,
                             ModifiableTypeConsistencyEnforcementQosPolicy>
 {
-    public void setKind(TypeConsistencyEnforcementQosPolicy.Kind kind);
+    /**
+     * @return  this
+     */
+    public ModifiableTypeConsistencyEnforcementQosPolicy setKind(
+            TypeConsistencyEnforcementQosPolicy.Kind kind);
 }

@@ -26,8 +26,10 @@ extends ModifiableValue<KeyedString, KeyedString>
 {
     /**
      * @param key the key to set
+     * 
+     * @return  this
      */
-    public void setKey(CharSequence key);
+    public KeyedString setKey(CharSequence key);
 
     /**
      * @return the key
@@ -36,8 +38,10 @@ extends ModifiableValue<KeyedString, KeyedString>
 
     /**
      * @param value the value to set
+     * 
+     * @return  this
      */
-    public void setValue(CharSequence value);
+    public KeyedString setValue(CharSequence value);
 
     /**
      * @return the value

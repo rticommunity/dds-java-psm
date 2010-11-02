@@ -27,6 +27,8 @@ extends OwnershipStrengthQosPolicy,
                             ModifiableOwnershipStrengthQosPolicy> {
     /**
      * @param value the value to set
+     * 
+     * @return  this
      */
-    public void setValue(int value);
+    public ModifiableOwnershipStrengthQosPolicy setValue(int value);
 }

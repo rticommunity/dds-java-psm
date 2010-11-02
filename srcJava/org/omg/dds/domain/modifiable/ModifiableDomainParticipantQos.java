@@ -33,8 +33,11 @@ extends DomainParticipantQos,
 {
     /**
      * @param userData the userData to set
+     * 
+     * @return  this
      */
-    public void setUserData(UserDataQosPolicy userData);
+    public ModifiableDomainParticipantQos setUserData(
+            UserDataQosPolicy userData);
 
     /**
      * @return the userData
@@ -43,8 +46,11 @@ extends DomainParticipantQos,
 
     /**
      * @param entityFactory the entityFactory to set
+     * 
+     * @return  this
      */
-    public void setEntityFactory(EntityFactoryQosPolicy entityFactory);
+    public ModifiableDomainParticipantQos setEntityFactory(
+            EntityFactoryQosPolicy entityFactory);
 
     /**
      * @return the entityFactory

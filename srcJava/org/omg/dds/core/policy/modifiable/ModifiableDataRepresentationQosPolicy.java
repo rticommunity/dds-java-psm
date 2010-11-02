@@ -30,6 +30,13 @@ extends DataRepresentationQosPolicy,
 {
     public List<Short> getValue();
 
-    public void setValue(List<Short> value);
-    public void setValue(short... value);
+    /**
+     * @return  this
+     */
+    public ModifiableDataRepresentationQosPolicy setValue(List<Short> value);
+
+    /**
+     * @return  this
+     */
+    public ModifiableDataRepresentationQosPolicy setValue(short... value);
 }
