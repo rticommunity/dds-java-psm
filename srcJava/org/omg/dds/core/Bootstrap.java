@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 import org.omg.dds.core.modifiable.ModifiableDuration;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableTime;
+import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.status.DataAvailableStatus;
 import org.omg.dds.core.status.DataOnReadersStatus;
 import org.omg.dds.core.status.InconsistentTopicStatus;
@@ -447,11 +448,17 @@ public abstract class Bootstrap implements DDSObject {
         newTopicBuiltinTopicData();
 
 
+        // --- QoS: ----------------------------------------------------------
+
+        public abstract QosPolicy.Id getQosPolicyId(
+                Class<? extends QosPolicy<?, ?>> policyClass);
+
+
         // --- Status: -------------------------------------------------------
 
-        public abstract Set<Status.Kind> allStatusKinds();
+        public abstract Set<Class<? extends Status<?, ?>>> allStatusKinds();
 
-        public abstract Set<Status.Kind> noStatusKinds();
+        public abstract Set<Class<? extends Status<?, ?>>> noStatusKinds();
 
         public abstract <TYPE> LivelinessLostStatus<TYPE>
         newLivelinessLostStatus();

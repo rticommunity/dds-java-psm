@@ -24,7 +24,6 @@ import java.util.concurrent.TimeoutException;
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.status.DataAvailableStatus;
-import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.sub.DataReader;
@@ -58,7 +57,7 @@ public class GreetingSubscribingApp {
                 tp,
                 sub.getDefaultDataReaderQos(),
                 ls,
-                Status.allStatusKinds(bstp));
+                null /* all status changes */);
 
         try {
             dr.waitForHistoricalData(10, TimeUnit.SECONDS);

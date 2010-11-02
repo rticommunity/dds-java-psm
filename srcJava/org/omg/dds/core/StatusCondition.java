@@ -25,10 +25,15 @@ import org.omg.dds.core.status.Status;
 
 public interface StatusCondition<ENTITY extends Entity<ENTITY, ?, ?>>
 extends Condition {
-    public Collection<Status.Kind> getEnabledStatuses(
-            Collection<Status.Kind> statuses);
+    public Collection<Class<? extends Status<?, ?>>> getEnabledStatuses(
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
-    public void setEnabledStatuses(Collection<Status.Kind> statuses);
+    /**
+     * @param statuses  For which status changes the condition should trigger.
+     *                  A null collection signifies all status changes.
+     */
+    public void setEnabledStatuses(
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     public ENTITY getEntity();
 }

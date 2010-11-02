@@ -49,27 +49,63 @@ public interface DomainParticipant
 extends Entity<DomainParticipant,
                DomainParticipantListener,
                DomainParticipantQos> {
+    // --- Create Publisher: -------------------------------------------------
+
     public Publisher createPublisher();
+
+    /**
+     * Create a new publisher.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public Publisher createPublisher(
             PublisherQos qos,
             PublisherListener listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new publisher.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public Publisher createPublisher(
             String qosLibraryName,
             String qosProfileName,
             PublisherListener listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    // --- Create Subscriber: ------------------------------------------------
 
     public Subscriber createSubscriber();
+
+    /**
+     * Create a new subscriber.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public Subscriber createSubscriber(
             SubscriberQos qos,
             SubscriberListener listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new subscriber.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public Subscriber createSubscriber(
             String qosLibraryName,
             String qosProfileName,
             SubscriberListener listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     public Subscriber getBuiltinSubscriber();
 
@@ -79,19 +115,35 @@ extends Entity<DomainParticipant,
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<TYPE> type);
+
+    /**
+     * Create a new topic.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new topic.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             Class<TYPE> type,
             String qosLibraryName,
             String qosProfileName,
             TopicListener<TYPE> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create Topic with explicit TypeSupport: ---------------------------
@@ -99,19 +151,35 @@ extends Entity<DomainParticipant,
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             TypeSupport<TYPE> type);
+
+    /**
+     * Create a new topic.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             TypeSupport<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new topic.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
             TypeSupport<TYPE> type,
             String qosLibraryName,
             String qosProfileName,
             TopicListener<TYPE> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Other operations: -------------------------------------------------

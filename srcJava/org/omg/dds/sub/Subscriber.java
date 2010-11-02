@@ -46,85 +46,165 @@ extends DomainEntity<Subscriber,
 
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
             DataReaderListener<TYPE> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public <TYPE> DataReader<TYPE> createDataReader(
             TopicDescription<TYPE> topic,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<TYPE> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataReader of built-in bytes type: -------------------------
 
     public BytesDataReader createBytesDataReader(
             TopicDescription<byte[]> topic);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public BytesDataReader createBytesDataReader(
             TopicDescription<byte[]> topic,
             DataReaderQos qos,
             DataReaderListener<byte[]> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public BytesDataReader createBytesDataReader(
             TopicDescription<byte[]> topic,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<byte[]> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
-    // --- Create DataReader of built-in KeyedString type: -------------------
+    // --- Create DataReader of built-in KeyedBytes type: --------------------
 
     public KeyedBytesDataReader createKeyedBytesDataReader(
             TopicDescription<KeyedBytes> topic);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public KeyedBytesDataReader createKeyedBytesDataReader(
             TopicDescription<KeyedBytes> topic,
             DataReaderQos qos,
             DataReaderListener<KeyedBytes> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public KeyedBytesDataReader createKeyedBytesDataReader(
             TopicDescription<KeyedBytes> topic,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<KeyedBytes> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataReader of built-in string type: ------------------------
 
     public StringDataReader createStringDataReader(
             TopicDescription<String> topic);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public StringDataReader createStringDataReader(
             TopicDescription<String> topic,
             DataReaderQos qos,
             DataReaderListener<String> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public StringDataReader createStringDataReader(
             TopicDescription<String> topic,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<String> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataReader of built-in KeyedString type: -------------------
 
     public KeyedStringDataReader createKeyedStringDataReader(
             TopicDescription<KeyedString> topic);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public KeyedStringDataReader createKeyedStringDataReader(
             TopicDescription<KeyedString> topic,
             DataReaderQos qos,
             DataReaderListener<KeyedString> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data reader.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public KeyedStringDataReader createKeyedStringDataReader(
             TopicDescription<KeyedString> topic,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<KeyedString> listener,
-            Collection<Status.Kind> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Lookup operations: ------------------------------------------------

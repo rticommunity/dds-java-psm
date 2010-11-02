@@ -18,6 +18,7 @@
 
 package org.omg.dds.core.policy;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Value;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
@@ -43,46 +44,24 @@ extends Value<UNMOD_SELF, MOD_SELF> {
     // Types
     // -----------------------------------------------------------------------
     
-    public static enum Id {
-        // --- Policies: -----------------------------------------------------
-        INVALID                 ("", 0),
-        USER_DATA               ("UserData", 1),
-        DURABILITY              ("Durability", 2),
-        PRESENTATION            ("Presentation", 3),
-        DEADLINE                ("Deadline", 4),
-        LATENCY_BUDGET          ("LatencyBudget", 5),
-        OWNERSHIP               ("Ownership", 6),
-        OWNERSHIP_STRENGTH      ("OwnershipStrength", 7),
-        LIVELINESS              ("Liveliness", 8),
-        TIME_BASED_FILTER       ("TimeBasedFilter", 9),
-        PARTITION               ("Partition", 10),
-        RELIABILITY             ("Reliability", 11),
-        DESTINATION_ORDER       ("DestinationOrder", 12),
-        HISTORY                 ("History", 13),
-        RESOURCE_LIMITS         ("ResourceLimits", 14),
-        ENTITY_FACTORY          ("EntityFactory", 15),
-        WRITER_DATA_LIFECYCLE   ("WriterDataLifecycle", 16),
-        READER_DATA_LIFECYCLE   ("ReaderDataLifecycle", 17),
-        TOPIC_DATA              ("TopicData", 18),
-        GROUP_DATA              ("GroupData", 19),
-        TRANSPORT_PRIORITY      ("TransportPriority", 20),
-        LIFESPAN                ("Lifespan", 21),
-        DURABILITY_SERVICE      ("DurabilityService", 22),
-        DATA_REPRESENTATION     ("DataRepresentation", 23),
-        TYPE_CONSISTENCY_ENFORCEMENT    ("TypeConsistencyEnforcement", 24),
-        ;
-
-
-        // --- Constants: ----------------------------------------------------
-        public final int value;
-        public final String policyName;
-
-
-        // --- Object Life Cycle: --------------------------------------------
-        private Id(String enumName, int value) {
-            this.policyName = enumName;
-            this.value = value;
+    public static abstract class Id {
+        // --- Factory Methods: ----------------------------------------------
+        /**
+         * Get the QoS policy ID for the given QoS policy class.
+         * 
+         * @param bootstrap Identifies the Service instance to which the
+         *                  object will belong.
+         */
+        public static Id getId(
+                Class<? extends QosPolicy<?, ?>> policyClass,
+                Bootstrap bootstrap) {
+            return bootstrap.getSPI().getQosPolicyId(policyClass);
         }
+
+        // --- Instance Methods: ---------------------------------------------
+        public abstract int getPolicyIdValue();
+
+        public abstract String getPolicyName();
     }
 
 }

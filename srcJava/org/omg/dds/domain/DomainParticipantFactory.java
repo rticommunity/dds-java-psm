@@ -50,19 +50,36 @@ public abstract class DomainParticipantFactory implements DDSObject
      * and no listener.
      */
     public abstract DomainParticipant createParticipant();
+
     public abstract DomainParticipant createParticipant(
             int domainId);
+
+    /**
+     * Create a new domain participant.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public abstract DomainParticipant createParticipant(
             int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new domain participant.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public abstract DomainParticipant createParticipant(
             int domainId,
             String qosLibraryName,
             String qosProfileName,
             DomainParticipantListener listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     public abstract DomainParticipant lookupParticipant(int domainId);
 

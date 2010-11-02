@@ -40,8 +40,8 @@ extends DDSObject
 
     public StatusCondition<SELF> getStatusCondition();
 
-    public Collection<Status.Kind> getStatusChanges(
-            Collection<Status.Kind> status);
+    public Collection<Class<? extends Status<?, ?>>> getStatusChanges(
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     public InstanceHandle getInstanceHandle();
 

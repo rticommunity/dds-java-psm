@@ -49,7 +49,8 @@ implements ModifiableValue<SELF, SELF> {
      * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      */
-    public static Set<Status.Kind> allStatusKinds(Bootstrap bootstrap) {
+    public static Set<Class<? extends Status<?, ?>>> allStatuses(
+            Bootstrap bootstrap) {
         return bootstrap.getSPI().allStatusKinds();
     }
 
@@ -58,7 +59,8 @@ implements ModifiableValue<SELF, SELF> {
      * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      */
-    public static Set<Status.Kind> noStatusKinds(Bootstrap bootstrap) {
+    public static Set<Class<? extends Status<?, ?>>> noStatuses(
+            Bootstrap bootstrap) {
         return bootstrap.getSPI().noStatusKinds();
     }
 
@@ -77,9 +79,6 @@ implements ModifiableValue<SELF, SELF> {
 
     // --- API: --------------------------------------------------------------
 
-    public abstract Kind getKind();
-
-
     @Override
     public abstract SOURCE getSource();
 
@@ -93,38 +92,4 @@ implements ModifiableValue<SELF, SELF> {
     protected void setSource(SOURCE source) {
         super.source = source;
     }
-
-
-
-    // -----------------------------------------------------------------------
-    // Types
-    // -----------------------------------------------------------------------
-    
-    public static enum Kind {
-        // --- Kinds: --------------------------------------------------------
-        INCONSISTENT_TOPIC          (0x0001 << 0),
-        OFFERED_DEADLINE_MISSED     (0x0001 << 1),
-        REQUESTED_DEADLINE_MISSED   (0x0001 << 2),
-        OFFERED_INCOMPATIBLE_QOS    (0x0001 << 5),
-        REQUESTED_INCOMPATIBLE_QOS  (0x0001 << 6),
-        SAMPLE_LOST                 (0x0001 << 7),
-        SAMPLE_REJECTED             (0x0001 << 8),
-        DATA_ON_READERS             (0x0001 << 9),
-        DATA_AVAILABLE              (0x0001 << 10),
-        LIVELINESS_LOST             (0x0001 << 11),
-        LIVELINESS_CHANGED          (0x0001 << 12),
-        PUBLICATION_MATCHED         (0x0001 << 13),
-        SUBSCRIPTION_MATCHED        (0x0001 << 14);
-
-
-        // --- Constants: ----------------------------------------------------
-        public final long value;
-
-
-        // --- Object Life Cycle: --------------------------------------------
-        private Kind(long value) {
-            this.value = value;
-        }
-    }
-
 }

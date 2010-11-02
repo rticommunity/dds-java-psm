@@ -46,85 +46,165 @@ extends DomainEntity<Publisher,
 
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic,
             DataWriterQos qos,
             DataWriterListener<TYPE> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public <TYPE> DataWriter<TYPE> createDataWriter(
             Topic<TYPE> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<TYPE> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataWriter for built-in bytes type: ------------------------
 
     public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             DataWriterQos qos,
             DataWriterListener<byte[]> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<byte[]> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataWriter for built-in KeyedBytes type: -------------------
 
     public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedBytes> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public KeyedBytesDataWriter createKeyedBytesDataWriter(
             Topic<KeyedBytes> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<KeyedBytes> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataWriter for built-in string type: -----------------------
 
     public StringDataWriter createStringDataWriter(
             Topic<String> topic);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public StringDataWriter createStringDataWriter(
             Topic<String> topic,
             DataWriterQos qos,
             DataWriterListener<String> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public StringDataWriter createStringDataWriter(
             Topic<String> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<String> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataWriter for built-in KeyedString type: ------------------
 
     public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedString> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
+     * Create a new data writer.
+     * 
+     * @param statuses  Of which status changes the listener should be
+     *                  notified. A null collection signifies all status
+     *                  changes.
+     */
     public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<KeyedString> listener,
-            Collection<Status.Kind> status);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Lookup operations: ------------------------------------------------
