@@ -21,9 +21,9 @@ package org.omg.dds.type.typeobject;
 import java.util.List;
 
 import org.omg.dds.core.modifiable.ModifiableValue;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.ID;
-import org.omg.dds.type.annotation.Nested;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.ID;
+import org.omg.dds.type.Nested;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)

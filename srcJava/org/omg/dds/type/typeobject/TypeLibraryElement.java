@@ -19,11 +19,11 @@
 package org.omg.dds.type.typeobject;
 
 import org.omg.dds.core.modifiable.ModifiableValue;
+import org.omg.dds.type.BitBound;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.Nested;
 import org.omg.dds.type.TypeKind;
-import org.omg.dds.type.annotation.BitBound;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
-import org.omg.dds.type.annotation.Value;
+import org.omg.dds.type.Value;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)

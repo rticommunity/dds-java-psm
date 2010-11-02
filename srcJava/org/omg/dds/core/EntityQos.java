@@ -21,7 +21,7 @@ package org.omg.dds.core;
 import java.util.Map;
 
 import org.omg.dds.core.policy.QosPolicy;
-import org.omg.dds.type.annotation.Extensibility;
+import org.omg.dds.type.Extensibility;
 
 
 /**

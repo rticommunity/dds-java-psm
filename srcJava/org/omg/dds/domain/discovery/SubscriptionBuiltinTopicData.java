@@ -37,10 +37,10 @@ import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
 import org.omg.dds.core.policy.TopicDataQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.ID;
-import org.omg.dds.type.annotation.Key;
-import org.omg.dds.type.annotation.Optional;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.ID;
+import org.omg.dds.type.Key;
+import org.omg.dds.type.Optional;
 import org.omg.dds.type.typeobject.TypeObject;
 
 

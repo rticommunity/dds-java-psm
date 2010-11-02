@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.type.annotation;
+package org.omg.dds.type;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -24,7 +24,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.omg.dds.type.TypeKind;
 
 
 @Documented

@@ -16,19 +16,28 @@
  * limitations under the License.
  */
 
-package org.omg.dds.type.annotation;
+package org.omg.dds.type;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 
 @Documented
+@Inherited
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = { ElementType.FIELD })
-public @interface Value
+@Target(value = ElementType.TYPE)
+public @interface Extensibility
 {
-    public long value();
+    public Kind value();
+
+    public static enum Kind
+    {
+        FINAL_EXTENSIBILITY,
+        EXTENSIBLE_EXTENSIBILITY,
+        MUTABLE_EXTENSIBILITY
+    }
 }

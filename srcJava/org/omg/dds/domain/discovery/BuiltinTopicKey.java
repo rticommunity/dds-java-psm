@@ -20,8 +20,8 @@ package org.omg.dds.domain.discovery;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableValue;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.Nested;
 
 
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)

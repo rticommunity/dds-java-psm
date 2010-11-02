@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.type.annotation;
+package org.omg.dds.type;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -27,8 +27,8 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = ElementType.TYPE)
-public @interface BitBound
+@Target(value = { ElementType.FIELD })
+public @interface Value
 {
-    public int value() default 32;
+    public long value();
 }

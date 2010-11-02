@@ -21,9 +21,9 @@ package org.omg.dds.domain.discovery;
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableValue;
 import org.omg.dds.core.policy.UserDataQosPolicy;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.ID;
-import org.omg.dds.type.annotation.Key;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.ID;
+import org.omg.dds.type.Key;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)

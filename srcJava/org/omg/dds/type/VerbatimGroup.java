@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.type.annotation;
+package org.omg.dds.type;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -28,9 +28,11 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {
-        ElementType.FIELD,
-        ElementType.METHOD      // JavaBean property: like field, but doc only
+        ElementType.TYPE,
+        ElementType.FIELD,  // literal field
+        ElementType.METHOD  // Java Bean property
     })
-public @interface UnionDiscriminator {
-    // empty
+public @interface VerbatimGroup
+{
+    public Verbatim[] value();
 }

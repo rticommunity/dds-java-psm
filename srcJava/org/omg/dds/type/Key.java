@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.type.annotation;
+package org.omg.dds.type;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
         ElementType.FIELD,  // literal field
         ElementType.METHOD  // Java Bean property
     })
-public @interface MustUnderstand
+public @interface Key
 {
     public boolean value() default true;
 }

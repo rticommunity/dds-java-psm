@@ -21,8 +21,8 @@ package org.omg.dds.core;
 import java.util.concurrent.TimeUnit;
 
 import org.omg.dds.core.modifiable.ModifiableDuration;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.Nested;
 
 
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)

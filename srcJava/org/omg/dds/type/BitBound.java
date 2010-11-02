@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.type.annotation;
+package org.omg.dds.type;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -27,23 +27,8 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = {
-        // "Enum" type should be considered a bit set type:
-        ElementType.TYPE,
-        // Object of EnumSet or BitSet type should be serialized as bit set:
-        ElementType.FIELD,  // literal field
-        ElementType.METHOD  // Java Bean property
-    })
-public @interface BitSet
+@Target(value = ElementType.TYPE)
+public @interface BitBound
 {
-    /**
-     * When this annotation annotates an enum class, don't set this member.
-     * But if you do, set it to the type of the enumeration itself.
-     * 
-     * When it annotates an object of type java.util.EnumSet of
-     * java.util.BitSet, it indicates the BitSet-annotated enum class that
-     * defines the members of the bit set.
-     */
-    @SuppressWarnings("unchecked")
-    public Class<? extends Enum> elementType() default Enum.class;
+    public int value() default 32;
 }

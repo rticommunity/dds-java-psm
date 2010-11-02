@@ -18,9 +18,9 @@
 
 package org.omg.dds.type.typeobject;
 
-import org.omg.dds.type.annotation.BitBound;
-import org.omg.dds.type.annotation.BitSet;
-import org.omg.dds.type.annotation.Value;
+import org.omg.dds.type.BitBound;
+import org.omg.dds.type.BitSet;
+import org.omg.dds.type.Value;
 
 
 @BitSet

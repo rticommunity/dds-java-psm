@@ -19,8 +19,8 @@
 package org.omg.dds.type.typeobject;
 
 import org.omg.dds.core.modifiable.ModifiableValue;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.Nested;
 
 
 // The assignment of a value to a member of an annotation

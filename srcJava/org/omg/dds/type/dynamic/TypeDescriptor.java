@@ -21,8 +21,8 @@ package org.omg.dds.type.dynamic;
 import java.util.List;
 
 import org.omg.dds.core.Value;
+import org.omg.dds.type.Optional;
 import org.omg.dds.type.TypeKind;
-import org.omg.dds.type.annotation.Optional;
 import org.omg.dds.type.dynamic.modifiable.ModifiableTypeDescriptor;
 
 

@@ -19,8 +19,8 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Value;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.Nested;
 
 
 /**

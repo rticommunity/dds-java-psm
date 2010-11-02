@@ -21,9 +21,9 @@ package org.omg.dds.type.typeobject;
 import java.math.BigDecimal;
 
 import org.omg.dds.core.modifiable.ModifiableValue;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.Nested;
 import org.omg.dds.type.TypeKind;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Nested;
 
 
 /* Literal value of an annotation member: either the default value in its

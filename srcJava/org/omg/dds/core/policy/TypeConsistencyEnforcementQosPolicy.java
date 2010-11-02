@@ -19,7 +19,7 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.policy.modifiable.ModifiableTypeConsistencyEnforcementQosPolicy;
-import org.omg.dds.type.annotation.BitBound;
+import org.omg.dds.type.BitBound;
 
 
 public interface TypeConsistencyEnforcementQosPolicy

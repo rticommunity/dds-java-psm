@@ -19,9 +19,9 @@
 package org.omg.dds.type.typeobject;
 
 import org.omg.dds.core.modifiable.ModifiableValue;
-import org.omg.dds.type.annotation.Extensibility;
-import org.omg.dds.type.annotation.Optional;
-import org.omg.dds.type.annotation.Shared;
+import org.omg.dds.type.Extensibility;
+import org.omg.dds.type.Optional;
+import org.omg.dds.type.Shared;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)

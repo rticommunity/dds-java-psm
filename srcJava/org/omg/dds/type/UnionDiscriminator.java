@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.type.annotation;
+package org.omg.dds.type;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -31,6 +31,6 @@ import java.lang.annotation.Target;
         ElementType.FIELD,
         ElementType.METHOD      // JavaBean property: like field, but doc only
     })
-public @interface UnionMember {
-    public long discriminatorValue();
+public @interface UnionDiscriminator {
+    // empty
 }
