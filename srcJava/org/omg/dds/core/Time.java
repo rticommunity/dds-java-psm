@@ -25,6 +25,10 @@ import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
 
 
+/**
+ * A moment in time expressed with nanosecond precision (though not
+ * necessarily nanosecond accuracy).
+ */
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
 public abstract class Time implements Value<Time, ModifiableTime>
@@ -51,6 +55,8 @@ public abstract class Time implements Value<Time, ModifiableTime>
      * 
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
+     * 
+     * @see     #isValid()
      */
     public static ModifiableTime newTime(
             long time, TimeUnit units, Bootstrap bootstrap) {
@@ -77,53 +83,62 @@ public abstract class Time implements Value<Time, ModifiableTime>
     // --- Data access: ------------------------------------------------------
 
     /**
-     * Convert this Time to a quantity of nanoseconds.
+     * Truncate this time to a whole-number quantity of the given time
+     * unit. For example, if this time is equal to one second plus 100
+     * nanoseconds since the start of the epoch, calling this method with an
+     * argument of {@link TimeUnit#SECONDS} will result in the value
+     * <code>1</code>.
      * 
-     * An invalid time will be reported as a negative value.
+     * If this time is invalid, this method shall return
+     * a negative value, regardless of the units given.
+     * 
+     * If this time cannot be expressed in the given units without
+     * overflowing, this method shall return {@link Long#MAX_VALUE}. In such
+     * a case, the caller may wish to use this method in combination with
+     * {@link #getRemainder(TimeUnit, TimeUnit)} to obtain the full time
+     * without lack of precision.
+     * 
+     * @param   inThisUnit  The time unit in which the return result will
+     *                      be measured.
+     * 
+     * @see     #getRemainder(TimeUnit, TimeUnit)
+     * @see     Long#MAX_VALUE
+     * @see     TimeUnit
      */
-    public abstract long toNanos();
+    public abstract long getTime(TimeUnit inThisUnit);
 
     /**
-     * Truncate this Time to a whole-number quantity of microseconds.
+     * If getting the magnitude of this time in the given
+     * <code>primaryUnit</code> would cause truncation with respect to the
+     * given <code>remainderUnit</code>, return the magnitude of the
+     * truncation in the latter (presumably finer-grained) unit. For example,
+     * if this time is equal to one second plus 100 nanoseconds since the
+     * start of the epoch, calling this method with arguments of
+     * {@link TimeUnit#SECONDS} and {@link TimeUnit#NANOSECONDS} respectively
+     * will result in the value <code>100</code>.
      * 
-     * An invalid time will be reported as a negative value.
-     */
-    public abstract long toMicros();
-
-    /**
-     * Truncate this Time to a whole-number quantity of milliseconds.
+     * This method is equivalent to the following pseudo-code:
      * 
-     * An invalid time will be reported as a negative value.
-     */
-    public abstract long toMillis();
-
-    /**
-     * Truncate this Time to a whole-number quantity of seconds.
+     * <code>(this - getTime(primaryUnit)).getTime(remainderUnit)</code>
      * 
-     * An invalid time will be reported as a negative value.
-     */
-    public abstract long toSeconds();
-
-    /**
-     * Truncate this Time to a whole-number quantity of minutes.
+     * If <code>remainderUnit</code> is represents a coarser granularity than
+     * <code>primaryUnit</code> (for example, the former is
+     * {@link TimeUnit#HOURS} but the latter is {@link TimeUnit#SECONDS}),
+     * this method shall return <code>0</code>.
      * 
-     * An invalid time will be reported as a negative value.
-     */
-    public abstract long toMinutes();
-
-    /**
-     * Truncate this Time to a whole-number quantity of hours.
+     * If the resulting time cannot be expressed in the given units
+     * without overflowing, this method shall return {@link Long#MAX_VALUE}.
      * 
-     * An invalid time will be reported as a negative value.
-     */
-    public abstract long toHours();
-
-    /**
-     * Truncate this Time to a whole-number quantity of days.
+     * @param   primaryUnit
+     * @param   remainderUnit   The time unit in which the return result will
+     *                          be measured.
      * 
-     * An invalid time will be reported as a negative value.
+     * @see     #getTime(TimeUnit)
+     * @see     Long#MAX_VALUE
+     * @see     TimeUnit
      */
-    public abstract long toDays();
+    public abstract long getRemainder(
+            TimeUnit primaryUnit, TimeUnit remainderUnit);
 
 
     // --- Query: ------------------------------------------------------------

@@ -25,6 +25,9 @@ import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
 
 
+/**
+ * A span of elapsed time expressed with nanosecond precision.
+ */
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
 public abstract class Duration implements Value<Duration, ModifiableDuration>
@@ -49,6 +52,9 @@ public abstract class Duration implements Value<Duration, ModifiableDuration>
      * 
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
+     * 
+     * @see     #isInfinite()
+     * @see     #infiniteDuration(Bootstrap)
      */
     public static ModifiableDuration newDuration(
             long duration, TimeUnit unit, Bootstrap bootstrap) {
@@ -86,53 +92,63 @@ public abstract class Duration implements Value<Duration, ModifiableDuration>
     // --- Data access: ------------------------------------------------------
 
     /**
-     * Convert this Duration to a quantity of nanoseconds.
+     * Truncate this duration to a whole-number quantity of the given time
+     * unit. For example, if this duration is equal to one second plus 100
+     * nanoseconds, calling this method with an argument of
+     * {@link TimeUnit#SECONDS} will result in the value <code>1</code>.
      * 
-     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
+     * If this duration is infinite, this method shall return
+     * {@link Long#MAX_VALUE}, regardless of the units given.
+     * 
+     * If this duration cannot be expressed in the given units without
+     * overflowing, this method shall return {@link Long#MAX_VALUE}. In such
+     * a case, the caller may wish to use this method in combination with
+     * {@link #getRemainder(TimeUnit, TimeUnit)} to obtain the full duration
+     * without lack of precision.
+     * 
+     * @param   inThisUnit  The time unit in which the return result will
+     *                      be measured.
+     * 
+     * @see     #getRemainder(TimeUnit, TimeUnit)
+     * @see     Long#MAX_VALUE
+     * @see     TimeUnit
      */
-    public abstract long toNanos();
+    public abstract long getDuration(TimeUnit inThisUnit);
 
     /**
-     * Truncate this Duration to a whole-number quantity of microseconds.
+     * If getting the magnitude of this duration in the given
+     * <code>primaryUnit</code> would cause truncation with respect to the
+     * given <code>remainderUnit</code>, return the magnitude of the
+     * truncation in the latter (presumably finer-grained) unit. For example,
+     * if this duration is equal to one second plus 100 nanoseconds, calling
+     * this method with arguments of {@link TimeUnit#SECONDS} and
+     * {@link TimeUnit#NANOSECONDS} respectively will result in the value
+     * <code>100</code>.
      * 
-     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
-     */
-    public abstract long toMicros();
-
-    /**
-     * Truncate this Duration to a whole-number quantity of milliseconds.
+     * This method is equivalent to the following pseudo-code:
      * 
-     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
-     */
-    public abstract long toMillis();
-
-    /**
-     * Truncate this Duration to a whole-number quantity of seconds.
+     * <code>
+     * (this - getDuration(primaryUnit)).getDuration(remainderUnit)
+     * </code>
      * 
-     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
-     */
-    public abstract long toSeconds();
-
-    /**
-     * Truncate this Duration to a whole-number quantity of minutes.
+     * If <code>remainderUnit</code> is represents a coarser granularity than
+     * <code>primaryUnit</code> (for example, the former is
+     * {@link TimeUnit#HOURS} but the latter is {@link TimeUnit#SECONDS}),
+     * this method shall return <code>0</code>.
      * 
-     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
-     */
-    public abstract long toMinutes();
-
-    /**
-     * Truncate this Duration to a whole-number quantity of hours.
+     * If the resulting duration cannot be expressed in the given units
+     * without overflowing, this method shall return {@link Long#MAX_VALUE}.
      * 
-     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
-     */
-    public abstract long toHours();
-
-    /**
-     * Truncate this Duration to a whole-number quantity of days.
+     * @param   primaryUnit
+     * @param   remainderUnit   The time unit in which the return result will
+     *                          be measured.
      * 
-     * An infinite duration will be reported as {@link Long#MAX_VALUE}.
+     * @see     #getDuration(TimeUnit)
+     * @see     Long#MAX_VALUE
+     * @see     TimeUnit
      */
-    public abstract long toDays();
+    public abstract long getRemainder(
+            TimeUnit primaryUnit, TimeUnit remainderUnit);
 
 
     // --- Query: ------------------------------------------------------------
@@ -141,15 +157,21 @@ public abstract class Duration implements Value<Duration, ModifiableDuration>
      * Report whether this duration lasts no time at all. The result of this
      * method is equivalent to the following:
      * 
-     * <code>d.toNanos() == 0;</code>
+     * <code>this.getDuration(TimeUnit.NANOSECONDS) == 0;</code>
+     * 
+     * @see     #getDuration(TimeUnit)
      */
     public abstract boolean isZero();
 
     /**
-     * Report whether this duration lasts forever. The result of this method
-     * is equivalent to the following:
+     * Report whether this duration lasts forever.
      * 
-     * <code>d.toNanos() == Long.MAX_VALUE;</code>
+     * If this duration is infinite, the following relationship shall be
+     * true:
+     * 
+     * <code>this.equals(infiniteDuration(this.getBootstrap()))</code>
+     * 
+     * @see     #infiniteDuration(Bootstrap)
      */
     public abstract boolean isInfinite();
 
