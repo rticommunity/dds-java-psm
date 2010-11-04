@@ -31,7 +31,7 @@ import org.omg.dds.core.status.LivelinessLostStatus;
 import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
 import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
 import org.omg.dds.core.status.PublicationMatchedStatus;
-import org.omg.dds.domain.discovery.SubscriptionBuiltinTopicData;
+import org.omg.dds.topic.SubscriptionBuiltinTopicData;
 import org.omg.dds.topic.Topic;
 
 

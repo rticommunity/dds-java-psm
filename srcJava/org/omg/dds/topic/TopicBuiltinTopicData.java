@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.domain.discovery;
+package org.omg.dds.topic;
 
 import java.util.List;
 
@@ -26,17 +26,17 @@ import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.DurabilityQosPolicy;
-import org.omg.dds.core.policy.GroupDataQosPolicy;
+import org.omg.dds.core.policy.DurabilityServiceQosPolicy;
+import org.omg.dds.core.policy.HistoryQosPolicy;
 import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
+import org.omg.dds.core.policy.LifespanQosPolicy;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
-import org.omg.dds.core.policy.PartitionQosPolicy;
-import org.omg.dds.core.policy.PresentationQosPolicy;
 import org.omg.dds.core.policy.ReliabilityQosPolicy;
-import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
+import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TopicDataQosPolicy;
+import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
-import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.ID;
 import org.omg.dds.type.Key;
@@ -45,15 +45,14 @@ import org.omg.dds.type.typeobject.TypeObject;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public abstract class SubscriptionBuiltinTopicData
-implements ModifiableValue<SubscriptionBuiltinTopicData,
-                           SubscriptionBuiltinTopicData>
+public abstract class TopicBuiltinTopicData
+implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
 {
     // -----------------------------------------------------------------------
     // Private Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 1517912242172167011L;
+    private static final long serialVersionUID = -3621587724397579935L;
 
 
 
@@ -65,11 +64,10 @@ implements ModifiableValue<SubscriptionBuiltinTopicData,
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static SubscriptionBuiltinTopicData newSubscriptionBuiltinTopicData(
+    public static TopicBuiltinTopicData newTopicBuiltinTopicData(
             Bootstrap bootstrap) {
-        return bootstrap.getSPI().newSubscriptionBuiltinTopicData();
+        return bootstrap.getSPI().newTopicBuiltinTopicData();
     }
-
 
 
     // -----------------------------------------------------------------------
@@ -80,16 +78,10 @@ implements ModifiableValue<SubscriptionBuiltinTopicData,
     public abstract BuiltinTopicKey getKey();
 
     /**
-     * @return the participantKey
-     */
-    @ID(0x0050)
-    public abstract BuiltinTopicKey getParticipantKey();
-
-    /**
-     * @return the topicName
+     * @return the name
      */
     @ID(0x0005)
-    public abstract String getTopicName();
+    public abstract String getName();
 
     /**
      * @return the typeName
@@ -111,6 +103,12 @@ implements ModifiableValue<SubscriptionBuiltinTopicData,
      */
     @ID(0x001D)
     public abstract DurabilityQosPolicy getDurability();
+
+    /**
+     * @return the durabilityService
+     */
+    @ID(0x001E)
+    public abstract DurabilityServiceQosPolicy getDurabilityService();
 
     /**
      * @return the deadline
@@ -137,10 +135,16 @@ implements ModifiableValue<SubscriptionBuiltinTopicData,
     public abstract ReliabilityQosPolicy getReliability();
 
     /**
-     * @return the ownership
+     * @return the transportPriority
      */
-    @ID(0x001F)
-    public abstract OwnershipQosPolicy getOwnership();
+    @ID(0x0049)
+    public abstract TransportPriorityQosPolicy getTransportPriority();
+
+    /**
+     * @return the lifespan
+     */
+    @ID(0x002B)
+    public abstract LifespanQosPolicy getLifespan();
 
     /**
      * @return the destinationOrder
@@ -149,40 +153,28 @@ implements ModifiableValue<SubscriptionBuiltinTopicData,
     public abstract DestinationOrderQosPolicy getDestinationOrder();
 
     /**
-     * @return the userData
+     * @return the history
      */
-    @ID(0x002C)
-    public abstract UserDataQosPolicy getUserData();
+    @ID(0x0040)
+    public abstract HistoryQosPolicy getHistory();
 
     /**
-     * @return the timeBasedFilter
+     * @return the resourceLimits
      */
-    @ID(0x0004)
-    public abstract TimeBasedFilterQosPolicy getTimeBasedFilter();
+    @ID(0x0041)
+    public abstract ResourceLimitsQosPolicy getResourceLimits();
 
     /**
-     * @return the presentation
+     * @return the ownership
      */
-    @ID(0x0021)
-    public abstract PresentationQosPolicy getPresentation();
-
-    /**
-     * @return the partition
-     */
-    @ID(0x0029)
-    public abstract PartitionQosPolicy getPartition();
+    @ID(0x001F)
+    public abstract OwnershipQosPolicy getOwnership();
 
     /**
      * @return the topicData
      */
     @ID(0x002E)
     public abstract TopicDataQosPolicy getTopicData();
-
-    /**
-     * @return the groupData
-     */
-    @ID(0x002D)
-    public abstract GroupDataQosPolicy getGroupData();
 
     @ID(0x0073)
     public abstract DataRepresentationQosPolicy getRepresentation();
@@ -194,5 +186,5 @@ implements ModifiableValue<SubscriptionBuiltinTopicData,
     // --- From Object: ------------------------------------------------------
 
     @Override
-    public abstract SubscriptionBuiltinTopicData clone();
+    public abstract TopicBuiltinTopicData clone();
 }

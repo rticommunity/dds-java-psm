@@ -16,26 +16,24 @@
  * limitations under the License.
  */
 
-package org.omg.dds.domain.discovery;
+package org.omg.dds.topic;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableValue;
-import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.type.Extensibility;
-import org.omg.dds.type.ID;
-import org.omg.dds.type.Key;
+import org.omg.dds.type.Nested;
 
 
-@Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public abstract class ParticipantBuiltinTopicData
-implements ModifiableValue<ParticipantBuiltinTopicData,
-                           ParticipantBuiltinTopicData>
+@Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+@Nested
+public abstract class BuiltinTopicKey
+implements ModifiableValue<BuiltinTopicKey, BuiltinTopicKey>
 {
     // -----------------------------------------------------------------------
     // Private Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -1531303601733890381L;
+    private static final long serialVersionUID = 5414777490591097112L;
 
 
 
@@ -47,9 +45,8 @@ implements ModifiableValue<ParticipantBuiltinTopicData,
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static ParticipantBuiltinTopicData newParticipantBuiltinTopicData(
-            Bootstrap bootstrap) {
-        return bootstrap.getSPI().newParticipantBuiltinTopicData();
+    public static BuiltinTopicKey newBuiltinTopicKey(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newBuiltinTopicKey();
     }
 
 
@@ -58,15 +55,24 @@ implements ModifiableValue<ParticipantBuiltinTopicData,
     // Instance Methods
     // -----------------------------------------------------------------------
 
-    @ID(0x0050) @Key
-    public abstract BuiltinTopicKey getKey();
-
-    @ID(0x002C)
-    public abstract UserDataQosPolicy getUserData();
+    /**
+     * Copy the value of this key into the first four positions of the given
+     * array.
+     * 
+     * Service implementations that do not support the DDS-RTPS
+     * interoperability protocol may use a key length of only three, not
+     * four. Such implementations shall set index 3 in the given array to 0.
+     * 
+     * @param   dst     An array of length at least four integers. Any items
+     *                  at index 4 or higher will not be modified.
+     * 
+     * @return  The input array.
+     */
+    public abstract int[] getValue(int[] dst);
 
 
     // --- From Object: ------------------------------------------------------
 
     @Override
-    public abstract ParticipantBuiltinTopicData clone();
+    public abstract BuiltinTopicKey clone();
 }

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.domain.discovery;
+package org.omg.dds.topic;
 
 import java.util.List;
 
@@ -27,16 +27,18 @@ import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.DurabilityQosPolicy;
 import org.omg.dds.core.policy.DurabilityServiceQosPolicy;
-import org.omg.dds.core.policy.HistoryQosPolicy;
+import org.omg.dds.core.policy.GroupDataQosPolicy;
 import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
 import org.omg.dds.core.policy.LifespanQosPolicy;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
+import org.omg.dds.core.policy.OwnershipStrengthQosPolicy;
+import org.omg.dds.core.policy.PartitionQosPolicy;
+import org.omg.dds.core.policy.PresentationQosPolicy;
 import org.omg.dds.core.policy.ReliabilityQosPolicy;
-import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TopicDataQosPolicy;
-import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
+import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.ID;
 import org.omg.dds.type.Key;
@@ -45,14 +47,15 @@ import org.omg.dds.type.typeobject.TypeObject;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public abstract class TopicBuiltinTopicData
-implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
+public abstract class PublicationBuiltinTopicData
+implements ModifiableValue<PublicationBuiltinTopicData,
+                           PublicationBuiltinTopicData>
 {
     // -----------------------------------------------------------------------
     // Private Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -3621587724397579935L;
+    private static final long serialVersionUID = -786548075816876965L;
 
 
 
@@ -64,10 +67,11 @@ implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static TopicBuiltinTopicData newTopicBuiltinTopicData(
+    public static PublicationBuiltinTopicData newPublicationBuiltinTopicData(
             Bootstrap bootstrap) {
-        return bootstrap.getSPI().newTopicBuiltinTopicData();
+        return bootstrap.getSPI().newPublicationBuiltinTopicData();
     }
+
 
 
     // -----------------------------------------------------------------------
@@ -78,10 +82,16 @@ implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
     public abstract BuiltinTopicKey getKey();
 
     /**
-     * @return the name
+     * @return the participantKey
+     */
+    @ID(0x0050)
+    public abstract BuiltinTopicKey getParticipantKey();
+
+    /**
+     * @return the topicName
      */
     @ID(0x0005)
-    public abstract String getName();
+    public abstract String getTopicName();
 
     /**
      * @return the typeName
@@ -97,7 +107,7 @@ implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
 
     @ID(0x0072) @Optional
     public abstract TypeObject getType();
-
+    
     /**
      * @return the durability
      */
@@ -135,34 +145,16 @@ implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
     public abstract ReliabilityQosPolicy getReliability();
 
     /**
-     * @return the transportPriority
-     */
-    @ID(0x0049)
-    public abstract TransportPriorityQosPolicy getTransportPriority();
-
-    /**
      * @return the lifespan
      */
     @ID(0x002B)
     public abstract LifespanQosPolicy getLifespan();
 
     /**
-     * @return the destinationOrder
+     * @return the userData
      */
-    @ID(0x0025)
-    public abstract DestinationOrderQosPolicy getDestinationOrder();
-
-    /**
-     * @return the history
-     */
-    @ID(0x0040)
-    public abstract HistoryQosPolicy getHistory();
-
-    /**
-     * @return the resourceLimits
-     */
-    @ID(0x0041)
-    public abstract ResourceLimitsQosPolicy getResourceLimits();
+    @ID(0x002C)
+    public abstract UserDataQosPolicy getUserData();
 
     /**
      * @return the ownership
@@ -171,10 +163,40 @@ implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
     public abstract OwnershipQosPolicy getOwnership();
 
     /**
+     * @return the ownershipStrength
+     */
+    @ID(0x0006)
+    public abstract OwnershipStrengthQosPolicy getOwnershipStrength();
+
+    /**
+     * @return the destinationOrder
+     */
+    @ID(0x0025)
+    public abstract DestinationOrderQosPolicy getDestinationOrder();
+
+    /**
+     * @return the presentation
+     */
+    @ID(0x0021)
+    public abstract PresentationQosPolicy getPresentation();
+
+    /**
+     * @return the partition
+     */
+    @ID(0x0029)
+    public abstract PartitionQosPolicy getPartition();
+
+    /**
      * @return the topicData
      */
     @ID(0x002E)
     public abstract TopicDataQosPolicy getTopicData();
+
+    /**
+     * @return the groupData
+     */
+    @ID(0x002D)
+    public abstract GroupDataQosPolicy getGroupData();
 
     @ID(0x0073)
     public abstract DataRepresentationQosPolicy getRepresentation();
@@ -186,5 +208,5 @@ implements ModifiableValue<TopicBuiltinTopicData, TopicBuiltinTopicData>
     // --- From Object: ------------------------------------------------------
 
     @Override
-    public abstract TopicBuiltinTopicData clone();
+    public abstract PublicationBuiltinTopicData clone();
 }

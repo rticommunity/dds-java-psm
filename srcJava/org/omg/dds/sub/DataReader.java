@@ -36,7 +36,7 @@ import org.omg.dds.core.status.SampleRejectedStatus;
 import org.omg.dds.core.status.SampleState;
 import org.omg.dds.core.status.SubscriptionMatchedStatus;
 import org.omg.dds.core.status.ViewState;
-import org.omg.dds.domain.discovery.PublicationBuiltinTopicData;
+import org.omg.dds.topic.PublicationBuiltinTopicData;
 import org.omg.dds.topic.TopicDescription;
 
 
