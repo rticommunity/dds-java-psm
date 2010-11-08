@@ -72,6 +72,7 @@ limitations under the License.
     <!-- Build zip file of Eclipse project source -->
     <target name="zip-source" depends="init">
         <property name="staging.dir" value="${class.dir}/omgdds" />
+        <property name="javadoc.dir" value="${staging.dir}/doc" />
 
         <!-- Clean destination directory -->
         <delete dir="${class.dir}" />
@@ -91,6 +92,28 @@ limitations under the License.
                 <include name=".settings" />
             </fileset>
         </copy>
+
+        <!-- Build JavaDoc -->
+        <javadoc sourcepath="${src.dir}"
+                 destdir="${javadoc.dir}"
+                 windowtitle="OMG Data Distribution Service"
+                 version="true"
+                 use="true"
+                 overview="${src.dir}/overview.html"
+                 failonerror="true">
+            <doctitle><![CDATA[
+                <h1>OMG Data Distribution Service<br/>
+                API Specification</h1>
+            ]]></doctitle>
+            <bottom><![CDATA[
+                <p align="left"><small>
+                Copyright &#169; 2010 Real-Time Innovations, Inc. (RTI)<br/>
+                Copyright &#169; 2010 PrismTech, Ltd.<br/>
+                Copyright &#169; 2010 Object Management Group, Inc. (OMG)<br/>
+                All Rights Reserved.
+                </small></p>
+            ]]></bottom>
+        </javadoc>
 
         <!-- Zip it -->
         <mkdir dir="${lib.dir}" />

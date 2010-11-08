@@ -144,7 +144,7 @@ public abstract class Bootstrap implements DDSObject {
      * invocations of this method. As a result, execution of this method is
      * expected to be relatively expensive. However, as any DDS object can
      * provide a reference to its creating Bootstrap via
-     * {@link DdsObject#getBootstrap()}, executions of this method are also
+     * {@link DDSObject#getBootstrap()}, executions of this method are also
      * expected to be rare.
      * 
      * @param   implClassNameProperty       The name of a system property,
@@ -176,7 +176,7 @@ public abstract class Bootstrap implements DDSObject {
      *          error that occurred within its implementation.
      * 
      * @see     #createInstance()
-     * @see     DdsObject#getBootstrap()
+     * @see     DDSObject#getBootstrap()
      * @see     System#getProperty(String)
      * @see     Class#getClassLoader()
      * @see     ClassLoader#getSystemClassLoader()
@@ -324,7 +324,7 @@ public abstract class Bootstrap implements DDSObject {
     public abstract ServiceProviderInterface getSPI();
 
 
-    // --- From DdsObject: ---------------------------------------------------
+    // --- From DDSObject: ---------------------------------------------------
 
     public final Bootstrap getBootstrap() {
         return this;
@@ -337,9 +337,9 @@ public abstract class Bootstrap implements DDSObject {
     // -----------------------------------------------------------------------
 
     /**
-     * This interface simplifies the creation of certain value types in the
-     * DDS API. It is for the use of the DDS implementation, not of DDS
-     * applications.
+     * This interface is for the use of the DDS implementation, not of DDS
+     * applications. It simplifies the creation of objects of certain types in
+     * the DDS API.
      */
     public static interface ServiceProviderInterface {
         // --- Singleton factories: ------------------------------------------

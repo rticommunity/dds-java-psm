@@ -1,0 +1,47 @@
+<html>
+<body>
+<p>This document is the JavaDoc component of the API specification for the
+Java version of the OMG Data Distribution Service for Real-Time Systems.
+</p>
+<p>Your DDS application will begin by creating a
+<a href="org/omg/dds/core/Bootstrap.html#createInstance()">Bootstrap</a>
+object and then using that to get the
+<a href="org/omg/dds/domain/DomainParticipantFactory.html#getInstance(org.omd.dds.core.Bootstrap)">
+DomainParticipantFactory</a>.
+</p>
+<ol>
+    <li>Indicate your intention to participate in a DDS network (domain) by
+        creating a
+        <a href="org/omg/dds/domain/DomainParticipantFactory.html#createParticipant()">
+        DomainParticipant</a>.</li>
+    <li>To publish data:
+        <ol style="a">
+            <li>Create a
+                <a href="org/omg/dds/domain/DomainParticipant.html#createTopic(java.lang.String,%20java.lang.Class)">
+                Topic</a>.</li>
+            <li>Create a
+                <a href="org/omg/dds/domain/DomainParticipant.html#createPublisher()">
+                Publisher</a>.</li>
+            <li>Create a
+                <a href="org/omg/dds/pub/Publisher.html#createDataWriter(org.omg.dds.topic.Topic)">
+                DataWriter</a>.</li>
+            <li><a href="org/omg/dds/pub/DataWriter.html#write(TYPE)">
+                Write</a> your Java object.</li>
+        </ol></li>
+    <li>To subscribe to data:
+        <ol style="a">
+            <li>Create a
+                <a href="org/omg/dds/domain/DomainParticipant.html#createTopic(java.lang.String,%20java.lang.Class)">
+                Topic</a>.</li>
+            <li>Create a
+                <a href="org/omg/dds/domain/DomainParticipant.html#createSubscriber()">
+                Subscriber</a>.</li>
+            <li>Create a
+                <a href="org/omg/dds/sub/Subscriber.html#createDataReader(org.omg.dds.topic.TopicDescription)">
+                DataReader</a>.</li>
+            <li><a href="org/omg/dds/sub/DataReader.html#take()">
+                Take</a> your Java objects.</li>
+        </ol></li>
+    </ol>
+</body>
+</html>
