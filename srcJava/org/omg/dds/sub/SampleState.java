@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.core.status;
+package org.omg.dds.sub;
 
 import java.util.Set;
 

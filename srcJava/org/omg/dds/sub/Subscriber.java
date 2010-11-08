@@ -21,10 +21,7 @@ package org.omg.dds.sub;
 import java.util.Collection;
 
 import org.omg.dds.core.DomainEntity;
-import org.omg.dds.core.status.InstanceState;
-import org.omg.dds.core.status.SampleState;
 import org.omg.dds.core.status.Status;
-import org.omg.dds.core.status.ViewState;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;

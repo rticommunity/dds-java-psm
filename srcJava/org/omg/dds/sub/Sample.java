@@ -23,9 +23,6 @@ import java.util.ListIterator;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableTime;
 import org.omg.dds.core.modifiable.ModifiableValue;
-import org.omg.dds.core.status.InstanceState;
-import org.omg.dds.core.status.SampleState;
-import org.omg.dds.core.status.ViewState;
 
 
 public interface Sample<TYPE>
