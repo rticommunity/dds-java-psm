@@ -321,7 +321,7 @@ public abstract class Bootstrap implements DDSObject {
     // Instance Methods
     // -----------------------------------------------------------------------
 
-    public abstract SPI getSPI();
+    public abstract ServiceProviderInterface getSPI();
 
 
     // --- From DdsObject: ---------------------------------------------------
@@ -341,7 +341,7 @@ public abstract class Bootstrap implements DDSObject {
      * DDS API. It is for the use of the DDS implementation, not of DDS
      * applications.
      */
-    public static interface SPI {
+    public static interface ServiceProviderInterface {
         // --- Singleton factories: ------------------------------------------
 
         public abstract DomainParticipantFactory getParticipantFactory();
