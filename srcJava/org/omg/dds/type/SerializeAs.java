@@ -30,6 +30,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {
         ElementType.TYPE,       // for specifying structure vs. union
+        ElementType.ANNOTATION_TYPE,    // for indicating DDS annotations
         ElementType.FIELD,      // for primitives, collections, etc.
         ElementType.METHOD      // JavaBean property: like field, but doc only
     })
