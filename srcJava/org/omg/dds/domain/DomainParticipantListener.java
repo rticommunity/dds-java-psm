@@ -18,11 +18,25 @@
 
 package org.omg.dds.domain;
 
+import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.status.InconsistentTopicStatus;
 import org.omg.dds.pub.PublisherListener;
 import org.omg.dds.sub.SubscriberListener;
 
 
+/**
+ * This is the interface that can be implemented by an application-provided
+ * class and then registered with the {@link DomainParticipant} such that the
+ * application can be notified by the DCPS Service of relevant status changes.
+ * 
+ * The purpose of the DomainParticipantListener is to be the listener of last
+ * resort that is notified of all status changes not captured by more specific
+ * listeners attached to the {@link DomainEntity} objects. When a relevant
+ * status change occurs, the DCPS Service will first attempt to notify the
+ * listener attached to the concerned DomainEntity if one is installed.
+ * Otherwise, the DCPS Service will notify the Listener attached to the
+ * DomainParticipant.
+ */
 public interface DomainParticipantListener
 extends PublisherListener, SubscriberListener {
     public void onInconsistentTopic(InconsistentTopicStatus<?> status);

@@ -45,6 +45,29 @@ import org.omg.dds.topic.TopicQos;
 import org.omg.dds.type.TypeSupport;
 
 
+/**
+ * The DomainParticipant object plays several roles:
+ * <ul>
+ * <li>It acts as a container for all other {@link Entity} objects.</li>
+ * <li>It acts as factory for the {@link Publisher}, {@link Subscriber},
+ *     {@link Topic}, {@link ContentFilteredTopic}, and {@link MultiTopic}
+ *     objects.</li>
+ * <li>It represents the participation of the application on a communication
+ *     plane that isolates applications running on the same set of physical
+ *     computers from each other. A domain establishes a "virtual network"
+ *     linking all applications that share the same domainId and isolating
+ *     them from applications running on different domains. In this way,
+ *     several independent distributed applications can coexist in the same
+ *     physical network without interfering, or even being aware of each
+ *     other.</li>
+ * <li>It provides administration services in the domain, offering operations
+ *     that allow the application to "ignore" locally any information about a
+ *     given participant ({@link #ignoreParticipant(InstanceHandle)}),
+ *     publication ({@link #ignorePublication(InstanceHandle)}),
+ *     subscription ({@link #ignoreSubscription(InstanceHandle)}), or topic
+ *     ({@link #ignoreTopic(InstanceHandle)}).</li>
+ * </ul>
+ */
 public interface DomainParticipant
 extends Entity<DomainParticipant,
                DomainParticipantListener,

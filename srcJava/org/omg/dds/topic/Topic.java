@@ -19,10 +19,30 @@
 package org.omg.dds.topic;
 
 import org.omg.dds.core.DomainEntity;
+import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.status.InconsistentTopicStatus;
 import org.omg.dds.domain.DomainParticipant;
 
 
+/**
+ * Topic is the most basic description of the data to be published and
+ * subscribed.
+ * 
+ * A Topic is identified by its name, which must be unique in the whole
+ * Domain.
+ * 
+ * Topic is the only TopicDescription that can be used for publications and
+ * therefore associated to a {@link DataWriter}. All operations except for
+ * the inherited operations {@link #setQos(org.omg.dds.core.EntityQos)},
+ * {@link #getQos()}, {@link #setListener(java.util.EventListener)},
+ * {@link #getListener()}, {@link #enable()}, and
+ * {@link #getStatusCondition()} may fail with the exception
+ * {@link NotEnabledException}.
+ *
+ * @param <TYPE>    The concrete type of the data that will be published and/
+ *                  or subscribed by the readers and writers that use this
+ *                  topic.
+ */
 public interface Topic<TYPE>
 extends TopicDescription<TYPE>, DomainEntity<Topic<TYPE>,
                                              DomainParticipant,

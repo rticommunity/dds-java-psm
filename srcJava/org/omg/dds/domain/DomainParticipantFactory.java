@@ -25,6 +25,13 @@ import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.status.Status;
 
 
+/**
+ * The sole purpose of this class is to allow the creation and destruction of
+ * {@link DomainParticipant} objects. DomainParticipantFactory itself has no
+ * factory. It is a pre-existing per-{@link Bootstrap} singleton object that
+ * can be accessed by means of the {@link #getInstance(Bootstrap)} operation
+ * on the DomainParticipantFactory.
+ */
 public abstract class DomainParticipantFactory implements DDSObject
 {
     // -----------------------------------------------------------------------

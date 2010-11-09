@@ -19,6 +19,16 @@
 package org.omg.dds.core;
 
 
+/**
+ * A GuardCondition object is a specific Condition whose triggerValue is
+ * completely under the control of the application. When it is first created,
+ * the triggerValue is set to false.
+ * 
+ * The purpose of the GuardCondition is to provide the means for the
+ * application to manually wake up a {@link WaitSet}. This is accomplished by
+ * attaching the GuardCondition to the WaitSet and then setting the
+ * triggerValue by means of the {@link #setTriggerValue(boolean)} operation.
+ */
 public abstract class GuardCondition implements Condition
 {
     // -----------------------------------------------------------------------

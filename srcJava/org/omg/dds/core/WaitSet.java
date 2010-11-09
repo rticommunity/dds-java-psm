@@ -22,7 +22,18 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.omg.dds.domain.DomainParticipant;
 
+
+/**
+ * A WaitSet object allows an application to wait until one or more of the
+ * attached {@link Condition} objects has a triggerValue of true or else until
+ * the timeout expires.
+ * 
+ * WaitSet is not necessarily associated with a single
+ * {@link DomainParticipant} and could be used to wait on Condition objects
+ * associated with different DomainParticipant objects.
+ */
 public abstract class WaitSet implements DDSObject {
     // -----------------------------------------------------------------------
     // Factory Methods

@@ -20,8 +20,23 @@ package org.omg.dds.topic;
 
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.type.TypeSupport;
 
 
+/**
+ * This interface is the base for {@link Topic}, {@link ContentFilteredTopic},
+ * and {@link MultiTopic}.
+ * 
+ * TopicDescription represents the fact that both publications and
+ * subscriptions are tied to a single data type. Its attribute typeName
+ * defines a unique resulting type for the publication or the subscription
+ * and therefore creates an implicit association with a {@link TypeSupport}.
+ * TopicDescription has also a name that allows it to be retrieved locally.
+ *
+ * @param <TYPE>    The concrete type of the data that will be published and/
+ *                  or subscribed by the readers and writers that use this
+ *                  topic description.
+ */
 public interface TopicDescription<TYPE> extends DDSObject {
     /**
      * @return  the type parameter if this object's class.

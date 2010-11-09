@@ -24,6 +24,15 @@ import java.util.EventListener;
 import org.omg.dds.core.status.Status;
 
 
+/**
+ * This class is the abstract base class for all the DCPS objects that
+ * support QoS policies, a listener and a status condition.
+ * 
+ * @param <SELF>        The most-derived DDS-standard interface implemented
+ *                      by this entity.
+ * @param <LISTENER>    The listener interface appropriate for this entity.
+ * @param <QOS>         The QoS interface appropriate for this entity.
+ */
 public interface Entity<SELF extends Entity<SELF, LISTENER, QOS>,
                         LISTENER extends EventListener,
                         QOS extends EntityQos<?, ?>>
@@ -33,7 +42,21 @@ extends DDSObject
     public void setListener(LISTENER listener);
 
     public QOS getQos();
+
+    /**
+     * @see     #setQos(String, String)
+     */
     public void setQos(QOS qos);
+
+    /**
+     * Set the QoS to that specified in the given QoS profile in the given
+     * QoS library.
+     * 
+     * @param qosLibraryName
+     * @param qosProfileName
+     * 
+     * @see     #setQos(EntityQos)
+     */
     public void setQos(String qosLibraryName, String qosProfileName);
 
     public void enable();

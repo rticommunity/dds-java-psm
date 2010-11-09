@@ -23,6 +23,16 @@ import java.util.Collection;
 import org.omg.dds.core.status.Status;
 
 
+/**
+ * A StatusCondition object is a specific Condition that is associated with
+ * each {@link Entity}. The triggerValue of the StatusCondition depends on
+ * the communication status of that entity (e.g., arrival of data, loss of
+ * information, etc.), "filtered" by the set of enabledStatuses on the
+ * StatusCondition.
+ * 
+ * @param <ENTITY>      The type of the entity with which this condition is
+ *                      associated.
+ */
 public interface StatusCondition<ENTITY extends Entity<ENTITY, ?, ?>>
 extends Condition {
     public Collection<Class<? extends Status<?, ?>>> getEnabledStatuses(

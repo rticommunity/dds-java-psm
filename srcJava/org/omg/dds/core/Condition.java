@@ -18,7 +18,19 @@
 
 package org.omg.dds.core;
 
+import org.omg.dds.sub.ReadCondition;
 
+
+/**
+ * A Condition is a root interface for all the conditions that may be
+ * attached to a {@link WaitSet}. This basic interface is specialized in the
+ * following interfaces that are known by the middleware:
+ * {@link GuardCondition}, {@link StatusCondition}, and
+ * {@link ReadCondition}.
+ * 
+ * A Condition has a triggerValue that can be true or false and is set
+ * automatically by the Service.
+ */
 public interface Condition extends DDSObject {
     public boolean getTriggerValue();
 }

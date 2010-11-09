@@ -21,6 +21,32 @@ package org.omg.dds.topic;
 import java.util.List;
 
 
+/**
+ * ContentFilteredTopic is a specialization of TopicDescription that allows
+ * for content-based subscriptions.
+ * 
+ * ContentFilteredTopic describes a more sophisticated subscription that
+ * indicates the subscriber does not want to necessarily see all values of
+ * each instance published under the {@link Topic}. Rather, it wants to see
+ * only the values whose contents satisfy certain criteria. This class
+ * therefore can be used to request content-based subscriptions.
+ * 
+ * The selection of the content is done using the filterExpression with
+ * parameters expressionParameters.
+ * <ul>
+ * <li>The filterExpression attribute is a string that specifies the criteria
+ *     to select the data samples of interest. It is similar to the WHERE
+ *     part of an SQL clause.</li>
+ * <li>The expressionParameters attribute is a sequence of strings that give
+ *     values to the "parameters" (i.e., "%n" tokens) in the filterExpression.
+ *     The number of supplied parameters must fit with the requested values
+ *     in the filterExpression (i.e., the number of "%n" tokens).</li>
+ * </ul>
+ * 
+ * @param <TYPE>    The concrete type of the data that will be published and/
+ *                  or subscribed by the readers and writers that use this
+ *                  topic description.
+ */
 public interface ContentFilteredTopic<TYPE> extends TopicDescription<TYPE> {
     public String getFilterExpression();
 
