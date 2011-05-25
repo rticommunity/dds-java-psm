@@ -22,6 +22,7 @@ import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.status.InconsistentTopicStatus;
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.pub.DataWriter;
 
 
 /**
@@ -31,12 +32,13 @@ import org.omg.dds.domain.DomainParticipant;
  * A Topic is identified by its name, which must be unique in the whole
  * Domain.
  * 
- * Topic is the only TopicDescription that can be used for publications and
- * therefore associated to a {@link DataWriter}. All operations except for
- * the inherited operations {@link #setQos(org.omg.dds.core.EntityQos)},
+ * Topic is the only {@link TopicDescription} that can be used for
+ * publications and therefore associated to a {@link DataWriter}. All
+ * operations except for the inherited operations
+ * {@link #setQos(org.omg.dds.core.EntityQos)},
  * {@link #getQos()}, {@link #setListener(java.util.EventListener)},
- * {@link #getListener()}, {@link #enable()}, and
- * {@link #getStatusCondition()} may fail with the exception
+ * {@link #getListener()}, {@link #enable()}, {@link #getStatusCondition()},
+ * and {@link #close()} may fail with the exception
  * {@link NotEnabledException}.
  *
  * @param <TYPE>    The concrete type of the data that will be published and/

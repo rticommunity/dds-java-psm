@@ -26,17 +26,67 @@ import java.util.concurrent.TimeoutException;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.NotEnabledException;
+import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.policy.HistoryQosPolicy;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
 import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
 import org.omg.dds.core.status.SampleLostStatus;
 import org.omg.dds.core.status.SampleRejectedStatus;
 import org.omg.dds.core.status.SubscriptionMatchedStatus;
+import org.omg.dds.topic.ContentFilteredTopic;
+import org.omg.dds.topic.MultiTopic;
 import org.omg.dds.topic.PublicationBuiltinTopicData;
+import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 
 
+/**
+ * A DataReader allows the application (1) to declare the data it wishes to
+ * receive (i.e., make a subscription) and (2) to access the data received by
+ * the attached {@link Subscriber}.
+ * 
+ * A DataReader refers to exactly one {@link TopicDescription} (either a
+ * {@link Topic}, a {@link ContentFilteredTopic}, or a {@link MultiTopic})
+ * that identifies the data to be read. The subscription has a unique
+ * resulting type. The data reader may give access to several instances of
+ * the resulting type, which can be distinguished from each other by their
+ * keys.
+ * 
+ * All operations except for the inherited operations
+ * {@link #setQos(org.omg.dds.core.EntityQos)}, {@link #getQos()},
+ * {@link #setListener(java.util.EventListener)}, {@link #getListener()},
+ * {@link #enable()}, {@link #getStatusCondition()}, and {@link #close()} may
+ * fail with the exception {@link NotEnabledException}.
+ * 
+ * All sample-accessing operations, namely all variants of {@link #read()} or
+ * {@link #take()}, may fail with the exception
+ * {@link PreconditionNotMetException}.
+ * 
+ * <b>Access to the Data</b>
+ * 
+ * Data is made available to the application by the following operations on
+ * DataReader objects: {@link #read()}, {@link #take()}, and the other methods
+ * beginning with those prefixes.. The general semantics of the "read"
+ * operations is that the application only gets access to the corresponding
+ * data; the data remains the middleware's responsibility and can be read
+ * again. The semantics of the "take" operations is that the application
+ * takes full responsibility for the data; that data will no longer be
+ * accessible to the DataReader. Consequently, it is possible for a
+ * DataReader to access the same sample multiple times but only if all
+ * previous accesses were read operations.
+ * 
+ * Each of these operations returns an ordered collection of {@link Sample}s
+ * (data values and associated meta-information). Each data value represents
+ * an atom of data information (i.e., a value for one instance). This
+ * collection may contain samples related to the same or different instances
+ * (identified by the key). Multiple samples can refer to the same instance
+ * if the settings of the {@link HistoryQosPolicy} allow for it.
+ * 
+ * @param <TYPE>    The concrete type of the data to be read.
+ */
 public interface DataReader<TYPE>
 extends DomainEntity<DataReader<TYPE>,
                      Subscriber,
