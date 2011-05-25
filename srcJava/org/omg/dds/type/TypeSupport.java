@@ -22,6 +22,14 @@ import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.DDSObject;
 
 
+/**
+ * TypeSupport is an abstract interface that has to be specialized for each
+ * concrete type that will be used by the application to publish and/or
+ * subscribe to data over DDS.
+ * 
+ * @param <TYPE>    The type to be supported for publication and/or
+ *                  subscription.
+ */
 public abstract class TypeSupport<TYPE> implements DDSObject
 {
     // -----------------------------------------------------------------------
