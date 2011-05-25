@@ -18,10 +18,56 @@
 
 package org.omg.dds.core.policy;
 
+import org.omg.dds.core.Condition;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.policy.modifiable.ModifiableDeadlineQosPolicy;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * {@link DataReader} expects a new sample updating the value of each
+ * instance at least once every deadline period. The {@link DataWriter}
+ * indicates that the application commits to write a new value (using the
+ * DataWriter) for each instance managed by the DataWriter at least once
+ * every deadline period. It is inconsistent for a DataReader to have a
+ * deadline period less than the result of its
+ * {@link TimeBasedFilterQosPolicy#getMinimumSeparation()}. The default value
+ * of the deadline period is infinite.
+ * 
+ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * 
+ * <b>RxO:</b> Yes
+ * 
+ * <b>Changeable:</b> Yes
+ * 
+ * This policy is useful for cases where a {@link Topic} is expected to have
+ * each instance updated periodically. On the publishing side this setting
+ * establishes a contract that the application must meet. On the subscribing
+ * side the setting establishes a minimum requirement for the remote
+ * publishers that are expected to supply the data values.
+ * 
+ * When the Service "matches" a DataWriter and a DataReader it checks whether
+ * the settings are compatible (i.e., offered deadline period<= requested
+ * deadline period). If they are not, the two entities are informed (via the
+ * listener or {@link Condition} mechanism) of the incompatibility of the QoS
+ * settings and communication will not occur.
+ * 
+ * Assuming that the reader and writer ends have compatible settings, the
+ * fulfillment of this contract is monitored by the Service and the
+ * application is informed of any violations by means of the proper listener
+ * or condition.
+ * 
+ * The value offered is considered compatible with the value requested if and
+ * only if the inequality "offered deadline period <= requested deadline
+ * period" evaluates to true.
+ * 
+ * The setting of the DEADLINE policy must be set consistently with that of
+ * the {@link TimeBasedFilterQosPolicy}. For these two policies to be
+ * consistent the settings must be such that "deadline period >=
+ * minimum_separation."
+ */
 public interface DeadlineQosPolicy
 extends QosPolicy<DeadlineQosPolicy, ModifiableDeadlineQosPolicy> {
     public Duration getPeriod();

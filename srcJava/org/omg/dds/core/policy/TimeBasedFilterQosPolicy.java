@@ -19,9 +19,64 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Duration;
+import org.omg.dds.core.Entity;
 import org.omg.dds.core.policy.modifiable.ModifiableTimeBasedFilterQosPolicy;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
 
 
+/**
+ * Filter that allows a {@link DataReader} to specify that it is interested
+ * only in (potentially) a subset of the values of the data. The filter
+ * states that the DataReader does not want to receive more than one value
+ * each minimumSeparation, regardless of how fast the changes occur. It is
+ * inconsistent for a DataReader to have a minimumSeparation longer than the
+ * result of its {@link DeadlineQosPolicy#getPeriod()}. By default,
+ * minimumSeparation = 0, indicating that the DataReader is potentially
+ * interested in all values.
+ * 
+ * <b>Concerns:</b> {@link DataReader}
+ * 
+ * <b>RxO:</b> N/A
+ * 
+ * <b>Changeable:</b> Yes
+ * 
+ * The TIME_BASED_FILTER applies to each instance separately, that is, the
+ * constraint is that the DataReader does not want to see more than one
+ * sample of each instance per minumumSeparation period.
+ * 
+ * This setting allows a DataReader to further decouple itself from the
+ * {@link DataWriter} objects. It can be used to protect applications that
+ * are running on a heterogeneous network where some nodes are capable of
+ * generating data much faster than others can consume it. It also
+ * accommodates the fact that for fast-changing data different subscribers
+ * may have different requirements as to how frequently they need to be
+ * notified of the most current values.
+ * 
+ * The setting of a TIME_BASED_FILTER, that is, the selection of a
+ * minimumSeparation with a value greater than zero is compatible with all
+ * settings of the HISTORY and RELIABILITY QoS. The TIME_BASED_FILTER
+ * specifies the samples that are of interest to the DataReader. The HISTORY
+ * and RELIABILITY QoS affect the behavior of the middleware with respect to
+ * the samples that have been determined to be of interest to the DataReader,
+ * that is, they apply after the TIME_BASED_FILTER has been applied.
+ * 
+ * In the case where the reliability QoS kind is RELIABLE then in steady
+ * state, defined as the situation where the DataWriter does not write new
+ * samples for a period "long" compared to the minimumSeparation, the system
+ * should guarantee delivery the last sample to the DataReader.
+ * 
+ * The setting of the TIME_BASED_FILTER minimumSeparation must be consistent
+ * with the DEADLINE period. For these two QoS policies to be consistent they
+ * must verify that "period >= minimumSeparation." An attempt to set these
+ * policies in an inconsistent manner when an entity is created via a
+ * {@link Entity#setQos(org.omg.dds.core.EntityQos)} operation will cause the
+ * operation to fail.
+ * 
+ * @see DeadlineQosPolicy
+ * @see HistoryQosPolicy
+ * @see ReliabilityQosPolicy
+ */
 public interface TimeBasedFilterQosPolicy
 extends QosPolicy<TimeBasedFilterQosPolicy,
                   ModifiableTimeBasedFilterQosPolicy> {

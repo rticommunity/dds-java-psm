@@ -25,6 +25,7 @@ import java.util.concurrent.TimeoutException;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.Time;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.status.LivelinessLostStatus;
@@ -35,6 +36,24 @@ import org.omg.dds.topic.SubscriptionBuiltinTopicData;
 import org.omg.dds.topic.Topic;
 
 
+/**
+ * DataWriter allows the application to set the value of the data to be
+ * published under a given {@link Topic}.
+ * 
+ * A DataWriter is attached to exactly one {@link Publisher} that acts as a
+ * factory for it. A DataWriter is bound to exactly one Topic and therefore
+ * to exactly one data type. The Topic must exist prior to the DataWriter's
+ * creation.
+ * 
+ * All operations except for the inherited operations
+ * {@link #setQos(org.omg.dds.core.EntityQos)}, {@link #getQos()},
+ * {@link #setListener(java.util.EventListener)},{@link #getListener()},
+ * {@link #enable()}, {@link #getStatusCondition()}, and {@link #close()} may
+ * fail with the exception {@link NotEnabledException}.
+ * 
+ * @param <TYPE>    The concrete type of the data to be published over the
+ *                  the topic.
+ */
 public interface DataWriter<TYPE>
 extends DomainEntity<DataWriter<TYPE>,
                      Publisher,

@@ -19,8 +19,26 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.policy.modifiable.ModifiableOwnershipStrengthQosPolicy;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * [optional] Specifies the value of the "strength" used to arbitrate among
+ * multiple {@link DataWriter} objects that attempt to modify the same
+ * instance of a data object (identified by {@link Topic} + key). This policy
+ * only applies if the {@link OwnershipQosPolicy#getKind()} is
+ * {@link OwnershipQosPolicy.Kind#EXCLUSIVE}. The default value of the
+ * ownership strength is zero.
+ * 
+ * <b>Concerns:</b> {@link DataWriter}
+ * 
+ * <b>RxO:</b> N/A
+ * 
+ * <b>Changeable:</b> Yes
+ * 
+ * @see OwnershipQosPolicy
+ */
 public interface OwnershipStrengthQosPolicy
 extends QosPolicy<OwnershipStrengthQosPolicy,
                   ModifiableOwnershipStrengthQosPolicy> {

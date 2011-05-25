@@ -18,9 +18,52 @@
 
 package org.omg.dds.core.policy;
 
+import org.omg.dds.core.Entity;
 import org.omg.dds.core.policy.modifiable.ModifiableEntityFactoryQosPolicy;
+import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.domain.DomainParticipantFactory;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.pub.Publisher;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.sub.Subscriber;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * Controls the behavior of the {@link Entity} when acting as a factory for
+ * other entities. In other words, configures the side-effects of the
+ * <code>create_*</code> operations.
+ * 
+ * <b>Concerns:</b> {@link DomainParticipantFactory},
+ *                  {@link DomainParticipant}, {@link Publisher},
+ *                  {@link Subscriber}
+ * 
+ * <b>RxO:</b> No
+ * 
+ * <b>Changeable:</b> Yes
+ * 
+ * This policy controls the behavior of the Entity as a factory for other entities.
+ * 
+ * This policy concerns only DomainParticipant (as factory for Publisher,
+ * Subscriber, and {@link Topic}), Publisher (as factory for
+ * {@link DataWriter}), and Subscriber (as factory for {@link DataReader}).
+ * 
+ * This policy is mutable. A change in the policy affects only the entities
+ * created after the change; not the previously created entities.
+ *  
+ * The setting of autoenableCreatedEntities to true indicates that the
+ * factory <code>create&lt;<i>entity</i>&gt;</code> operation will
+ * automatically invoke the {@link Entity#enable()} operation each time a new
+ * Entity is created. Therefore, the Entity returned by
+ * <code>create&lt;<i>entity</i>&gt;</code> will already be enabled. A
+ * setting of false indicates that the Entity will not be automatically
+ * enabled. The application will need to enable it explicitly by means of the
+ * enable operation.
+ * 
+ * The default setting of autoenableCreatedEntities = true means that, by
+ * default, it is not necessary to explicitly call enable on newly created
+ * entities.
+ */
 public interface EntityFactoryQosPolicy
 extends QosPolicy<EntityFactoryQosPolicy, ModifiableEntityFactoryQosPolicy> {
     /**

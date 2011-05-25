@@ -20,9 +20,74 @@ package org.omg.dds.core.policy;
 
 import java.util.Collection;
 
+import org.omg.dds.core.Entity;
 import org.omg.dds.core.policy.modifiable.ModifiablePartitionQosPolicy;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.pub.Publisher;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.sub.Subscriber;
 
 
+/**
+ * This policy allows the introduction of a logical partition concept inside
+ * the "physical" partition induced by a domain. It consists of a set of
+ * strings that introduces a logical partition among the topics
+ * visible by the {@link Publisher} and {@link Subscriber}.
+ * 
+ * <b>Concerns:</b> {@link Publisher}, {@link Subscriber}
+ * 
+ * <b>RxO:</b> No
+ * 
+ * <b>Changeable:</b> Yes
+ * 
+ * A {@link DataWriter} within a Publisher only communicates with a
+ * {@link DataReader} in a Subscriber if (in addition to matching the Topic
+ * and having compatible QoS) the Publisher and Subscriber have a common
+ * partition name string. Each string in the list that defines this QoS
+ * policy defines a partition name. A partition name may contain wild cards.
+ * Sharing a common partition means that one of the partition names matches.
+ * 
+ * Failure to match partitions is not considered an "incompatible" QoS and
+ * does not trigger any listeners nor conditions.
+ * 
+ * This policy is changeable. A change of this policy can potentially modify
+ * the "match" of existing DataReader and DataWriter entities. It may
+ * establish new "matches" that did not exist before, or break existing
+ * matches.
+ * 
+ * The empty string ("") is considered a valid partition that is matched with
+ * other partition names using the same rules of string matching and
+ * regular expression matching used for any other partition name.
+ * 
+ * The default value for is a zero-length sequence. The
+ * zero-length sequence is treated as a special value equivalent to a
+ * sequence containing a single element consisting of the empty string.
+ * 
+ * This policy is changeable. A change of this policy can potentially modify
+ * the "match" of existing DataReader and DataWriter entities. It may
+ * establish new "matches" that did not exist before, or break existing
+ * matches.
+ * 
+ * PARTITION names can be regular expressions and include wild cards as
+ * defined by the POSIX fnmatch API (1003.2-1992 section B.6). Either
+ * {@link Publisher} or {@link Subscriber} may include regular expressions in
+ * partition names, but no two names that both contain wild cards will ever
+ * be considered to match. This means that although regular expressions may
+ * be used both at publisher as well as subscriber side, the service will not
+ * try to match two regular expressions (between publishers and subscribers).
+ * 
+ * Partitions are different from creating {@link Entity} objects in different
+ * domains in several ways. First, entities belonging to different domains
+ * are completely isolated from each other; there is no traffic, meta-traffic
+ * or any other way for an application or the Service itself to see entities
+ * in a domain it does not belong to. Second, an Entity can only belong to
+ * one domain whereas an Entity can be in multiple partitions. Finally, as
+ * far as the DDS Service is concerned, each unique data instance is
+ * identified by the tuple (domainId, Topic, key). Therefore two Entity
+ * objects in different domains cannot refer to the same data instance. On
+ * the other hand, the same data instance can be made available (published)
+ * or requested (subscribed) on one or more partitions.
+ */
 public interface PartitionQosPolicy
 extends QosPolicy<PartitionQosPolicy, ModifiablePartitionQosPolicy> {
     /**

@@ -24,6 +24,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
+import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.Topic;
@@ -36,6 +37,24 @@ import org.omg.dds.type.builtin.KeyedStringDataWriter;
 import org.omg.dds.type.builtin.StringDataWriter;
 
 
+/**
+ * A Publisher is the object responsible for the actual dissemination of
+ * publications.
+ * 
+ * The Publisher acts on the behalf of one or several {@link DataWriter}
+ * objects that belong to it. When it is informed of a change to the data
+ * associated with one of its DataWriter objects, it decides when it is
+ * appropriate to actually send the data-update message. In making this
+ * decision, it considers any extra information that goes with the data
+ * (time stamp, writer, etc.) as well as the QoS of the Publisher and the
+ * DataWriter.
+ * 
+ * All operations except for {@link #setQos(PublisherQos)}, {@link #getQos()},
+ * {@link #setListener(PublisherListener)}, {@link #getListener()},
+ * {@link #enable()}, {@link #getStatusCondition()},
+ * {@link #createDataWriter(Topic)}, and {@link Publisher#close()} may fail
+ * with the exception {@link NotEnabledException}.
+ */
 public interface Publisher
 extends DomainEntity<Publisher,
                      DomainParticipant,

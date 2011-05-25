@@ -21,11 +21,31 @@ package org.omg.dds.core;
 import java.util.Map;
 
 import org.omg.dds.core.policy.QosPolicy;
+import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.pub.Publisher;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.sub.Subscriber;
+import org.omg.dds.topic.Topic;
 import org.omg.dds.type.Extensibility;
 
 
 /**
- * A base interface for all entity QoS types.
+ * The Data-Distribution Service (DDS) relies on the use of QoS. A QoS
+ * (Quality of Service) is a set of characteristics that controls some aspect
+ * of the behavior of the DDS Service. QoS is comprised of individual QoS
+ * policies (objects of type deriving from {@link QosPolicy}).
+ * 
+ * QoS (i.e., a collection of QosPolicy objects) may be associated with all
+ * {@link Entity} objects in the system such as {@link Topic},
+ * {@link DataWriter}, {@link DataReader}, {@link Publisher},
+ * {@link Subscriber}, and {@link DomainParticipant}.
+ * 
+ * Some QosPolicy values may not be consistent with other ones. When a set of
+ * QosPolicy is passed ({@link Entity#setQos(EntityQos)} operations), the set
+ * resulting from adding the new policies on top of the previous is checked
+ * for consistency. If the resulting QoS is inconsistent, the change of QoS
+ * operation fails and the previous values are retained.
  */
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 public interface EntityQos<UNMOD_SELF extends EntityQos<UNMOD_SELF, MOD_SELF>,

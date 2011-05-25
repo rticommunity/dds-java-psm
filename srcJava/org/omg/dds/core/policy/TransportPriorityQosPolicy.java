@@ -19,8 +19,37 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.policy.modifiable.ModifiableTransportPriorityQosPolicy;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * This policy is a hint to the infrastructure as to how to set the priority
+ * of the underlying transport used to send the data. The default value is
+ * zero.
+ * 
+ * <b>Concerns:</b> {@link Topic}, {@link DataWriter}
+ * 
+ * <b>RxO:</b> N/A
+ * 
+ * <b>Changeable:</b> Yes
+ * 
+ * The purpose of this QoS is to allow the application to take advantage of
+ * transports capable of sending messages with different priorities.
+ * 
+ * This policy is considered a hint. The policy depends on the ability of the
+ * underlying transports to set a priority on the messages they send. Any
+ * value within the range of a 32-bit signed integer may be chosen; higher
+ * values indicate higher priority. However, any further interpretation of
+ * this policy is specific to a particular transport and a particular
+ * implementation of the Service. For example, a particular transport is
+ * permitted to treat a range of priority values as equivalent to one
+ * another. It is expected that during transport configuration the
+ * application would provide a mapping between the values of the
+ * TRANSPORT_PRIORITY set on DataWriter and the values meaningful to each
+ * transport. This mapping would then be used by the infrastructure when
+ * propagating the data written by the DataWriter.
+ */
 public interface TransportPriorityQosPolicy
 extends QosPolicy<TransportPriorityQosPolicy,
                   ModifiableTransportPriorityQosPolicy> {

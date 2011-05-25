@@ -19,8 +19,24 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.policy.modifiable.ModifiableOwnershipQosPolicy;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * [optional] Specifies whether it is allowed for multiple {@link DataWriter}s
+ * to write the same instance of the data and if so, how these modifications
+ * should be arbitrated.
+ * 
+ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * 
+ * <b>RxO:</b> Yes
+ * 
+ * <b>Changeable:</b> No
+ * 
+ * @see OwnershipStrengthQosPolicy
+ */
 public interface OwnershipQosPolicy
 extends QosPolicy<OwnershipQosPolicy, ModifiableOwnershipQosPolicy> {
     // -----------------------------------------------------------------------
@@ -39,7 +55,23 @@ extends QosPolicy<OwnershipQosPolicy, ModifiableOwnershipQosPolicy> {
     // -----------------------------------------------------------------------
 
     public enum Kind {
+        /**
+         * Indicates shared ownership for each instance. Multiple writers are
+         * allowed to update the same instance and all the updates are made
+         * available to the readers. In other words there is no concept of an
+         * "owner" for the instances. This is the default behavior.
+         */
         SHARED,
+
+        /**
+         * Indicates each instance can only be owned by one
+         * {@link DataWriter}, but the owner of an instance can change
+         * dynamically. The selection of the owner is controlled by the
+         * setting of the {@link OwnershipStrengthQosPolicy}. The owner is
+         * always set to be the highest-strength DataWriter object among the
+         * ones currently "active" (as determined by the
+         * {@link LivelinessQosPolicy}).
+         */
         EXCLUSIVE
     }
 
