@@ -20,8 +20,37 @@ package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.policy.modifiable.ModifiableLatencyBudgetQosPolicy;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * Specifies the maximum acceptable delay from the time the data is written
+ * until the data is inserted in the receiver's application cache and the
+ * receiving application is notified of the fact. This policy is a hint to
+ * the Service, not something that must be monitored or enforced. The Service
+ * is not required to track or alert the user of any violation. The default
+ * value of the duration is zero indicating that the delay should be
+ * minimized.
+ * 
+ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * 
+ * <b>RxO:</b> Yes
+ * 
+ * <b>Changeable:</b> Yes
+ * 
+ * This policy provides a means for the application to indicate to the
+ * middleware the "urgency" of the data communication. By having a non-zero
+ * duration the Service can optimize its internal operation.
+ * 
+ * This policy is considered a hint. There is no specified mechanism as to
+ * how the service should take advantage of this hint.
+ * 
+ * The value offered is considered compatible with the value requested if and
+ * only if the inequality "offered duration <= requested duration" evaluates
+ * to true.
+ */
 public interface LatencyBudgetQosPolicy
 extends QosPolicy<LatencyBudgetQosPolicy, ModifiableLatencyBudgetQosPolicy> {
     public Duration getDuration();

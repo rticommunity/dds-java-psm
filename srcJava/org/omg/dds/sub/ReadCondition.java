@@ -21,8 +21,27 @@ package org.omg.dds.sub;
 import java.util.Set;
 
 import org.omg.dds.core.Condition;
+import org.omg.dds.core.WaitSet;
 
 
+/**
+ * ReadCondition objects are conditions specifically dedicated to read
+ * operations and attached to one {@link DataReader}.
+ * 
+ * ReadCondition objects allow an application to specify the data samples it
+ * is interested in by specifying the desired sample states, view states,
+ * and instance states. (See the parameter definitions for
+ * {@link DataReader#read(java.util.Collection, java.util.Collection, java.util.Collection)}
+ * and
+ * {@link DataReader#take(java.util.Collection, java.util.Collection, java.util.Collection)}.)
+ * This allows the middleware to enable the condition only when suitable
+ * information is available. They are to be used in conjunction with a
+ * {@link WaitSet} as normal conditions. More than one ReadCondition may be
+ * attached to the same DataReader.
+ * 
+ * @param <TYPE>    The concrete type of the data that can be read using the
+ *                  the {@link DataReader} that created this ReadCondition.
+ */
 public interface ReadCondition<TYPE>
 extends Condition {
     /**

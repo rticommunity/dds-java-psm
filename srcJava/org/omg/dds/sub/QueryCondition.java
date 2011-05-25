@@ -21,6 +21,21 @@ package org.omg.dds.sub;
 import java.util.List;
 
 
+/**
+ * QueryCondition objects are specialized {@link ReadCondition} objects that
+ * allow the application to also specify a filter on the locally available
+ * data.
+ * 
+ * The query (queryExpression) is similar to an SQL WHERE clause can be
+ * parameterized by arguments that are dynamically changeable by the
+ * {@link #setQueryParameters(List)} operation.
+ * 
+ * This feature is optional. In the cases where it is not supported, the
+ * {@link DataReader#createQueryCondition(String, List)} will return null.
+ * 
+ * @param <TYPE>    The concrete type of the data that can be read using the
+ *                  the {@link DataReader} that created this QueryCondition.
+ */
 public interface QueryCondition<TYPE> extends ReadCondition<TYPE> {
     public String getQueryExpression();
 

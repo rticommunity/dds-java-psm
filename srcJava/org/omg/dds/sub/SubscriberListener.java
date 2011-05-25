@@ -20,6 +20,7 @@ package org.omg.dds.sub;
 
 import java.util.EventListener;
 
+import org.omg.dds.core.Entity;
 import org.omg.dds.core.status.DataAvailableStatus;
 import org.omg.dds.core.status.DataOnReadersStatus;
 import org.omg.dds.core.status.LivelinessChangedStatus;
@@ -30,6 +31,11 @@ import org.omg.dds.core.status.SampleRejectedStatus;
 import org.omg.dds.core.status.SubscriptionMatchedStatus;
 
 
+/**
+ * Since a {@link Subscriber} is a kind of {@link Entity}, it has the ability
+ * to have an associated listener. In this case, the associated listener must
+ * be of concrete type SubscriberListener.
+ */
 public interface SubscriberListener extends EventListener {
     public void onRequestedDeadlineMissed(
             RequestedDeadlineMissedStatus<?> status);

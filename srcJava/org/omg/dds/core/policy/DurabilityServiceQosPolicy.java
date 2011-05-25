@@ -20,8 +20,32 @@ package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.policy.modifiable.ModifiableDurabilityServiceQosPolicy;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * Specifies the configuration of the durability service. That is, the
+ * service that implements the {@link DurabilityQosPolicy.Kind} of
+ * {@link DurabilityQosPolicy.Kind#TRANSIENT} and
+ * {@link DurabilityQosPolicy.Kind#PERSISTENT}.
+ * 
+ * <b>Concerns:</b> {@link Topic}, {@link DataWriter}
+ * 
+ * <b>RxO:</b> No
+ * 
+ * <b>Changeable:</b> No
+ * 
+ * This policy is used to configure the {@link HistoryQosPolicy} and the
+ * {@link ResourceLimitsQosPolicy} used by the fictitious {@link DataReader}
+ * and {@link DataWriter} used by the "persistence service." The "persistence
+ * service" is the one responsible for implementing
+ * {@link DurabilityQosPolicy.Kind#TRANSIENT} and
+ * {@link DurabilityQosPolicy.Kind#PERSISTENT}.
+ * 
+ * @see DurabilityQosPolicy
+ */
 public interface DurabilityServiceQosPolicy
 extends QosPolicy<DurabilityServiceQosPolicy,
                   ModifiableDurabilityServiceQosPolicy> {

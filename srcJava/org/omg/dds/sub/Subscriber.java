@@ -21,6 +21,7 @@ package org.omg.dds.sub;
 import java.util.Collection;
 
 import org.omg.dds.core.DomainEntity;
+import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.TopicDescription;
@@ -33,6 +34,26 @@ import org.omg.dds.type.builtin.KeyedStringDataReader;
 import org.omg.dds.type.builtin.StringDataReader;
 
 
+/**
+ * A Subscriber is the object responsible for the actual reception of the
+ * data resulting from its subscriptions.
+ * 
+ * A Subscriber acts on the behalf of one or several {@link DataReader}
+ * objects that are related to it. When it receives data (from the other
+ * parts of the system), it builds the list of concerned DataReader objects,
+ * and then indicates to the application that data is available, through its
+ * listener or by enabling related conditions. The application can access the
+ * list of concerned DataReader objects through the operation
+ * {@link #getDataReaders(Collection)} and then access the data available
+ * through operations on the DataReaders.
+ * 
+ * All operations except for the inherited operations
+ * {@link #setQos(SubscriberQos)}, {@link #getQos()},
+ * {@link #setListener(SubscriberListener)}, {@link #getListener()},
+ * {@link #enable()}, {@link #getStatusCondition()}, and
+ * {@link #createDataReader(TopicDescription)} may fail with the exception
+ * {@link NotEnabledException}.
+ */
 public interface Subscriber
 extends DomainEntity<Subscriber,
                      DomainParticipant,

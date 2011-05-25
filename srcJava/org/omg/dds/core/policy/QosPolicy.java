@@ -19,10 +19,17 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.Condition;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.Value;
+import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
+import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.pub.DataWriterListener;
 import org.omg.dds.pub.Publisher;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.sub.DataReaderListener;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
@@ -57,9 +64,57 @@ import org.omg.dds.type.Nested;
  * When a policy is changed after being set to a given value, it is not
  * required that the new value be applied instantaneously; the Service is
  * allowed to apply it after a transition phase. In addition, some QosPolicy
- * have “immutable” semantics meaning that they can only be specified either
+ * have "immutable" semantics meaning that they can only be specified either
  * at Entity creation time or else prior to calling the
  * {@link Entity#enable()} operation on the Entity.
+ * 
+ * <b>Properties of QoS Policies</b>
+ * 
+ * In several cases, for communications to occur properly (or efficiently), a
+ * QosPolicy on the publisher side must be compatible with a corresponding
+ * policy on the subscriber side. For example, if a {@link DataReader}
+ * requests to receive data reliably while the corresponding
+ * {@link DataWriter} defines a best-effort policy, communication will not
+ * happen as requested. To address this issue and maintain the desirable
+ * decoupling of publication and subscription as much as possible, the
+ * specification for QosPolicy follows the subscriber-requested,
+ * publisher-offered pattern. In this pattern, the subscriber side can
+ * specify a "requested" value for a particular QosPolicy. The publisher side
+ * specifies an "offered" value for that QosPolicy. The Service will then
+ * determine whether the value requested by the subscriber side is compatible
+ * with what is offered by the publisher side. If the two policies are
+ * compatible, then communication will be established. If the two policies
+ * are not compatible, the Service will not establish communications between
+ * the two {@link Entity} objects and will record this fact by means of the
+ * {@link OfferedIncompatibleQosStatus} status on the publisher end and
+ * {@link RequestedIncompatibleQosStatus} status on the subscriber end. The
+ * application can detect this fact by means of a listener (e.g.
+ * {@link DataReaderListener} or {@link DataWriterListener}) or
+ * {@link Condition}s.
+ * 
+ * The QosPolicy objects that need to be set in a compatible manner between
+ * the publisher and subscriber ends are indicated by the setting of the
+ * "RxO" (Requested/Offered) property:
+ * 
+ * <ul>
+ *      <li>An "RxO" setting of "Yes" indicates that the policy can be set
+ *          both at the publishing and subscribing ends and the values must
+ *          be set in a compatible manner. In this case the compatible values
+ *          are explicitly defined.</li>
+ *      <li>An "RxO" setting of "No" indicates that the policy can be set
+ *          both at the publishing and subscribing ends but the two settings
+ *          are independent. That is, all combinations of values are
+ *          compatible.</li>
+ *      <li>An "RxO" setting of "N/A" indicates that the policy can only be
+ *          specified at either the publishing or the subscribing end, but
+ *          not at both ends. So compatibility does not apply.</li>
+ * </ul>
+ * 
+ * The "changeable" property determines whether the QosPolicy can be changed
+ * after the Entity is enabled. In other words, a policy with "changeable"
+ * setting of "NO" is considered "immutable" and can only be specified either
+ * at {@link Entity} creation time or else prior to calling the
+ * {@link Entity#enable()} operation.
  */
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
