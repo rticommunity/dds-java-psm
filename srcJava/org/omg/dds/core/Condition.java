@@ -32,5 +32,8 @@ import org.omg.dds.sub.ReadCondition;
  * automatically by the Service.
  */
 public interface Condition extends DDSObject {
+    /**
+     * @return  the triggerValue of the Condition.
+     */
     public boolean getTriggerValue();
 }
