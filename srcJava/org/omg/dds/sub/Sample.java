@@ -24,6 +24,7 @@ import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableTime;
 import org.omg.dds.core.modifiable.ModifiableValue;
+import org.omg.dds.core.policy.OwnershipQosPolicy;
 import org.omg.dds.pub.DataWriter;
 
 
@@ -86,6 +87,33 @@ import org.omg.dds.pub.DataWriter;
  *          {@link DataReader#getMatchedPublicationData(org.omg.dds.topic.PublicationBuiltinTopicData, InstanceHandle)}.</li>
  * </ul>
  * 
+ * <b>Interpretation of the Counters and Ranks</b>
+ * 
+ * A Sample provides several counters and ranks: the disposedGenerationCount
+ * ({@link #getDisposedGenerationCount()}), noWritersGenerationCount
+ * ({@link #getNoWritersGenerationCount()}), sampleRank
+ * ({@link #getSampleRank()}), generationRank ({@link #getGenerationRank()}),
+ * and absoluteGenerationRank ({@link #getAbsoluteGenerationRank()}). These
+ * counters and ranks allow the application to distinguish samples belonging
+ * to different 'generations' of the instance. Note that it is possible for
+ * an instance to transition from not-alive to alive (and back) several times
+ * before the application accesses the data by means of
+ * {@link DataReader#read()} or {@link DataReader#take()}. In this case the
+ * returned collection may contain samples that cross generations (i.e., some
+ * samples were received before the instance became not-alive, others after
+ * the instance reappeared again). Using the information in the Sample the
+ * application can anticipate what other information regarding the same
+ * instance appears in the returned collection as well as in the
+ * infrastructure and thus make appropriate decisions. For example, an
+ * application desiring to only consider the most current sample for each
+ * instance would only look at samples with sampleRank == 0. Similarly an
+ * application desiring to only consider samples that correspond to the
+ * latest generation in the collection will only look at samples with
+ * generationRank == 0. An application desiring only samples pertaining to
+ * the latest generation available will ignore samples for which
+ * absoluteGenerationRank != 0. Other application-defined criteria may also
+ * be used.
+ * 
  * @param <TYPE>    The concrete type of the data encapsulated by this Sample.
  */
 public interface Sample<TYPE>
@@ -95,7 +123,31 @@ extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
     // -----------------------------------------------------------------------
 
     // --- Sample data: ------------------------------------------------------
+
     /**
+     * Get the data associated with this Sample, if any.
+     * 
+     * Normally each Sample contains both meta-data ("Sample Info") and some
+     * data. However there are situations where a Sample contains only the
+     * Sample Info and does not have any associated data. This occurs when
+     * the Service notifies the application of a change of state for an
+     * instance that was caused by some internal mechanism (such as a
+     * timeout) for which there is no associated data. An example of this
+     * situation is when the Service detects that an instance has no writers
+     * and changes the corresponding instanceState to
+     * {@link InstanceState#NOT_ALIVE_NO_WRITERS}.
+     * 
+     * The actual set of scenarios under which the middleware returns Samples
+     * containing no data is implementation dependent. The application can
+     * distinguish whether a particular Sample has data by examining the
+     * value returned by this method. If the result is not null, then the
+     * Sample contains valid data. If it is null, the Sample contains no
+     * data.
+     * 
+     * To ensure correctness and portability, the application must check for
+     * a null result from this method prior to using it. If the data is null,
+     * the application should access only the Sample Info.
+     * 
      * @return  the data associated with this sample. This method will return
      *          null if this sample contains no valid data.
      */
@@ -103,18 +155,104 @@ extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
 
 
     // --- Sample meta-data: -------------------------------------------------
+
     /**
-     * @return the sampleState
+     * For each sample received, the middleware internally maintains a
+     * sampleState relative to each {@link DataReader}. The sampleState can
+     * either be {@link SampleState#READ} or {@link SampleState#NOT_READ}.
+     * 
+     * <ul>
+     *     <li>READ indicates that the DataReader has already accessed that
+     *         sample by means of {@link DataReader#read()}. (Had the sample
+     *         been accessed by {@link DataReader#take()}, it would no longer
+     *         be available to the DataReader.)</li>
+     *     <li>NOT_READ indicates that the DataReader has not accessed that
+     *         sample before.</li>
+     * </ul>
+     * 
+     * The sampleState will, in general, be different for each sample in the
+     * collection returned by {@link DataReader#read()} or
+     * {@link DataReader#take()}.
      */
     public SampleState getSampleState();
 
     /**
-     * @return the viewState
+     * For each instance (identified by the key), the middleware internally
+     * maintains a viewState relative to each {@link DataReader}. The
+     * viewState can either be {@link ViewState#NEW} or
+     * {@link ViewState#NOT_NEW}.
+     * 
+     * <ul>
+     *     <li>NEW indicates that either this is the first time that the
+     *         DataReader has ever accessed samples of that instance, or else
+     *         that the DataReader has accessed previous samples of the
+     *         instance, but the instance has since been reborn (i.e., become
+     *         not-alive and then alive again). These two cases are
+     *         distinguished by examining the disposedGenerationCount and the
+     *         noWritersGenerationCount.</li>
+     *     <li>NOT_NEW indicates that the DataReader has already accessed
+     *         samples of the same instance and that the instance has not
+     *         been reborn since.</li>
+     * </ul>
+     * 
+     * The viewState available in the Sample is a snapshot of the viewState
+     * of the instance relative to the DataReader used to access the samples
+     * at the time the collection was obtained (i.e., at the time
+     * {@link DataReader#read()} or {@link DataReader#take()} was called).
+     * The viewState is therefore the same for all samples in the returned
+     * collection that refer to the same instance.
+     * 
+     * 
+     * 
+     * @see     #getDisposedGenerationCount()
+     * @see     #getNoWritersGenerationCount()
      */
     public ViewState getViewState();
 
     /**
-     * @return the instanceState
+     * For each instance the middleware internally maintains an
+     * instanceState. The instanceState can be {@link InstanceState#ALIVE},
+     * {@link InstanceState#NOT_ALIVE_DISPOSED}, or
+     * {@link InstanceState#NOT_ALIVE_NO_WRITERS}.
+     * 
+     * <ul>
+     *     <li>ALIVE indicates that (a) samples have been received for the
+     *         instance, (b) there are live {@link DataWriter} entities
+     *         writing the instance, and (c) the instance has not been
+     *         explicitly disposed (or else more samples have been received
+     *         after it was disposed).</li>
+     *     <li>NOT_ALIVE_DISPOSED indicates the instance was explicitly
+     *         disposed by a DataWriter by means of
+     *         {@link DataWriter#dispose(InstanceHandle)}.</li>
+     *     <li>NOT_ALIVE_NO_WRITERS indicates the instance has been declared
+     *         as not-alive by the {@link DataReader} because it detected
+     *         that there are no live DataWriter entities writing that
+     *         instance.
+     * </ul>
+     * 
+     * The precise behavior events that cause the instanceState to change
+     * depends on the setting of the {@link OwnershipQosPolicy}:
+     * 
+     * <ul>
+     *     <li>If {@link OwnershipQosPolicy#getKind()} is
+     *         {@link OwnershipQosPolicy.Kind#EXCLUSIVE}, then the
+     *         instanceState becomes NOT_ALIVE_DISPOSED only if the
+     *         DataWriter that "owns" the instance explicitly disposes it.
+     *         The instanceState becomes ALIVE again only if the DataWriter
+     *         that owns the instance writes it.</li>
+     *     <li>If {@link OwnershipQosPolicy#getKind()} is
+     *         {@link OwnershipQosPolicy.Kind#SHARED}, then the instanceState
+     *         becomes NOT_ALIVE_DISPOSED if any DataWriter explicitly
+     *         disposes the instance. The instanceState becomes ALIVE as soon
+     *         as any DataWriter writes the instance again.</li>
+     * </ul>
+     * 
+     * The instanceState available in the Sample is a snapshot of the
+     * instanceState of the instance at the time the collection was obtained
+     * (i.e., at the time {@link DataReader#read()} or
+     * {@link DataReader#take()} was called). The instanceState is therefore
+     * the same for all samples in the returned collection that refer to the
+     * same instance.
      */
     public InstanceState getInstanceState();
 
@@ -125,27 +263,139 @@ extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
     public ModifiableInstanceHandle getPublicationHandle();
 
     /**
-     * @return the disposedGenerationCount
+     * For each instance the middleware internally maintains two counts: the
+     * disposedGenerationCount and noWritersGenerationCount, relative to each
+     * {@link DataReader}:
+     * 
+     * <ul>
+     *     <li>The disposedGenerationCount and noWritersGenerationCount are
+     *         initialized to zero when the DataReader first detects the
+     *         presence of a never-seen-before instance.</li>
+     *     <li>The disposedGenerationCount is incremented each time the
+     *         instanceState of the corresponding instance changes from
+     *         NOT_ALIVE_DISPOSED to ALIVE.</li>
+     *     <li>The noWritersGenerationCount is incremented each time the
+     *         instanceState of the corresponding instance changes from
+     *         NOT_ALIVE_NO_WRITERS to ALIVE.</li>
+     * </ul>
+     * 
+     * The disposedGenerationCount and noWritersGenerationCount available in
+     * the Sample capture a snapshot of the corresponding counters at the
+     * time the sample was received.
+     * 
+     * @see     #getNoWritersGenerationCount()
      */
     public int getDisposedGenerationCount();
 
     /**
-     * @return the noWritersGenerationCount
+     * For each instance the middleware internally maintains two counts: the
+     * disposedGenerationCount and noWritersGenerationCount, relative to each
+     * {@link DataReader}:
+     * 
+     * <ul>
+     *     <li>The disposedGenerationCount and noWritersGenerationCount are
+     *         initialized to zero when the DataReader first detects the
+     *         presence of a never-seen-before instance.</li>
+     *     <li>The disposedGenerationCount is incremented each time the
+     *         instanceState of the corresponding instance changes from
+     *         NOT_ALIVE_DISPOSED to ALIVE.</li>
+     *     <li>The noWritersGenerationCount is incremented each time the
+     *         instanceState of the corresponding instance changes from
+     *         NOT_ALIVE_NO_WRITERS to ALIVE.</li>
+     * </ul>
+     * 
+     * The disposedGenerationCount and noWritersGenerationCount available in
+     * the Sample capture a snapshot of the corresponding counters at the
+     * time the sample was received.
+     * 
+     * @see     #getDisposedGenerationCount()
      */
     public int getNoWritersGenerationCount();
 
     /**
-     * @return the sampleRank
+     * The sampleRank and generationRank available in the Sample are computed
+     * based solely on the actual samples in the ordered collection returned
+     * by {@link DataReader#read()} or {@link DataReader#take()}.
+     * 
+     * <ul>
+     *     <li>The sampleRank indicates the number of samples of the same
+     *         instance that follow the current one in the collection.</li>
+     *     <li>The generationRank available in the Sample indicates the
+     *         difference in 'generations' between the sample (S) and the
+     *         Most Recent Sample of the same instance that appears In the
+     *         returned Collection (MRSIC). That is, it counts the number of
+     *         times the instance transitioned from not-alive to alive in the
+     *         time from the reception of S to the reception of MRSIC.</li>
+     * </ul>
+     * 
+     * @see     #getAbsoluteGenerationRank()
+     * @see     #getGenerationRank()
      */
     public int getSampleRank();
 
     /**
-     * @return the generationRank
+     * The sampleRank and generationRank available in the Sample are computed
+     * based solely on the actual samples in the ordered collection returned
+     * by {@link DataReader#read()} or {@link DataReader#take()}.
+     * 
+     * <ul>
+     *     <li>The sampleRank indicates the number of samples of the same
+     *         instance that follow the current one in the collection.</li>
+     *     <li>The generationRank available in the Sample indicates the
+     *         difference in 'generations' between the sample (S) and the
+     *         Most Recent Sample of the same instance that appears In the
+     *         returned Collection (MRSIC). That is, it counts the number of
+     *         times the instance transitioned from not-alive to alive in the
+     *         time from the reception of S to the reception of MRSIC.</li>
+     * </ul>
+     * 
+     * The generationRank is computed using the formula:
+     * 
+     * <code>
+     * generationRank = (MRSIC.disposedGenerationCount
+     *                  + MRSIC.noWritersGenerationCount)
+     *                  - (S.disposedGenerationCount
+     *                  + S.noWritersGenerationCount)
+     * </code>
+     * 
+     * @see     #getAbsoluteGenerationRank()
+     * @see     #getSampleRank()
      */
     public int getGenerationRank();
 
     /**
-     * @return the absoluteGenerationRank
+     * The sampleRank and generationRank available in the Sample are computed
+     * based solely on the actual samples in the ordered collection returned
+     * by {@link DataReader#read()} or {@link DataReader#take()}.
+     * 
+     * <ul>
+     *     <li>The sampleRank indicates the number of samples of the same
+     *         instance that follow the current one in the collection.</li>
+     *     <li>The generationRank available in the Sample indicates the
+     *         difference in 'generations' between the sample (S) and the
+     *         Most Recent Sample of the same instance that appears In the
+     *         returned Collection (MRSIC). That is, it counts the number of
+     *         times the instance transitioned from not-alive to alive in the
+     *         time from the reception of S to the reception of MRSIC.</li>
+     * </ul>
+     * 
+     * The absoluteGenerationRank available in the Sample indicates the
+     * difference in 'generations' between the sample (S) and the Most Recent
+     * Sample of the same instance that the middleware has received (MRS).
+     * That is, it counts the number of times the instance transitioned from
+     * not-alive to alive in the time from the reception of S to the time
+     * when {@link DataReader#read()} or {@link DataReader#take()} was
+     * called.
+     * 
+     * <code>
+     * absoluteGenerationRank = (MRS.disposedGenerationCount
+     *                          + MRS.noWritersGenerationCount)
+     *                          - (S.disposedGenerationCount
+     *                          + S.noWritersGenerationCount)
+     * </code>
+     * 
+     * @see     #getGenerationRank()
+     * @see     #getSampleRank()
      */
     public int getAbsoluteGenerationRank();
 
@@ -158,8 +408,30 @@ extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
     public static interface Iterator<IT_DATA>
     extends ListIterator<Sample<IT_DATA>> {
         /**
-         * The samples provided by this iterator have been loaned from a
-         * pool maintained by the Service; return that loan now.
+         * This operation indicates to that the application is done accessing
+         * the list of Samples obtained by some earlier invocation of
+         * {@link DataReader#read()} or {@link DataReader#take()}.
+         * 
+         * The operation allows implementations to "loan" buffers from the
+         * DataReader to the application and in this manner provide
+         * "zero-copy" access to the data. During the loan, the DataReader
+         * will guarantee that the data and sample information are not
+         * modified.
+         * 
+         * It is not necessary for an application to return the loans
+         * immediately after the read or take calls. However, as these
+         * buffers correspond to internal resources inside the DataReader,
+         * the application should not retain them indefinitely.
+         * 
+         * The use of the operation is only necessary if the read or take
+         * calls "loaned" buffers to the application. The situations in which
+         * this occurs are described in the documentation for
+         * {@link DataReader#read()} and {@link DataReader#take()}. However,
+         * calling returnLoan on a collection that does not have a loan is
+         * safe and has no side effects.
+         * 
+         * @see DataReader#read()
+         * @see DataReader#take()
          */
         public void returnLoan();
 
