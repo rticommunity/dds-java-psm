@@ -22,6 +22,11 @@ import org.omg.dds.core.Bootstrap;
 import org.omg.dds.topic.Topic;
 
 
+/**
+ * Another topic exists with the same name but different characteristics.
+ * 
+ * @param <TYPE>    The data type of the source {@link Topic}
+ */
 public abstract class InconsistentTopicStatus<TYPE>
 extends Status<InconsistentTopicStatus<TYPE>, Topic<TYPE>> {
     // -----------------------------------------------------------------------
@@ -59,12 +64,15 @@ extends Status<InconsistentTopicStatus<TYPE>, Topic<TYPE>> {
     // -----------------------------------------------------------------------
 
     /**
-     * @return the totalCount
+     * Total cumulative count of the {@link Topic}s discovered whose name
+     * matches the Topic to which this status is attached and whose type is
+     * inconsistent with the Topic.
      */
     public abstract int getTotalCount();
 
     /**
-     * @return the totalCountChange
+     * The incremental number of inconsistent topics discovered since the
+     * last time the listener was called or the status was read.
      */
     public abstract int getTotalCountChange();
 

@@ -19,6 +19,9 @@
 package org.omg.dds.core;
 
 
+/**
+ * A supertype of all DDS classes and interfaces.
+ */
 public interface DDSObject {
     /**
      * @return  the {@link Bootstrap} object that directly or indirectly

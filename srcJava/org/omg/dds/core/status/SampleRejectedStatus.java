@@ -23,6 +23,11 @@ import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.sub.DataReader;
 
 
+/**
+ * A (received) sample has been rejected.
+ * 
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ */
 public abstract class SampleRejectedStatus<TYPE>
 extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
@@ -60,20 +65,26 @@ extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
 
     /**
-     * @return the totalCount
+     * Total cumulative count of samples rejected by the {@link DataReader}.
      */
     public abstract int getTotalCount();
 
     /**
-     * @return the totalCountChange
+     * The incremental number of samples rejected since the last time the
+     * listener was called or the status was read.
      */
     public abstract int getTotalCountChange();
 
     /**
-     * @return the lastReason
+     * Reason for rejecting the last sample rejected. If no samples have been
+     * rejected, the reason is the special value {@link Kind#NOT_REJECTED}.
      */
     public abstract Kind getLastReason();
 
+    /**
+     * Handle to the instance being updated by the last sample that was
+     * rejected.
+     */
     public abstract ModifiableInstanceHandle getLastInstanceHandle();
 
 

@@ -21,8 +21,19 @@ package org.omg.dds.core.status;
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * The {@link DataWriter} has found a {@link DataReader} that matches the
+ * {@link Topic} and has compatible QoS, or has ceased to be matched with a
+ * DataReader that was previously considered to be matched.
+ *
+ * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * 
+ * @see SubscriptionMatchedStatus
+ */
 public abstract class PublicationMatchedStatus<TYPE>
 extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
@@ -60,25 +71,35 @@ extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
 
     /**
-     * @return the totalCount
+     * Total cumulative count the concerned {@link DataWriter} discovered a
+     * "match" with a {@link DataReader}. That is, it found a DataReader for
+     * the same {@link Topic} with a requested QoS that is compatible with
+     * that offered by the DataWriter.
      */
     public abstract int getTotalCount();
 
     /**
-     * @return the totalCountChange
+     * The change in totalCcount since the last time the listener was called
+     * or the status was read.
      */
     public abstract int getTotalCountChange();
 
     /**
-     * @return the currentCount
+     * The number of {@link DataReader}s currently matched to the concerned
+     * {@link DataWriter}.
      */
     public abstract int getCurrentCount();
 
     /**
-     * @return the currentCountChange
+     * The change in currentCount since the last time the listener was called
+     * or the status was read.
      */
     public abstract int getCurrentCountChange();
 
+    /**
+     * Handle to the last {@link DataReader} that matched the
+     * {@link DataWriter}, causing the status to change.
+     */
     public abstract ModifiableInstanceHandle getLastSubscriptionHandle();
 
 }

@@ -49,5 +49,15 @@ public abstract class GuardCondition implements Condition
     // Instance Methods
     // -----------------------------------------------------------------------
 
+    /**
+     * This operation sets the triggerValue of the GuardCondition.
+     * 
+     * {@link WaitSet} objects' behavior depends on the changes of the
+     * triggerValue of their attached conditions. Therefore, any WaitSet
+     * to which the GuardCondition is attached is potentially affected by
+     * this operation.
+     * 
+     * @see     Condition#getTriggerValue()
+     */
     public abstract void setTriggerValue(boolean value);
 }

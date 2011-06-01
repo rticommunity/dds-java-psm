@@ -22,6 +22,11 @@ import org.omg.dds.core.Bootstrap;
 import org.omg.dds.sub.Subscriber;
 
 
+/**
+ * New information is available.
+ * 
+ * @see DataAvailableStatus
+ */
 public abstract class DataOnReadersStatus
 extends Status<DataOnReadersStatus, Subscriber> {
     // -----------------------------------------------------------------------

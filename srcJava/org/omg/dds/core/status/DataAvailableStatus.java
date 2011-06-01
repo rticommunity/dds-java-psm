@@ -22,6 +22,13 @@ import org.omg.dds.core.Bootstrap;
 import org.omg.dds.sub.DataReader;
 
 
+/**
+ * New information is available.
+ *
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ * 
+ * @see DataOnReadersStatus
+ */
 public abstract class DataAvailableStatus<TYPE>
 extends Status<DataAvailableStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------

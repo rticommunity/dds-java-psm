@@ -20,8 +20,14 @@ package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.sub.DataReader;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * A sample has been lost (never received).
+ *
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ */
 public abstract class SampleLostStatus<TYPE>
 extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
@@ -59,12 +65,14 @@ extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
 
     /**
-     * @return the totalCount
+     * Total cumulative count of all samples lost across all instances of
+     * data published under the {@link Topic}.
      */
     public abstract int getTotalCount();
 
     /**
-     * @return the totalCountChange
+     * The incremental number of samples lost since the last time the
+     * listener was called or the status was read.
      */
     public abstract int getTotalCountChange();
 

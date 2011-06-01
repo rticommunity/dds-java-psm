@@ -20,9 +20,18 @@ package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.pub.DataWriter;
 
 
+/**
+ * The deadline that the {@link DataWriter} has committed through its
+ * {@link DeadlineQosPolicy} was not respected for a specific instance.
+ *
+ * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * 
+ * @see RequestedDeadlineMissedStatus
+ */
 public abstract class OfferedDeadlineMissedStatus<TYPE>
 extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
@@ -60,15 +69,23 @@ extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
 
     /**
-     * @return the totalCount
+     * Total cumulative number of offered deadline periods elapsed during
+     * which a DataWriter failed to provide data. Missed deadlines
+     * accumulate; that is, each deadline period the totalCount will be
+     * incremented by one.
      */
     public abstract int getTotalCount();
 
     /**
-     * @return the totalCountChange
+     * The change in totalCount since the last time the listener was called
+     * or the status was read.
      */
     public abstract int getTotalCountChange();
 
+    /**
+     * Handle to the last instance in the {@link DataWriter} for which an
+     * offered deadline was missed.
+     */
     public abstract ModifiableInstanceHandle getLastInstanceHandle();
 
 }

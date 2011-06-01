@@ -23,9 +23,18 @@ import java.util.Set;
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
+import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * A {@link QosPolicy} value was incompatible with what is offered.
+ *
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ * 
+ * @see OfferedIncompatibleQosStatus
+ */
 public abstract class RequestedIncompatibleQosStatus<TYPE>
 extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
@@ -63,21 +72,32 @@ extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
 
     /**
-     * @return the totalCount
+     * Total cumulative number of times the concerned {@link DataReader}
+     * discovered a {@link DataWriter} for the same {@link Topic} with an
+     * offered QoS that was incompatible with that requested by the
+     * DataReader.
      */
     public abstract int getTotalCount();
 
     /**
-     * @return the totalCountChange
+     * The change in totalCount since the last time the listener was called
+     * or the status was read.
      */
     public abstract int getTotalCountChange();
 
     /**
-     * @return the lastPolicyId
+     * The {@link org.omg.dds.core.policy.QosPolicy.Id} of one of the
+     * policies that was found to be incompatible the last time an
+     * incompatibility was detected.
      */
     public abstract QosPolicy.Id getLastPolicyId();
 
     /**
+     * A list containing for each policy the total number of times that the
+     * concerned {@link DataReader} discovered a {@link DataWriter} for the
+     * same {@link Topic} with an offered QoS that is incompatible with that
+     * requested by the DataReader.
+     * 
      * @return  an unmodifiable set.
      */
     public abstract Set<QosPolicyCount> getPolicies();

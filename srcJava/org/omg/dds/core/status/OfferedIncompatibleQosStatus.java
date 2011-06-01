@@ -24,8 +24,17 @@ import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.topic.Topic;
 
 
+/**
+ * A {@link QosPolicy} value was incompatible with what was requested.
+ *
+ * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * 
+ * @see RequestedIncompatibleQosStatus
+ */
 public abstract class OfferedIncompatibleQosStatus<TYPE>
 extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
@@ -63,21 +72,31 @@ extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
 
     /**
-     * @return the totalCount
+     * Total cumulative number of times the concerned {@link DataWriter}
+     * discovered a {@link DataReader} for the same {@link Topic} with a
+     * requested QoS that is incompatible with that offered by the
+     * DataWriter.
      */
     public abstract int getTotalCount();
 
     /**
-     * @return the totalCountChange
+     * The change in totalCount since the last time the listener was called
+     * or the status was read.
      */
     public abstract int getTotalCountChange();
 
     /**
-     * @return the lastPolicyId
+     * The {@link QosPolicy.Id} of one of the policies that was found to be
+     * incompatible the last time an incompatibility was detected.
      */
     public abstract QosPolicy.Id getLastPolicyId();
 
     /**
+     * A list containing for each policy the total number of times that the
+     * concerned {@link DataWriter} discovered a {@link DataReader} for the
+     * same {@link Topic} with a requested QoS that is incompatible with that
+     * offered by the DataWriter.
+     * 
      * @return  an unmodifiable set of policy counts.
      */
     public abstract Set<QosPolicyCount> getPolicies();
