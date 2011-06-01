@@ -26,12 +26,24 @@ import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.NotEnabledException;
+import org.omg.dds.core.OutOfResourcesException;
+import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.Time;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+import org.omg.dds.core.policy.HistoryQosPolicy;
+import org.omg.dds.core.policy.LivelinessQosPolicy;
+import org.omg.dds.core.policy.OwnershipQosPolicy;
+import org.omg.dds.core.policy.ReliabilityQosPolicy;
+import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.status.LivelinessLostStatus;
 import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
 import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
 import org.omg.dds.core.status.PublicationMatchedStatus;
+import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.sub.DataReader;
+import org.omg.dds.sub.InstanceState;
+import org.omg.dds.sub.Sample;
 import org.omg.dds.topic.SubscriptionBuiltinTopicData;
 import org.omg.dds.topic.Topic;
 
@@ -75,61 +87,502 @@ extends DomainEntity<DataWriter<TYPE>,
      */
     public <OTHER> DataWriter<OTHER> cast();
 
+    /**
+     * @return  the {@link Topic} associated with the DataWriter. This is the
+     *          same Topic that was used to create the DataWriter.
+     */
     public Topic<TYPE> getTopic();
 
+    /**
+     * This operation is intended to be used only if the DataWriter has
+     * {@link ReliabilityQosPolicy#getKind()} set to
+     * {@link ReliabilityQosPolicy.Kind#RELIABLE}. Otherwise the operation
+     * will return immediately.
+     * 
+     * The operation blocks the calling thread until either all data written
+     * by the DataWriter is acknowledged by all matched {@link DataReader}
+     * entities that have {@link ReliabilityQosPolicy#getKind()} set to
+     * {@link ReliabilityQosPolicy.Kind#RELIABLE}, or else the duration
+     * specified by the maxWait parameter elapses, whichever happens first.
+     * 
+     * A normal return indicates that all the samples written have been
+     * acknowledged by all reliable matched data readers.
+     * 
+     *  @throws TimeoutException    if maxWait elapsed before all the data
+     *          was acknowledged.
+     */
     public void waitForAcknowledgments(Duration maxWait)
     throws TimeoutException;
 
+    /**
+     * This operation is intended to be used only if the DataWriter has
+     * {@link ReliabilityQosPolicy#getKind()} set to
+     * {@link ReliabilityQosPolicy.Kind#RELIABLE}. Otherwise the operation
+     * will return immediately.
+     * 
+     * The operation blocks the calling thread until either all data written
+     * by the DataWriter is acknowledged by all matched {@link DataReader}
+     * entities that have {@link ReliabilityQosPolicy#getKind()} set to
+     * {@link ReliabilityQosPolicy.Kind#RELIABLE}, or else the duration
+     * specified by the maxWait parameter elapses, whichever happens first.
+     * 
+     * A normal return indicates that all the samples written have been
+     * acknowledged by all reliable matched data readers.
+     * 
+     *  @throws TimeoutException    if maxWait elapsed before all the data
+     *          was acknowledged.
+     */
     public void waitForAcknowledgments(long maxWait, TimeUnit unit)
     throws TimeoutException;
 
+    /**
+     * This operation allows access to the LIVELINESS_LOST communication
+     * status.
+     * 
+     * @param   status  a container, into which this method will place its
+     *                  result.
+     * @return  the input status, as a convenience to facilitate chaining.
+     * 
+     * @see     org.omg.dds.core.status
+     */
     public LivelinessLostStatus<TYPE> getLivelinessLostStatus(
             LivelinessLostStatus<TYPE> status);
 
+    /**
+     * This operation allows access to the OFFERED_DEADLINE_MISSED
+     * communication status.
+     * 
+     * @param   status  a container, into which this method will place its
+     *                  result.
+     * @return  the input status, as a convenience to facilitate chaining.
+     * 
+     * @see     org.omg.dds.core.status
+     */
     public OfferedDeadlineMissedStatus<TYPE> getOfferedDeadlineMissedStatus(
             OfferedDeadlineMissedStatus<TYPE> status);
 
+    /**
+     * This operation allows access to the OFFERED_INCOMPATIBLE_QOS
+     * communication status.
+     * 
+     * @param   status  a container, into which this method will place its
+     *                  result.
+     * @return  the input status, as a convenience to facilitate chaining.
+     * 
+     * @see     org.omg.dds.core.status
+     */
     public OfferedIncompatibleQosStatus<TYPE> getOfferedIncompatibleQosStatus(
             OfferedIncompatibleQosStatus<TYPE> status);
 
+    /**
+     * This operation allows access to the PUBLICATION_MATCHED
+     * communication status.
+     * 
+     * @param   status  a container, into which this method will place its
+     *                  result.
+     * @return  the input status, as a convenience to facilitate chaining.
+     * 
+     * @see     org.omg.dds.core.status
+     */
     public PublicationMatchedStatus<TYPE> getPublicationMatchedStatus(
             PublicationMatchedStatus<TYPE> status);
 
+    /**
+     * This operation manually asserts the liveliness of the DataWriter. This
+     * is used in combination with the {@link LivelinessQosPolicy} to
+     * indicate to the Service that the entity remains active.
+     * 
+     * This operation need only be used if
+     * {@link LivelinessQosPolicy#getKind()} is either
+     * {@link LivelinessQosPolicy.Kind#MANUAL_BY_PARTICIPANT} or
+     * {@link LivelinessQosPolicy.Kind#MANUAL_BY_TOPIC}. Otherwise, it has
+     * no effect.
+     * 
+     * <b>Note</b> - Writing data via {@link #write(Object)} asserts
+     * liveliness on the DataWriter itself and its DomainParticipant.
+     * Consequently the use of assertLiveliness is only needed if the
+     * application is not writing data regularly.
+     */
     public void assertLiveliness();
 
+    /**
+     * This operation retrieves the list of subscriptions currently
+     * "associated" with the DataWriter; that is, subscriptions that have a
+     * matching {@link Topic} and compatible QoS that the application has not
+     * indicated should be "ignored" by means of
+     * {@link DomainParticipant#ignoreSubscription(InstanceHandle)}.
+     * 
+     * The handles returned in the 'subscriptionHandles' list are the ones
+     * that are used by the DDS implementation to locally identify the
+     * corresponding matched {@link DataReader} entities. These handles match
+     * the ones that appear in {@link Sample#getInstanceHandle()} when
+     * reading the "DCPSSubscriptions" built-in topic.
+     * 
+     * The operation may fail if the infrastructure does not locally maintain
+     * the connectivity information.
+     * 
+     * @param   subscriptionHandles     a container, into which this method
+     *          will place its result.
+     * 
+     * @return  subscriptionHandles, as a convenience to facilitate chaining.
+     * 
+     * @see     #getMatchedSubscriptionData(SubscriptionBuiltinTopicData, InstanceHandle)
+     */
     public Collection<InstanceHandle> getMatchedSubscriptions(
             Collection<InstanceHandle> subscriptionHandles);
+
+    /**
+     * This operation retrieves information on a subscription that is
+     * currently "associated" with the DataWriter; that is, a subscription
+     * with a matching {@link Topic} and compatible QoS that the application
+     * has not indicated should be "ignored" by means of
+     * {@link DomainParticipant#ignoreSubscription(InstanceHandle)}.
+     * 
+     * The operation {@link #getMatchedSubscriptions(Collection)} can be used
+     * to find the subscriptions that are currently matched with the
+     * DataWriter.
+     * 
+     * @param   subscriptionData        a container, into which this method
+     *          will place its result.
+     * @param   subscriptionHandle      a handle to the subscription, the
+     *          data of which is to be retrieved.
+     * 
+     * @return  subscriptionData, as a convenience to facilitate chaining.
+     * 
+     * @throws  IllegalArgumentException        if subscriptionHandle does
+     *          not correspond to a subscription currently associated with
+     *          the DataWriter.
+     * @throws  UnsupportedOperationException   if the infrastructure does
+     *          not hold the information necessary to fill in the
+     *          subscriptionData.
+     *
+     * @see     #getMatchedSubscriptions(Collection)
+     */
     public SubscriptionBuiltinTopicData getMatchedSubscriptionData(
             SubscriptionBuiltinTopicData subscriptionData,
             InstanceHandle subscriptionHandle);
 
 
     // --- Type-specific interface: ------------------------------------------
+
+    /**
+     * This operation informs the Service that the application will be
+     * modifying a particular instance. It gives an opportunity to the
+     * Service to pre-configure itself to improve performance.
+     * 
+     * It takes as a parameter an instance (to get the key value) and returns
+     * a handle that can be used in successive {@link #write(Object)} or
+     * {@link #dispose(InstanceHandle)} operations.
+     * 
+     * This operation should be invoked prior to calling any operation that
+     * modifies the instance.
+     * 
+     * A nil handle may be returned by the Service if it does not want to
+     * allocate any handle for that instance.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for the {@link #write(Object)}.
+     * 
+     * The operation is idempotent. If it is called for an already registered
+     * instance, it just returns the already allocated handle. This may be
+     * used to lookup and retrieve the handle allocated to a given instance.
+     * The explicit use of this operation is optional as the application may
+     * call directly the write operation and specify a nil handle to indicate
+     * that the 'key' should be examined to identify the instance.
+     * 
+     * @throws  OutOfResourcesException under the same circumstances
+     *          described for {@link #write(Object)}.
+     * @throws  TimeoutException        under the same circumstances
+     *          described for {@link #write(Object)}.
+     * 
+     * @see     #registerInstance(Object, Time)
+     * @see     #registerInstance(Object, long, TimeUnit)
+     * @see     #unregisterInstance(InstanceHandle)
+     * @see     #unregisterInstance(InstanceHandle, Object)
+     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
+     */
     public InstanceHandle registerInstance(
             TYPE instanceData) throws TimeoutException;
+
+    /**
+     * This operation performs the same function as
+     * {@link #registerInstance(Object)} and can be used instead in the cases
+     * where the application desires to specify the value for the source
+     * time stamp. The source time stamp potentially affects the relative
+     * order in which readers observe events from multiple writers. For
+     * details see {@link DestinationOrderQosPolicy}.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for the {@link #write(Object)}.
+     * 
+     * @throws  OutOfResourcesException under the same circumstances
+     *          described for {@link #write(Object)}.
+     * @throws  TimeoutException        under the same circumstances
+     *          described for {@link #write(Object)}.
+     * 
+     * @see     #registerInstance(Object)
+     * @see     #registerInstance(Object, long, TimeUnit)
+     * @see     #unregisterInstance(InstanceHandle, Object, Time)
+     */
     public InstanceHandle registerInstance(
             TYPE instanceData, 
             Time sourceTimestamp) throws TimeoutException;
+
+    /**
+     * This operation performs the same function as
+     * {@link #registerInstance(Object)} and can be used instead in the cases
+     * where the application desires to specify the value for the source
+     * time stamp. The source time stamp potentially affects the relative
+     * order in which readers observe events from multiple writers. For
+     * details see {@link DestinationOrderQosPolicy}.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for the {@link #write(Object)}.
+     * 
+     * @throws  OutOfResourcesException under the same circumstances
+     *          described for {@link #write(Object)}.
+     * @throws  TimeoutException        under the same circumstances
+     *          described for {@link #write(Object)}.
+     * 
+     * @see     #registerInstance(Object)
+     * @see     #registerInstance(Object, Time)
+     * @see     #unregisterInstance(InstanceHandle, Object, long, TimeUnit)
+     */
     public InstanceHandle registerInstance(
             TYPE instanceData, 
             long sourceTimestamp,
             TimeUnit unit) throws TimeoutException;
 
+    /**
+     * This operation reverses the action of
+     * {@link #registerInstance(Object)}. It should only be called on an
+     * instance that is currently registered.
+     * 
+     * The operation should be called just once per instance, regardless of
+     * how many times {@link #registerInstance(Object)} was called for that
+     * instance.
+     * 
+     * This operation informs the Service that the DataWriter is not
+     * intending to modify that data instance any more. This operation also
+     * indicates that the Service can locally remove all information
+     * regarding that instance. The application should not attempt to use the
+     * handle previously allocated to that instance after calling
+     * {@link #unregisterInstance(InstanceHandle)}.
+     * 
+     * If handle is any value other than nil, then it must correspond to the
+     * value returned by {@link #registerInstance(Object)} when the instance
+     * (identified by its key) was registered.
+     * 
+     * If after that, the application wants to modify (write or dispose) the
+     * instance, it has to register it again, or else use a nil handle.
+     * 
+     * This operation does not indicate that the instance is deleted (that is
+     * the purpose of dispose). The operation just indicates that the
+     * DataWriter no longer has 'anything to say' about the instance.
+     * DataReader entities that are reading the instance will eventually
+     * receive a sample with a {@link InstanceState#NOT_ALIVE_NO_WRITERS}
+     * instance state if no other DataWriter entities are writing the
+     * instance.
+     * 
+     * This operation can affect the ownership of the data instance (see
+     * {@link OwnershipQosPolicy}). If the DataWriter was the exclusive owner
+     * of the instance, then calling this method will relinquish that
+     * ownership.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for the {@link #write(Object)}.
+     * 
+     * @throws  IllegalArgumentException    if the handle does not correspond
+     *          to an existing instance, and if this situation is detectable
+     *          by the Service implementation. If the situation is not
+     *          detectable, the behavior is unspecified.
+     *
+     * @see     #unregisterInstance(InstanceHandle, Object)
+     * @see     #unregisterInstance(InstanceHandle, Object, Time)
+     * @see     #unregisterInstance(InstanceHandle, Object, long, TimeUnit)
+     * @see     #registerInstance(Object)
+     */
     public void unregisterInstance(
             InstanceHandle handle) throws TimeoutException;
+
+    /**
+     * This operation reverses the action of
+     * {@link #registerInstance(Object)}. It should only be called on an
+     * instance that is currently registered.
+     * 
+     * The operation should be called just once per instance, regardless of
+     * how many times {@link #registerInstance(Object)} was called for that
+     * instance.
+     * 
+     * This operation informs the Service that the DataWriter is not
+     * intending to modify that data instance any more. This operation also
+     * indicates that the Service can locally remove all information
+     * regarding that instance. The application should not attempt to use the
+     * handle previously allocated to that instance after calling
+     * {@link #unregisterInstance(InstanceHandle)}.
+     * 
+     * A nil handle can be used for the parameter handle. This indicates that
+     * the identity of the instance should be automatically deduced from the
+     * instance data (by means of the key).
+     * 
+     * If handle is any value other than nil, then it must correspond to the
+     * value returned by {@link #registerInstance(Object)} when the instance
+     * (identified by its key) was registered.
+     * 
+     * If after that, the application wants to modify (write or dispose) the
+     * instance, it has to register it again, or else use a nil handle.
+     * 
+     * This operation does not indicate that the instance is deleted (that is
+     * the purpose of dispose). The operation just indicates that the
+     * DataWriter no longer has 'anything to say' about the instance.
+     * DataReader entities that are reading the instance will eventually
+     * receive a sample with a {@link InstanceState#NOT_ALIVE_NO_WRITERS}
+     * instance state if no other DataWriter entities are writing the
+     * instance.
+     * 
+     * This operation can affect the ownership of the data instance (see
+     * {@link OwnershipQosPolicy}). If the DataWriter was the exclusive owner
+     * of the instance, then calling this method will relinquish that
+     * ownership.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for the {@link #write(Object)}.
+     * 
+     * @throws  IllegalArgumentException    if the handle does not correspond
+     *          to an existing instance, and if this situation is detectable
+     *          by the Service implementation. If the situation is not
+     *          detectable, the behavior is unspecified.
+     * @throws  PreconditionNotMetException if the handle corresponds to an
+     *          existing instance but does not correspond to the same
+     *          instance referred by the instancData parameter, and if this
+     *          situation is detectable by the Service implementation If the
+     *          situation is not detectable, the behavior is unspecified.
+     * 
+     * @see     #unregisterInstance(InstanceHandle)
+     * @see     #unregisterInstance(InstanceHandle, Object, Time)
+     * @see     #unregisterInstance(InstanceHandle, Object, long, TimeUnit)
+     * @see     #registerInstance(Object)
+     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
+     */
     public void unregisterInstance(
             InstanceHandle handle, 
             TYPE instanceData) throws TimeoutException;
+
+    /**
+     * This operation performs the same function as
+     * {@link #unregisterInstance(InstanceHandle, Object)} and can be used
+     * instead in the cases where the application desires to specify the
+     * value for the source time stamp. The source time stamp potentially
+     * affects the relative order in which readers observe events from
+     * multiple writers. For details see {@link DestinationOrderQosPolicy}.
+     * 
+     * The constraints on the values of the handle parameter and the
+     * corresponding error behavior are the same specified for the
+     * {@link #unregisterInstance(InstanceHandle, Object)} operation.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for the {@link #write(Object)}.
+     * 
+     * @see     #unregisterInstance(InstanceHandle)
+     * @see     #unregisterInstance(InstanceHandle, Object)
+     * @see     #unregisterInstance(InstanceHandle, Object, long, TimeUnit)
+     * @see     #registerInstance(Object, Time)
+     */
     public void unregisterInstance(
             InstanceHandle handle, 
             TYPE instanceData,
             Time sourceTimestamp) throws TimeoutException;
+
+    /**
+     * This operation performs the same function as
+     * {@link #unregisterInstance(InstanceHandle, Object)} and can be used
+     * instead in the cases where the application desires to specify the
+     * value for the source time stamp. The source time stamp potentially
+     * affects the relative order in which readers observe events from
+     * multiple writers. For details see {@link DestinationOrderQosPolicy}.
+     * 
+     * The constraints on the values of the handle parameter and the
+     * corresponding error behavior are the same specified for the
+     * {@link #unregisterInstance(InstanceHandle, Object)} operation.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for the {@link #write(Object)}.
+     * 
+     * @see     #unregisterInstance(InstanceHandle)
+     * @see     #unregisterInstance(InstanceHandle, Object)
+     * @see     #unregisterInstance(InstanceHandle, Object, Time)
+     * @see     #registerInstance(Object, long, TimeUnit)
+     */
     public void unregisterInstance(
             InstanceHandle handle, 
             TYPE instanceData,
             long sourceTimestamp,
             TimeUnit unit) throws TimeoutException;
 
+    /**
+     * This operation modifies the value of a data instance. When this
+     * operation is used, the Service will automatically supply the value of
+     * the source time stamp that is made available to {@link DataReader}
+     * objects by means of {@link Sample#getSourceTimestamp()}. See also
+     * {@link DestinationOrderQosPolicy}.
+     * 
+     * As a side effect, this operation asserts liveliness on the DataWriter
+     * itself, the {@link Publisher} and the {@link DomainParticipant}.
+     * 
+     * If {@link ReliabilityQosPolicy#getKind()} kind is set to
+     * {@link ReliabilityQosPolicy.Kind#RELIABLE}, the operation may block if
+     * the modification would cause data to be lost or else cause one of the
+     * limits specified in {@link ResourceLimitsQosPolicy} to be exceeded.
+     * Under these circumstances,
+     * {@link ReliabilityQosPolicy#getMaxBlockingTime()} configures the
+     * maximum time the operation may block waiting for space to become
+     * available. If this duration elapses before the DataWriter is able to
+     * store the modification without exceeding the limits, the operation
+     * will fail with {@link TimeoutException}.
+     * 
+     * Specifically, the DataWriter write operation may block in the
+     * following situations (note that the list may not be exhaustive), even
+     * if {@link HistoryQosPolicy#getKind()} is
+     * {@link HistoryQosPolicy.Kind#KEEP_LAST}.
+     * 
+     * <ul>
+     *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
+     *         {@link ResourceLimitsQosPolicy#getMaxInstances()} *
+     *         {@link HistoryQosPolicy#getDepth()}), then in the situation
+     *         where the max samples resource limit is exhausted the Service
+     *         is allowed to discard samples of some other instance as long
+     *         as at least one sample remains for such an instance. If it is
+     *         still not possible to make space available to store the
+     *         modification, the writer is allowed to block.</li>
+     *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
+     *         {@link ResourceLimitsQosPolicy#getMaxInstances()}), then the
+     *         DataWriter may block regardless of the HISTORY depth.</li>
+     * </ul>
+     * 
+     * Instead of blocking, the operation is allowed to fail immediately
+     * with {@link OutOfResourcesException} provided the following two
+     * conditions are met:
+     * 
+     * <ol>
+     *     <li>The reason for blocking would be that the RESOURCE_LIMITS are
+     *         exceeded.</li>
+     *     <li>The service determines that waiting the max blocking time has
+     *         no chance of freeing the necessary resources. For example, if
+     *         the only way to gain the necessary resources would be for the
+     *         user to unregister an instance.</li>
+     * </ol>
+     * 
+     * @throws  OutOfResourcesException     if it is not possible for
+     *          sufficient resources to be made available within the
+     *          configured max blocking time.
+     * @throws  TimeoutException            if the configured maximum
+     *          time elapses and the DataWriter is still unable to store the
+     *          new sample without exceeding its configured resource limits.
+     * 
+     * @see     #write(Object, InstanceHandle)
+     * @see     #write(Object, InstanceHandle, Time)
+     * @see     #write(Object, InstanceHandle, long, TimeUnit)
+     */
     public void write(
             TYPE instanceData) throws TimeoutException;
     public void write(
@@ -139,38 +592,334 @@ extends DomainEntity<DataWriter<TYPE>,
             TYPE instanceData, 
             long sourceTimestamp,
             TimeUnit unit) throws TimeoutException;
+
+    /**
+     * This operation modifies the value of a data instance. When this
+     * operation is used, the Service will automatically supply the value of
+     * the source time stamp that is made available to {@link DataReader}
+     * objects by means of {@link Sample#getSourceTimestamp()}. See also
+     * {@link DestinationOrderQosPolicy}.
+     * 
+     * As a side effect, this operation asserts liveliness on the DataWriter
+     * itself, the {@link Publisher} and the {@link DomainParticipant}.
+     * 
+     * A nil handle can be used for the parameter handle. This indicates that
+     * the identity of the instance should be automatically deduced from the
+     * instanceData (by means of the key). If handle is not nil, then it must
+     * correspond to the value returned by {@link #registerInstance(Object)}
+     * when the instance (identified by its key) was registered.
+     * 
+     * If {@link ReliabilityQosPolicy#getKind()} kind is set to
+     * {@link ReliabilityQosPolicy.Kind#RELIABLE}, the operation may block if
+     * the modification would cause data to be lost or else cause one of the
+     * limits specified in {@link ResourceLimitsQosPolicy} to be exceeded.
+     * Under these circumstances,
+     * {@link ReliabilityQosPolicy#getMaxBlockingTime()} configures the
+     * maximum time the operation may block waiting for space to become
+     * available. If this duration elapses before the DataWriter is able to
+     * store the modification without exceeding the limits, the operation
+     * will fail with {@link TimeoutException}.
+     * 
+     * Specifically, the DataWriter write operation may block in the
+     * following situations (note that the list may not be exhaustive), even
+     * if {@link HistoryQosPolicy#getKind()} is
+     * {@link HistoryQosPolicy.Kind#KEEP_LAST}.
+     * 
+     * <ul>
+     *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
+     *         {@link ResourceLimitsQosPolicy#getMaxInstances()} *
+     *         {@link HistoryQosPolicy#getDepth()}), then in the situation
+     *         where the max samples resource limit is exhausted the Service
+     *         is allowed to discard samples of some other instance as long
+     *         as at least one sample remains for such an instance. If it is
+     *         still not possible to make space available to store the
+     *         modification, the writer is allowed to block.</li>
+     *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
+     *         {@link ResourceLimitsQosPolicy#getMaxInstances()}), then the
+     *         DataWriter may block regardless of the HISTORY depth.</li>
+     * </ul>
+     * 
+     * Instead of blocking, the operation is allowed to fail immediately
+     * with {@link OutOfResourcesException} provided the following two
+     * conditions are met:
+     * 
+     * <ol>
+     *     <li>The reason for blocking would be that the RESOURCE_LIMITS are
+     *         exceeded.</li>
+     *     <li>The service determines that waiting the max blocking time has
+     *         no chance of freeing the necessary resources. For example, if
+     *         the only way to gain the necessary resources would be for the
+     *         user to unregister an instance.</li>
+     * </ol>
+     * 
+     * @throws  IllegalArgumentException    if the handle does not correspond
+     *          to an existing instance, and if this situation is detectable
+     *          by the Service implementation. If the situation is not
+     *          detectable, the behavior is unspecified.
+     * @throws  PreconditionNotMetException if the handle corresponds to an
+     *          existing instance but does not correspond to the same
+     *          instance referred by the instancData parameter, and if this
+     *          situation is detectable by the Service implementation If the
+     *          situation is not detectable, the behavior is unspecified.
+     * @throws  OutOfResourcesException     if it is not possible for
+     *          sufficient resources to be made available within the
+     *          configured max blocking time.
+     * @throws  TimeoutException            if the configured maximum
+     *          time elapses and the DataWriter is still unable to store the
+     *          new sample without exceeding its configured resource limits.
+     * 
+     * @see     #write(Object)
+     * @see     #write(Object, InstanceHandle, Time)
+     * @see     #write(Object, InstanceHandle, long, TimeUnit)
+     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
+     */
     public void write(
             TYPE instanceData, 
             InstanceHandle handle) throws TimeoutException;
+
+    /**
+     * This operation performs the same function as
+     * {@link #write(Object, InstanceHandle)} except that it also provides
+     * the value for the source time stamp that is made available to
+     * {@link DataReader} objects by means of
+     * {@link Sample#getSourceTimestamp()}. See also
+     * {@link DestinationOrderQosPolicy}.
+     * 
+     * The constraints on the values of the handle parameter and the
+     * corresponding error behavior are the same specified for
+     * {@link #write(Object, InstanceHandle)}.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for
+     * {@link #write(Object, InstanceHandle)}.
+     * 
+     * @throws  IllegalArgumentException    under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  PreconditionNotMetException under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  OutOfResourcesException     under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  TimeoutException            under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * 
+     * @see     #write(Object)
+     * @see     #write(Object, InstanceHandle)
+     * @see     #write(Object, InstanceHandle, long, TimeUnit)
+     */
     public void write(
             TYPE instanceData, 
             InstanceHandle handle,
             Time sourceTimestamp) throws TimeoutException;
+
+    /**
+     * This operation performs the same function as
+     * {@link #write(Object, InstanceHandle)} except that it also provides
+     * the value for the source time stamp that is made available to
+     * {@link DataReader} objects by means of
+     * {@link Sample#getSourceTimestamp()}. See also
+     * {@link DestinationOrderQosPolicy}.
+     * 
+     * The constraints on the values of the handle parameter and the
+     * corresponding error behavior are the same specified for
+     * {@link #write(Object, InstanceHandle)}.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for
+     * {@link #write(Object, InstanceHandle)}.
+     * 
+     * @throws  IllegalArgumentException    under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  PreconditionNotMetException under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  OutOfResourcesException     under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  TimeoutException            under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * 
+     * @see     #write(Object)
+     * @see     #write(Object, InstanceHandle)
+     * @see     #write(Object, InstanceHandle, Time)
+     */
     public void write(
             TYPE instanceData, 
             InstanceHandle handle,
             long sourceTimestamp,
             TimeUnit unit) throws TimeoutException;
 
+    /**
+     * This operation requests the middleware to delete the data (the actual
+     * deletion is postponed until there is no more use for that data in the
+     * whole system). In general, applications are made aware of the deletion
+     * by means of operations on the {@link DataReader} objects that already
+     * knew that instance. DataReader objects that didn't know the instance
+     * will never see it.
+     * 
+     * When this operation is used, the Service will automatically supply the
+     * value of the source time stamp that is made available to DataReader
+     * objects by means of {@link Sample#getSourceTimestamp()}.
+     * 
+     * The constraints on the values of the instanceHandle parameter and the
+     * corresponding error behavior are the same specified for
+     * {@link #unregisterInstance(InstanceHandle)}.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for {@link #write(Object)}.
+     * 
+     * @throws  OutOfResourcesException     under the same circumstances as
+     *          {@link #write(Object)}.
+     * @throws  TimeoutException            under the same circumstances as
+     *          {@link #write(Object)}.
+     *
+     * @see     #dispose(InstanceHandle, Object)
+     * @see     #dispose(InstanceHandle, Object, Time)
+     * @see     #dispose(InstanceHandle, Object, long, TimeUnit)
+     */
     public void dispose(
             InstanceHandle instanceHandle) throws TimeoutException;
+
+    /**
+     * This operation requests the middleware to delete the data (the actual
+     * deletion is postponed until there is no more use for that data in the
+     * whole system). In general, applications are made aware of the deletion
+     * by means of operations on the {@link DataReader} objects that already
+     * knew that instance. DataReader objects that didn't know the instance
+     * will never see it.
+     * 
+     * This operation does not modify the value of the instance. The
+     * instanceData parameter is passed just for the purposes of identifying
+     * the instance.
+     * 
+     * When this operation is used, the Service will automatically supply the
+     * value of the source time stamp that is made available to DataReader
+     * objects by means of {@link Sample#getSourceTimestamp()}.
+     * 
+     * The constraints on the values of the instanceHandle parameter and the
+     * corresponding error behavior are the same specified for
+     * {@link #unregisterInstance(InstanceHandle, Object)}.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for
+     * {@link #write(Object, InstanceHandle)}.
+     * 
+     * @throws  OutOfResourcesException     under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  TimeoutException            under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     *
+     * @see     #dispose(InstanceHandle)
+     * @see     #dispose(InstanceHandle, Object, Time)
+     * @see     #dispose(InstanceHandle, Object, long, TimeUnit)
+     */
     public void dispose(
             InstanceHandle instanceHandle, 
             TYPE instanceData) throws TimeoutException;
+
+    /**
+     * This operation performs the same functions as
+     * {@link #dispose(InstanceHandle, Object)} except that the application
+     * provides the value for the source time stamp that is made available to
+     * {@link DataReader} objects by means of
+     * {@link Sample#getSourceTimestamp()}.
+     * 
+     * The constraints on the values of the instanceHandle parameter and the
+     * corresponding error behavior are the same specified for
+     * {@link #dispose(InstanceHandle, Object)}.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for
+     * {@link #write(Object, InstanceHandle)}.
+     * 
+     * @throws  IllegalArgumentException    under the same circumstances as
+     *          {@link #dispose(Object, InstanceHandle)}.
+     * @throws  PreconditionNotMetException under the same circumstances as
+     *          {@link #dispose(InstanceHandle, Object)}.
+     * @throws  OutOfResourcesException     under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  TimeoutException            under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * 
+     * @see     #dispose(InstanceHandle)
+     * @see     #dispose(InstanceHandle, Object)
+     * @see     #dispose(InstanceHandle, Object, long, TimeUnit)
+     */
     public void dispose(
             InstanceHandle instanceHandle, 
             TYPE instanceData,
             Time sourceTimestamp) throws TimeoutException;
+
+    /**
+     * This operation performs the same functions as
+     * {@link #dispose(InstanceHandle, Object)} except that the application
+     * provides the value for the source time stamp that is made available to
+     * {@link DataReader} objects by means of
+     * {@link Sample#getSourceTimestamp()}.
+     * 
+     * The constraints on the values of the instanceHandle parameter and the
+     * corresponding error behavior are the same specified for
+     * {@link #dispose(InstanceHandle, Object)}.
+     * 
+     * This operation may block and exit with {@link TimeoutException} under
+     * the same circumstances described for
+     * {@link #write(Object, InstanceHandle)}.
+     * 
+     * @throws  IllegalArgumentException    under the same circumstances as
+     *          {@link #dispose(Object, InstanceHandle)}.
+     * @throws  PreconditionNotMetException under the same circumstances as
+     *          {@link #dispose(InstanceHandle, Object)}.
+     * @throws  OutOfResourcesException     under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * @throws  TimeoutException            under the same circumstances as
+     *          {@link #write(Object, InstanceHandle)}.
+     * 
+     * @see     #dispose(InstanceHandle)
+     * @see     #dispose(InstanceHandle, Object)
+     * @see     #dispose(InstanceHandle, Object, Time)
+     */
     public void dispose(
             InstanceHandle instanceHandle, 
             TYPE instanceData,
             long sourceTimestamp,
             TimeUnit unit) throws TimeoutException;
 
+    /**
+     * This operation can be used to retrieve the instance key that
+     * corresponds to an instance handle. The operation will only fill the
+     * fields that form the key inside the keyHolder instance.
+     * 
+     * @param   keyHolder       a container, into which this method shall
+     *          place its result.
+     * @param   handle          a handle indicating the instance whose value
+     *          this method should get.
+     *
+     * @return  keyHolder, as a convenience to facilitate chaining.
+     * 
+     * @throws  IllegalArgumentException    if the handle does not correspond
+     *          to an existing data object known to the DataWriter. If the
+     *          implementation is not able to check invalid handles, then the
+     *          result in this situation is unspecified.
+     */
     public TYPE getKeyValue(
             TYPE keyHolder, 
             InstanceHandle handle);
 
+    /**
+     * This operation takes as a parameter an instance and returns a handle
+     * that can be used in subsequent operations that accept an instance
+     * handle as an argument. The instance parameter is only used for the
+     * purpose of examining the fields that define the key.
+     * 
+     * This operation does not register the instance in question. If the
+     * instance has not been previously registered, or if for any other
+     * reason the Service is unable to provide an instance handle, the
+     * Service will return a nil handle.
+     * 
+     * @param   handle  a container, into which this method shall place its
+     *          result.
+     * @param   keyHolder       a sample of the instance whose handle this
+     *          method should look up.
+     *
+     * @return  handle, as a convenience to facilitate chaining.
+     */
     public ModifiableInstanceHandle lookupInstance(
             ModifiableInstanceHandle handle,
             TYPE keyHolder);
