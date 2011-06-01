@@ -90,5 +90,9 @@ public abstract class TypeSupport<TYPE> implements DDSObject
     // Instance Methods
     // -----------------------------------------------------------------------
 
+    /**
+     * @return  the registered name for the data type represented by the
+     *          TypeSupport.
+     */
     public abstract String getTypeName();
 }
