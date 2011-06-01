@@ -20,6 +20,7 @@ package org.omg.dds.topic;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.NotEnabledException;
+import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.status.InconsistentTopicStatus;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.pub.DataWriter;
@@ -50,6 +51,18 @@ extends TopicDescription<TYPE>, DomainEntity<Topic<TYPE>,
                                              DomainParticipant,
                                              TopicListener<TYPE>,
                                              TopicQos> {
+    /**
+     * This method allows the application to retrieve the
+     * {@link InconsistentTopicStatus} of the Topic.
+     * 
+     * Each {@link DomainEntity} has a set of relevant communication
+     * statuses. A change of status causes the corresponding Listener to be
+     * invoked and can also be monitored by means of the associated
+     * {@link StatusCondition}.
+     * 
+     * @see     TopicListener
+     * @see     StatusCondition
+     */
     public InconsistentTopicStatus<TYPE> getInconsistentTopicStatus(
             InconsistentTopicStatus<TYPE> status);
 }

@@ -78,12 +78,31 @@ import org.omg.dds.sub.ViewState;
  *                  topic description.
  */
 public interface MultiTopic<TYPE> extends TopicDescription<TYPE> {
+    /**
+     * @return  the subscription expression associated with the MultiTopic, 
+     *          that is, the expression specified when the MultiTopic was
+     *          created.
+     */
     public String getSubscriptionExpression();
 
     /**
+     * This operation returns the expression parameters associated with the
+     * MultiTopic, that is, the parameters specified on the last successful
+     * call to {@link #setExpressionParameters(List)}, or if
+     * {@link #setExpressionParameters(List)} was never called, the
+     * parameters specified when the MultiTopic was created.
+     * 
      * @return  an unmodifiable list.
+     * 
+     * @see     #setExpressionParameters(List)
      */
     public List<String> getExpressionParameters();
 
+    /**
+     * This operation changes the expression parameters associated with the
+     * MultiTopic.
+     * 
+     * @see     #getExpressionParameters()
+     */
     public void setExpressionParameters(List<String> expressionParameters);
 }

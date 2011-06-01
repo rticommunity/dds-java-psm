@@ -19,7 +19,10 @@
 package org.omg.dds.topic;
 
 import org.omg.dds.core.DDSObject;
+import org.omg.dds.core.Entity;
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
 import org.omg.dds.type.TypeSupport;
 
 
@@ -54,13 +57,32 @@ public interface TopicDescription<TYPE> extends DDSObject {
      */
     public <OTHER> TopicDescription<OTHER> cast();
 
+    /**
+     * @return  the type name used to create the TopicDescription.
+     */
     public String getTypeName();
+
+    /**
+     * @return  the name used to create the TopicDescription.
+     */
     public String getName();
 
+    /**
+     * @return  the {@link DomainParticipant} to which the TopicDescription
+     *          belongs.
+     */
     public DomainParticipant getParent();
 
     /**
      * Dispose the resources held by this object.
+     * 
+     * A TopicDescription cannot be closed if it is in use by any
+     * {@link DataWriter}s or {@link DataReader}s. With respect to
+     * {@link Topic}s specifically: a Topic cannot be closed if it has any
+     * remaining {@link ContentFilteredTopic}s or {@link MultiTopic}s related
+     * to it.
+     * 
+     * @see     Entity#close()
      */
     public void close();
 }
