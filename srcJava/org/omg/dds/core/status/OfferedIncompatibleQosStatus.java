@@ -86,10 +86,10 @@ extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
     public abstract int getTotalCountChange();
 
     /**
-     * The {@link QosPolicy.Id} of one of the policies that was found to be
+     * The class of one of the policies that was found to be
      * incompatible the last time an incompatibility was detected.
      */
-    public abstract QosPolicy.Id getLastPolicyId();
+    public abstract Class<? extends QosPolicy<?, ?>> getLastPolicyClass();
 
     /**
      * A list containing for each policy the total number of times that the

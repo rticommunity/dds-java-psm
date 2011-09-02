@@ -50,23 +50,26 @@ import org.omg.dds.type.Extensibility;
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
 public interface EntityQos<UNMOD_SELF extends EntityQos<UNMOD_SELF, MOD_SELF>,
                            MOD_SELF extends UNMOD_SELF>
-extends Value<UNMOD_SELF, MOD_SELF>, Map<QosPolicy.Id, QosPolicy<?, ?>>
+extends Value<UNMOD_SELF, MOD_SELF>, Map<Class<? extends QosPolicy<?, ?>>, QosPolicy<?, ?>>
 {
     /**
      * @return  a reference to the corresponding policy in this
-     *          <code>EntityQos</code>. The returned object is not a copy; changes
-     *          to the returned object will be reflected in subsequent
+     *          <code>EntityQos</code>. The returned object is not a copy;
+     *          changes to the returned object will be reflected in subsequent
      *          accesses.
      *
      * @see Map#get(Object)
      */
-    public <POLICY extends QosPolicy<POLICY, ?>> POLICY get(QosPolicy.Id id);
+    public <POLICY extends QosPolicy<POLICY, ?>> POLICY get(
+            Class<? extends QosPolicy<?, ?>> id);
 
     /**
-     * @throws  UnsupportedOperationException   if this <code>EntityQos</code> is
-     *          not a <code>ModifiableEntityQos</code>.
+     * @throws  UnsupportedOperationException   if this <code>EntityQos</code>
+     *          is not a <code>ModifiableEntityQos</code>.
      */
-    public QosPolicy<?, ?> put(QosPolicy.Id key, QosPolicy<?, ?> value);
+    public QosPolicy<?, ?> put(
+            Class<? extends QosPolicy<?, ?>> key,
+            QosPolicy<?, ?> value);
 
     /**
      * @throws  UnsupportedOperationException   always: the <tt>remove</tt>

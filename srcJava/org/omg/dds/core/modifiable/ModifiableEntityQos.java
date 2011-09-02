@@ -42,5 +42,5 @@ extends EntityQos<UNMOD_SELF, MOD_SELF>, ModifiableValue<UNMOD_SELF, MOD_SELF>
      *                                  <code>null</code>.
      */
     public <POLICY extends QosPolicy<POLICY, ?>> POLICY put(
-            QosPolicy.Id key, POLICY value);
+            Class<? extends QosPolicy<?, ?>> key, POLICY value);
 }

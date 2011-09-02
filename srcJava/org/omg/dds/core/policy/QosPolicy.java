@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Condition;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.Value;
@@ -38,10 +37,8 @@ import org.omg.dds.type.Nested;
 /**
  * This class is the abstract root for all the QoS policies. It provides the
  * basic mechanism for an application to specify quality of service
- * parameters. It has a name (<code>getId().getPolicyName()</code>) that is
- * used to identify uniquely each QoS policy. All concrete QosPolicy classes
- * derive from this root and include a value whose type depends on the
- * concrete QoS policy.
+ * parameters. All concrete QosPolicy classes derive from this root and
+ * include a value whose type depends on the concrete QoS policy.
  * 
  * The type of a QosPolicy value may be atomic, such as an integer or float,
  * or compound (a structure). Compound types are used whenever multiple
@@ -121,36 +118,5 @@ import org.omg.dds.type.Nested;
 public interface QosPolicy<UNMOD_SELF extends QosPolicy<UNMOD_SELF, MOD_SELF>,
                            MOD_SELF extends UNMOD_SELF>
 extends Value<UNMOD_SELF, MOD_SELF> {
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    public Id getId();
-
-
-
-    // -----------------------------------------------------------------------
-    // Types
-    // -----------------------------------------------------------------------
-    
-    public static abstract class Id {
-        // --- Factory Methods: ----------------------------------------------
-        /**
-         * Get the QoS policy ID for the given QoS policy class.
-         * 
-         * @param bootstrap Identifies the Service instance to which the
-         *                  object will belong.
-         */
-        public static Id getId(
-                Class<? extends QosPolicy<?, ?>> policyClass,
-                Bootstrap bootstrap) {
-            return bootstrap.getSPI().getQosPolicyId(policyClass);
-        }
-
-        // --- Instance Methods: ---------------------------------------------
-        public abstract int getPolicyIdValue();
-
-        public abstract String getPolicyName();
-    }
-
+    // empty
 }
