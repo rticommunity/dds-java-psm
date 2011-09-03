@@ -124,7 +124,7 @@ public abstract class WaitSet implements DDSObject {
      * already has a thread blocking on it, the operation will fail with the
      * value {@link PreconditionNotMetException}.
      */
-    public abstract void waitForConditions() throws TimeoutException;
+    public abstract void waitForConditions();
 
     /**
      * This operation allows an application thread to wait for the occurrence
@@ -142,8 +142,7 @@ public abstract class WaitSet implements DDSObject {
      * value {@link PreconditionNotMetException}.
      */
     public abstract void waitForConditions(
-            Collection<Condition> activeConditions)
-    throws TimeoutException;
+            Collection<Condition> activeConditions);
 
     /**
      * This operation allows an application thread to wait for the occurrence
