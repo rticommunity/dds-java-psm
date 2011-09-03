@@ -473,7 +473,7 @@ extends Entity<DomainParticipant,
      * @param   <TYPE>  The type of all samples subscribed to with the new
      *                  MultiTopic.
      * @param   name    The name of the new MultiTopic.
-     * @param   typeName The resulting type. The Service will attempt to
+     * @param   type    The resulting type. The Service will attempt to
      *                  locate an appropriate {@link TypeSupport} instance
      *                  based on this type.
      * @param   subscriptionExpression  The list of topics and the logic used
@@ -483,7 +483,29 @@ extends Entity<DomainParticipant,
      */
     public <TYPE> MultiTopic<TYPE> createMultiTopic(
             String name,
-            String typeName,
+            Class<TYPE> type,
+            String subscriptionExpression,
+            List<String> expressionParameters);
+
+    /**
+     * This operation creates a MultiTopic. A MultiTopic can be used to
+     * subscribe to multiple topics and combine/filter the received data into
+     * a resulting type. In particular, MultiTopic provides a content-based
+     * subscription mechanism.
+     * 
+     * @param   <TYPE>  The type of all samples subscribed to with the new
+     *                  MultiTopic.
+     * @param   name    The name of the new MultiTopic.
+     * @param   type    A {@link TypeSupport} representing the resulting
+     *                  type.
+     * @param   subscriptionExpression  The list of topics and the logic used
+     *          to combine filter and re-arrange the information from each
+     *          Topic.
+     * @param   expressionParameters    Parameters to the filterExpression.
+     */
+    public <TYPE> MultiTopic<TYPE> createMultiTopic(
+            String name,
+            TypeSupport<TYPE> type,
             String subscriptionExpression,
             List<String> expressionParameters);
 
