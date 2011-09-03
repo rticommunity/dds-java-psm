@@ -41,5 +41,5 @@ public abstract class DynamicDataFactory
     // Instance Methods
     // -----------------------------------------------------------------------
 
-    public abstract DynamicData createData();
+    public abstract DynamicData createData(DynamicType type);
 }
