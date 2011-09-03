@@ -51,7 +51,6 @@ import org.omg.dds.topic.PublicationBuiltinTopicData;
 import org.omg.dds.topic.SubscriptionBuiltinTopicData;
 import org.omg.dds.topic.TopicBuiltinTopicData;
 import org.omg.dds.type.TypeSupport;
-import org.omg.dds.type.dynamic.DynamicDataFactory;
 import org.omg.dds.type.dynamic.DynamicTypeFactory;
 
 
@@ -346,8 +345,6 @@ public abstract class Bootstrap implements DDSObject {
         public abstract DomainParticipantFactory getParticipantFactory();
 
         public abstract DynamicTypeFactory getTypeFactory();
-
-        public abstract DynamicDataFactory getDataFactory();
 
 
         // --- Types: --------------------------------------------------------

@@ -91,6 +91,16 @@ public abstract class TypeSupport<TYPE> implements DDSObject
     // -----------------------------------------------------------------------
 
     /**
+     * @return  a new object of the type supported by this TypeSupport.
+     */
+    public abstract TYPE newData();
+
+    /**
+     * @return  the class of the type supported by this TypeSupport.
+     */
+    public abstract Class<TYPE> getType();
+
+    /**
      * @return  the registered name for the data type represented by the
      *          TypeSupport.
      */

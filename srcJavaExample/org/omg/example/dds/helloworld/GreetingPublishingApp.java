@@ -26,30 +26,27 @@ import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
 import org.omg.dds.topic.Topic;
+import org.omg.dds.type.TypeSupport;
 
 
 public class GreetingPublishingApp {
     public static void main(String[] args) {
+        Bootstrap bstp = Bootstrap.createInstance();
         DomainParticipantFactory factory =
-            DomainParticipantFactory.getInstance(Bootstrap.createInstance());
+            DomainParticipantFactory.getInstance(bstp);
         DomainParticipant dp = factory.createParticipant();
 
-        // Implicitly create TypeSupport and register type:
-        Topic<Greeting> tp = dp.createTopic("My Topic", Greeting.class);
-        // OR explicitly create TypeSupport, registered with default name:
-        // Topic<Greeting> tp = dp.createTopic(
-        //         "My Topic",
-        //         ctx.createTypeSupport(Greeting.class));
-        // OR explicitly create TypeSupport, registered with custom name:
-        // Topic<Greeting> tp = dp.createTopic(
-        //         "My Topic",
-        //         ctx.createTypeSupport(Greeting.class, "MyType"));
+        // Implicitly register type:
+        TypeSupport<Greeting> greetingType = TypeSupport.newTypeSupport(
+                Greeting.class,
+                bstp);
+        Topic<Greeting> tp = dp.createTopic("My Topic", greetingType);
 
         Publisher pub = dp.createPublisher();
         DataWriter<Greeting> dw = pub.createDataWriter(tp);
 
         try {
-            dw.write(new Greeting("Hello, World"));
+            dw.write(greetingType.newData());
         } catch (TimeoutException tx) {
             tx.printStackTrace();
         }

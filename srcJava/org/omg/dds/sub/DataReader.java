@@ -95,11 +95,6 @@ extends DomainEntity<DataReader<TYPE>,
                      DataReaderListener<TYPE>,
                      DataReaderQos> {
     /**
-     * @return  the type parameter if this object's class.
-     */
-    public Class<TYPE> getType();
-
-    /**
      * Cast this data reader to the given type, or throw an exception if
      * the cast fails.
      * 
@@ -368,19 +363,6 @@ extends DomainEntity<DataReader<TYPE>,
 
 
     // --- Type-specific interface: ------------------------------------------
-
-    /**
-     * Create and return a new Sample of the same type as may be accessed by
-     * this DataReader.
-     * 
-     * Applications may use this method, for example, to preallocate samples
-     * to be overwritten by the <code>read</code> and/or <code>take</code>
-     * methods of this interface.
-     * 
-     * @see #read(List)
-     * @see #take(List)
-     */
-    public Sample<TYPE> createSample();
 
     /**
      * TODO: Add JavaDoc.

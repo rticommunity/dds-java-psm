@@ -42,9 +42,9 @@ import org.omg.dds.type.TypeSupport;
  */
 public interface TopicDescription<TYPE> extends DDSObject {
     /**
-     * @return  the type parameter if this object's class.
+     * @return  the {@link TypeSupport} used to create this TopicDescription.
      */
-    public Class<TYPE> getType();
+    public TypeSupport<TYPE> getTypeSupport();
 
     /**
      * Cast this topic description to the given type, or throw an exception if

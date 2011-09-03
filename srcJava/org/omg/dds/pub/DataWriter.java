@@ -72,11 +72,6 @@ extends DomainEntity<DataWriter<TYPE>,
                      DataWriterListener<TYPE>,
                      DataWriterQos> {
     /**
-     * @return  the type parameter if this object's class.
-     */
-    public Class<TYPE> getType();
-
-    /**
      * Cast this data writer to the given type, or throw an exception if
      * the cast fails.
      * 
