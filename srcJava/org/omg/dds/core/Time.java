@@ -31,7 +31,8 @@ import org.omg.dds.type.Nested;
  */
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
-public abstract class Time implements Value<Time, ModifiableTime>
+public abstract class Time
+implements Value<Time, ModifiableTime>, Comparable<Time>
 {
     // -----------------------------------------------------------------------
     // Private Constants
