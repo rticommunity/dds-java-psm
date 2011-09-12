@@ -113,7 +113,7 @@ extends Condition {
      *          there is exactly one DataReader associated with each
      *          ReadCondition.
      */
-    public DataReader<TYPE> getDataReader();
+    public DataReader<TYPE> getParent();
 
     /**
      * Reclaim any resources associated with this condition.
