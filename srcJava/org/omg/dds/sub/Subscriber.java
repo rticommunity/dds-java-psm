@@ -30,6 +30,7 @@ import org.omg.dds.core.policy.PresentationQosPolicy;
 import org.omg.dds.core.status.DataAvailableStatus;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
+import org.omg.dds.sub.modifiable.ModifiableDataReaderQos;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;
@@ -635,6 +636,9 @@ extends DomainEntity<Subscriber,
      * 
      * @param   dst     the QoS, the policies of which will be overwritten.
      * @param   src     the source for the new policies to be copied.
+     * 
+     * @return  dst, as a convenience to facilitate chaining.
      */
-    public void copyFromTopicQos(DataReaderQos dst, TopicQos src);
+    public ModifiableDataReaderQos copyFromTopicQos(
+            ModifiableDataReaderQos dst, TopicQos src);
 }
