@@ -50,20 +50,15 @@ public interface KeyedStringDataWriter extends DataWriter<KeyedString>
 
     public void write(String key, String str) throws TimeoutException;
 
-    public void write(String key, String str, InstanceHandle handle)
-    throws TimeoutException;
-
     public void write(
             String key,
             String str,
-            InstanceHandle handle,
             Time sourceTimestamp)
     throws TimeoutException;
 
     public void write(
             String key,
             String str,
-            InstanceHandle handle,
             long sourceTimestamp,
             TimeUnit unit)
     throws TimeoutException;
