@@ -33,13 +33,13 @@ public interface DynamicType extends DDSObject, Cloneable
 
     public TypeKind getKind();
 
-    public DynamicTypeMember getMember(String name);
+    public DynamicTypeMember getMember(int id);
 
-    public Map<String, DynamicTypeMember> getAllMembers();
+    public Map<Integer, DynamicTypeMember> getAllMembers();
 
-    public DynamicTypeMember getMemberById(int id);
+    public DynamicTypeMember getMemberByName(String name);
 
-    public Map<Integer, DynamicTypeMember> getAllMembersById();
+    public Map<String, DynamicTypeMember> getAllMembersByName();
 
     public List<AnnotationDescriptor> getAnnotations();
 
