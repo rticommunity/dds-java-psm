@@ -36,9 +36,9 @@ import org.omg.dds.topic.Topic;
 
 public class GreetingSubscribingApp {
     public static void main(String[] args) {
-        Bootstrap bstp = Bootstrap.createInstance();
-        DomainParticipant dp =
-            DomainParticipantFactory.getInstance(bstp).createParticipant();
+        DomainParticipantFactory factory =
+            DomainParticipantFactory.getInstance(Bootstrap.createInstance());
+        DomainParticipant dp = factory.createParticipant();
 
         // Implicitly create TypeSupport and register type:
         Topic<Greeting> tp = dp.createTopic("My Topic", Greeting.class);
@@ -86,13 +86,17 @@ public class GreetingSubscribingApp {
         {
             DataReader<Greeting> dr = status.getSource();
             Sample.Iterator<Greeting> it = dr.take();
-            while (it.hasNext()) {
-                Sample<Greeting> smp = it.next();
-                // SampleInfo stuff is built into Sample:
-                InstanceHandle inst = smp.getInstanceHandle();
-                // Data accessible from Sample; null if invalid:
-                Greeting dt = smp.getData();
-                // ...
+            try {
+                while (it.hasNext()) {
+                    Sample<Greeting> smp = it.next();
+                    // SampleInfo stuff is built into Sample:
+                    InstanceHandle inst = smp.getInstanceHandle();
+                    // Data accessible from Sample; null if invalid:
+                    Greeting dt = smp.getData();
+                    // ...
+                }
+            } finally {
+                it.returnLoan();
             }
         }
     }
