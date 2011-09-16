@@ -103,7 +103,7 @@ public abstract class DomainParticipantFactory implements DDSObject
             int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new domain participant.
@@ -119,7 +119,7 @@ public abstract class DomainParticipantFactory implements DDSObject
             String qosLibraryName,
             String qosProfileName,
             DomainParticipantListener listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * This operation retrieves a previously created DomainParticipant

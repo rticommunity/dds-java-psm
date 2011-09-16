@@ -25,15 +25,15 @@ import org.omg.dds.topic.Topic;
 /**
  * Another topic exists with the same name but different characteristics.
  * 
- * @param <TYPE>    The data type of the source {@link Topic}
+ * @see InconsistentTopicEvent
  */
-public abstract class InconsistentTopicStatus<TYPE>
-extends Status<InconsistentTopicStatus<TYPE>, Topic<TYPE>> {
+public abstract class InconsistentTopicStatus
+extends Status<InconsistentTopicStatus> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 4436349983298916816L;
+    private static final long serialVersionUID = -1695476267550323893L;
 
 
 
@@ -45,16 +45,10 @@ extends Status<InconsistentTopicStatus<TYPE>, Topic<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> InconsistentTopicStatus<TYPE>
-    newInconsistentTopicStatus(Bootstrap bootstrap) {
+    public static InconsistentTopicStatus newInconsistentTopicStatus(
+            Bootstrap bootstrap)
+    {
         return bootstrap.getSPI().newInconsistentTopicStatus();
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    protected InconsistentTopicStatus(Topic<TYPE> source) {
-        super(source);
     }
 
 

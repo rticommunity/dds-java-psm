@@ -28,17 +28,16 @@ import org.omg.dds.sub.DataReader;
  * The deadline that the {@link DataReader} was expecting through its
  * {@link DeadlineQosPolicy} was not respected for a specific instance.
  *
- * @param <TYPE>    The data type of the source {@link DataReader}.
- * 
+ * @see RequestedDeadlineMissedEvent
  * @see OfferedDeadlineMissedStatus
  */
-public abstract class RequestedDeadlineMissedStatus<TYPE>
-extends Status<RequestedDeadlineMissedStatus<TYPE>, DataReader<TYPE>> {
+public abstract class RequestedDeadlineMissedStatus
+extends Status<RequestedDeadlineMissedStatus> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 8571367679700186607L;
+    private static final long serialVersionUID = 4552827018168249989L;
 
 
 
@@ -50,16 +49,9 @@ extends Status<RequestedDeadlineMissedStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> RequestedDeadlineMissedStatus<TYPE>
+    public static RequestedDeadlineMissedStatus
     newRequestedDeadlineMissedStatus(Bootstrap bootstrap) {
         return bootstrap.getSPI().newRequestedDeadlineMissedStatus();
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    protected RequestedDeadlineMissedStatus(DataReader<TYPE> source) {
-        super(source);
     }
 
 

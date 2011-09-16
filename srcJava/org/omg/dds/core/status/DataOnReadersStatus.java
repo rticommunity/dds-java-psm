@@ -19,21 +19,21 @@
 package org.omg.dds.core.status;
 
 import org.omg.dds.core.Bootstrap;
-import org.omg.dds.sub.Subscriber;
 
 
 /**
  * New information is available.
  * 
+ * @see DataOnReadersEvent
  * @see DataAvailableStatus
  */
 public abstract class DataOnReadersStatus
-extends Status<DataOnReadersStatus, Subscriber> {
+extends Status<DataOnReadersStatus> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -770537656671131411L;
+    private static final long serialVersionUID = -3503272626810221511L;
 
 
 
@@ -48,12 +48,5 @@ extends Status<DataOnReadersStatus, Subscriber> {
     public static DataOnReadersStatus newDataOnReadersStatus(
             Bootstrap bootstrap) {
         return bootstrap.getSPI().newDataOnReadersStatus();
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    protected DataOnReadersStatus(Subscriber source) {
-        super(source);
     }
 }

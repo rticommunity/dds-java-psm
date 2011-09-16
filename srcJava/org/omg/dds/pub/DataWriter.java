@@ -140,8 +140,8 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public LivelinessLostStatus<TYPE> getLivelinessLostStatus(
-            LivelinessLostStatus<TYPE> status);
+    public LivelinessLostStatus getLivelinessLostStatus(
+            LivelinessLostStatus status);
 
     /**
      * This operation allows access to the OFFERED_DEADLINE_MISSED
@@ -153,8 +153,8 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public OfferedDeadlineMissedStatus<TYPE> getOfferedDeadlineMissedStatus(
-            OfferedDeadlineMissedStatus<TYPE> status);
+    public OfferedDeadlineMissedStatus getOfferedDeadlineMissedStatus(
+            OfferedDeadlineMissedStatus status);
 
     /**
      * This operation allows access to the OFFERED_INCOMPATIBLE_QOS
@@ -166,8 +166,8 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public OfferedIncompatibleQosStatus<TYPE> getOfferedIncompatibleQosStatus(
-            OfferedIncompatibleQosStatus<TYPE> status);
+    public OfferedIncompatibleQosStatus getOfferedIncompatibleQosStatus(
+            OfferedIncompatibleQosStatus status);
 
     /**
      * This operation allows access to the PUBLICATION_MATCHED
@@ -179,8 +179,8 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public PublicationMatchedStatus<TYPE> getPublicationMatchedStatus(
-            PublicationMatchedStatus<TYPE> status);
+    public PublicationMatchedStatus getPublicationMatchedStatus(
+            PublicationMatchedStatus status);
 
     /**
      * This operation manually asserts the liveliness of the DataWriter. This

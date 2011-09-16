@@ -443,45 +443,40 @@ public abstract class Bootstrap implements DDSObject {
 
         // --- Status: -------------------------------------------------------
 
-        public abstract Set<Class<? extends Status<?, ?>>> allStatusKinds();
+        public abstract Set<Class<? extends Status<?>>> allStatusKinds();
 
-        public abstract Set<Class<? extends Status<?, ?>>> noStatusKinds();
+        public abstract Set<Class<? extends Status<?>>> noStatusKinds();
 
-        public abstract <TYPE> LivelinessLostStatus<TYPE>
-        newLivelinessLostStatus();
+        public abstract LivelinessLostStatus newLivelinessLostStatus();
 
-        public abstract <TYPE> OfferedDeadlineMissedStatus<TYPE>
+        public abstract OfferedDeadlineMissedStatus
         newOfferedDeadlineMissedStatus();
 
-        public abstract <TYPE> OfferedIncompatibleQosStatus<TYPE>
+        public abstract OfferedIncompatibleQosStatus
         newOfferedIncompatibleQosStatus();
 
-        public abstract <TYPE> PublicationMatchedStatus<TYPE>
+        public abstract PublicationMatchedStatus
         newPublicationMatchedStatus();
 
-        public abstract <TYPE> LivelinessChangedStatus<TYPE>
-        newLivelinessChangedStatus();
+        public abstract LivelinessChangedStatus newLivelinessChangedStatus();
 
-        public abstract <TYPE> RequestedDeadlineMissedStatus<TYPE>
+        public abstract RequestedDeadlineMissedStatus
         newRequestedDeadlineMissedStatus();
 
-        public abstract <TYPE> RequestedIncompatibleQosStatus<TYPE>
+        public abstract RequestedIncompatibleQosStatus
         newRequestedIncompatibleQosStatus();
 
-        public abstract <TYPE> SampleLostStatus<TYPE> newSampleLostStatus();
+        public abstract SampleLostStatus newSampleLostStatus();
 
-        public abstract <TYPE> SampleRejectedStatus<TYPE>
-        newSampleRejectedStatus();
+        public abstract SampleRejectedStatus newSampleRejectedStatus();
 
-        public abstract <TYPE> SubscriptionMatchedStatus<TYPE>
+        public abstract SubscriptionMatchedStatus
         newSubscriptionMatchedStatus();
 
-        public abstract <TYPE> DataAvailableStatus<TYPE>
-        newDataAvailableStatus();
+        public abstract DataAvailableStatus newDataAvailableStatus();
 
         public abstract DataOnReadersStatus newDataOnReadersStatus();
 
-        public abstract <TYPE> InconsistentTopicStatus<TYPE>
-        newInconsistentTopicStatus();
+        public abstract InconsistentTopicStatus newInconsistentTopicStatus();
     }
 }

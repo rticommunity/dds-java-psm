@@ -26,15 +26,15 @@ import org.omg.dds.sub.DataReader;
 /**
  * A (received) sample has been rejected.
  * 
- * @param <TYPE>    The data type of the source {@link DataReader}.
+ * @see SampleRejectedEvent
  */
-public abstract class SampleRejectedStatus<TYPE>
-extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
+public abstract class SampleRejectedStatus
+extends Status<SampleRejectedStatus> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -3473343064305797468L;
+    private static final long serialVersionUID = -612709680820262641L;
 
 
 
@@ -46,16 +46,10 @@ extends Status<SampleRejectedStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> SampleRejectedStatus<TYPE>
-    newSampleRejectedStatus(Bootstrap bootstrap) {
+    public static SampleRejectedStatus newSampleRejectedStatus(
+            Bootstrap bootstrap)
+    {
         return bootstrap.getSPI().newSampleRejectedStatus();
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    protected SampleRejectedStatus(DataReader<TYPE> source) {
-        super(source);
     }
 
 

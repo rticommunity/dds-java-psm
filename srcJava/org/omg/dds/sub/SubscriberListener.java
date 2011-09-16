@@ -21,14 +21,14 @@ package org.omg.dds.sub;
 import java.util.EventListener;
 
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.status.DataAvailableStatus;
-import org.omg.dds.core.status.DataOnReadersStatus;
-import org.omg.dds.core.status.LivelinessChangedStatus;
-import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
-import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
-import org.omg.dds.core.status.SampleLostStatus;
-import org.omg.dds.core.status.SampleRejectedStatus;
-import org.omg.dds.core.status.SubscriptionMatchedStatus;
+import org.omg.dds.core.status.DataAvailableEvent;
+import org.omg.dds.core.status.DataOnReadersEvent;
+import org.omg.dds.core.status.LivelinessChangedEvent;
+import org.omg.dds.core.status.RequestedDeadlineMissedEvent;
+import org.omg.dds.core.status.RequestedIncompatibleQosEvent;
+import org.omg.dds.core.status.SampleLostEvent;
+import org.omg.dds.core.status.SampleRejectedEvent;
+import org.omg.dds.core.status.SubscriptionMatchedEvent;
 
 
 /**
@@ -38,20 +38,20 @@ import org.omg.dds.core.status.SubscriptionMatchedStatus;
  */
 public interface SubscriberListener extends EventListener {
     public void onRequestedDeadlineMissed(
-            RequestedDeadlineMissedStatus<?> status);
+            RequestedDeadlineMissedEvent<?> status);
 
     public void onRequestedIncompatibleQos(
-            RequestedIncompatibleQosStatus<?> status);
+            RequestedIncompatibleQosEvent<?> status);
 
-    public void onSampleRejected(SampleRejectedStatus<?> status);
+    public void onSampleRejected(SampleRejectedEvent<?> status);
 
-    public void onLivelinessChanged(LivelinessChangedStatus<?> status);
+    public void onLivelinessChanged(LivelinessChangedEvent<?> status);
 
-    public void onDataAvailable(DataAvailableStatus<?> status);
+    public void onDataAvailable(DataAvailableEvent<?> status);
 
-    public void onSubscriptionMatched(SubscriptionMatchedStatus<?> status);
+    public void onSubscriptionMatched(SubscriptionMatchedEvent<?> status);
 
-    public void onSampleLost(SampleLostStatus<?> status);
+    public void onSampleLost(SampleLostEvent<?> status);
 
-    public void onDataOnReaders(DataOnReadersStatus status);
+    public void onDataOnReaders(DataOnReadersEvent status);
 }

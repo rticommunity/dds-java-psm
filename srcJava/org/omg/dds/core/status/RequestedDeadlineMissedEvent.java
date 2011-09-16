@@ -18,34 +18,40 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.policy.DeadlineQosPolicy;
+import org.omg.dds.sub.DataReader;
 
 
 /**
- * New information is available.
+ * The deadline that the {@link DataReader} was expecting through its
+ * {@link DeadlineQosPolicy} was not respected for a specific instance.
  *
- * @see DataOnReadersStatus
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ * 
+ * @see RequestedDeadlineMissedStatus
+ * @see OfferedDeadlineMissedEvent
  */
-public abstract class DataAvailableStatus
-extends Status<DataAvailableStatus> {
+public abstract class RequestedDeadlineMissedEvent<TYPE>
+extends StatusChangedEvent<RequestedDeadlineMissedEvent<TYPE>,
+                           DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 8409886031912084829L;
+    private static final long serialVersionUID = -5542383130001845897L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Methods
     // -----------------------------------------------------------------------
 
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static DataAvailableStatus
-    newDataAvailableStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDataAvailableStatus();
+    public abstract RequestedDeadlineMissedStatus getStatus();
+
+
+    // --- Object Life Cycle: ------------------------------------------------
+
+    protected RequestedDeadlineMissedEvent(DataReader<TYPE> source) {
+        super(source);
     }
 }

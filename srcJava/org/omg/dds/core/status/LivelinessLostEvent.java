@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
@@ -29,33 +28,19 @@ import org.omg.dds.sub.DataReader;
  * {@link LivelinessQosPolicy} was not respected; thus {@link DataReader}
  * entities will consider the DataWriter as no longer "active."
  *
- * @see LivelinessLostEvent
- * @see LivelinessChangedStatus
- * @see SubscriptionMatchedStatus
+ * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * 
+ * @see LivelinessLostStatus
+ * @see LivelinessChangedEvent
+ * @see SubscriptionMatchedEvent
  */
-public abstract class LivelinessLostStatus
-extends Status<LivelinessLostStatus> {
+public abstract class LivelinessLostEvent<TYPE>
+extends StatusChangedEvent<LivelinessLostEvent<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -8294734757039670162L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static LivelinessLostStatus newLivelinessLostStatus(
-            Bootstrap bootstrap)
-    {
-        return bootstrap.getSPI().newLivelinessLostStatus();
-    }
+    private static final long serialVersionUID = 5161009365346289899L;
 
 
 
@@ -63,19 +48,12 @@ extends Status<LivelinessLostStatus> {
     // Methods
     // -----------------------------------------------------------------------
 
-    /**
-     * Total cumulative number of times that a previously-alive
-     * {@link DataWriter} became not alive due to a failure to actively
-     * signal its liveliness within its offered liveliness period. This count
-     * does not change when an already not alive DataWriter simply remains
-     * not alive for another liveliness period.
-     */
-    public abstract int getTotalCount();
+    public abstract LivelinessLostStatus getStatus();
 
-    /**
-     * The change in totalCount since the last time the listener was called
-     * or the status was read.
-     */
-    public abstract int getTotalCountChange();
 
+    // --- Object Life Cycle: ------------------------------------------------
+
+    protected LivelinessLostEvent(DataWriter<TYPE> source) {
+        super(source);
+    }
 }

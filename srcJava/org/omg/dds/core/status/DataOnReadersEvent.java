@@ -18,34 +18,35 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.sub.Subscriber;
 
 
 /**
  * New information is available.
- *
+ * 
  * @see DataOnReadersStatus
+ * @see DataAvailableEvent
  */
-public abstract class DataAvailableStatus
-extends Status<DataAvailableStatus> {
+public abstract class DataOnReadersEvent
+extends StatusChangedEvent<DataOnReadersEvent, Subscriber> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 8409886031912084829L;
+    private static final long serialVersionUID = -4742886897100340499L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Methods
     // -----------------------------------------------------------------------
 
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static DataAvailableStatus
-    newDataAvailableStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDataAvailableStatus();
+    public abstract DataOnReadersStatus getStatus();
+
+
+    // --- Object Life Cycle: ------------------------------------------------
+
+    protected DataOnReadersEvent(Subscriber source) {
+        super(source);
     }
 }

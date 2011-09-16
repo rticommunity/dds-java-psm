@@ -30,17 +30,16 @@ import org.omg.dds.topic.Topic;
  * instances read through the {@link DataReader} has changed. Some
  * DataWriter(s) have become "active" or "inactive."
  *
- * @param <TYPE>    The data type of the source {@link DataReader}.
- * 
+ * @see LivelinessChangedEvent
  * @see LivelinessLostStatus
  */
-public abstract class LivelinessChangedStatus<TYPE>
-extends Status<LivelinessChangedStatus<TYPE>, DataReader<TYPE>> {
+public abstract class LivelinessChangedStatus
+extends Status<LivelinessChangedStatus> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -6569834894650163848L;
+    private static final long serialVersionUID = -8771335633962700621L;
 
 
 
@@ -52,16 +51,10 @@ extends Status<LivelinessChangedStatus<TYPE>, DataReader<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> LivelinessChangedStatus<TYPE>
-    newLivelinessChangedStatus(Bootstrap bootstrap) {
+    public static LivelinessChangedStatus newLivelinessChangedStatus(
+            Bootstrap bootstrap)
+    {
         return bootstrap.getSPI().newLivelinessChangedStatus();
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    protected LivelinessChangedStatus(DataReader<TYPE> source) {
-        super(source);
     }
 
 

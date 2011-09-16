@@ -130,7 +130,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
             DataReaderListener<TYPE> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data reader.
@@ -146,7 +146,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<TYPE> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Create DataReader of built-in bytes type: -------------------------
@@ -172,7 +172,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<byte[]> topic,
             DataReaderQos qos,
             DataReaderListener<byte[]> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -188,7 +188,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<byte[]> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Create DataReader of built-in KeyedBytes type: --------------------
@@ -214,7 +214,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<KeyedBytes> topic,
             DataReaderQos qos,
             DataReaderListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -230,7 +230,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Create DataReader of built-in string type: ------------------------
@@ -256,7 +256,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<String> topic,
             DataReaderQos qos,
             DataReaderListener<String> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -272,7 +272,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<String> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Create DataReader of built-in KeyedString type: -------------------
@@ -298,7 +298,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<KeyedString> topic,
             DataReaderQos qos,
             DataReaderListener<KeyedString> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -314,7 +314,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<KeyedString> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Lookup operations: ------------------------------------------------

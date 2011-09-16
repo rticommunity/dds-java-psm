@@ -18,34 +18,39 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.policy.QosPolicy;
+import org.omg.dds.pub.DataWriter;
 
 
 /**
- * New information is available.
+ * A {@link QosPolicy} value was incompatible with what was requested.
  *
- * @see DataOnReadersStatus
+ * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * 
+ * @see OfferedIncompatibleQosStatus
+ * @see RequestedIncompatibleQosEvent
  */
-public abstract class DataAvailableStatus
-extends Status<DataAvailableStatus> {
+public abstract class OfferedIncompatibleQosEvent<TYPE>
+extends StatusChangedEvent<OfferedIncompatibleQosEvent<TYPE>,
+                           DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 8409886031912084829L;
+    private static final long serialVersionUID = 33668708964334599L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Methods
     // -----------------------------------------------------------------------
 
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static DataAvailableStatus
-    newDataAvailableStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDataAvailableStatus();
+    public abstract OfferedIncompatibleQosStatus getStatus();
+
+
+    // --- Object Life Cycle: ------------------------------------------------
+
+    protected OfferedIncompatibleQosEvent(DataWriter<TYPE> source) {
+        super(source);
     }
 }

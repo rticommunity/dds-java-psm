@@ -18,21 +18,27 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
-import org.omg.dds.topic.Topic;
+import java.util.EventObject;
+
+import org.omg.dds.core.Entity;
+import org.omg.dds.core.Value;
 
 
 /**
- * A sample has been lost (never received).
- *
- * @see SampleLostEvent
+ * The status of an Entity changed.
+ * 
+ * @see Status
  */
-public abstract class SampleLostStatus extends Status<SampleLostStatus> {
+public abstract class StatusChangedEvent<
+    SELF extends StatusChangedEvent<SELF, SOURCE>,
+    SOURCE extends Entity<SOURCE, ?, ?>>
+extends EventObject
+implements Value<SELF, SELF> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 6522885693257415947L;
+    private static final long serialVersionUID = -6417894245684012290L;
 
 
 
@@ -40,13 +46,8 @@ public abstract class SampleLostStatus extends Status<SampleLostStatus> {
     // Object Life Cycle
     // -----------------------------------------------------------------------
 
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static SampleLostStatus newSampleLostStatus(Bootstrap bootstrap)
-    {
-        return bootstrap.getSPI().newSampleLostStatus();
+    protected StatusChangedEvent(SOURCE source) {
+        super(source);
     }
 
 
@@ -55,16 +56,19 @@ public abstract class SampleLostStatus extends Status<SampleLostStatus> {
     // Methods
     // -----------------------------------------------------------------------
 
-    /**
-     * Total cumulative count of all samples lost across all instances of
-     * data published under the {@link Topic}.
-     */
-    public abstract int getTotalCount();
+    // --- API: --------------------------------------------------------------
 
-    /**
-     * The incremental number of samples lost since the last time the
-     * listener was called or the status was read.
-     */
-    public abstract int getTotalCountChange();
+    @Override
+    public abstract SOURCE getSource();
 
+
+    @Override
+    public abstract SELF clone();
+
+
+    // --- SPI: --------------------------------------------------------------
+
+    protected void setSource(SOURCE source) {
+        super.source = source;
+    }
 }

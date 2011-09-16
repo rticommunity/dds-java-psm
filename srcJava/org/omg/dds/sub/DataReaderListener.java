@@ -21,13 +21,13 @@ package org.omg.dds.sub;
 import java.util.EventListener;
 
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.status.DataAvailableStatus;
-import org.omg.dds.core.status.LivelinessChangedStatus;
-import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
-import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
-import org.omg.dds.core.status.SampleLostStatus;
-import org.omg.dds.core.status.SampleRejectedStatus;
-import org.omg.dds.core.status.SubscriptionMatchedStatus;
+import org.omg.dds.core.status.DataAvailableEvent;
+import org.omg.dds.core.status.LivelinessChangedEvent;
+import org.omg.dds.core.status.RequestedDeadlineMissedEvent;
+import org.omg.dds.core.status.RequestedIncompatibleQosEvent;
+import org.omg.dds.core.status.SampleLostEvent;
+import org.omg.dds.core.status.SampleRejectedEvent;
+import org.omg.dds.core.status.SubscriptionMatchedEvent;
 import org.omg.dds.pub.DataWriter;
 
 
@@ -47,18 +47,18 @@ import org.omg.dds.pub.DataWriter;
  */
 public interface DataReaderListener<TYPE> extends EventListener {
     public void onRequestedDeadlineMissed(
-            RequestedDeadlineMissedStatus<TYPE> status);
+            RequestedDeadlineMissedEvent<TYPE> status);
 
     public void onRequestedIncompatibleQos(
-            RequestedIncompatibleQosStatus<TYPE> status);
+            RequestedIncompatibleQosEvent<TYPE> status);
 
-    public void onSampleRejected(SampleRejectedStatus<TYPE> status);
+    public void onSampleRejected(SampleRejectedEvent<TYPE> status);
 
-    public void onLivelinessChanged(LivelinessChangedStatus<TYPE> status);
+    public void onLivelinessChanged(LivelinessChangedEvent<TYPE> status);
 
-    public void onDataAvailable(DataAvailableStatus<TYPE> status);
+    public void onDataAvailable(DataAvailableEvent<TYPE> status);
 
-    public void onSubscriptionMatched(SubscriptionMatchedStatus<TYPE> status);
+    public void onSubscriptionMatched(SubscriptionMatchedEvent<TYPE> status);
 
-    public void onSampleLost(SampleLostStatus<TYPE> status);
+    public void onSampleLost(SampleLostEvent<TYPE> status);
 }

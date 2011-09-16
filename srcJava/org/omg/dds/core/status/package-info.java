@@ -98,15 +98,15 @@
  * 
  * <ul>
  *     <li>The DATA_AVAILABLE StatusChangedFlag becomes false when either the
- *         {@link org.omg.dds.sub.DataReaderListener#onDataAvailable(DataAvailableStatus)}
+ *         {@link org.omg.dds.sub.DataReaderListener#onDataAvailable(DataAvailableEvent)}
  *         is called or the {@link org.omg.dds.sub.DataReader#read()} or
  *         {@link org.omg.dds.sub.DataReader#take()} operation (or their
  *         variants) is called on the associated DataReader.</li>
  *     <li>The DATA_ON_READERS StatusChangedFlag becomes false when any of
  *         the following events occur:<ul>
- *         <li>{@link org.omg.dds.sub.SubscriberListener#onDataOnReaders(DataOnReadersStatus)}
+ *         <li>{@link org.omg.dds.sub.SubscriberListener#onDataOnReaders(DataOnReadersEvent)}
  *             is called.</li>
- *         <li>{@link org.omg.dds.sub.DataReaderListener#onDataAvailable(DataAvailableStatus)}
+ *         <li>{@link org.omg.dds.sub.DataReaderListener#onDataAvailable(DataAvailableEvent)}
  *             is called on any DataReader belonging to the
  *             {@link org.omg.dds.sub.Subscriber}.</li>
  *         <li>The {@link org.omg.dds.sub.DataReader#read()} or

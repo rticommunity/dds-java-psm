@@ -21,10 +21,10 @@ package org.omg.dds.pub;
 import java.util.EventListener;
 
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.status.LivelinessLostStatus;
-import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
-import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
-import org.omg.dds.core.status.PublicationMatchedStatus;
+import org.omg.dds.core.status.LivelinessLostEvent;
+import org.omg.dds.core.status.OfferedDeadlineMissedEvent;
+import org.omg.dds.core.status.OfferedIncompatibleQosEvent;
+import org.omg.dds.core.status.PublicationMatchedEvent;
 
 
 /**
@@ -34,12 +34,12 @@ import org.omg.dds.core.status.PublicationMatchedStatus;
  */
 public interface PublisherListener extends EventListener {
     public void onOfferedDeadlineMissed(
-            OfferedDeadlineMissedStatus<?> status);
+            OfferedDeadlineMissedEvent<?> status);
 
     public void onOfferedIncompatibleQos(
-            OfferedIncompatibleQosStatus<?> status);
+            OfferedIncompatibleQosEvent<?> status);
 
-    public void onLivelinessLost(LivelinessLostStatus<?> status);
+    public void onLivelinessLost(LivelinessLostEvent<?> status);
 
-    public void onPublicationMatched(PublicationMatchedStatus<?> status);
+    public void onPublicationMatched(PublicationMatchedEvent<?> status);
 }

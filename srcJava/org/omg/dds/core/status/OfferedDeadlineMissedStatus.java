@@ -28,17 +28,16 @@ import org.omg.dds.pub.DataWriter;
  * The deadline that the {@link DataWriter} has committed through its
  * {@link DeadlineQosPolicy} was not respected for a specific instance.
  *
- * @param <TYPE>    The data type of the source {@link DataWriter}.
- * 
+ * @see OfferedDeadlineMissedEvent
  * @see RequestedDeadlineMissedStatus
  */
-public abstract class OfferedDeadlineMissedStatus<TYPE>
-extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
+public abstract class OfferedDeadlineMissedStatus
+extends Status<OfferedDeadlineMissedStatus> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 7958557115889148585L;
+    private static final long serialVersionUID = 6088889577826357336L;
 
 
 
@@ -50,16 +49,10 @@ extends Status<OfferedDeadlineMissedStatus<TYPE>, DataWriter<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> OfferedDeadlineMissedStatus<TYPE>
-    newOfferedDeadlineMissedStatus(Bootstrap bootstrap) {
+    public static OfferedDeadlineMissedStatus newOfferedDeadlineMissedStatus(
+            Bootstrap bootstrap)
+    {
         return bootstrap.getSPI().newOfferedDeadlineMissedStatus();
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    protected OfferedDeadlineMissedStatus(DataWriter<TYPE> source) {
-        super(source);
     }
 
 

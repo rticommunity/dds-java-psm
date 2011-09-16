@@ -63,6 +63,6 @@ extends TopicDescription<TYPE>, DomainEntity<Topic<TYPE>,
      * @see     TopicListener
      * @see     StatusCondition
      */
-    public InconsistentTopicStatus<TYPE> getInconsistentTopicStatus(
-            InconsistentTopicStatus<TYPE> status);
+    public InconsistentTopicStatus getInconsistentTopicStatus(
+            InconsistentTopicStatus status);
 }

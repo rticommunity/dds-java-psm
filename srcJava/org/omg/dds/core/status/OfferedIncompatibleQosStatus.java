@@ -31,17 +31,16 @@ import org.omg.dds.topic.Topic;
 /**
  * A {@link QosPolicy} value was incompatible with what was requested.
  *
- * @param <TYPE>    The data type of the source {@link DataWriter}.
- * 
+ * @see OfferedIncompatibleQosEvent
  * @see RequestedIncompatibleQosStatus
  */
-public abstract class OfferedIncompatibleQosStatus<TYPE>
-extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
+public abstract class OfferedIncompatibleQosStatus
+extends Status<OfferedIncompatibleQosStatus> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 8389878229396890980L;
+    private static final long serialVersionUID = 2435270267101388501L;
 
 
 
@@ -53,16 +52,9 @@ extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> OfferedIncompatibleQosStatus<TYPE>
+    public static OfferedIncompatibleQosStatus
     newOfferedIncompatibleQosStatus(Bootstrap bootstrap) {
         return bootstrap.getSPI().newOfferedIncompatibleQosStatus();
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    protected OfferedIncompatibleQosStatus(DataWriter<TYPE> source) {
-        super(source);
     }
 
 

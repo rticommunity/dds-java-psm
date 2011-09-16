@@ -18,34 +18,40 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
 
 
 /**
- * New information is available.
+ * The liveliness of one or more {@link DataWriter}s that were writing
+ * instances read through the {@link DataReader} has changed. Some
+ * DataWriter(s) have become "active" or "inactive."
  *
- * @see DataOnReadersStatus
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ * 
+ * @see LivelinessChangedStatus
+ * @see LivelinessLostEvent
  */
-public abstract class DataAvailableStatus
-extends Status<DataAvailableStatus> {
+public abstract class LivelinessChangedEvent<TYPE>
+extends StatusChangedEvent<LivelinessChangedEvent<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 8409886031912084829L;
+    private static final long serialVersionUID = -357766391795666379L;
 
 
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Methods
     // -----------------------------------------------------------------------
 
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static DataAvailableStatus
-    newDataAvailableStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDataAvailableStatus();
+    public abstract LivelinessChangedStatus getStatus();
+
+
+    // --- Object Life Cycle: ------------------------------------------------
+
+    protected LivelinessChangedEvent(DataReader<TYPE> source) {
+        super(source);
     }
 }
