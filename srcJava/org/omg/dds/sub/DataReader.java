@@ -20,7 +20,6 @@ package org.omg.dds.sub;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -502,8 +501,7 @@ extends DomainEntity<DataReader<TYPE>,
      * but the application can control where the copy is placed and the
      * application will not need to "return the loan."
      * 
-     * @return  An iterator over the returned list, as by calling
-     *          <code>samples.listIterator()</code>.
+     * @return  <code>samples</code>, for convenience.
      * 
      * @see     #read()
      * @see     #read(Query)
@@ -511,7 +509,7 @@ extends DomainEntity<DataReader<TYPE>,
      * @see     #readNextSample(Sample)
      * @see     #take(List)
      */
-    public ListIterator<TYPE> read(List<Sample<TYPE>> samples);
+    public List<Sample<TYPE>> read(List<Sample<TYPE>> samples);
 
     /**
      * This operation accesses a collection of samples from this DataReader.
@@ -525,8 +523,7 @@ extends DomainEntity<DataReader<TYPE>,
      * but the application can control where the copy is placed and the
      * application will not need to "return the loan."
      * 
-     * @return  An iterator over the returned list, as by calling
-     *          <code>samples.listIterator()</code>.
+     * @return  <code>samples</code>, for convenience.
      * 
      * @see     #read()
      * @see     #read(Query)
@@ -535,7 +532,7 @@ extends DomainEntity<DataReader<TYPE>,
      * @see     #take(List, Query)
      * @see     #createQuery(InstanceHandle, int, boolean)
      */
-    public ListIterator<TYPE> read(
+    public List<Sample<TYPE>> read(
             List<Sample<TYPE>> samples,
             Query<TYPE> query);
 
@@ -600,8 +597,7 @@ extends DomainEntity<DataReader<TYPE>,
      * but the application can control where the copy is placed and the
      * application will not need to "return the loan."
      * 
-     * @return  An iterator over the returned list, as by calling
-     *          <code>samples.listIterator()</code>.
+     * @return  <code>samples</code>, for convenience.
      * 
      * @see     #take()
      * @see     #take(Query)
@@ -609,7 +605,7 @@ extends DomainEntity<DataReader<TYPE>,
      * @see     #takeNextSample(Sample)
      * @see     #read(List)
      */
-    public ListIterator<TYPE> take(List<Sample<TYPE>> samples);
+    public List<Sample<TYPE>> take(List<Sample<TYPE>> samples);
 
     /**
      * This operation accesses a collection of samples from this DataReader.
@@ -623,8 +619,7 @@ extends DomainEntity<DataReader<TYPE>,
      * but the application can control where the copy is placed and the
      * application will not need to "return the loan."
      * 
-     * @return  An iterator over the returned list, as by calling
-     *          <code>samples.listIterator()</code>.
+     * @return  <code>samples</code>, for convenience.
      * 
      * @see     #take()
      * @see     #take(Query)
@@ -633,7 +628,7 @@ extends DomainEntity<DataReader<TYPE>,
      * @see     #read(List, Query)
      * @see     #createQuery(InstanceHandle, int, boolean)
      */
-    public ListIterator<TYPE> take(
+    public List<Sample<TYPE>> take(
             List<Sample<TYPE>> samples,
             Query<TYPE> query);
 
