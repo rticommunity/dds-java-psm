@@ -35,12 +35,10 @@ extends EntityQos<UNMOD_SELF, MOD_SELF>, ModifiableValue<UNMOD_SELF, MOD_SELF>
      * 
      * @return  the previous value of the indicated policy if that policy
      *          applies to this <code>EntityQos</code>'s {@link Entity} or
-     *          <code>null</code> otherwise. If the returned object is not
-     *          <code>null</code>, changes to it will <em>not</em> be
-     *          reflected by subsequent calls to {@link #get(Object)}.
+     *          <code>null</code> otherwise.
      * @throws  NullPointerException    if the given key or value is
      *                                  <code>null</code>.
      */
-    public <POLICY extends QosPolicy<POLICY, ?>> POLICY put(
-            Class<? extends QosPolicy<?, ?>> key, POLICY value);
+    public QosPolicy<?, ?> put(
+            Class<? extends QosPolicy<?, ?>> key, QosPolicy<?, ?> value);
 }
