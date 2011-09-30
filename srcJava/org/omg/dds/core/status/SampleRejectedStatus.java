@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.ServiceImplementationProvider;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.sub.DataReader;
 
@@ -46,10 +46,10 @@ extends Status<SampleRejectedStatus> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static SampleRejectedStatus newSampleRejectedStatus(
-            Bootstrap bootstrap)
+    public static SampleRejectedStatus newSampleRejectedStatus()
     {
-        return bootstrap.getSPI().newSampleRejectedStatus();
+        return ServiceImplementationProvider.getCurrent().
+                newSampleRejectedStatus();
     }
 
 

@@ -20,7 +20,7 @@ package org.omg.dds.core.status;
 
 import java.util.Set;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.ServiceImplementationProvider;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 import org.omg.dds.pub.DataWriter;
@@ -53,8 +53,10 @@ extends Status<RequestedIncompatibleQosStatus> {
      *                  object will belong.
      */
     public static RequestedIncompatibleQosStatus
-    newRequestedIncompatibleQosStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newRequestedIncompatibleQosStatus();
+    newRequestedIncompatibleQosStatus()
+    {
+        return ServiceImplementationProvider.getCurrent().
+                newRequestedIncompatibleQosStatus();
     }
 
 

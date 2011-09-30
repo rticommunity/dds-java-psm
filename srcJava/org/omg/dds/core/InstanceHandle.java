@@ -44,9 +44,9 @@ implements Comparable<InstanceHandle>,
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static ModifiableInstanceHandle newInstanceHandle(
-            Bootstrap bootstrap) {
-        return bootstrap.getSPI().newInstanceHandle();
+    public static ModifiableInstanceHandle newInstanceHandle()
+    {
+        return ServiceImplementationProvider.getCurrent().newInstanceHandle();
     }
 
 
@@ -56,8 +56,9 @@ implements Comparable<InstanceHandle>,
      * 
      * @return  An unmodifiable nil instance handle.
      */
-    public static InstanceHandle nilHandle(Bootstrap bootstrap) {
-        return bootstrap.getSPI().nilHandle();
+    public static InstanceHandle nilHandle()
+    {
+        return ServiceImplementationProvider.getCurrent().nilHandle();
     }
 
 

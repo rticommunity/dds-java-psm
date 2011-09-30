@@ -294,7 +294,7 @@ extends DomainEntity<DataWriter<TYPE>,
      * @see     #registerInstance(Object, long, TimeUnit)
      * @see     #unregisterInstance(InstanceHandle)
      * @see     #unregisterInstance(InstanceHandle, Object)
-     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
+     * @see     InstanceHandle#nilHandle()
      */
     public InstanceHandle registerInstance(
             TYPE instanceData) throws TimeoutException;
@@ -457,7 +457,7 @@ extends DomainEntity<DataWriter<TYPE>,
      * @see     #unregisterInstance(InstanceHandle, Object, Time)
      * @see     #unregisterInstance(InstanceHandle, Object, long, TimeUnit)
      * @see     #registerInstance(Object)
-     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
+     * @see     InstanceHandle#nilHandle()
      */
     public void unregisterInstance(
             InstanceHandle handle, 
@@ -659,7 +659,7 @@ extends DomainEntity<DataWriter<TYPE>,
      * @see     #write(Object)
      * @see     #write(Object, InstanceHandle, Time)
      * @see     #write(Object, InstanceHandle, long, TimeUnit)
-     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
+     * @see     InstanceHandle#nilHandle()
      */
     public void write(
             TYPE instanceData, 

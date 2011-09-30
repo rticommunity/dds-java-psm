@@ -20,7 +20,6 @@ package org.omg.example.dds.helloworld;
 
 import java.util.concurrent.TimeoutException;
 
-import org.omg.dds.core.Bootstrap;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.pub.DataWriter;
@@ -31,15 +30,13 @@ import org.omg.dds.type.TypeSupport;
 
 public class GreetingPublishingApp {
     public static void main(String[] args) {
-        Bootstrap bstp = Bootstrap.createInstance();
         DomainParticipantFactory factory =
-            DomainParticipantFactory.getInstance(bstp);
+                DomainParticipantFactory.getInstance();
         DomainParticipant dp = factory.createParticipant();
 
         // Implicitly register type:
         TypeSupport<Greeting> greetingType = TypeSupport.newTypeSupport(
-                Greeting.class,
-                bstp);
+                Greeting.class);
         Topic<Greeting> tp = dp.createTopic("My Topic", greetingType);
 
         Publisher pub = dp.createPublisher();

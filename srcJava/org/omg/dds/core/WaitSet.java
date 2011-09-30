@@ -99,8 +99,9 @@ public abstract class WaitSet implements DDSObject {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static WaitSet newWaitSet(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newWaitSet();
+    public static WaitSet newWaitSet()
+    {
+        return ServiceImplementationProvider.getCurrent().newWaitSet();
     }
 
 

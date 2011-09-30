@@ -52,7 +52,7 @@ import org.omg.dds.type.dynamic.DynamicTypeFactory;
  * reentrancy of any new methods that may be defined by subclasses is
  * unspecified.
  */
-public abstract class Bootstrap implements DDSObject {
+public class ServiceImplementationProvider {
     // -----------------------------------------------------------------------
     // Public Fields
     // -----------------------------------------------------------------------
@@ -70,25 +70,68 @@ public abstract class Bootstrap implements DDSObject {
         "Unable to load OMG DDS implementation. ";
 
 
+    private static volatile ServiceImplementation _defaultImpl = null;
+
+    private static final ThreadLocal<ServiceImplementation> _implPerThread =
+            new ThreadLocal<ServiceImplementation>();
+
+
 
     // -----------------------------------------------------------------------
-    // Object Life Cycle
+    // Public Methods
     // -----------------------------------------------------------------------
 
     /**
-     * Create and return a new instance of a concrete implementation of this
-     * class. This method is equivalent to calling:
+     * Get the {@link ServiceImplementation} instance that should be used for
+     * creating new objects in the current context. First, check whether a
+     * thread-specific instance has been set for the current thread. If so,
+     * return it. If not, get the global current instance.
      * 
-     * <code>createInstance((Map) null);</code>
+     * @return  the current {@link ServiceImplementation}. This method will
+     *          never return null.
      * 
-     * @see     #createInstance(Map)
-     * @see     #createInstance(String, Map)
-     * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
+     * @see     #setCurrentPerThread(ServiceImplementation)
+     * @see     #setDefault(ServiceImplementation)
      */
-    public static Bootstrap createInstance() {
-        return createInstance(null);
+    public static ServiceImplementation getCurrent()
+    {
+        /* This method is not synchronized. However, synchronization would
+         * prevent arbitrary ordering between gets and sets, and interleaving
+         * will not corrupt state.
+         */
+        ServiceImplementation current = _implPerThread.get();
+        if (current == null) {
+            /* Assign to local variable to avoid race condition in which
+             * default is changed or cleared after being checked and before
+             * being used.
+             */
+            current = _defaultImpl;
+            if (current == null) {
+                _defaultImpl = createDefaultInstance();
+            }
+        }
+        assert current != null;
+        return current;
     }
 
+
+    public static void setCurrentPerThread(ServiceImplementation newCurrent)
+    {
+        if (newCurrent == null) {
+            _implPerThread.remove();
+        } else {
+            _implPerThread.set(newCurrent);
+        }
+    }
+
+
+    public static void setDefault(ServiceImplementation newDefault)
+    {
+        _defaultImpl = newDefault;
+    }
+
+
+    // -----------------------------------------------------------------------
 
     /**
      * Create and return a new instance of a concrete implementation of this
@@ -98,11 +141,14 @@ public abstract class Bootstrap implements DDSObject {
      * createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY, environment);
      * </code>
      * 
-     * @see     #createInstance()
+     * @see     #createDefaultInstance()
      * @see     #createInstance(String, Map)
      * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
      */
-    public static Bootstrap createInstance(Map<String, Object> environment) {
+    public static ServiceImplementation createInstance(
+            Map<String,
+            Object> environment)
+    {
         return createInstance(
                 IMPLEMENTATION_CLASS_NAME_PROPERTY, environment);
     }
@@ -110,8 +156,9 @@ public abstract class Bootstrap implements DDSObject {
 
     /**
      * Look up the system property identified by the given string and load,
-     * then instantiate, the Bootstrap implementation class identified by its
-     * value. The class must be accessible and have a public constructor.
+     * then instantiate, the ServiceImplementation implementation class
+     * identified by its value. The class must be accessible and have a
+     * public constructor.
      * 
      * The public constructors of the implementation class will first be
      * searched for one accepting a single argument of type {@link Map}. If
@@ -122,30 +169,30 @@ public abstract class Bootstrap implements DDSObject {
      * implementation class provides no public constructor with either of
      * these signatures, an exception will be thrown.
      * 
-     * By default, the class loader for the <code>Bootstrap</code> class will
-     * be used to load the indicated class. If this class loader is null --
-     * for instance, if it is the bootstrap class loader -- then the system
-     * class loader will be used in its place. If it is also null, a
-     * <code>ServiceConfigurationException</code> will be thrown.
+     * By default, the class loader for the <code>ServiceImplementation</code>
+     * class will be used to load the indicated class. If this class loader
+     * is null -- for instance, if it is the bootstrap class loader -- then
+     * the system class loader will be used in its place. If it is also null,
+     * a <code>ServiceConfigurationException</code> will be thrown.
      * 
      * Neither the class loader nor the loaded class will be cached between
      * invocations of this method. As a result, execution of this method is
      * expected to be relatively expensive. However, as any DDS object can
-     * provide a reference to its creating Bootstrap via
-     * {@link DDSObject#getBootstrap()}, executions of this method are also
-     * expected to be rare.
+     * provide a reference to its creating ServiceImplementation via
+     * {@link DDSObject#getImplementation()}, executions of this method are
+     * also expected to be rare.
      * 
      * @param   implClassNameProperty       The name of a system property,
-     *          the value of which will be taken as the name of a Bootstrap
-     *          implementation class to load.
+     *          the value of which will be taken as the name of a
+     *          ServiceImplementation implementation class to load.
      * @param   environment                 A collection of name-value pairs
-     *          to be provided to the concrete Bootstrap subclass. If that
-     *          class does not provide a constructor that can accept this
-     *          environment, the environment will be ignored. This argument
-     *          may be null; a null environment shall be considered equivalent
-     *          to an empty map.
+     *          to be provided to the concrete ServiceImplementation
+     *          subclass. If that class does not provide a constructor that
+     *          can accept this environment, the environment will be ignored.
+     *          This argument may be null; a null environment shall be
+     *          considered equivalent to an empty map.
      * 
-     * @return  A non-null Bootstrap.
+     * @return  A non-null ServiceImplementation.
      * 
      * @throws  NullPointerException        If the given property name is
      *          null.
@@ -157,21 +204,24 @@ public abstract class Bootstrap implements DDSObject {
      *          example, the class may not be on the class path, it may
      *          require a native library that is not available, or an
      *          inappropriate class may have been requested (e.g. one that is
-     *          not a Bootstrap or that doesn't have a no-argument
+     *          not a ServiceImplementation or that doesn't have a no-argument
      *          constructor).
      * @throws  ServiceInitializationException  If the class was found but
      *          could not be initialized and/or instantiated because of an
      *          error that occurred within its implementation.
      * 
-     * @see     #createInstance()
-     * @see     DDSObject#getBootstrap()
+     * @see     #createDefaultInstance()
+     * @see     DDSObject#getImplementation()
      * @see     System#getProperty(String)
      * @see     Class#getClassLoader()
      * @see     ClassLoader#getSystemClassLoader()
      * @see     ClassLoader#loadClass(String)
      */
-    public static Bootstrap createInstance(
-            String implClassNameProperty, Map<String, Object> environment) {
+    public static ServiceImplementation createInstance(
+            String implClassNameProperty,
+            Map<String,
+            Object> environment)
+    {
         // --- Get implementation class name --- //
         /* System.getProperty checks the implClassNameProperty argument as
          * described in the specification for this method and throws
@@ -193,7 +243,8 @@ public abstract class Bootstrap implements DDSObject {
              * undesirable ways, both of which can cause problems in
              * container environments such as OSGi.
              */
-            ClassLoader classLoader = Bootstrap.class.getClassLoader();
+            ClassLoader classLoader =
+                    ServiceImplementationProvider.class.getClassLoader();
             if (classLoader == null) {
                 /* The class loader is the bootstrap class loader, which
                  * is not directly accessible. Substitute the system
@@ -212,7 +263,7 @@ public abstract class Bootstrap implements DDSObject {
             try {
                 // First, try a constructor that will accept the environment.
                 Constructor<?> ctor = ctxClass.getConstructor(Map.class);
-                return (Bootstrap) ctor.newInstance(environment);
+                return (ServiceImplementation) ctor.newInstance(environment);
             } catch (NoSuchMethodException nsmx) {
                 /* No Map constructor found; try a no-argument constructor
                  * instead.
@@ -224,7 +275,8 @@ public abstract class Bootstrap implements DDSObject {
                  */
                 Constructor<?> ctor = ctxClass.getConstructor(
                         (Class<?>[]) null);
-                return (Bootstrap) ctor.newInstance((Object[]) null);
+                return (ServiceImplementation) ctor.newInstance(
+                        (Object[]) null);
             }
 
             // --- Initialization problems --- //
@@ -279,7 +331,8 @@ public abstract class Bootstrap implements DDSObject {
         } catch (ClassCastException ccx) {
             // Thrown by type cast
             throw new ServiceConfigurationException(
-                    ERROR_STRING + className + " is not a Bootstrap.", ccx);
+                    ERROR_STRING + className +
+                        " is not a ServiceImplementation.", ccx);
 
             // --- Implementation problems --- //
         } catch (IllegalArgumentException argx) {
@@ -299,23 +352,32 @@ public abstract class Bootstrap implements DDSObject {
     }
 
 
-    protected Bootstrap() {
-        // empty
+
+    // -----------------------------------------------------------------------
+    // Private Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * Create and return a new instance of a concrete implementation of this
+     * class. This method is equivalent to calling:
+     * 
+     * <code>createInstance((Map) null);</code>
+     * 
+     * @see     #createInstance(Map)
+     * @see     #createInstance(String, Map)
+     * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
+     */
+    private static ServiceImplementation createDefaultInstance()
+    {
+        return createInstance(null);
     }
 
 
+    // --- Object Life Cycle: ------------------------------------------------
 
-    // -----------------------------------------------------------------------
-    // Instance Methods
-    // -----------------------------------------------------------------------
-
-    public abstract ServiceProviderInterface getSPI();
-
-
-    // --- From DDSObject: ---------------------------------------------------
-
-    public final Bootstrap getBootstrap() {
-        return this;
+    private ServiceImplementationProvider()
+    {
+        // prevent construction
     }
 
 
@@ -329,7 +391,7 @@ public abstract class Bootstrap implements DDSObject {
      * applications. It simplifies the creation of objects of certain types in
      * the DDS API.
      */
-    public static interface ServiceProviderInterface {
+    public static interface ServiceImplementation {
         // --- Singleton factories: ------------------------------------------
 
         public abstract DomainParticipantFactory getParticipantFactory();

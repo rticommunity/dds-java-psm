@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.ServiceImplementationProvider;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
@@ -51,10 +51,10 @@ extends Status<PublicationMatchedStatus> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static PublicationMatchedStatus newPublicationMatchedStatus(
-            Bootstrap bootstrap)
+    public static PublicationMatchedStatus newPublicationMatchedStatus()
     {
-        return bootstrap.getSPI().newPublicationMatchedStatus();
+        return ServiceImplementationProvider.getCurrent().
+                newPublicationMatchedStatus();
     }
 
 

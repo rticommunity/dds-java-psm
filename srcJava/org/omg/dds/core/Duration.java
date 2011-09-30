@@ -55,11 +55,15 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      *                  object will belong.
      * 
      * @see     #isInfinite()
-     * @see     #infiniteDuration(Bootstrap)
+     * @see     #infiniteDuration()
      */
     public static ModifiableDuration newDuration(
-            long duration, TimeUnit unit, Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDuration(duration, unit);
+            long duration,
+            TimeUnit unit)
+    {
+        return ServiceImplementationProvider.getCurrent().newDuration(
+                duration,
+                unit);
     }
 
 
@@ -69,8 +73,9 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      * 
      * @return  An unmodifiable {@link Duration} of infinite length.
      */
-    public static Duration infiniteDuration(Bootstrap bootstrap) {
-        return bootstrap.getSPI().infiniteDuration();
+    public static Duration infiniteDuration()
+    {
+        return ServiceImplementationProvider.getCurrent().infiniteDuration();
     }
 
 
@@ -80,8 +85,9 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      * 
      * @return  A {@link Duration} of zero length.
      */
-    public static Duration zeroDuration(Bootstrap bootstrap) {
-        return bootstrap.getSPI().zeroDuration();
+    public static Duration zeroDuration()
+    {
+        return ServiceImplementationProvider.getCurrent().zeroDuration();
     }
 
 
@@ -170,9 +176,9 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      * If this duration is infinite, the following relationship shall be
      * true:
      * 
-     * <code>this.equals(infiniteDuration(this.getBootstrap()))</code>
+     * <code>this.equals(infiniteDuration())</code>
      * 
-     * @see     #infiniteDuration(Bootstrap)
+     * @see     #infiniteDuration()
      */
     public abstract boolean isInfinite();
 
