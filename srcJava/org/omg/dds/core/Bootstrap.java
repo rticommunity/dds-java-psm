@@ -27,8 +27,6 @@ import java.util.concurrent.TimeUnit;
 import org.omg.dds.core.modifiable.ModifiableDuration;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableTime;
-import org.omg.dds.core.status.DataAvailableStatus;
-import org.omg.dds.core.status.DataOnReadersStatus;
 import org.omg.dds.core.status.InconsistentTopicStatus;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.LivelinessLostStatus;
@@ -450,10 +448,6 @@ public abstract class Bootstrap implements DDSObject {
 
         public abstract SubscriptionMatchedStatus
         newSubscriptionMatchedStatus();
-
-        public abstract DataAvailableStatus newDataAvailableStatus();
-
-        public abstract DataOnReadersStatus newDataOnReadersStatus();
 
         public abstract InconsistentTopicStatus newInconsistentTopicStatus();
     }

@@ -41,9 +41,6 @@ extends StatusChangedEvent<DataOnReadersEvent, Subscriber> {
     // Methods
     // -----------------------------------------------------------------------
 
-    public abstract DataOnReadersStatus getStatus();
-
-
     // --- Object Life Cycle: ------------------------------------------------
 
     protected DataOnReadersEvent(Subscriber source) {

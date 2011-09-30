@@ -28,7 +28,6 @@ import org.omg.dds.core.InconsistentPolicyException;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.policy.PresentationQosPolicy;
-import org.omg.dds.core.status.DataAvailableStatus;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.sub.modifiable.ModifiableDataReaderQos;
@@ -516,13 +515,13 @@ extends DomainEntity<Subscriber,
 
     /**
      * This operation invokes the operation
-     * {@link DataReaderListener#onDataAvailable(org.omg.dds.core.status.DataAvailableStatus)}
+     * {@link DataReaderListener#onDataAvailable(org.omg.dds.core.status.DataAvailableEvent)}
      * on the DataReaderListener objects attached to contained DataReader
      * entities with a {@link DataAvailableStatus} that is considered
      * changed.
      * 
      * This operation is typically invoked from
-     * {@link SubscriberListener#onDataOnReaders(org.omg.dds.core.status.DataOnReadersStatus)}.
+     * {@link SubscriberListener#onDataOnReaders(org.omg.dds.core.status.DataOnReadersEvent)}.
      * That way the SubscriberListener can delegate to the DataReaderListener
      * objects the handling of the data.
      */

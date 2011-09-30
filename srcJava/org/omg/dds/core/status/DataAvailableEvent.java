@@ -43,9 +43,6 @@ extends StatusChangedEvent<DataAvailableEvent<TYPE>, DataReader<TYPE>> {
    // Methods
    // -----------------------------------------------------------------------
 
-   public abstract DataAvailableStatus getStatus();
-
-
    // --- Object Life Cycle: ------------------------------------------------
 
     protected DataAvailableEvent(DataReader<TYPE> source) {
