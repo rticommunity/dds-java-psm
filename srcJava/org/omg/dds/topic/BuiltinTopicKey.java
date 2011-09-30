@@ -18,7 +18,6 @@
 
 package org.omg.dds.topic;
 
-import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableValue;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
@@ -34,20 +33,6 @@ implements ModifiableValue<BuiltinTopicKey, BuiltinTopicKey>
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = 5414777490591097112L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Factory Methods
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static BuiltinTopicKey newBuiltinTopicKey(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newBuiltinTopicKey();
-    }
 
 
 
