@@ -18,36 +18,28 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.pub.DataWriter;
+import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
 
 
 /**
- * A sample has been lost (never received).
+ * The {@link DataReader} has found a {@link DataWriter} that matches the
+ * {@link Topic} and has compatible QoS, or has ceased to be matched with a
+ * DataWriter that was previously considered to be matched.
  *
- * @see SampleLostEvent
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ * 
+ * @see SubscriptionMatchedStatus
+ * @see PublicationMatchedEvent
  */
-public abstract class SampleLostStatus extends Status<SampleLostStatus> {
+public abstract class SubscriptionMatchedEvent<TYPE>
+extends StatusChangedEvent<SubscriptionMatchedEvent<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 6522885693257415947L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static SampleLostStatus newSampleLostStatus(Bootstrap bootstrap)
-    {
-        return bootstrap.getSPI().newSampleLostStatus();
-    }
+    private static final long serialVersionUID = 285655835365202584L;
 
 
 
@@ -55,16 +47,12 @@ public abstract class SampleLostStatus extends Status<SampleLostStatus> {
     // Methods
     // -----------------------------------------------------------------------
 
-    /**
-     * Total cumulative count of all samples lost across all instances of
-     * data published under the {@link Topic}.
-     */
-    public abstract int getTotalCount();
+    public abstract SubscriptionMatchedStatus getStatus();
 
-    /**
-     * The incremental number of samples lost since the last time the
-     * listener was called or the status was read.
-     */
-    public abstract int getTotalCountChange();
 
+    // --- Object Life Cycle: ------------------------------------------------
+
+    protected SubscriptionMatchedEvent(DataReader<TYPE> source) {
+        super(source);
+    }
 }

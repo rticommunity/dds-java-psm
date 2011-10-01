@@ -94,7 +94,7 @@ extends DDSObject
      */
     public void setListener(
             LISTENER listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * This operation allows access to the existing set of QoS policies for
@@ -237,8 +237,8 @@ extends DDSObject
      * @return  the argument as a convenience in order to facilitate call
      *          chaining. 
      */
-    public Collection<Class<? extends Status<?, ?>>> getStatusChanges(
-            Collection<Class<? extends Status<?, ?>>> statuses);
+    public Collection<Class<? extends Status<?>>> getStatusChanges(
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * @return  the {@link InstanceHandle} that represents the Entity.

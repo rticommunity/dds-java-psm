@@ -19,7 +19,7 @@
 package org.omg.dds.domain;
 
 import org.omg.dds.core.DomainEntity;
-import org.omg.dds.core.status.InconsistentTopicStatus;
+import org.omg.dds.core.status.InconsistentTopicEvent;
 import org.omg.dds.pub.PublisherListener;
 import org.omg.dds.sub.SubscriberListener;
 
@@ -39,5 +39,5 @@ import org.omg.dds.sub.SubscriberListener;
  */
 public interface DomainParticipantListener
 extends PublisherListener, SubscriberListener {
-    public void onInconsistentTopic(InconsistentTopicStatus<?> status);
+    public void onInconsistentTopic(InconsistentTopicEvent<?> status);
 }

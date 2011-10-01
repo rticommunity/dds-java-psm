@@ -18,24 +18,27 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
-import org.omg.dds.sub.DataReader;
+import java.util.EventObject;
+
+import org.omg.dds.core.Entity;
+import org.omg.dds.core.Value;
 
 
 /**
- * New information is available.
- *
- * @param <TYPE>    The data type of the source {@link DataReader}.
+ * The status of an Entity changed.
  * 
- * @see DataOnReadersStatus
+ * @see Status
  */
-public abstract class DataAvailableStatus<TYPE>
-extends Status<DataAvailableStatus<TYPE>, DataReader<TYPE>> {
+public abstract class StatusChangedEvent<
+    SELF extends StatusChangedEvent<SELF, SOURCE>,
+    SOURCE extends Entity<SOURCE, ?, ?>>
+extends EventObject
+implements Value<SELF, SELF> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -865384611703927431L;
+    private static final long serialVersionUID = -6417894245684012290L;
 
 
 
@@ -43,19 +46,29 @@ extends Status<DataAvailableStatus<TYPE>, DataReader<TYPE>> {
     // Object Life Cycle
     // -----------------------------------------------------------------------
 
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static <TYPE> DataAvailableStatus<TYPE>
-    newDataAvailableStatus(Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDataAvailableStatus();
+    protected StatusChangedEvent(SOURCE source) {
+        super(source);
     }
 
 
+
+    // -----------------------------------------------------------------------
+    // Methods
     // -----------------------------------------------------------------------
 
-    protected DataAvailableStatus(DataReader<TYPE> source) {
-        super(source);
+    // --- API: --------------------------------------------------------------
+
+    @Override
+    public abstract SOURCE getSource();
+
+
+    @Override
+    public abstract SELF clone();
+
+
+    // --- SPI: --------------------------------------------------------------
+
+    protected void setSource(SOURCE source) {
+        super.source = source;
     }
 }

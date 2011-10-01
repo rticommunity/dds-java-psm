@@ -30,17 +30,16 @@ import org.omg.dds.topic.Topic;
  * {@link Topic} and has compatible QoS, or has ceased to be matched with a
  * DataReader that was previously considered to be matched.
  *
- * @param <TYPE>    The data type of the source {@link DataWriter}.
- * 
+ * @see PublicationMatchedEvent
  * @see SubscriptionMatchedStatus
  */
-public abstract class PublicationMatchedStatus<TYPE>
-extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
+public abstract class PublicationMatchedStatus
+extends Status<PublicationMatchedStatus> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -2133794660702966974L;
+    private static final long serialVersionUID = 275828934444687975L;
 
 
 
@@ -52,16 +51,10 @@ extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static <TYPE> PublicationMatchedStatus<TYPE>
-    newPublicationMatchedStatus(Bootstrap bootstrap) {
+    public static PublicationMatchedStatus newPublicationMatchedStatus(
+            Bootstrap bootstrap)
+    {
         return bootstrap.getSPI().newPublicationMatchedStatus();
-    }
-
-
-    // -----------------------------------------------------------------------
-
-    protected PublicationMatchedStatus(DataWriter<TYPE> source) {
-        super(source);
     }
 
 

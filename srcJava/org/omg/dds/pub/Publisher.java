@@ -129,7 +129,7 @@ extends DomainEntity<Publisher,
             Topic<TYPE> topic,
             DataWriterQos qos,
             DataWriterListener<TYPE> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data writer.
@@ -145,7 +145,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<TYPE> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Create DataWriter for built-in bytes type: ------------------------
@@ -171,7 +171,7 @@ extends DomainEntity<Publisher,
             Topic<byte[]> topic,
             DataWriterQos qos,
             DataWriterListener<byte[]> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data writer for this built-in type.
@@ -187,7 +187,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<byte[]> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Create DataWriter for built-in KeyedBytes type: -------------------
@@ -213,7 +213,7 @@ extends DomainEntity<Publisher,
             Topic<KeyedBytes> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data writer for this built-in type.
@@ -229,7 +229,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Create DataWriter for built-in string type: -----------------------
@@ -255,7 +255,7 @@ extends DomainEntity<Publisher,
             Topic<String> topic,
             DataWriterQos qos,
             DataWriterListener<String> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data writer for this built-in type.
@@ -271,7 +271,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<String> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Create DataWriter for built-in KeyedString type: ------------------
@@ -297,7 +297,7 @@ extends DomainEntity<Publisher,
             Topic<KeyedString> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedString> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
     /**
      * Create a new data writer for this built-in type.
@@ -313,7 +313,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<KeyedString> listener,
-            Collection<Class<? extends Status<?, ?>>> statuses);
+            Collection<Class<? extends Status<?>>> statuses);
 
 
     // --- Lookup operations: ------------------------------------------------

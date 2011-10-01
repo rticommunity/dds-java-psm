@@ -18,87 +18,87 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.core.status.DataAvailableStatus;
-import org.omg.dds.core.status.DataOnReadersStatus;
-import org.omg.dds.core.status.InconsistentTopicStatus;
-import org.omg.dds.core.status.LivelinessChangedStatus;
-import org.omg.dds.core.status.LivelinessLostStatus;
-import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
-import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
-import org.omg.dds.core.status.PublicationMatchedStatus;
-import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
-import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
-import org.omg.dds.core.status.SampleLostStatus;
-import org.omg.dds.core.status.SampleRejectedStatus;
-import org.omg.dds.core.status.SubscriptionMatchedStatus;
+import org.omg.dds.core.status.DataAvailableEvent;
+import org.omg.dds.core.status.DataOnReadersEvent;
+import org.omg.dds.core.status.InconsistentTopicEvent;
+import org.omg.dds.core.status.LivelinessChangedEvent;
+import org.omg.dds.core.status.LivelinessLostEvent;
+import org.omg.dds.core.status.OfferedDeadlineMissedEvent;
+import org.omg.dds.core.status.OfferedIncompatibleQosEvent;
+import org.omg.dds.core.status.PublicationMatchedEvent;
+import org.omg.dds.core.status.RequestedDeadlineMissedEvent;
+import org.omg.dds.core.status.RequestedIncompatibleQosEvent;
+import org.omg.dds.core.status.SampleLostEvent;
+import org.omg.dds.core.status.SampleRejectedEvent;
+import org.omg.dds.core.status.SubscriptionMatchedEvent;
 
 
 public class DomainParticipantAdapter implements DomainParticipantListener
 {
-    public void onInconsistentTopic(InconsistentTopicStatus<?> status)
+    public void onInconsistentTopic(InconsistentTopicEvent<?> status)
     {
         // empty
     }
 
-    public void onLivelinessLost(LivelinessLostStatus<?> status)
+    public void onLivelinessLost(LivelinessLostEvent<?> status)
     {
         // empty
     }
 
-    public void onOfferedDeadlineMissed(OfferedDeadlineMissedStatus<?> status)
+    public void onOfferedDeadlineMissed(OfferedDeadlineMissedEvent<?> status)
     {
         // empty
     }
 
     public void onOfferedIncompatibleQos(
-            OfferedIncompatibleQosStatus<?> status)
+            OfferedIncompatibleQosEvent<?> status)
     {
         // empty
     }
 
-    public void onPublicationMatched(PublicationMatchedStatus<?> status)
+    public void onPublicationMatched(PublicationMatchedEvent<?> status)
     {
         // empty
     }
 
-    public void onDataOnReaders(DataOnReadersStatus status)
+    public void onDataOnReaders(DataOnReadersEvent status)
     {
         // empty
     }
 
-    public void onDataAvailable(DataAvailableStatus<?> status)
+    public void onDataAvailable(DataAvailableEvent<?> status)
     {
         // empty
     }
 
-    public void onLivelinessChanged(LivelinessChangedStatus<?> status)
+    public void onLivelinessChanged(LivelinessChangedEvent<?> status)
     {
         // empty
     }
 
     public void onRequestedDeadlineMissed(
-            RequestedDeadlineMissedStatus<?> status)
+            RequestedDeadlineMissedEvent<?> status)
     {
         // empty
     }
 
     public void onRequestedIncompatibleQos(
-            RequestedIncompatibleQosStatus<?> status)
+            RequestedIncompatibleQosEvent<?> status)
     {
         // empty
     }
 
-    public void onSampleLost(SampleLostStatus<?> status)
+    public void onSampleLost(SampleLostEvent<?> status)
     {
         // empty
     }
 
-    public void onSampleRejected(SampleRejectedStatus<?> status)
+    public void onSampleRejected(SampleRejectedEvent<?> status)
     {
         // empty
     }
 
-    public void onSubscriptionMatched(SubscriptionMatchedStatus<?> status)
+    public void onSubscriptionMatched(SubscriptionMatchedEvent<?> status)
     {
         // empty
     }

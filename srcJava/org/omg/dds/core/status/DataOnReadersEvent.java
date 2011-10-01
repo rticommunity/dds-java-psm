@@ -18,36 +18,22 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.Bootstrap;
-import org.omg.dds.topic.Topic;
+import org.omg.dds.sub.Subscriber;
 
 
 /**
- * A sample has been lost (never received).
- *
- * @see SampleLostEvent
+ * New information is available.
+ * 
+ * @see DataOnReadersStatus
+ * @see DataAvailableEvent
  */
-public abstract class SampleLostStatus extends Status<SampleLostStatus> {
+public abstract class DataOnReadersEvent
+extends StatusChangedEvent<DataOnReadersEvent, Subscriber> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 6522885693257415947L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param bootstrap Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static SampleLostStatus newSampleLostStatus(Bootstrap bootstrap)
-    {
-        return bootstrap.getSPI().newSampleLostStatus();
-    }
+    private static final long serialVersionUID = -4742886897100340499L;
 
 
 
@@ -55,16 +41,9 @@ public abstract class SampleLostStatus extends Status<SampleLostStatus> {
     // Methods
     // -----------------------------------------------------------------------
 
-    /**
-     * Total cumulative count of all samples lost across all instances of
-     * data published under the {@link Topic}.
-     */
-    public abstract int getTotalCount();
+    // --- Object Life Cycle: ------------------------------------------------
 
-    /**
-     * The incremental number of samples lost since the last time the
-     * listener was called or the status was read.
-     */
-    public abstract int getTotalCountChange();
-
+    protected DataOnReadersEvent(Subscriber source) {
+        super(source);
+    }
 }

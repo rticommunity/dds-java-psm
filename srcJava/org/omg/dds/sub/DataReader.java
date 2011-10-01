@@ -187,8 +187,8 @@ extends DomainEntity<DataReader<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public SampleRejectedStatus<TYPE> getSampleRejectedStatus(
-            SampleRejectedStatus<TYPE> status);
+    public SampleRejectedStatus getSampleRejectedStatus(
+            SampleRejectedStatus status);
 
     /**
      * This operation allows access to the LIVELINESS_CHANGED communication
@@ -199,8 +199,8 @@ extends DomainEntity<DataReader<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public LivelinessChangedStatus<TYPE> getLivelinessChangedStatus(
-            LivelinessChangedStatus<TYPE> status);
+    public LivelinessChangedStatus getLivelinessChangedStatus(
+            LivelinessChangedStatus status);
 
     /**
      * This operation allows access to the REQUESTED_DEADLINE_MISSED
@@ -211,9 +211,8 @@ extends DomainEntity<DataReader<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public RequestedDeadlineMissedStatus<TYPE>
-    getRequestedDeadlineMissedStatus(
-            RequestedDeadlineMissedStatus<TYPE> status);
+    public RequestedDeadlineMissedStatus getRequestedDeadlineMissedStatus(
+            RequestedDeadlineMissedStatus status);
 
     /**
      * This operation allows access to the REQUESTED_INCOMPATIBLE_QOS
@@ -224,9 +223,8 @@ extends DomainEntity<DataReader<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public RequestedIncompatibleQosStatus<TYPE>
-    getRequestedIncompatibleQosStatus(
-            RequestedIncompatibleQosStatus<TYPE> status);
+    public RequestedIncompatibleQosStatus getRequestedIncompatibleQosStatus(
+            RequestedIncompatibleQosStatus status);
 
     /**
      * This operation allows access to the SUBSCRIPTION_MATCHED communication
@@ -237,8 +235,8 @@ extends DomainEntity<DataReader<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public SubscriptionMatchedStatus<TYPE> getSubscriptionMatchedStatus(
-            SubscriptionMatchedStatus<TYPE> status);
+    public SubscriptionMatchedStatus getSubscriptionMatchedStatus(
+            SubscriptionMatchedStatus status);
 
     /**
      * This operation allows access to the SAMPLE_LOST communication status.
@@ -249,8 +247,8 @@ extends DomainEntity<DataReader<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public SampleLostStatus<TYPE> getSampleLostStatus(
-            SampleLostStatus<TYPE> status);
+    public SampleLostStatus getSampleLostStatus(
+            SampleLostStatus status);
 
     /**
      * This operation is intended only for DataReader entities for which

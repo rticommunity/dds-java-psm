@@ -23,7 +23,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.core.status.DataAvailableStatus;
+import org.omg.dds.core.status.DataAvailableEvent;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.sub.DataReader;
@@ -82,9 +82,9 @@ public class GreetingSubscribingApp {
     private static class MyListener extends DataReaderAdapter<Greeting>
     {
         @Override
-        public void onDataAvailable(DataAvailableStatus<Greeting> status)
+        public void onDataAvailable(DataAvailableEvent<Greeting> evt)
         {
-            DataReader<Greeting> dr = status.getSource();
+            DataReader<Greeting> dr = evt.getSource();
             Sample.Iterator<Greeting> it = dr.take();
             while (it.hasNext()) {
                 Sample<Greeting> smp = it.next();
