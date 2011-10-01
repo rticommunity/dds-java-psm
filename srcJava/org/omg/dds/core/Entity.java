@@ -77,6 +77,26 @@ extends DDSObject
     public void setListener(LISTENER listener);
 
     /**
+     * This operation installs a Listener on the Entity. The listener will
+     * only be invoked on the changes of communication status indicated by
+     * the specified mask.
+     * 
+     * It is permitted to use null as the value of the listener. The null
+     * listener behaves as a Listener whose operations perform no action.
+     * 
+     * Only one listener can be attached to each Entity. If a listener was
+     * already set, the operation will replace it with the new one.
+     * Consequently if the value null is passed for the listener parameter,
+     * any existing listener will be removed.
+     * 
+     * @see     #getListener()
+     * @see     #setListener(EventListener)
+     */
+    public void setListener(
+            LISTENER listener,
+            Collection<Class<? extends Status<?, ?>>> statuses);
+
+    /**
      * This operation allows access to the existing set of QoS policies for
      * the Entity. This operation must be provided by each of the derived
      * Entity classes ({@link DomainParticipant}, {@link Topic},
