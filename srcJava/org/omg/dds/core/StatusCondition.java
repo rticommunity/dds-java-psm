@@ -84,5 +84,5 @@ extends Condition {
      *          there is exactly one Entity associated with each
      *          StatusCondition.
      */
-    public ENTITY getEntity();
+    public ENTITY getParent();
 }
