@@ -57,12 +57,12 @@ extends ModifiableValue<MemberProperty, MemberProperty>
      * 
      * @return  this
      */
-    public MemberProperty setType(int type);
+    public MemberProperty setTypeId(int type);
 
     /**
      * @return the type
      */
-    public int getType();
+    public int getTypeId();
 
     /**
      * @param name the name to set
