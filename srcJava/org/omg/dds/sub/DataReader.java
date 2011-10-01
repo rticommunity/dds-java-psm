@@ -105,8 +105,6 @@ extends DomainEntity<DataReader<TYPE>,
      */
     public <OTHER> DataReader<OTHER> cast();
 
-    public ReadCondition<TYPE> createReadCondition();
-
     /**
      * This operation creates a ReadCondition. The returned ReadCondition
      * will be attached and belong to the DataReader.
