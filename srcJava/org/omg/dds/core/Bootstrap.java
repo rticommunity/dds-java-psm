@@ -46,13 +46,7 @@ import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.sub.InstanceState;
 import org.omg.dds.sub.SampleState;
 import org.omg.dds.sub.ViewState;
-import org.omg.dds.topic.BuiltinTopicKey;
-import org.omg.dds.topic.ParticipantBuiltinTopicData;
-import org.omg.dds.topic.PublicationBuiltinTopicData;
-import org.omg.dds.topic.SubscriptionBuiltinTopicData;
-import org.omg.dds.topic.TopicBuiltinTopicData;
 import org.omg.dds.type.TypeSupport;
-import org.omg.dds.type.dynamic.DynamicDataFactory;
 import org.omg.dds.type.dynamic.DynamicTypeFactory;
 
 
@@ -348,8 +342,6 @@ public abstract class Bootstrap implements DDSObject {
 
         public abstract DynamicTypeFactory getTypeFactory();
 
-        public abstract DynamicDataFactory getDataFactory();
-
 
         // --- Types: --------------------------------------------------------
 
@@ -429,23 +421,6 @@ public abstract class Bootstrap implements DDSObject {
         public abstract GuardCondition newGuardCondition();
 
         public abstract WaitSet newWaitSet();
-
-
-        // --- Built-in topics: ----------------------------------------------
-
-        public abstract BuiltinTopicKey newBuiltinTopicKey();
-
-        public abstract ParticipantBuiltinTopicData
-        newParticipantBuiltinTopicData();
-
-        public abstract PublicationBuiltinTopicData
-        newPublicationBuiltinTopicData();
-
-        public abstract SubscriptionBuiltinTopicData
-        newSubscriptionBuiltinTopicData();
-
-        public abstract TopicBuiltinTopicData
-        newTopicBuiltinTopicData();
 
 
         // --- QoS: ----------------------------------------------------------
