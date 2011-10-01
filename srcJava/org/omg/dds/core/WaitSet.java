@@ -99,9 +99,8 @@ public abstract class WaitSet implements DDSObject {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static WaitSet newWaitSet()
-    {
-        return ServiceImplementationProvider.getCurrent().newWaitSet();
+    public static WaitSet newWaitSet(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newWaitSet();
     }
 
 
@@ -125,7 +124,7 @@ public abstract class WaitSet implements DDSObject {
      * already has a thread blocking on it, the operation will fail with the
      * value {@link PreconditionNotMetException}.
      */
-    public abstract void waitForConditions();
+    public abstract void waitForConditions() throws TimeoutException;
 
     /**
      * This operation allows an application thread to wait for the occurrence
@@ -143,7 +142,8 @@ public abstract class WaitSet implements DDSObject {
      * value {@link PreconditionNotMetException}.
      */
     public abstract void waitForConditions(
-            Collection<Condition> activeConditions);
+            Collection<Condition> activeConditions)
+    throws TimeoutException;
 
     /**
      * This operation allows an application thread to wait for the occurrence

@@ -20,7 +20,11 @@ package org.omg.example.dds.helloworld;
 
 
 public class Greeting {
-    private final String value = "Hello, World";
+    private final String value;
+
+    public Greeting(String value) {
+        this.value = value;
+    }
 
     public String getValue() {
         return value;

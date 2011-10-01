@@ -20,7 +20,7 @@ package org.omg.dds.core.status;
 
 import java.util.Set;
 
-import org.omg.dds.core.ServiceImplementationProvider;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 import org.omg.dds.pub.DataWriter;
@@ -31,16 +31,17 @@ import org.omg.dds.topic.Topic;
 /**
  * A {@link QosPolicy} value was incompatible with what was requested.
  *
- * @see OfferedIncompatibleQosEvent
+ * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * 
  * @see RequestedIncompatibleQosStatus
  */
-public abstract class OfferedIncompatibleQosStatus
-extends Status<OfferedIncompatibleQosStatus> {
+public abstract class OfferedIncompatibleQosStatus<TYPE>
+extends Status<OfferedIncompatibleQosStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 2435270267101388501L;
+    private static final long serialVersionUID = 8389878229396890980L;
 
 
 
@@ -52,11 +53,16 @@ extends Status<OfferedIncompatibleQosStatus> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static OfferedIncompatibleQosStatus
-    newOfferedIncompatibleQosStatus()
-    {
-        return ServiceImplementationProvider.getCurrent().
-                newOfferedIncompatibleQosStatus();
+    public static <TYPE> OfferedIncompatibleQosStatus<TYPE>
+    newOfferedIncompatibleQosStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newOfferedIncompatibleQosStatus();
+    }
+
+
+    // -----------------------------------------------------------------------
+
+    protected OfferedIncompatibleQosStatus(DataWriter<TYPE> source) {
+        super(source);
     }
 
 
@@ -80,10 +86,10 @@ extends Status<OfferedIncompatibleQosStatus> {
     public abstract int getTotalCountChange();
 
     /**
-     * The class of one of the policies that was found to be
+     * The {@link QosPolicy.Id} of one of the policies that was found to be
      * incompatible the last time an incompatibility was detected.
      */
-    public abstract Class<? extends QosPolicy<?, ?>> getLastPolicyClass();
+    public abstract QosPolicy.Id getLastPolicyId();
 
     /**
      * A list containing for each policy the total number of times that the

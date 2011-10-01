@@ -39,9 +39,8 @@ public abstract class GuardCondition implements Condition
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static GuardCondition newGuardCondition()
-    {
-        return ServiceImplementationProvider.getCurrent().newGuardCondition();
+    public static GuardCondition newGuardCondition(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newGuardCondition();
     }
 
 

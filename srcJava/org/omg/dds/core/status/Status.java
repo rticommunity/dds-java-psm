@@ -18,10 +18,11 @@
 
 package org.omg.dds.core.status;
 
+import java.util.EventObject;
 import java.util.Set;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.ServiceImplementationProvider;
 import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.modifiable.ModifiableValue;
 
@@ -36,16 +37,16 @@ import org.omg.dds.core.modifiable.ModifiableValue;
  * The changes on these status values are the ones that both cause activation
  * of the corresponding {@link StatusCondition} objects and trigger invocation
  * of the proper Listener objects to asynchronously inform the application.
- * 
- * @see StatusChangedEvent
  */
-public abstract class Status<SELF extends Status<SELF>>
+public abstract class Status<SELF extends Status<SELF, SOURCE>,
+                             SOURCE extends Entity<SOURCE, ?, ?>>
+extends EventObject
 implements ModifiableValue<SELF, SELF> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 8294883446033723160L;
+    private static final long serialVersionUID = 1989817719529565165L;
 
 
 
@@ -57,9 +58,9 @@ implements ModifiableValue<SELF, SELF> {
      * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      */
-    public static Set<Class<? extends Status<?>>> allStatuses()
-    {
-        return ServiceImplementationProvider.getCurrent().allStatusKinds();
+    public static Set<Class<? extends Status<?, ?>>> allStatuses(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().allStatusKinds();
     }
 
 
@@ -67,9 +68,16 @@ implements ModifiableValue<SELF, SELF> {
      * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      */
-    public static Set<Class<? extends Status<?>>> noStatuses()
-    {
-        return ServiceImplementationProvider.getCurrent().noStatusKinds();
+    public static Set<Class<? extends Status<?, ?>>> noStatuses(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().noStatusKinds();
+    }
+
+
+    // -----------------------------------------------------------------------
+
+    protected Status(SOURCE source) {
+        super(source);
     }
 
 
@@ -78,6 +86,19 @@ implements ModifiableValue<SELF, SELF> {
     // Methods
     // -----------------------------------------------------------------------
 
+    // --- API: --------------------------------------------------------------
+
+    @Override
+    public abstract SOURCE getSource();
+
+
     @Override
     public abstract SELF clone();
+
+
+    // --- SPI: --------------------------------------------------------------
+
+    protected void setSource(SOURCE source) {
+        super.source = source;
+    }
 }

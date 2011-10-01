@@ -25,8 +25,7 @@ import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
  * An opaque handle that can be used to refer to a local or remote entity.
  */
 public abstract class InstanceHandle
-implements Comparable<InstanceHandle>,
-           Value<InstanceHandle, ModifiableInstanceHandle>
+implements Value<InstanceHandle, ModifiableInstanceHandle>
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -44,9 +43,9 @@ implements Comparable<InstanceHandle>,
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static ModifiableInstanceHandle newInstanceHandle()
-    {
-        return ServiceImplementationProvider.getCurrent().newInstanceHandle();
+    public static ModifiableInstanceHandle newInstanceHandle(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newInstanceHandle();
     }
 
 
@@ -56,9 +55,8 @@ implements Comparable<InstanceHandle>,
      * 
      * @return  An unmodifiable nil instance handle.
      */
-    public static InstanceHandle nilHandle()
-    {
-        return ServiceImplementationProvider.getCurrent().nilHandle();
+    public static InstanceHandle nilHandle(Bootstrap bootstrap) {
+        return bootstrap.getSPI().nilHandle();
     }
 
 

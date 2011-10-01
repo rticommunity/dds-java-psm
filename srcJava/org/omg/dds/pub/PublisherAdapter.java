@@ -18,32 +18,32 @@
 
 package org.omg.dds.pub;
 
-import org.omg.dds.core.status.LivelinessLostEvent;
-import org.omg.dds.core.status.OfferedDeadlineMissedEvent;
-import org.omg.dds.core.status.OfferedIncompatibleQosEvent;
-import org.omg.dds.core.status.PublicationMatchedEvent;
+import org.omg.dds.core.status.LivelinessLostStatus;
+import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
+import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
+import org.omg.dds.core.status.PublicationMatchedStatus;
 
 
 public class PublisherAdapter implements PublisherListener
 {
-    public void onLivelinessLost(LivelinessLostEvent<?> status)
+    public void onLivelinessLost(LivelinessLostStatus<?> status)
     {
         // empty
     }
 
     public void onOfferedDeadlineMissed(
-            OfferedDeadlineMissedEvent<?> status)
+            OfferedDeadlineMissedStatus<?> status)
     {
         // empty
     }
 
     public void onOfferedIncompatibleQos(
-            OfferedIncompatibleQosEvent<?> status)
+            OfferedIncompatibleQosStatus<?> status)
     {
         // empty
     }
 
-    public void onPublicationMatched(PublicationMatchedEvent<?> status)
+    public void onPublicationMatched(PublicationMatchedStatus<?> status)
     {
         // empty
     }

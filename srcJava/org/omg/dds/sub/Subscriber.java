@@ -22,15 +22,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.InconsistentPolicyException;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.policy.PresentationQosPolicy;
+import org.omg.dds.core.status.DataAvailableStatus;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.sub.modifiable.ModifiableDataReaderQos;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;
@@ -129,7 +128,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
             DataReaderListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * Create a new data reader.
@@ -145,7 +144,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataReader of built-in bytes type: -------------------------
@@ -171,7 +170,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<byte[]> topic,
             DataReaderQos qos,
             DataReaderListener<byte[]> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -187,7 +186,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<byte[]> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataReader of built-in KeyedBytes type: --------------------
@@ -213,7 +212,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<KeyedBytes> topic,
             DataReaderQos qos,
             DataReaderListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -229,7 +228,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataReader of built-in string type: ------------------------
@@ -255,7 +254,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<String> topic,
             DataReaderQos qos,
             DataReaderListener<String> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -271,7 +270,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<String> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create DataReader of built-in KeyedString type: -------------------
@@ -297,7 +296,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<KeyedString> topic,
             DataReaderQos qos,
             DataReaderListener<KeyedString> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -313,7 +312,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<KeyedString> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Lookup operations: ------------------------------------------------
@@ -423,9 +422,11 @@ extends DomainEntity<Subscriber,
      * This operation is equivalent to calling
      * {@link #getDataReaders(Collection, Collection, Collection, Collection)}
      * with any sample state
-     * ({@link Subscriber.ReaderState#withAnySampleState()}), any view state
-     * ({@link Subscriber.ReaderState#withAnyViewState()}), and any instance
-     * state ({@link Subscriber.ReaderState#withAnyInstanceState()}).
+     * ({@link SampleState#anySampleStateSet(org.omg.dds.core.Bootstrap)}),
+     * any view state
+     * ({@link ViewState#anyViewStateSet(org.omg.dds.core.Bootstrap)}), and
+     * any instance state
+     * ({@link InstanceState#anyInstanceStateSet(org.omg.dds.core.Bootstrap)}).
      * 
      * @param   readers         a container, into which this method will place
      *          its result.
@@ -509,17 +510,19 @@ extends DomainEntity<Subscriber,
      */
     public Collection<DataReader<?>> getDataReaders(
             Collection<DataReader<?>> readers,
-            ReaderState readerState);
+            Collection<SampleState> sampleStates,
+            Collection<ViewState> viewStates,
+            Collection<InstanceState> instanceStates);
 
     /**
      * This operation invokes the operation
-     * {@link DataReaderListener#onDataAvailable(org.omg.dds.core.status.DataAvailableEvent)}
+     * {@link DataReaderListener#onDataAvailable(org.omg.dds.core.status.DataAvailableStatus)}
      * on the DataReaderListener objects attached to contained DataReader
      * entities with a {@link DataAvailableStatus} that is considered
      * changed.
      * 
      * This operation is typically invoked from
-     * {@link SubscriberListener#onDataOnReaders(org.omg.dds.core.status.DataOnReadersEvent)}.
+     * {@link SubscriberListener#onDataOnReaders(org.omg.dds.core.status.DataOnReadersStatus)}.
      * That way the SubscriberListener can delegate to the DataReaderListener
      * objects the handling of the data.
      */
@@ -632,149 +635,6 @@ extends DomainEntity<Subscriber,
      * 
      * @param   dst     the QoS, the policies of which will be overwritten.
      * @param   src     the source for the new policies to be copied.
-     * 
-     * @return  dst, as a convenience to facilitate chaining.
      */
-    public ModifiableDataReaderQos copyFromTopicQos(
-            ModifiableDataReaderQos dst, TopicQos src);
-
-
-    // --- ReaderState: ------------------------------------------------------
-
-    /**
-     * Create and return a new modifiable {@link ReaderState} object. This
-     * object will be initialized with no sample states, no instance states,
-     * and no view states.
-     * 
-     * This method shall never return null.
-     * 
-     * @return  a new {@link ReaderState} object.
-     */
-    public ReaderState createReaderState();
-
-
-    /**
-     * A ReaderState encapsulates sets of sample states, view states, and
-     * instance states as a convenience.
-     * 
-     * Instances of ReaderState may be unmodifiable, in which case methods
-     * that would change them shall throw
-     * {@link UnsupportedOperationException}.
-     */
-    public static interface ReaderState extends DDSObject, Cloneable {
-        // --- Accessors: ----------------------------------------------------
-
-        /**
-         * Get the current set of sample states. The resulting unmodifiable
-         * collection may be empty, but it shall never be null.
-         * 
-         * @return      the current set of sample states.
-         */
-        public Set<SampleState> getSampleStates();
-
-        /**
-         * Get the current set of view states. The resulting unmodifiable
-         * collection may be empty, but it shall never be null.
-         * 
-         * @return      the current set of view states.
-         */
-        public Set<ViewState> getViewStates();
-
-        /**
-         * Get the current set of instance states. The resulting unmodifiable
-         * collection may be empty, but it shall never be null.
-         * 
-         * @return      the current set of instance states.
-         */
-        public Set<InstanceState> getInstanceStates();
-
-
-        // --- Mutators: -----------------------------------------------------
-
-        /**
-         * Add the given {@link SampleState} to this ReaderState.
-         * 
-         * @param state the state to add.
-         * 
-         * @return      this
-         * 
-         * @throws      UnsupportedOperationException   if this ReaderState
-         *                                              is unmodifiable.
-         */
-        public ReaderState with(SampleState state);
-
-        /**
-         * Add the given {@link ViewState} to this ReaderState.
-         * 
-         * @param state the state to add.
-         * 
-         * @return      this
-         * 
-         * @throws      UnsupportedOperationException   if this ReaderState
-         *                                              is unmodifiable.
-         */
-        public ReaderState with(ViewState state);
-
-        /**
-         * Add the given {@link InstanceState} to this ReaderState.
-         * 
-         * @param state the state to add.
-         * 
-         * @return      this
-         * 
-         * @throws      UnsupportedOperationException   if this ReaderState
-         *                                              is unmodifiable.
-         */
-        public ReaderState with(InstanceState state);
-
-        /**
-         * Add all {@link SampleState} values to this ReaderState.
-         * 
-         * @return      this
-         * 
-         * @throws      UnsupportedOperationException   if this ReaderState
-         *                                              is unmodifiable.
-         */
-        public ReaderState withAnySampleState();
-
-        /**
-         * Add all {@link ViewState} values to this ReaderState.
-         * 
-         * @return      this
-         * 
-         * @throws      UnsupportedOperationException   if this ReaderState
-         *                                              is unmodifiable.
-         */
-        public ReaderState withAnyViewState();
-
-        /**
-         * Add all {@link InstanceState} values to this ReaderState.
-         * 
-         * @return      this
-         * 
-         * @throws      UnsupportedOperationException   if this ReaderState
-         *                                              is unmodifiable.
-         */
-        public ReaderState withAnyInstanceState();
-
-        /**
-         * Add {@link InstanceState#NOT_ALIVE_DISPOSED} and
-         * {@link InstanceState#NOT_ALIVE_NO_WRITERS} to this ReaderState.
-         * 
-         * @return      this
-         * 
-         * @throws      UnsupportedOperationException   if this ReaderState
-         *                                              is unmodifiable.
-         */
-        public ReaderState withNotAliveInstanceStates();
-
-
-        // --- From Object: --------------------------------------------------
-
-        public ReaderState clone();
-
-        public boolean equals(Object other);
-
-        public int hashCode();
-    }
+    public void copyFromTopicQos(DataReaderQos dst, TopicQos src);
 }

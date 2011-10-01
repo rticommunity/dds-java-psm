@@ -18,21 +18,23 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceImplementationProvider;
+import org.omg.dds.core.Bootstrap;
+import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
 
 
 /**
  * A sample has been lost (never received).
  *
- * @see SampleLostEvent
+ * @param <TYPE>    The data type of the source {@link DataReader}.
  */
-public abstract class SampleLostStatus extends Status<SampleLostStatus> {
+public abstract class SampleLostStatus<TYPE>
+extends Status<SampleLostStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 6522885693257415947L;
+    private static final long serialVersionUID = -520330521363610833L;
 
 
 
@@ -44,10 +46,16 @@ public abstract class SampleLostStatus extends Status<SampleLostStatus> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static SampleLostStatus newSampleLostStatus()
-    {
-        return ServiceImplementationProvider.getCurrent().
-                newSampleLostStatus();
+    public static <TYPE> SampleLostStatus<TYPE>
+    newSampleLostStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newSampleLostStatus();
+    }
+
+
+    // -----------------------------------------------------------------------
+
+    protected SampleLostStatus(DataReader<TYPE> source) {
+        super(source);
     }
 
 

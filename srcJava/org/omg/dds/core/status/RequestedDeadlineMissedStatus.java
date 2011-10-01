@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceImplementationProvider;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.sub.DataReader;
@@ -28,16 +28,17 @@ import org.omg.dds.sub.DataReader;
  * The deadline that the {@link DataReader} was expecting through its
  * {@link DeadlineQosPolicy} was not respected for a specific instance.
  *
- * @see RequestedDeadlineMissedEvent
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ * 
  * @see OfferedDeadlineMissedStatus
  */
-public abstract class RequestedDeadlineMissedStatus
-extends Status<RequestedDeadlineMissedStatus> {
+public abstract class RequestedDeadlineMissedStatus<TYPE>
+extends Status<RequestedDeadlineMissedStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 4552827018168249989L;
+    private static final long serialVersionUID = 8571367679700186607L;
 
 
 
@@ -49,11 +50,16 @@ extends Status<RequestedDeadlineMissedStatus> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static RequestedDeadlineMissedStatus
-    newRequestedDeadlineMissedStatus()
-    {
-        return ServiceImplementationProvider.getCurrent().
-                newRequestedDeadlineMissedStatus();
+    public static <TYPE> RequestedDeadlineMissedStatus<TYPE>
+    newRequestedDeadlineMissedStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newRequestedDeadlineMissedStatus();
+    }
+
+
+    // -----------------------------------------------------------------------
+
+    protected RequestedDeadlineMissedStatus(DataReader<TYPE> source) {
+        super(source);
     }
 
 

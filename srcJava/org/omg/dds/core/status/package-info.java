@@ -3,9 +3,8 @@
  * 
  * <ul>
  *     <li>Read communication statuses: i.e., those that are related to
- *         arrival of data, namely
- *         {@link org.omg.dds.core.status.DataOnReadersStatus} and
- *         {@link org.omg.dds.core.status.DataAvailableStatus}.</li>
+ *         arrival of data, namely {@link DataOnReadersStatus} and
+ *         {@link DataAvailableStatus}.</li>
  *     <li>Plain communication statuses: i.e., all the others.</li>
  * </ul>
  * 
@@ -52,9 +51,9 @@
  * does not reset the communication status.
  * 
  * For example, the value of the StatusChangedFlag associated with the
- * {@link org.omg.dds.core.status.RequestedDeadlineMissedStatus} will become
- * true each time new deadline occurs (which increases the totalCount field
- * within RequestedDeadlineMissedStatus). The value changes to false when the
+ * {@link RequestedDeadlineMissedStatus} will become true each time new
+ * deadline occurs (which increases the totalCount field within
+ * RequestedDeadlineMissedStatus). The value changes to false when the
  * application accesses the status via
  * {@link org.omg.dds.sub.DataReader#getRequestedDeadlineMissedStatus(RequestedDeadlineMissedStatus)}.
  * 
@@ -98,15 +97,15 @@
  * 
  * <ul>
  *     <li>The DATA_AVAILABLE StatusChangedFlag becomes false when either the
- *         {@link org.omg.dds.sub.DataReaderListener#onDataAvailable(DataAvailableEvent)}
+ *         {@link org.omg.dds.sub.DataReaderListener#onDataAvailable(DataAvailableStatus)}
  *         is called or the {@link org.omg.dds.sub.DataReader#read()} or
  *         {@link org.omg.dds.sub.DataReader#take()} operation (or their
  *         variants) is called on the associated DataReader.</li>
  *     <li>The DATA_ON_READERS StatusChangedFlag becomes false when any of
  *         the following events occur:<ul>
- *         <li>{@link org.omg.dds.sub.SubscriberListener#onDataOnReaders(DataOnReadersEvent)}
+ *         <li>{@link org.omg.dds.sub.SubscriberListener#onDataOnReaders(DataOnReadersStatus)}
  *             is called.</li>
- *         <li>{@link org.omg.dds.sub.DataReaderListener#onDataAvailable(DataAvailableEvent)}
+ *         <li>{@link org.omg.dds.sub.DataReaderListener#onDataAvailable(DataAvailableStatus)}
  *             is called on any DataReader belonging to the
  *             {@link org.omg.dds.sub.Subscriber}.</li>
  *         <li>The {@link org.omg.dds.sub.DataReader#read()} or

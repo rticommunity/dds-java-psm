@@ -18,40 +18,42 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
+import org.omg.dds.core.Bootstrap;
+import org.omg.dds.sub.Subscriber;
 
 
 /**
- * The liveliness of one or more {@link DataWriter}s that were writing
- * instances read through the {@link DataReader} has changed. Some
- * DataWriter(s) have become "active" or "inactive."
- *
- * @param <TYPE>    The data type of the source {@link DataReader}.
+ * New information is available.
  * 
- * @see LivelinessChangedStatus
- * @see LivelinessLostEvent
+ * @see DataAvailableStatus
  */
-public abstract class LivelinessChangedEvent<TYPE>
-extends StatusChangedEvent<LivelinessChangedEvent<TYPE>, DataReader<TYPE>> {
+public abstract class DataOnReadersStatus
+extends Status<DataOnReadersStatus, Subscriber> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -357766391795666379L;
+    private static final long serialVersionUID = -770537656671131411L;
 
 
 
     // -----------------------------------------------------------------------
-    // Methods
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
-    public abstract LivelinessChangedStatus getStatus();
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static DataOnReadersStatus newDataOnReadersStatus(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newDataOnReadersStatus();
+    }
 
 
-    // --- Object Life Cycle: ------------------------------------------------
+    // -----------------------------------------------------------------------
 
-    protected LivelinessChangedEvent(DataReader<TYPE> source) {
+    protected DataOnReadersStatus(Subscriber source) {
         super(source);
     }
 }

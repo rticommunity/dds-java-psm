@@ -20,7 +20,7 @@ package org.omg.dds.core.status;
 
 import java.util.Set;
 
-import org.omg.dds.core.ServiceImplementationProvider;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 import org.omg.dds.pub.DataWriter;
@@ -31,16 +31,17 @@ import org.omg.dds.topic.Topic;
 /**
  * A {@link QosPolicy} value was incompatible with what is offered.
  *
- * @see RequestedIncompatibleQosEvent
+ * @param <TYPE>    The data type of the source {@link DataReader}.
+ * 
  * @see OfferedIncompatibleQosStatus
  */
-public abstract class RequestedIncompatibleQosStatus
-extends Status<RequestedIncompatibleQosStatus> {
+public abstract class RequestedIncompatibleQosStatus<TYPE>
+extends Status<RequestedIncompatibleQosStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -2043838384277714409L;
+    private static final long serialVersionUID = 4709309312402183531L;
 
 
 
@@ -52,11 +53,16 @@ extends Status<RequestedIncompatibleQosStatus> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static RequestedIncompatibleQosStatus
-    newRequestedIncompatibleQosStatus()
-    {
-        return ServiceImplementationProvider.getCurrent().
-                newRequestedIncompatibleQosStatus();
+    public static <TYPE> RequestedIncompatibleQosStatus<TYPE>
+    newRequestedIncompatibleQosStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newRequestedIncompatibleQosStatus();
+    }
+
+
+    // -----------------------------------------------------------------------
+
+    protected RequestedIncompatibleQosStatus(DataReader<TYPE> source) {
+        super(source);
     }
 
 
@@ -80,10 +86,11 @@ extends Status<RequestedIncompatibleQosStatus> {
     public abstract int getTotalCountChange();
 
     /**
-     * The class of one of the policies that was found to be incompatible the
-     * last time an incompatibility was detected.
+     * The {@link org.omg.dds.core.policy.QosPolicy.Id} of one of the
+     * policies that was found to be incompatible the last time an
+     * incompatibility was detected.
      */
-    public abstract Class<? extends QosPolicy<?, ?>> getLastPolicyClass();
+    public abstract QosPolicy.Id getLastPolicyId();
 
     /**
      * A list containing for each policy the total number of times that the

@@ -18,8 +18,8 @@
 
 package org.omg.dds.type.dynamic;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.ServiceImplementationProvider;
 import org.omg.dds.type.TypeKind;
 
 
@@ -29,9 +29,12 @@ public abstract class DynamicTypeFactory implements DDSObject
     // Singleton Access
     // -----------------------------------------------------------------------
 
-    public static DynamicTypeFactory getInstance()
-    {
-        return ServiceImplementationProvider.getCurrent().getTypeFactory();
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static DynamicTypeFactory getInstance(Bootstrap bootstrap) {
+        return bootstrap.getSPI().getTypeFactory();
     }
 
 

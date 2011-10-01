@@ -72,6 +72,11 @@ extends DomainEntity<DataWriter<TYPE>,
                      DataWriterListener<TYPE>,
                      DataWriterQos> {
     /**
+     * @return  the type parameter if this object's class.
+     */
+    public Class<TYPE> getType();
+
+    /**
      * Cast this data writer to the given type, or throw an exception if
      * the cast fails.
      * 
@@ -140,8 +145,8 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public LivelinessLostStatus getLivelinessLostStatus(
-            LivelinessLostStatus status);
+    public LivelinessLostStatus<TYPE> getLivelinessLostStatus(
+            LivelinessLostStatus<TYPE> status);
 
     /**
      * This operation allows access to the OFFERED_DEADLINE_MISSED
@@ -153,8 +158,8 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public OfferedDeadlineMissedStatus getOfferedDeadlineMissedStatus(
-            OfferedDeadlineMissedStatus status);
+    public OfferedDeadlineMissedStatus<TYPE> getOfferedDeadlineMissedStatus(
+            OfferedDeadlineMissedStatus<TYPE> status);
 
     /**
      * This operation allows access to the OFFERED_INCOMPATIBLE_QOS
@@ -166,8 +171,8 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public OfferedIncompatibleQosStatus getOfferedIncompatibleQosStatus(
-            OfferedIncompatibleQosStatus status);
+    public OfferedIncompatibleQosStatus<TYPE> getOfferedIncompatibleQosStatus(
+            OfferedIncompatibleQosStatus<TYPE> status);
 
     /**
      * This operation allows access to the PUBLICATION_MATCHED
@@ -179,8 +184,8 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * @see     org.omg.dds.core.status
      */
-    public PublicationMatchedStatus getPublicationMatchedStatus(
-            PublicationMatchedStatus status);
+    public PublicationMatchedStatus<TYPE> getPublicationMatchedStatus(
+            PublicationMatchedStatus<TYPE> status);
 
     /**
      * This operation manually asserts the liveliness of the DataWriter. This
@@ -294,7 +299,7 @@ extends DomainEntity<DataWriter<TYPE>,
      * @see     #registerInstance(Object, long, TimeUnit)
      * @see     #unregisterInstance(InstanceHandle)
      * @see     #unregisterInstance(InstanceHandle, Object)
-     * @see     InstanceHandle#nilHandle()
+     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
      */
     public InstanceHandle registerInstance(
             TYPE instanceData) throws TimeoutException;
@@ -457,7 +462,7 @@ extends DomainEntity<DataWriter<TYPE>,
      * @see     #unregisterInstance(InstanceHandle, Object, Time)
      * @see     #unregisterInstance(InstanceHandle, Object, long, TimeUnit)
      * @see     #registerInstance(Object)
-     * @see     InstanceHandle#nilHandle()
+     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
      */
     public void unregisterInstance(
             InstanceHandle handle, 
@@ -580,6 +585,13 @@ extends DomainEntity<DataWriter<TYPE>,
      */
     public void write(
             TYPE instanceData) throws TimeoutException;
+    public void write(
+            TYPE instanceData, 
+            Time sourceTimestamp) throws TimeoutException;
+    public void write(
+            TYPE instanceData, 
+            long sourceTimestamp,
+            TimeUnit unit) throws TimeoutException;
 
     /**
      * This operation modifies the value of a data instance. When this
@@ -659,7 +671,7 @@ extends DomainEntity<DataWriter<TYPE>,
      * @see     #write(Object)
      * @see     #write(Object, InstanceHandle, Time)
      * @see     #write(Object, InstanceHandle, long, TimeUnit)
-     * @see     InstanceHandle#nilHandle()
+     * @see     InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)
      */
     public void write(
             TYPE instanceData, 

@@ -18,27 +18,24 @@
 
 package org.omg.dds.core.status;
 
-import java.util.EventObject;
-
-import org.omg.dds.core.Entity;
-import org.omg.dds.core.Value;
+import org.omg.dds.core.Bootstrap;
+import org.omg.dds.sub.DataReader;
 
 
 /**
- * The status of an Entity changed.
+ * New information is available.
+ *
+ * @param <TYPE>    The data type of the source {@link DataReader}.
  * 
- * @see Status
+ * @see DataOnReadersStatus
  */
-public abstract class StatusChangedEvent<
-    SELF extends StatusChangedEvent<SELF, SOURCE>,
-    SOURCE extends Entity<SOURCE, ?, ?>>
-extends EventObject
-implements Value<SELF, SELF> {
+public abstract class DataAvailableStatus<TYPE>
+extends Status<DataAvailableStatus<TYPE>, DataReader<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -6417894245684012290L;
+    private static final long serialVersionUID = -865384611703927431L;
 
 
 
@@ -46,29 +43,19 @@ implements Value<SELF, SELF> {
     // Object Life Cycle
     // -----------------------------------------------------------------------
 
-    protected StatusChangedEvent(SOURCE source) {
-        super(source);
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static <TYPE> DataAvailableStatus<TYPE>
+    newDataAvailableStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newDataAvailableStatus();
     }
 
 
-
-    // -----------------------------------------------------------------------
-    // Methods
     // -----------------------------------------------------------------------
 
-    // --- API: --------------------------------------------------------------
-
-    @Override
-    public abstract SOURCE getSource();
-
-
-    @Override
-    public abstract SELF clone();
-
-
-    // --- SPI: --------------------------------------------------------------
-
-    protected void setSource(SOURCE source) {
-        super.source = source;
+    protected DataAvailableStatus(DataReader<TYPE> source) {
+        super(source);
     }
 }

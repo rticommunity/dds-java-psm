@@ -54,8 +54,8 @@ extends Condition {
      * 
      * @see     #setEnabledStatuses(Collection)
      */
-    public Collection<Class<? extends Status<?>>> getEnabledStatuses(
-            Collection<Class<? extends Status<?>>> statuses);
+    public Collection<Class<? extends Status<?, ?>>> getEnabledStatuses(
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * This operation defines the list of communication statuses that are
@@ -77,12 +77,12 @@ extends Condition {
      * @see     #getEnabledStatuses(Collection)
      */
     public void setEnabledStatuses(
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * @return  the Entity associated with the StatusCondition. Note that
      *          there is exactly one Entity associated with each
      *          StatusCondition.
      */
-    public ENTITY getParent();
+    public ENTITY getEntity();
 }

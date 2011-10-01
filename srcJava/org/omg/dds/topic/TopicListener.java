@@ -21,7 +21,7 @@ package org.omg.dds.topic;
 import java.util.EventListener;
 
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.status.InconsistentTopicEvent;
+import org.omg.dds.core.status.InconsistentTopicStatus;
 
 
 /**
@@ -33,5 +33,6 @@ import org.omg.dds.core.status.InconsistentTopicEvent;
  *                  by the readers and writers that use to topic.
  */
 public interface TopicListener<TYPE> extends EventListener {
-    public void onInconsistentTopic(InconsistentTopicEvent<TYPE> status);
+    public void onInconsistentTopic(
+            InconsistentTopicStatus<TYPE> status);
 }

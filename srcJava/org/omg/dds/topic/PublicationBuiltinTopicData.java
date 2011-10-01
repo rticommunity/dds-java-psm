@@ -20,6 +20,7 @@ package org.omg.dds.topic;
 
 import java.util.List;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableValue;
 import org.omg.dds.core.policy.DataRepresentationQosPolicy;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
@@ -55,6 +56,21 @@ implements ModifiableValue<PublicationBuiltinTopicData,
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = -786548075816876965L;
+
+
+
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static PublicationBuiltinTopicData newPublicationBuiltinTopicData(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newPublicationBuiltinTopicData();
+    }
 
 
 

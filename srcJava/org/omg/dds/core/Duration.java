@@ -30,8 +30,7 @@ import org.omg.dds.type.Nested;
  */
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
-public abstract class Duration
-implements Value<Duration, ModifiableDuration>, Comparable<Duration>
+public abstract class Duration implements Value<Duration, ModifiableDuration>
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -55,15 +54,11 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      *                  object will belong.
      * 
      * @see     #isInfinite()
-     * @see     #infiniteDuration()
+     * @see     #infiniteDuration(Bootstrap)
      */
     public static ModifiableDuration newDuration(
-            long duration,
-            TimeUnit unit)
-    {
-        return ServiceImplementationProvider.getCurrent().newDuration(
-                duration,
-                unit);
+            long duration, TimeUnit unit, Bootstrap bootstrap) {
+        return bootstrap.getSPI().newDuration(duration, unit);
     }
 
 
@@ -73,9 +68,8 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      * 
      * @return  An unmodifiable {@link Duration} of infinite length.
      */
-    public static Duration infiniteDuration()
-    {
-        return ServiceImplementationProvider.getCurrent().infiniteDuration();
+    public static Duration infiniteDuration(Bootstrap bootstrap) {
+        return bootstrap.getSPI().infiniteDuration();
     }
 
 
@@ -85,9 +79,8 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      * 
      * @return  A {@link Duration} of zero length.
      */
-    public static Duration zeroDuration()
-    {
-        return ServiceImplementationProvider.getCurrent().zeroDuration();
+    public static Duration zeroDuration(Bootstrap bootstrap) {
+        return bootstrap.getSPI().zeroDuration();
     }
 
 
@@ -176,9 +169,9 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      * If this duration is infinite, the following relationship shall be
      * true:
      * 
-     * <code>this.equals(infiniteDuration())</code>
+     * <code>this.equals(infiniteDuration(this.getBootstrap()))</code>
      * 
-     * @see     #infiniteDuration()
+     * @see     #infiniteDuration(Bootstrap)
      */
     public abstract boolean isInfinite();
 

@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceImplementationProvider;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
@@ -30,16 +30,17 @@ import org.omg.dds.topic.Topic;
  * {@link Topic} and has compatible QoS, or has ceased to be matched with a
  * DataReader that was previously considered to be matched.
  *
- * @see PublicationMatchedEvent
+ * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * 
  * @see SubscriptionMatchedStatus
  */
-public abstract class PublicationMatchedStatus
-extends Status<PublicationMatchedStatus> {
+public abstract class PublicationMatchedStatus<TYPE>
+extends Status<PublicationMatchedStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 275828934444687975L;
+    private static final long serialVersionUID = -2133794660702966974L;
 
 
 
@@ -51,10 +52,16 @@ extends Status<PublicationMatchedStatus> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static PublicationMatchedStatus newPublicationMatchedStatus()
-    {
-        return ServiceImplementationProvider.getCurrent().
-                newPublicationMatchedStatus();
+    public static <TYPE> PublicationMatchedStatus<TYPE>
+    newPublicationMatchedStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newPublicationMatchedStatus();
+    }
+
+
+    // -----------------------------------------------------------------------
+
+    protected PublicationMatchedStatus(DataWriter<TYPE> source) {
+        super(source);
     }
 
 

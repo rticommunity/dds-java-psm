@@ -16,38 +16,30 @@
  * limitations under the License.
  */
 
-package org.omg.dds.core.status;
+package org.omg.dds.type.dynamic;
 
-import org.omg.dds.sub.DataReader;
+import org.omg.dds.core.Bootstrap;
 
 
-/**
- * A sample has been lost (never received).
- *
- * @param <TYPE>    The data type of the source {@link DataReader}.
- * 
- * @see SampleLostStatus
- */
-public abstract class SampleLostEvent<TYPE>
-extends StatusChangedEvent<SampleLostEvent<TYPE>, DataReader<TYPE>> {
+public abstract class DynamicDataFactory 
+{
     // -----------------------------------------------------------------------
-    // Constants
+    // Singleton Access
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 5998068582940180285L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    public abstract SampleLostStatus getStatus();
-
-
-    // --- Object Life Cycle: ------------------------------------------------
-
-    protected SampleLostEvent(DataReader<TYPE> source) {
-        super(source);
+    /**
+     * @param bootstrap Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static DynamicDataFactory getInstance(Bootstrap bootstrap) {
+        return bootstrap.getSPI().getDataFactory();
     }
+
+
+
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
+    public abstract DynamicData createData();
 }

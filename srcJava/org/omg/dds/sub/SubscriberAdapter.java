@@ -18,56 +18,56 @@
 
 package org.omg.dds.sub;
 
-import org.omg.dds.core.status.DataAvailableEvent;
-import org.omg.dds.core.status.DataOnReadersEvent;
-import org.omg.dds.core.status.LivelinessChangedEvent;
-import org.omg.dds.core.status.RequestedDeadlineMissedEvent;
-import org.omg.dds.core.status.RequestedIncompatibleQosEvent;
-import org.omg.dds.core.status.SampleLostEvent;
-import org.omg.dds.core.status.SampleRejectedEvent;
-import org.omg.dds.core.status.SubscriptionMatchedEvent;
+import org.omg.dds.core.status.DataAvailableStatus;
+import org.omg.dds.core.status.DataOnReadersStatus;
+import org.omg.dds.core.status.LivelinessChangedStatus;
+import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
+import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
+import org.omg.dds.core.status.SampleLostStatus;
+import org.omg.dds.core.status.SampleRejectedStatus;
+import org.omg.dds.core.status.SubscriptionMatchedStatus;
 
 
 public class SubscriberAdapter implements SubscriberListener
 {
-    public void onDataAvailable(DataAvailableEvent<?> status)
+    public void onDataAvailable(DataAvailableStatus<?> status)
     {
         // empty
     }
 
-    public void onLivelinessChanged(LivelinessChangedEvent<?> status)
+    public void onLivelinessChanged(LivelinessChangedStatus<?> status)
     {
         // empty
     }
 
     public void onRequestedDeadlineMissed(
-            RequestedDeadlineMissedEvent<?> status)
+            RequestedDeadlineMissedStatus<?> status)
     {
         // empty
     }
 
     public void onRequestedIncompatibleQos(
-            RequestedIncompatibleQosEvent<?> status)
+            RequestedIncompatibleQosStatus<?> status)
     {
         // empty
     }
 
-    public void onSampleLost(SampleLostEvent<?> status)
+    public void onSampleLost(SampleLostStatus<?> status)
     {
         // empty
     }
 
-    public void onSampleRejected(SampleRejectedEvent<?> status)
+    public void onSampleRejected(SampleRejectedStatus<?> status)
     {
         // empty
     }
 
-    public void onSubscriptionMatched(SubscriptionMatchedEvent<?> status)
+    public void onSubscriptionMatched(SubscriptionMatchedStatus<?> status)
     {
         // empty
     }
 
-    public void onDataOnReaders(DataOnReadersEvent status)
+    public void onDataOnReaders(DataOnReadersStatus status)
     {
         // empty
     }

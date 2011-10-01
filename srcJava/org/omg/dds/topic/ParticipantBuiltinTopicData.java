@@ -18,6 +18,7 @@
 
 package org.omg.dds.topic;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableValue;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.type.Extensibility;
@@ -35,6 +36,21 @@ implements ModifiableValue<ParticipantBuiltinTopicData,
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = -1531303601733890381L;
+
+
+
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param bootstrap Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static ParticipantBuiltinTopicData newParticipantBuiltinTopicData(
+            Bootstrap bootstrap) {
+        return bootstrap.getSPI().newParticipantBuiltinTopicData();
+    }
 
 
 

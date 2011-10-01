@@ -63,6 +63,15 @@ public interface KeyedBytesDataWriter extends DataWriter<KeyedBytes>
             byte[] bytes,
             int offset,
             int length,
+            InstanceHandle handle)
+    throws TimeoutException;
+
+    public void write(
+            String key,
+            byte[] bytes,
+            int offset,
+            int length,
+            InstanceHandle handle,
             Time sourceTimestamp)
     throws TimeoutException;
 
@@ -71,6 +80,7 @@ public interface KeyedBytesDataWriter extends DataWriter<KeyedBytes>
             byte[] bytes,
             int offset,
             int length,
+            InstanceHandle handle,
             long sourceTimestamp,
             TimeUnit unit)
     throws TimeoutException;

@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceImplementationProvider;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
@@ -29,17 +29,17 @@ import org.omg.dds.sub.DataReader;
  * {@link LivelinessQosPolicy} was not respected; thus {@link DataReader}
  * entities will consider the DataWriter as no longer "active."
  *
- * @see LivelinessLostEvent
- * @see LivelinessChangedStatus
+ * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * 
  * @see SubscriptionMatchedStatus
  */
-public abstract class LivelinessLostStatus
-extends Status<LivelinessLostStatus> {
+public abstract class LivelinessLostStatus<TYPE>
+extends Status<LivelinessLostStatus<TYPE>, DataWriter<TYPE>> {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = -8294734757039670162L;
+    private static final long serialVersionUID = -3741038559289576020L;
 
 
 
@@ -51,10 +51,16 @@ extends Status<LivelinessLostStatus> {
      * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static LivelinessLostStatus newLivelinessLostStatus()
-    {
-        return ServiceImplementationProvider.getCurrent().
-                newLivelinessLostStatus();
+    public static <TYPE> LivelinessLostStatus<TYPE>
+    newLivelinessLostStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newLivelinessLostStatus();
+    }
+
+
+    // -----------------------------------------------------------------------
+
+    protected LivelinessLostStatus(DataWriter<TYPE> source) {
+        super(source);
     }
 
 

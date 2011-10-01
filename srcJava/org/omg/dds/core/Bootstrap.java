@@ -27,6 +27,9 @@ import java.util.concurrent.TimeUnit;
 import org.omg.dds.core.modifiable.ModifiableDuration;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableTime;
+import org.omg.dds.core.policy.QosPolicy;
+import org.omg.dds.core.status.DataAvailableStatus;
+import org.omg.dds.core.status.DataOnReadersStatus;
 import org.omg.dds.core.status.InconsistentTopicStatus;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.LivelinessLostStatus;
@@ -40,7 +43,16 @@ import org.omg.dds.core.status.SampleRejectedStatus;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.core.status.SubscriptionMatchedStatus;
 import org.omg.dds.domain.DomainParticipantFactory;
+import org.omg.dds.sub.InstanceState;
+import org.omg.dds.sub.SampleState;
+import org.omg.dds.sub.ViewState;
+import org.omg.dds.topic.BuiltinTopicKey;
+import org.omg.dds.topic.ParticipantBuiltinTopicData;
+import org.omg.dds.topic.PublicationBuiltinTopicData;
+import org.omg.dds.topic.SubscriptionBuiltinTopicData;
+import org.omg.dds.topic.TopicBuiltinTopicData;
 import org.omg.dds.type.TypeSupport;
+import org.omg.dds.type.dynamic.DynamicDataFactory;
 import org.omg.dds.type.dynamic.DynamicTypeFactory;
 
 
@@ -52,7 +64,7 @@ import org.omg.dds.type.dynamic.DynamicTypeFactory;
  * reentrancy of any new methods that may be defined by subclasses is
  * unspecified.
  */
-public class ServiceImplementationProvider {
+public abstract class Bootstrap implements DDSObject {
     // -----------------------------------------------------------------------
     // Public Fields
     // -----------------------------------------------------------------------
@@ -70,68 +82,25 @@ public class ServiceImplementationProvider {
         "Unable to load OMG DDS implementation. ";
 
 
-    private static volatile ServiceImplementation _defaultImpl = null;
-
-    private static final ThreadLocal<ServiceImplementation> _implPerThread =
-            new ThreadLocal<ServiceImplementation>();
-
-
 
     // -----------------------------------------------------------------------
-    // Public Methods
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     /**
-     * Get the {@link ServiceImplementation} instance that should be used for
-     * creating new objects in the current context. First, check whether a
-     * thread-specific instance has been set for the current thread. If so,
-     * return it. If not, get the global current instance.
+     * Create and return a new instance of a concrete implementation of this
+     * class. This method is equivalent to calling:
      * 
-     * @return  the current {@link ServiceImplementation}. This method will
-     *          never return null.
+     * <code>createInstance((Map) null);</code>
      * 
-     * @see     #setCurrentPerThread(ServiceImplementation)
-     * @see     #setDefault(ServiceImplementation)
+     * @see     #createInstance(Map)
+     * @see     #createInstance(String, Map)
+     * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
      */
-    public static ServiceImplementation getCurrent()
-    {
-        /* This method is not synchronized. However, synchronization would
-         * prevent arbitrary ordering between gets and sets, and interleaving
-         * will not corrupt state.
-         */
-        ServiceImplementation current = _implPerThread.get();
-        if (current == null) {
-            /* Assign to local variable to avoid race condition in which
-             * default is changed or cleared after being checked and before
-             * being used.
-             */
-            current = _defaultImpl;
-            if (current == null) {
-                _defaultImpl = createDefaultInstance();
-            }
-        }
-        assert current != null;
-        return current;
+    public static Bootstrap createInstance() {
+        return createInstance(null);
     }
 
-
-    public static void setCurrentPerThread(ServiceImplementation newCurrent)
-    {
-        if (newCurrent == null) {
-            _implPerThread.remove();
-        } else {
-            _implPerThread.set(newCurrent);
-        }
-    }
-
-
-    public static void setDefault(ServiceImplementation newDefault)
-    {
-        _defaultImpl = newDefault;
-    }
-
-
-    // -----------------------------------------------------------------------
 
     /**
      * Create and return a new instance of a concrete implementation of this
@@ -141,14 +110,11 @@ public class ServiceImplementationProvider {
      * createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY, environment);
      * </code>
      * 
-     * @see     #createDefaultInstance()
+     * @see     #createInstance()
      * @see     #createInstance(String, Map)
      * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
      */
-    public static ServiceImplementation createInstance(
-            Map<String,
-            Object> environment)
-    {
+    public static Bootstrap createInstance(Map<String, Object> environment) {
         return createInstance(
                 IMPLEMENTATION_CLASS_NAME_PROPERTY, environment);
     }
@@ -156,9 +122,8 @@ public class ServiceImplementationProvider {
 
     /**
      * Look up the system property identified by the given string and load,
-     * then instantiate, the ServiceImplementation implementation class
-     * identified by its value. The class must be accessible and have a
-     * public constructor.
+     * then instantiate, the Bootstrap implementation class identified by its
+     * value. The class must be accessible and have a public constructor.
      * 
      * The public constructors of the implementation class will first be
      * searched for one accepting a single argument of type {@link Map}. If
@@ -169,30 +134,30 @@ public class ServiceImplementationProvider {
      * implementation class provides no public constructor with either of
      * these signatures, an exception will be thrown.
      * 
-     * By default, the class loader for the <code>ServiceImplementation</code>
-     * class will be used to load the indicated class. If this class loader
-     * is null -- for instance, if it is the bootstrap class loader -- then
-     * the system class loader will be used in its place. If it is also null,
-     * a <code>ServiceConfigurationException</code> will be thrown.
+     * By default, the class loader for the <code>Bootstrap</code> class will
+     * be used to load the indicated class. If this class loader is null --
+     * for instance, if it is the bootstrap class loader -- then the system
+     * class loader will be used in its place. If it is also null, a
+     * <code>ServiceConfigurationException</code> will be thrown.
      * 
      * Neither the class loader nor the loaded class will be cached between
      * invocations of this method. As a result, execution of this method is
      * expected to be relatively expensive. However, as any DDS object can
-     * provide a reference to its creating ServiceImplementation via
-     * {@link DDSObject#getImplementation()}, executions of this method are
-     * also expected to be rare.
+     * provide a reference to its creating Bootstrap via
+     * {@link DDSObject#getBootstrap()}, executions of this method are also
+     * expected to be rare.
      * 
      * @param   implClassNameProperty       The name of a system property,
-     *          the value of which will be taken as the name of a
-     *          ServiceImplementation implementation class to load.
+     *          the value of which will be taken as the name of a Bootstrap
+     *          implementation class to load.
      * @param   environment                 A collection of name-value pairs
-     *          to be provided to the concrete ServiceImplementation
-     *          subclass. If that class does not provide a constructor that
-     *          can accept this environment, the environment will be ignored.
-     *          This argument may be null; a null environment shall be
-     *          considered equivalent to an empty map.
+     *          to be provided to the concrete Bootstrap subclass. If that
+     *          class does not provide a constructor that can accept this
+     *          environment, the environment will be ignored. This argument
+     *          may be null; a null environment shall be considered equivalent
+     *          to an empty map.
      * 
-     * @return  A non-null ServiceImplementation.
+     * @return  A non-null Bootstrap.
      * 
      * @throws  NullPointerException        If the given property name is
      *          null.
@@ -204,24 +169,21 @@ public class ServiceImplementationProvider {
      *          example, the class may not be on the class path, it may
      *          require a native library that is not available, or an
      *          inappropriate class may have been requested (e.g. one that is
-     *          not a ServiceImplementation or that doesn't have a no-argument
+     *          not a Bootstrap or that doesn't have a no-argument
      *          constructor).
      * @throws  ServiceInitializationException  If the class was found but
      *          could not be initialized and/or instantiated because of an
      *          error that occurred within its implementation.
      * 
-     * @see     #createDefaultInstance()
-     * @see     DDSObject#getImplementation()
+     * @see     #createInstance()
+     * @see     DDSObject#getBootstrap()
      * @see     System#getProperty(String)
      * @see     Class#getClassLoader()
      * @see     ClassLoader#getSystemClassLoader()
      * @see     ClassLoader#loadClass(String)
      */
-    public static ServiceImplementation createInstance(
-            String implClassNameProperty,
-            Map<String,
-            Object> environment)
-    {
+    public static Bootstrap createInstance(
+            String implClassNameProperty, Map<String, Object> environment) {
         // --- Get implementation class name --- //
         /* System.getProperty checks the implClassNameProperty argument as
          * described in the specification for this method and throws
@@ -243,8 +205,7 @@ public class ServiceImplementationProvider {
              * undesirable ways, both of which can cause problems in
              * container environments such as OSGi.
              */
-            ClassLoader classLoader =
-                    ServiceImplementationProvider.class.getClassLoader();
+            ClassLoader classLoader = Bootstrap.class.getClassLoader();
             if (classLoader == null) {
                 /* The class loader is the bootstrap class loader, which
                  * is not directly accessible. Substitute the system
@@ -263,7 +224,7 @@ public class ServiceImplementationProvider {
             try {
                 // First, try a constructor that will accept the environment.
                 Constructor<?> ctor = ctxClass.getConstructor(Map.class);
-                return (ServiceImplementation) ctor.newInstance(environment);
+                return (Bootstrap) ctor.newInstance(environment);
             } catch (NoSuchMethodException nsmx) {
                 /* No Map constructor found; try a no-argument constructor
                  * instead.
@@ -275,8 +236,7 @@ public class ServiceImplementationProvider {
                  */
                 Constructor<?> ctor = ctxClass.getConstructor(
                         (Class<?>[]) null);
-                return (ServiceImplementation) ctor.newInstance(
-                        (Object[]) null);
+                return (Bootstrap) ctor.newInstance((Object[]) null);
             }
 
             // --- Initialization problems --- //
@@ -331,8 +291,7 @@ public class ServiceImplementationProvider {
         } catch (ClassCastException ccx) {
             // Thrown by type cast
             throw new ServiceConfigurationException(
-                    ERROR_STRING + className +
-                        " is not a ServiceImplementation.", ccx);
+                    ERROR_STRING + className + " is not a Bootstrap.", ccx);
 
             // --- Implementation problems --- //
         } catch (IllegalArgumentException argx) {
@@ -352,32 +311,23 @@ public class ServiceImplementationProvider {
     }
 
 
-
-    // -----------------------------------------------------------------------
-    // Private Methods
-    // -----------------------------------------------------------------------
-
-    /**
-     * Create and return a new instance of a concrete implementation of this
-     * class. This method is equivalent to calling:
-     * 
-     * <code>createInstance((Map) null);</code>
-     * 
-     * @see     #createInstance(Map)
-     * @see     #createInstance(String, Map)
-     * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
-     */
-    private static ServiceImplementation createDefaultInstance()
-    {
-        return createInstance(null);
+    protected Bootstrap() {
+        // empty
     }
 
 
-    // --- Object Life Cycle: ------------------------------------------------
 
-    private ServiceImplementationProvider()
-    {
-        // prevent construction
+    // -----------------------------------------------------------------------
+    // Instance Methods
+    // -----------------------------------------------------------------------
+
+    public abstract ServiceProviderInterface getSPI();
+
+
+    // --- From DDSObject: ---------------------------------------------------
+
+    public final Bootstrap getBootstrap() {
+        return this;
     }
 
 
@@ -391,12 +341,14 @@ public class ServiceImplementationProvider {
      * applications. It simplifies the creation of objects of certain types in
      * the DDS API.
      */
-    public static interface ServiceImplementation {
+    public static interface ServiceProviderInterface {
         // --- Singleton factories: ------------------------------------------
 
         public abstract DomainParticipantFactory getParticipantFactory();
 
         public abstract DynamicTypeFactory getTypeFactory();
+
+        public abstract DynamicDataFactory getDataFactory();
 
 
         // --- Types: --------------------------------------------------------
@@ -479,38 +431,81 @@ public class ServiceImplementationProvider {
         public abstract WaitSet newWaitSet();
 
 
+        // --- Built-in topics: ----------------------------------------------
+
+        public abstract BuiltinTopicKey newBuiltinTopicKey();
+
+        public abstract ParticipantBuiltinTopicData
+        newParticipantBuiltinTopicData();
+
+        public abstract PublicationBuiltinTopicData
+        newPublicationBuiltinTopicData();
+
+        public abstract SubscriptionBuiltinTopicData
+        newSubscriptionBuiltinTopicData();
+
+        public abstract TopicBuiltinTopicData
+        newTopicBuiltinTopicData();
+
+
+        // --- QoS: ----------------------------------------------------------
+
+        public abstract QosPolicy.Id getQosPolicyId(
+                Class<? extends QosPolicy<?, ?>> policyClass);
+
+
         // --- Status: -------------------------------------------------------
 
-        public abstract Set<Class<? extends Status<?>>> allStatusKinds();
+        public abstract Set<Class<? extends Status<?, ?>>> allStatusKinds();
 
-        public abstract Set<Class<? extends Status<?>>> noStatusKinds();
+        public abstract Set<Class<? extends Status<?, ?>>> noStatusKinds();
 
-        public abstract LivelinessLostStatus newLivelinessLostStatus();
+        public abstract <TYPE> LivelinessLostStatus<TYPE>
+        newLivelinessLostStatus();
 
-        public abstract OfferedDeadlineMissedStatus
+        public abstract <TYPE> OfferedDeadlineMissedStatus<TYPE>
         newOfferedDeadlineMissedStatus();
 
-        public abstract OfferedIncompatibleQosStatus
+        public abstract <TYPE> OfferedIncompatibleQosStatus<TYPE>
         newOfferedIncompatibleQosStatus();
 
-        public abstract PublicationMatchedStatus
+        public abstract <TYPE> PublicationMatchedStatus<TYPE>
         newPublicationMatchedStatus();
 
-        public abstract LivelinessChangedStatus newLivelinessChangedStatus();
+        public abstract <TYPE> LivelinessChangedStatus<TYPE>
+        newLivelinessChangedStatus();
 
-        public abstract RequestedDeadlineMissedStatus
+        public abstract <TYPE> RequestedDeadlineMissedStatus<TYPE>
         newRequestedDeadlineMissedStatus();
 
-        public abstract RequestedIncompatibleQosStatus
+        public abstract <TYPE> RequestedIncompatibleQosStatus<TYPE>
         newRequestedIncompatibleQosStatus();
 
-        public abstract SampleLostStatus newSampleLostStatus();
+        public abstract <TYPE> SampleLostStatus<TYPE> newSampleLostStatus();
 
-        public abstract SampleRejectedStatus newSampleRejectedStatus();
+        public abstract <TYPE> SampleRejectedStatus<TYPE>
+        newSampleRejectedStatus();
 
-        public abstract SubscriptionMatchedStatus
+        public abstract <TYPE> SubscriptionMatchedStatus<TYPE>
         newSubscriptionMatchedStatus();
 
-        public abstract InconsistentTopicStatus newInconsistentTopicStatus();
+        public abstract <TYPE> DataAvailableStatus<TYPE>
+        newDataAvailableStatus();
+
+        public abstract DataOnReadersStatus newDataOnReadersStatus();
+
+        public abstract <TYPE> InconsistentTopicStatus<TYPE>
+        newInconsistentTopicStatus();
+
+
+        // --- Sample & Instance Life Cycle: ---------------------------------
+
+        public abstract Set<InstanceState> anyInstanceStateSet();
+
+        public abstract Set<InstanceState> notAliveInstanceStateSet();
+
+        public abstract Set<SampleState> anySampleStateSet();
+
+        public abstract Set<ViewState> anyViewStateSet();
     }
 }

@@ -114,7 +114,7 @@ extends Entity<DomainParticipant,
     public Publisher createPublisher(
             PublisherQos qos,
             PublisherListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * This operation creates a Publisher.
@@ -133,7 +133,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             PublisherListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     // --- Create Subscriber: ------------------------------------------------
 
@@ -167,7 +167,7 @@ extends Entity<DomainParticipant,
     public Subscriber createSubscriber(
             SubscriberQos qos,
             SubscriberListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * This operation creates a Subscriber.
@@ -186,7 +186,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             SubscriberListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * This operation allows access to the built-in Subscriber. Each
@@ -245,7 +245,7 @@ extends Entity<DomainParticipant,
             Class<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * This operation creates a Topic with the desired QoS policies and
@@ -269,7 +269,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             TopicListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Create Topic with explicit TypeSupport: ---------------------------
@@ -314,7 +314,7 @@ extends Entity<DomainParticipant,
             TypeSupport<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * This operation creates a Topic with the desired QoS policies and
@@ -337,7 +337,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             TopicListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
 
     // --- Other operations: -------------------------------------------------
@@ -473,7 +473,7 @@ extends Entity<DomainParticipant,
      * @param   <TYPE>  The type of all samples subscribed to with the new
      *                  MultiTopic.
      * @param   name    The name of the new MultiTopic.
-     * @param   type    The resulting type. The Service will attempt to
+     * @param   typeName The resulting type. The Service will attempt to
      *                  locate an appropriate {@link TypeSupport} instance
      *                  based on this type.
      * @param   subscriptionExpression  The list of topics and the logic used
@@ -483,29 +483,7 @@ extends Entity<DomainParticipant,
      */
     public <TYPE> MultiTopic<TYPE> createMultiTopic(
             String name,
-            Class<TYPE> type,
-            String subscriptionExpression,
-            List<String> expressionParameters);
-
-    /**
-     * This operation creates a MultiTopic. A MultiTopic can be used to
-     * subscribe to multiple topics and combine/filter the received data into
-     * a resulting type. In particular, MultiTopic provides a content-based
-     * subscription mechanism.
-     * 
-     * @param   <TYPE>  The type of all samples subscribed to with the new
-     *                  MultiTopic.
-     * @param   name    The name of the new MultiTopic.
-     * @param   type    A {@link TypeSupport} representing the resulting
-     *                  type.
-     * @param   subscriptionExpression  The list of topics and the logic used
-     *          to combine filter and re-arrange the information from each
-     *          Topic.
-     * @param   expressionParameters    Parameters to the filterExpression.
-     */
-    public <TYPE> MultiTopic<TYPE> createMultiTopic(
-            String name,
-            TypeSupport<TYPE> type,
+            String typeName,
             String subscriptionExpression,
             List<String> expressionParameters);
 

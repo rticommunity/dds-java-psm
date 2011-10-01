@@ -20,18 +20,19 @@ package org.omg.dds.domain;
 
 import java.util.Collection;
 
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.InconsistentPolicyException;
-import org.omg.dds.core.ServiceImplementationProvider;
 import org.omg.dds.core.status.Status;
 
 
 /**
  * The sole purpose of this class is to allow the creation and destruction of
  * {@link DomainParticipant} objects. DomainParticipantFactory itself has no
- * factory. It is a pre-existing singleton object that can be accessed by
- * means of {@link #getInstance()}.
+ * factory. It is a pre-existing per-{@link Bootstrap} singleton object that
+ * can be accessed by means of the {@link #getInstance(Bootstrap)} operation
+ * on the DomainParticipantFactory.
  */
 public abstract class DomainParticipantFactory implements DDSObject
 {
@@ -40,21 +41,20 @@ public abstract class DomainParticipantFactory implements DDSObject
     // -----------------------------------------------------------------------
 
     /**
-     * This operation returns the DomainParticipantFactory singleton. The
-     * operation is idempotent, that is, it can be called multiple times
-     * without side effects, and each time it will return a
+     * This operation returns the per-Bootstrap DomainParticipantFactory
+     * singleton. The operation is idempotent, that is, it can be called
+     * multiple times without side effects, and each time it will return a
      * DomainParticipantFactory instance that is equal to the previous
      * results.
      * 
      * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      *
+     * @see     Bootstrap
      * @see     Object#equals(Object)
      */
-    public static DomainParticipantFactory getInstance()
-    {
-        return ServiceImplementationProvider.getCurrent().
-                getParticipantFactory();
+    public static DomainParticipantFactory getInstance(Bootstrap bootstrap) {
+        return bootstrap.getSPI().getParticipantFactory();
     }
 
 
@@ -103,7 +103,7 @@ public abstract class DomainParticipantFactory implements DDSObject
             int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * Create a new domain participant.
@@ -119,7 +119,7 @@ public abstract class DomainParticipantFactory implements DDSObject
             String qosLibraryName,
             String qosProfileName,
             DomainParticipantListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status<?, ?>>> statuses);
 
     /**
      * This operation retrieves a previously created DomainParticipant

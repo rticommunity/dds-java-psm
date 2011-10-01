@@ -21,6 +21,7 @@ package org.omg.dds.type.builtin;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.Time;
 import org.omg.dds.pub.DataWriter;
 
@@ -34,6 +35,14 @@ public interface BytesDataWriter extends DataWriter<byte[]>
             byte[] bytes,
             int offset,
             int length,
+            InstanceHandle handle)
+    throws TimeoutException;
+
+    public void write(
+            byte[] bytes,
+            int offset,
+            int length,
+            InstanceHandle handle,
             Time sourceTimestamp)
     throws TimeoutException;
 
@@ -41,6 +50,7 @@ public interface BytesDataWriter extends DataWriter<byte[]>
             byte[] bytes,
             int offset,
             int length,
+            InstanceHandle handle,
             long sourceTimestamp,
             TimeUnit unit)
     throws TimeoutException;
