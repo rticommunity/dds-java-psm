@@ -52,7 +52,7 @@ import org.omg.dds.type.dynamic.DynamicTypeFactory;
  * reentrancy of any new methods that may be defined by subclasses is
  * unspecified.
  */
-public class ServiceImplementationProvider {
+public abstract class ServiceEnvironment implements DDSObject {
     // -----------------------------------------------------------------------
     // Public Fields
     // -----------------------------------------------------------------------
@@ -70,67 +70,9 @@ public class ServiceImplementationProvider {
         "Unable to load OMG DDS implementation. ";
 
 
-    private static volatile ServiceImplementation _defaultImpl = null;
-
-    private static final ThreadLocal<ServiceImplementation> _implPerThread =
-            new ThreadLocal<ServiceImplementation>();
-
-
 
     // -----------------------------------------------------------------------
-    // Public Methods
-    // -----------------------------------------------------------------------
-
-    /**
-     * Get the {@link ServiceImplementation} instance that should be used for
-     * creating new objects in the current context. First, check whether a
-     * thread-specific instance has been set for the current thread. If so,
-     * return it. If not, get the global current instance.
-     * 
-     * @return  the current {@link ServiceImplementation}. This method will
-     *          never return null.
-     * 
-     * @see     #setCurrentPerThread(ServiceImplementation)
-     * @see     #setDefault(ServiceImplementation)
-     */
-    public static ServiceImplementation getCurrent()
-    {
-        /* This method is not synchronized. However, synchronization would
-         * prevent arbitrary ordering between gets and sets, and interleaving
-         * will not corrupt state.
-         */
-        ServiceImplementation current = _implPerThread.get();
-        if (current == null) {
-            /* Assign to local variable to avoid race condition in which
-             * default is changed or cleared after being checked and before
-             * being used.
-             */
-            current = _defaultImpl;
-            if (current == null) {
-                _defaultImpl = createDefaultInstance();
-            }
-        }
-        assert current != null;
-        return current;
-    }
-
-
-    public static void setCurrentPerThread(ServiceImplementation newCurrent)
-    {
-        if (newCurrent == null) {
-            _implPerThread.remove();
-        } else {
-            _implPerThread.set(newCurrent);
-        }
-    }
-
-
-    public static void setDefault(ServiceImplementation newDefault)
-    {
-        _defaultImpl = newDefault;
-    }
-
-
+    // Object Life Cycle
     // -----------------------------------------------------------------------
 
     /**
@@ -138,25 +80,25 @@ public class ServiceImplementationProvider {
      * class with the given environment. This method is equivalent to calling:
      * 
      * <code>
-     * createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY, environment);
+     * createInstance(IMPLEMENTATION_CLASS_NAME_PROPERTY, null, classLoader);
      * </code>
      * 
-     * @see     #createDefaultInstance()
-     * @see     #createInstance(String, Map)
+     * @see     #createInstance(String, Map, ClassLoader)
      * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
      */
-    public static ServiceImplementation createInstance(
-            Map<String,
-            Object> environment)
+    public static ServiceEnvironment createInstance(
+            ClassLoader classLoader)
     {
         return createInstance(
-                IMPLEMENTATION_CLASS_NAME_PROPERTY, environment);
+                IMPLEMENTATION_CLASS_NAME_PROPERTY,
+                null,
+                classLoader);
     }
 
 
     /**
      * Look up the system property identified by the given string and load,
-     * then instantiate, the ServiceImplementation implementation class
+     * then instantiate, the ServiceEnvironment implementation class
      * identified by its value. The class must be accessible and have a
      * public constructor.
      * 
@@ -169,7 +111,7 @@ public class ServiceImplementationProvider {
      * implementation class provides no public constructor with either of
      * these signatures, an exception will be thrown.
      * 
-     * By default, the class loader for the <code>ServiceImplementation</code>
+     * By default, the class loader for the <code>ServiceEnvironment</code>
      * class will be used to load the indicated class. If this class loader
      * is null -- for instance, if it is the bootstrap class loader -- then
      * the system class loader will be used in its place. If it is also null,
@@ -178,21 +120,25 @@ public class ServiceImplementationProvider {
      * Neither the class loader nor the loaded class will be cached between
      * invocations of this method. As a result, execution of this method is
      * expected to be relatively expensive. However, as any DDS object can
-     * provide a reference to its creating ServiceImplementation via
-     * {@link DDSObject#getImplementation()}, executions of this method are
-     * also expected to be rare.
+     * provide a reference to its creating ServiceEnvironment via
+     * {@link DDSObject#getEnvironment()}, executions of this method are also
+     * expected to be rare.
      * 
      * @param   implClassNameProperty       The name of a system property,
      *          the value of which will be taken as the name of a
-     *          ServiceImplementation implementation class to load.
+     *          ServiceEnvironment implementation class to load.
      * @param   environment                 A collection of name-value pairs
-     *          to be provided to the concrete ServiceImplementation
-     *          subclass. If that class does not provide a constructor that
-     *          can accept this environment, the environment will be ignored.
-     *          This argument may be null; a null environment shall be
-     *          considered equivalent to an empty map.
+     *          to be provided to the concrete ServiceEnvironment subclass.
+     *          If that class does not provide a constructor that can accept
+     *          this environment, the environment will be ignored. This
+     *          argument may be null; a null environment shall be considered
+     *          equivalent to an empty map.
+     * @param   classLoader                 The class loader to use to load
+     *          the service implementation class. If it is null, this class's
+     *          class loader will be used if it is accessible; otherwise, the
+     *          system class loader will be used.
      * 
-     * @return  A non-null ServiceImplementation.
+     * @return  A non-null ServiceEnvironment.
      * 
      * @throws  NullPointerException        If the given property name is
      *          null.
@@ -204,23 +150,23 @@ public class ServiceImplementationProvider {
      *          example, the class may not be on the class path, it may
      *          require a native library that is not available, or an
      *          inappropriate class may have been requested (e.g. one that is
-     *          not a ServiceImplementation or that doesn't have a no-argument
+     *          not a ServiceEnvironment or that doesn't have a no-argument
      *          constructor).
      * @throws  ServiceInitializationException  If the class was found but
      *          could not be initialized and/or instantiated because of an
      *          error that occurred within its implementation.
      * 
-     * @see     #createDefaultInstance()
-     * @see     DDSObject#getImplementation()
+     * @see     #createInstance(ClassLoader)
+     * @see     DDSObject#getEnvironment()
      * @see     System#getProperty(String)
      * @see     Class#getClassLoader()
      * @see     ClassLoader#getSystemClassLoader()
      * @see     ClassLoader#loadClass(String)
      */
-    public static ServiceImplementation createInstance(
+    public static ServiceEnvironment createInstance(
             String implClassNameProperty,
-            Map<String,
-            Object> environment)
+            Map<String, Object> environment,
+            ClassLoader classLoader)
     {
         // --- Get implementation class name --- //
         /* System.getProperty checks the implClassNameProperty argument as
@@ -237,33 +183,23 @@ public class ServiceImplementationProvider {
 
         try {
             // --- Load implementation class --- //
+            if (classLoader == null) {
+                classLoader = getDefaultClassLoader();
+            }
+            assert classLoader != null;
             /* IMPORTANT: Load class with ClassLoader.loadClass, not with
              * Class.forName. The latter provides insufficient control over
              * the class loader used and also caches class references in
              * undesirable ways, both of which can cause problems in
              * container environments such as OSGi.
              */
-            ClassLoader classLoader =
-                    ServiceImplementationProvider.class.getClassLoader();
-            if (classLoader == null) {
-                /* The class loader is the bootstrap class loader, which
-                 * is not directly accessible. Substitute the system
-                 * class loader.
-                 */
-                classLoader = ClassLoader.getSystemClassLoader();
-                if (classLoader == null) {
-                    throw new ServiceConfigurationException(
-                        ERROR_STRING +
-                            "Incorrect system class loader configuration.");
-                }
-            }
             Class<?> ctxClass = classLoader.loadClass(className);
 
             // --- Instantiate new object --- //
             try {
                 // First, try a constructor that will accept the environment.
                 Constructor<?> ctor = ctxClass.getConstructor(Map.class);
-                return (ServiceImplementation) ctor.newInstance(environment);
+                return (ServiceEnvironment) ctor.newInstance(environment);
             } catch (NoSuchMethodException nsmx) {
                 /* No Map constructor found; try a no-argument constructor
                  * instead.
@@ -275,8 +211,7 @@ public class ServiceImplementationProvider {
                  */
                 Constructor<?> ctor = ctxClass.getConstructor(
                         (Class<?>[]) null);
-                return (ServiceImplementation) ctor.newInstance(
-                        (Object[]) null);
+                return (ServiceEnvironment) ctor.newInstance((Object[]) null);
             }
 
             // --- Initialization problems --- //
@@ -293,9 +228,6 @@ public class ServiceImplementationProvider {
                     itx.getCause());
 
             // --- Configuration problems --- //
-        } catch (IllegalStateException isx) {
-            // Thrown by ClassLoader.getSystemClassLoader.
-            throw new ServiceConfigurationException(ERROR_STRING, isx);
         } catch (ClassNotFoundException cnfx) {
             // Thrown by ClassLoader.loadClass.
             throw new ServiceConfigurationException(
@@ -324,7 +256,6 @@ public class ServiceImplementationProvider {
                     ERROR_STRING + className + " could not be instantiated.",
                     ix);
         } catch (SecurityException sx) {
-            // Thrown by ClassLoader.getSystemClassLoader.
             // Thrown by Class.getConstructor.
             throw new ServiceConfigurationException(
                     ERROR_STRING + "Prevented by security manager.", sx);
@@ -332,7 +263,7 @@ public class ServiceImplementationProvider {
             // Thrown by type cast
             throw new ServiceConfigurationException(
                     ERROR_STRING + className +
-                        " is not a ServiceImplementation.", ccx);
+                        " is not a ServiceEnvironment.", ccx);
 
             // --- Implementation problems --- //
         } catch (IllegalArgumentException argx) {
@@ -354,30 +285,96 @@ public class ServiceImplementationProvider {
 
 
     // -----------------------------------------------------------------------
-    // Private Methods
+    // Instance Methods
     // -----------------------------------------------------------------------
 
     /**
-     * Create and return a new instance of a concrete implementation of this
-     * class. This method is equivalent to calling:
-     * 
-     * <code>createInstance((Map) null);</code>
-     * 
-     * @see     #createInstance(Map)
-     * @see     #createInstance(String, Map)
-     * @see     #IMPLEMENTATION_CLASS_NAME_PROPERTY
+     * <em>This method is not intended for use by applications.</em> The
+     * DDS-standard classes use it to delegate to a Service implementation.
      */
-    private static ServiceImplementation createDefaultInstance()
-    {
-        return createInstance(null);
+    public abstract ServiceProviderInterface getSPI();
+
+
+    // --- From DDSObject: ---------------------------------------------------
+
+    public final ServiceEnvironment getEnvironment() {
+        return this;
     }
 
 
-    // --- Object Life Cycle: ------------------------------------------------
+    // --- Private methods: --------------------------------------------------
 
-    private ServiceImplementationProvider()
-    {
-        // prevent construction
+    /**
+     * A client did not provide a non-null class loader to be used to load
+     * the DDS service implementation; choose an alternative.
+     * 
+     * If it can, this method will use the class loader used to load this
+     * class. If this class loader is null -- most likely it is the bootstrap
+     * class loader -- then the system class loader will be used instead.
+     * 
+     * @return  a non-null class loader.
+     * 
+     * @throws  ServiceConfigurationException   if the system class loader
+     *                                          is not accessible.
+     * @throws  ServiceInitializationException  if the system class loader
+     *                                          could not be initialized.
+     */
+    private static ClassLoader getDefaultClassLoader() {
+        // --- Get class loader from this class --- //
+        ClassLoader classLoader =
+                ServiceEnvironment.class.getClassLoader();
+        if (classLoader != null) {
+            return classLoader;
+        }
+
+        // --- Fallback: get system class loader --- //
+        /* The class loader is probably the bootstrap class loader, which is
+         * not directly accessible. Substitute the system class loader if
+         * possible.
+         */
+        try {
+            classLoader = ClassLoader.getSystemClassLoader();
+        } catch (SecurityException sx) {
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + "Prevented by security manager.",
+                    sx);
+        } catch (IllegalStateException isx) {
+            /* The documentation for ClassLoader.getSystemClassLoader()
+             * says this is thrown if the system class loader tries to
+             * instantiate itself recursively. This situation should not
+             * occur unless a custom system class loader is injected
+             * which uses DDS.
+             */
+            throw new ServiceConfigurationException(
+                    ERROR_STRING +
+                        "Circular system class loader dependencies.",
+                    isx);
+        } catch (Error err) {
+            /* The documentation for ClassLoader.getSystemClassLoader() says
+             * this is thrown if the system class loader cannot be
+             * reflectively instantiated.
+             */
+            throw new ServiceConfigurationException(
+                    ERROR_STRING +
+                        "System class loader could not be initialized.",
+                    err.getCause());
+        }
+
+        // --- Check for null return result --- //
+        /* The documentation for ClassLoader.getSystemClassLoader() says that
+         * the method may return null if there is no system class loader.
+         * However, it doesn't say why that would be the case.
+         * 
+         * Do this check outside of the try/catch above to make sure that
+         * no exceptions thrown below will be handled incorrectly. The
+         * exception handling logic above is closely tied to the documented
+         * behavior of ClassLoader.getSystemClassLoader().
+         */
+        if (classLoader == null) {
+            throw new ServiceConfigurationException(
+                    ERROR_STRING + "No system class loader available.");
+        }
+        return classLoader;
     }
 
 
@@ -391,7 +388,7 @@ public class ServiceImplementationProvider {
      * applications. It simplifies the creation of objects of certain types in
      * the DDS API.
      */
-    public static interface ServiceImplementation {
+    public static interface ServiceProviderInterface {
         // --- Singleton factories: ------------------------------------------
 
         public abstract DomainParticipantFactory getParticipantFactory();

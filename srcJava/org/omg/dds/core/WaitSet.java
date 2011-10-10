@@ -96,12 +96,12 @@ public abstract class WaitSet implements DDSObject {
     // -----------------------------------------------------------------------
 
     /**
-     * @param bootstrap Identifies the Service instance to which the new
+     * @param env       Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static WaitSet newWaitSet()
+    public static WaitSet newWaitSet(ServiceEnvironment env)
     {
-        return ServiceImplementationProvider.getCurrent().newWaitSet();
+        return env.getSPI().newWaitSet();
     }
 
 

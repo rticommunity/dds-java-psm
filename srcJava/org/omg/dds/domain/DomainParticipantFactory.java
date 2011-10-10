@@ -20,18 +20,19 @@ package org.omg.dds.domain;
 
 import java.util.Collection;
 
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.InconsistentPolicyException;
-import org.omg.dds.core.ServiceImplementationProvider;
 import org.omg.dds.core.status.Status;
 
 
 /**
  * The sole purpose of this class is to allow the creation and destruction of
  * {@link DomainParticipant} objects. DomainParticipantFactory itself has no
- * factory. It is a pre-existing singleton object that can be accessed by
- * means of {@link #getInstance()}.
+ * factory. It is a pre-existing per-{@link ServiceEnvironment} singleton
+ * object that can be accessed by means of the
+ * {@link #getInstance(ServiceEnvironment)} operation.
  */
 public abstract class DomainParticipantFactory implements DDSObject
 {
@@ -40,21 +41,18 @@ public abstract class DomainParticipantFactory implements DDSObject
     // -----------------------------------------------------------------------
 
     /**
-     * This operation returns the DomainParticipantFactory singleton. The
-     * operation is idempotent, that is, it can be called multiple times
-     * without side effects, and each time it will return a
-     * DomainParticipantFactory instance that is equal to the previous
-     * results.
+     * This operation returns the per-ServiceEnvironment
+     * DomainParticipantFactory singleton. The operation is idempotent, that
+     * is, it can be called multiple times without side effects, and each
+     * time it will return a DomainParticipantFactory instance that is equal
+     * to the previous results.
      * 
-     * @param bootstrap Identifies the Service instance to which the
+     * @param env       Identifies the Service instance to which the
      *                  object will belong.
-     *
-     * @see     Object#equals(Object)
      */
-    public static DomainParticipantFactory getInstance()
+    public static DomainParticipantFactory getInstance(ServiceEnvironment env)
     {
-        return ServiceImplementationProvider.getCurrent().
-                getParticipantFactory();
+        return env.getSPI().getParticipantFactory();
     }
 
 

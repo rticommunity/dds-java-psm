@@ -54,28 +54,29 @@ implements Value<Time, ModifiableTime>, Comparable<Time>
      * 
      * <code>t.isValid() == false</code>
      * 
-     * @param bootstrap Identifies the Service instance to which the new
+     * @param env       Identifies the Service instance to which the new
      *                  object will belong.
      * 
      * @see     #isValid()
      */
-    public static ModifiableTime newTime(long time, TimeUnit units)
+    public static ModifiableTime newTime(
+            long time,
+            TimeUnit units,
+            ServiceEnvironment env)
     {
-        return ServiceImplementationProvider.getCurrent().newTime(
-                time,
-                units);
+        return env.getSPI().newTime(time, units);
     }
 
 
     /**
-     * @param bootstrap Identifies the Service instance to which the
+     * @param env       Identifies the Service instance to which the
      *                  object will belong.
      *                  
      * @return      An unmodifiable {@link Time} that is not valid.
      */
-    public static Time invalidTime()
+    public static Time invalidTime(ServiceEnvironment env)
     {
-        return ServiceImplementationProvider.getCurrent().invalidTime();
+        return env.getSPI().invalidTime();
     }
 
 

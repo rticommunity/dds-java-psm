@@ -36,12 +36,12 @@ public abstract class GuardCondition implements Condition
     // -----------------------------------------------------------------------
 
     /**
-     * @param bootstrap Identifies the Service instance to which the new
+     * @param env       Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static GuardCondition newGuardCondition()
+    public static GuardCondition newGuardCondition(ServiceEnvironment env)
     {
-        return ServiceImplementationProvider.getCurrent().newGuardCondition();
+        return env.getSPI().newGuardCondition();
     }
 
 

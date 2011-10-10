@@ -18,17 +18,14 @@
 
 package org.omg.dds.core;
 
-import org.omg.dds.core.ServiceImplementationProvider.ServiceImplementation;
-
 
 /**
  * A supertype of all DDS classes and interfaces.
  */
 public interface DDSObject {
     /**
-     * @return  the {@link ServiceImplementation} object that directly or
+     * @return  the {@link ServiceEnvironment} object that directly or
      *          indirectly was used to create this object.
      */
-    public ServiceImplementationProvider.ServiceImplementation
-    getImplementation();
+    public ServiceEnvironment getEnvironment();
 }

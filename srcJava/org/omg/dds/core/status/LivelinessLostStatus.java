@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceImplementationProvider;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
@@ -48,13 +48,13 @@ extends Status<LivelinessLostStatus> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param bootstrap Identifies the Service instance to which the new
+     * @param env       Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static LivelinessLostStatus newLivelinessLostStatus()
+    public static LivelinessLostStatus newLivelinessLostStatus(
+            ServiceEnvironment env)
     {
-        return ServiceImplementationProvider.getCurrent().
-                newLivelinessLostStatus();
+        return env.getSPI().newLivelinessLostStatus();
     }
 
 

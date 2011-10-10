@@ -20,7 +20,7 @@ package org.omg.dds.core.status;
 
 import java.util.Set;
 
-import org.omg.dds.core.ServiceImplementationProvider;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 import org.omg.dds.pub.DataWriter;
@@ -49,14 +49,13 @@ extends Status<OfferedIncompatibleQosStatus> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param bootstrap Identifies the Service instance to which the new
+     * @param env       Identifies the Service instance to which the new
      *                  object will belong.
      */
     public static OfferedIncompatibleQosStatus
-    newOfferedIncompatibleQosStatus()
+    newOfferedIncompatibleQosStatus(ServiceEnvironment env)
     {
-        return ServiceImplementationProvider.getCurrent().
-                newOfferedIncompatibleQosStatus();
+        return env.getSPI().newOfferedIncompatibleQosStatus();
     }
 
 
