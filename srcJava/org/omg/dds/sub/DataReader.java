@@ -118,9 +118,7 @@ extends DomainEntity<DataReader<TYPE>,
      *          samples with one of these instance states.
      */
     public ReadCondition<TYPE> createReadCondition(
-            Collection<SampleState> sampleStates,
-            Collection<ViewState> viewStates,
-            Collection<InstanceState> instanceStates);
+            Subscriber.ReaderState states);
 
     /**
      * This operation creates a QueryCondition. The returned QueryCondition
@@ -156,9 +154,7 @@ extends DomainEntity<DataReader<TYPE>,
      * @see     #createQueryCondition(String, List)
      */
     public QueryCondition<TYPE> createQueryCondition(
-            Collection<SampleState> sampleStates,
-            Collection<ViewState> viewStates,
-            Collection<InstanceState> instanceStates,
+            Subscriber.ReaderState states,
             String queryExpression,
             List<String> queryParameters);
 
