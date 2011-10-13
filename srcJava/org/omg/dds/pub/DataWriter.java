@@ -580,6 +580,13 @@ extends DomainEntity<DataWriter<TYPE>,
      */
     public void write(
             TYPE instanceData) throws TimeoutException;
+    public void write(
+            TYPE instanceData, 
+            Time sourceTimestamp) throws TimeoutException;
+    public void write(
+            TYPE instanceData, 
+            long sourceTimestamp,
+            TimeUnit unit) throws TimeoutException;
 
     /**
      * This operation modifies the value of a data instance. When this
