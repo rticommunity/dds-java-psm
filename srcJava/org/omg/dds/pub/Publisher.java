@@ -29,7 +29,6 @@ import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.pub.modifiable.ModifiableDataWriterQos;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicQos;
@@ -566,9 +565,6 @@ extends DomainEntity<Publisher,
      * 
      * @param dst   the QoS whose policies are to be overwritten.
      * @param src   the QoS from which the policies are to be taken.
-     * 
-     * @return      dst, as a convenience to facilitate chaining.
      */
-    public ModifiableDataWriterQos copyFromTopicQos(
-            ModifiableDataWriterQos dst, TopicQos src);
+    public void copyFromTopicQos(DataWriterQos dst, TopicQos src);
 }

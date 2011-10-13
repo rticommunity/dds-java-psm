@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.topic.Topic;
 
 
@@ -42,13 +42,13 @@ extends Status<InconsistentTopicStatus> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param env       Identifies the Service instance to which the new
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
     public static InconsistentTopicStatus newInconsistentTopicStatus(
-            ServiceEnvironment env)
+            Bootstrap bootstrap)
     {
-        return env.getSPI().newInconsistentTopicStatus();
+        return bootstrap.getSPI().newInconsistentTopicStatus();
     }
 
 

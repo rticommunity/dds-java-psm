@@ -20,7 +20,7 @@ package org.omg.dds.core.status;
 
 import java.util.Set;
 
-import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 import org.omg.dds.pub.DataWriter;
@@ -49,13 +49,12 @@ extends Status<RequestedIncompatibleQosStatus> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param env       Identifies the Service instance to which the new
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
     public static RequestedIncompatibleQosStatus
-    newRequestedIncompatibleQosStatus(ServiceEnvironment env)
-    {
-        return env.getSPI().newRequestedIncompatibleQosStatus();
+    newRequestedIncompatibleQosStatus(Bootstrap bootstrap) {
+        return bootstrap.getSPI().newRequestedIncompatibleQosStatus();
     }
 
 
@@ -79,10 +78,11 @@ extends Status<RequestedIncompatibleQosStatus> {
     public abstract int getTotalCountChange();
 
     /**
-     * The class of one of the policies that was found to be incompatible the
-     * last time an incompatibility was detected.
+     * The {@link org.omg.dds.core.policy.QosPolicy.Id} of one of the
+     * policies that was found to be incompatible the last time an
+     * incompatibility was detected.
      */
-    public abstract Class<? extends QosPolicy<?, ?>> getLastPolicyClass();
+    public abstract QosPolicy.Id getLastPolicyId();
 
     /**
      * A list containing for each policy the total number of times that the

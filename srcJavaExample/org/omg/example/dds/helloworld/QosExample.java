@@ -18,7 +18,7 @@
 
 package org.omg.example.dds.helloworld;
 
-import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.modifiable.ModifiableEntityFactoryQosPolicy;
 import org.omg.dds.domain.DomainParticipant;
@@ -29,10 +29,8 @@ import org.omg.dds.domain.modifiable.ModifiableDomainParticipantQos;
 
 public final class QosExample {
     public static void main(String[] args) {
-        ServiceEnvironment env = ServiceEnvironment.createInstance(
-                QosExample.class.getClassLoader());
         DomainParticipantFactory factory =
-                DomainParticipantFactory.getInstance(env);
+            DomainParticipantFactory.getInstance(Bootstrap.createInstance());
         DomainParticipant dp = factory.createParticipant();
 
         // Get unmodifiable QoS for inspection:

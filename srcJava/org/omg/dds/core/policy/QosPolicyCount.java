@@ -23,7 +23,10 @@ import org.omg.dds.core.modifiable.ModifiableValue;
 
 public interface QosPolicyCount
 extends ModifiableValue<QosPolicyCount, QosPolicyCount> {
-    public Class<? extends QosPolicy<?, ?>> getPolicyClass();
+    /**
+     * @return the policyId
+     */
+    public QosPolicy.Id getPolicyId();
 
     /**
      * @return the count
