@@ -77,7 +77,9 @@ import org.omg.dds.sub.Subscriber;
  * </ol>
  */
 public interface PresentationQosPolicy
-extends QosPolicy<PresentationQosPolicy, ModifiablePresentationQosPolicy> {
+extends QosPolicy<PresentationQosPolicy, ModifiablePresentationQosPolicy>,
+        RequestedOffered<PresentationQosPolicy>
+{
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

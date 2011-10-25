@@ -38,7 +38,9 @@ import org.omg.dds.topic.Topic;
  * @see OwnershipStrengthQosPolicy
  */
 public interface OwnershipQosPolicy
-extends QosPolicy<OwnershipQosPolicy, ModifiableOwnershipQosPolicy> {
+extends QosPolicy<OwnershipQosPolicy, ModifiableOwnershipQosPolicy>,
+        RequestedOffered<OwnershipQosPolicy>
+{
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

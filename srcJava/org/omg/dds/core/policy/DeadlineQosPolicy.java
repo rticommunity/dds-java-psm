@@ -69,7 +69,9 @@ import org.omg.dds.topic.Topic;
  * minimum_separation."
  */
 public interface DeadlineQosPolicy
-extends QosPolicy<DeadlineQosPolicy, ModifiableDeadlineQosPolicy> {
+extends QosPolicy<DeadlineQosPolicy, ModifiableDeadlineQosPolicy>,
+        RequestedOffered<DeadlineQosPolicy>
+{
     public Duration getPeriod();
 
 }

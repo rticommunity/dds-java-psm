@@ -68,7 +68,9 @@ import org.omg.dds.topic.Topic;
  * @see ResourceLimitsQosPolicy
  */
 public interface ReliabilityQosPolicy
-extends QosPolicy<ReliabilityQosPolicy, ModifiableReliabilityQosPolicy> {
+extends QosPolicy<ReliabilityQosPolicy, ModifiableReliabilityQosPolicy>,
+        RequestedOffered<ReliabilityQosPolicy>
+{
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
