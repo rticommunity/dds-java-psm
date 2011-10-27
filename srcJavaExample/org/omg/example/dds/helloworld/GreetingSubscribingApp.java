@@ -21,8 +21,8 @@ package org.omg.example.dds.helloworld;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.status.DataAvailableEvent;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.domain.DomainParticipantFactory;
@@ -36,8 +36,10 @@ import org.omg.dds.topic.Topic;
 
 public class GreetingSubscribingApp {
     public static void main(String[] args) {
+        ServiceEnvironment env = ServiceEnvironment.createInstance(
+                GreetingSubscribingApp.class.getClassLoader());
         DomainParticipantFactory factory =
-            DomainParticipantFactory.getInstance(Bootstrap.createInstance());
+                DomainParticipantFactory.getInstance(env);
         DomainParticipant dp = factory.createParticipant();
 
         // Implicitly create TypeSupport and register type:
@@ -91,9 +93,10 @@ public class GreetingSubscribingApp {
                     Sample<Greeting> smp = it.next();
                     // SampleInfo stuff is built into Sample:
                     InstanceHandle inst = smp.getInstanceHandle();
+                    System.out.println("Instance: " + inst);
                     // Data accessible from Sample; null if invalid:
                     Greeting dt = smp.getData();
-                    // ...
+                    System.out.println("Data: " + dt);
                 }
             } finally {
                 it.returnLoan();

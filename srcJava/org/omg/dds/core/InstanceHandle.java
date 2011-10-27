@@ -41,23 +41,25 @@ implements Comparable<InstanceHandle>,
     // -----------------------------------------------------------------------
 
     /**
-     * @param bootstrap Identifies the Service instance to which the new
+     * @param env       Identifies the Service instance to which the new
      *                  object will belong.
      */
     public static ModifiableInstanceHandle newInstanceHandle(
-            Bootstrap bootstrap) {
-        return bootstrap.getSPI().newInstanceHandle();
+            ServiceEnvironment env)
+    {
+        return env.getSPI().newInstanceHandle();
     }
 
 
     /**
-     * @param bootstrap Identifies the Service instance to which the
+     * @param env       Identifies the Service instance to which the
      *                  object will belong.
      * 
      * @return  An unmodifiable nil instance handle.
      */
-    public static InstanceHandle nilHandle(Bootstrap bootstrap) {
-        return bootstrap.getSPI().nilHandle();
+    public static InstanceHandle nilHandle(ServiceEnvironment env)
+    {
+        return env.getSPI().nilHandle();
     }
 
 

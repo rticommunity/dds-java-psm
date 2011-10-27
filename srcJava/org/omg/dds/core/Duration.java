@@ -51,37 +51,42 @@ implements Comparable<Duration>, Value<Duration, ModifiableDuration>
      * A duration of magnitude {@link Long#MAX_VALUE} indicates an infinite
      * duration, regardless of the units specified.
      * 
-     * @param bootstrap Identifies the Service instance to which the new
+     * @param env       Identifies the Service instance to which the new
      *                  object will belong.
      * 
      * @see     #isInfinite()
-     * @see     #infiniteDuration(Bootstrap)
+     * @see     #infiniteDuration(ServiceEnvironment)
      */
     public static ModifiableDuration newDuration(
-            long duration, TimeUnit unit, Bootstrap bootstrap) {
-        return bootstrap.getSPI().newDuration(duration, unit);
+            long duration,
+            TimeUnit unit,
+            ServiceEnvironment env)
+    {
+        return env.getSPI().newDuration(duration, unit);
     }
 
 
     /**
-     * @param bootstrap Identifies the Service instance to which the
+     * @param env       Identifies the Service instance to which the
      *                  object will belong.
      * 
      * @return  An unmodifiable {@link Duration} of infinite length.
      */
-    public static Duration infiniteDuration(Bootstrap bootstrap) {
-        return bootstrap.getSPI().infiniteDuration();
+    public static Duration infiniteDuration(ServiceEnvironment env)
+    {
+        return env.getSPI().infiniteDuration();
     }
 
 
     /**
-     * @param bootstrap Identifies the Service instance to which the
+     * @param env       Identifies the Service instance to which the
      *                  object will belong.
      * 
      * @return  A {@link Duration} of zero length.
      */
-    public static Duration zeroDuration(Bootstrap bootstrap) {
-        return bootstrap.getSPI().zeroDuration();
+    public static Duration zeroDuration(ServiceEnvironment env)
+    {
+        return env.getSPI().zeroDuration();
     }
 
 
@@ -170,9 +175,9 @@ implements Comparable<Duration>, Value<Duration, ModifiableDuration>
      * If this duration is infinite, the following relationship shall be
      * true:
      * 
-     * <code>this.equals(infiniteDuration(this.getBootstrap()))</code>
+     * <code>this.equals(infiniteDuration(this.getEnvironment()))</code>
      * 
-     * @see     #infiniteDuration(Bootstrap)
+     * @see     #infiniteDuration(ServiceEnvironment)
      */
     public abstract boolean isInfinite();
 

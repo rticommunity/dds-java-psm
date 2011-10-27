@@ -18,7 +18,7 @@
 
 package org.omg.dds.type.dynamic;
 
-import org.omg.dds.core.Bootstrap;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.type.TypeKind;
 
@@ -30,11 +30,12 @@ public abstract class DynamicTypeFactory implements DDSObject
     // -----------------------------------------------------------------------
 
     /**
-     * @param bootstrap Identifies the Service instance to which the
+     * @param env       Identifies the Service instance to which the
      *                  object will belong.
      */
-    public static DynamicTypeFactory getInstance(Bootstrap bootstrap) {
-        return bootstrap.getSPI().getTypeFactory();
+    public static DynamicTypeFactory getInstance(ServiceEnvironment env)
+    {
+        return env.getSPI().getTypeFactory();
     }
 
 
