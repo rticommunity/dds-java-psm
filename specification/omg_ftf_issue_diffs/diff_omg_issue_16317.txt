@@ -1,0 +1,274 @@
+
+Property changes on: ftf_vote_01
+___________________________________________________________________
+Modified: svn:mergeinfo
+   Merged /trunk:r128-130
+
+Index: ftf_vote_01/srcJava/org/omg/dds/type/dynamic/DynamicType.java
+===================================================================
+--- ftf_vote_01/srcJava/org/omg/dds/type/dynamic/DynamicType.java	(revision 140)
++++ ftf_vote_01/srcJava/org/omg/dds/type/dynamic/DynamicType.java	(working copy)
+@@ -33,13 +33,13 @@
+ 
+     public TypeKind getKind();
+ 
+-    public DynamicTypeMember getMember(String name);
++    public DynamicTypeMember getMember(int id);
+ 
+-    public Map<String, DynamicTypeMember> getAllMembers();
++    public Map<Integer, DynamicTypeMember> getAllMembers();
+ 
+-    public DynamicTypeMember getMemberById(int id);
++    public DynamicTypeMember getMemberByName(String name);
+ 
+-    public Map<Integer, DynamicTypeMember> getAllMembersById();
++    public Map<String, DynamicTypeMember> getAllMembersByName();
+ 
+     public List<AnnotationDescriptor> getAnnotations();
+ 
+Index: ftf_vote_01/srcJava/org/omg/dds/type/dynamic/DynamicData.java
+===================================================================
+--- ftf_vote_01/srcJava/org/omg/dds/type/dynamic/DynamicData.java	(revision 140)
++++ ftf_vote_01/srcJava/org/omg/dds/type/dynamic/DynamicData.java	(working copy)
+@@ -36,8 +36,8 @@
+      */
+     public List<MemberDescriptor> getDescriptors();
+ 
+-    int getMemberIdByName(String name);
+-    int getMemberIdAtIndex(int index);
++    public int getMemberIdByName(String name);
++    public int getMemberIdAtIndex(int index);
+ 
+ 
+     public void clearAllValues();
+@@ -129,10 +129,6 @@
+      */
+     public DynamicData setInt32Values(
+             int id, int[] value, int offset, int length);
+-    /**
+-     * @return  this
+-     */
+-    public DynamicData setInt32Values(int id, int... value);
+ 
+     public int getInt16Values(
+             short[] value, int offset, int length, int id);
+@@ -141,10 +137,6 @@
+      */
+     public DynamicData setInt16Values(
+             int id, short[] value, int offset, int length);
+-    /**
+-     * @return  this
+-     */
+-    public DynamicData setInt16Values(int id, short... value);
+ 
+     public int getInt64Values(
+             long[] value, int offset, int length, int id);
+@@ -153,23 +145,12 @@
+      */
+     public DynamicData setInt64Values(
+             int id, long[] value, int offset, int length);
+-    /**
+-     * @return  this
+-     */
+-    public DynamicData setInt64Values(int id, long... value);
+ 
+-    public int getBigIntegerValues(
+-            BigInteger[] value, int offset, int length, int id);
+     public List<BigInteger> getBigIntegerValues(
+             List<BigInteger> value, int id);
+     /**
+      * @return  this
+      */
+-    public DynamicData setBigIntegerValues(
+-            int id, BigInteger[] value, int offset, int length);
+-    /**
+-     * @return  this
+-     */
+     public DynamicData setBigIntegerValues(int id, List<BigInteger> value);
+ 
+     public int getFloat32Values(
+@@ -179,10 +160,6 @@
+      */
+     public DynamicData setFloat32Values(
+             int id, float[] value, int offset, int length);
+-    /**
+-     * @return  this
+-     */
+-    public DynamicData setFloat32Values(int id, float... value);
+ 
+     public int getFloat64Values(
+             double[] value, int offset, int length, int id);
+@@ -191,23 +168,13 @@
+      */
+     public DynamicData setFloat64Values(
+             int id, double[] value, int offset, int length);
+-    /**
+-     * @return  this
+-     */
+-    public DynamicData setFloat64Values(int id, double... value);
+ 
+-    public int getBigDecimalValues(
+-            BigDecimal[] value, int offset, int length, int id);
+     public List<BigDecimal> getBigDecimalValues(
+             List<BigDecimal> value, int id);
++
+     /**
+      * @return  this
+      */
+-    public DynamicData setBigDecimalValues(
+-            int id, BigDecimal[] value, int offset, int length);
+-    /**
+-     * @return  this
+-     */
+     public DynamicData setBigDecimalValues(int id, List<BigDecimal> value);
+ 
+     public int getCharValues(
+@@ -221,10 +188,6 @@
+     /**
+      * @return  this
+      */
+-    public DynamicData setCharValues(int id, char... value);
+-    /**
+-     * @return  this
+-     */
+     public DynamicData setCharValues(int id, CharSequence value);
+ 
+     public int getByteValues(
+@@ -237,19 +200,12 @@
+ 
+     public int getBooleanValues(
+             boolean[] value, int offset, int length, int id);
+-    public void getBooleanValues(List<Boolean> value, int id);
+     /**
+      * @return  this
+      */
+     public DynamicData setBooleanValues(
+             int id, boolean[] value, int offset, int length);
+-    /**
+-     * @return  this
+-     */
+-    public DynamicData setBooleanValues(int id, boolean... value);
+ 
+-    public int getStringValues(
+-            String[] value, int offset, int length, int id);
+     public void getStringValues(List<String> value, int id);
+     /**
+      * @return  this
+@@ -259,10 +215,6 @@
+     /**
+      * @return  this
+      */
+-    public DynamicData setStringValues(int id, String... value);
+-    /**
+-     * @return  this
+-     */
+     public DynamicData setStringValues(int id, List<String> value);
+ 
+ 
+Index: ftf_vote_01/srcJava/org/omg/dds/type/builtin/KeyedBytesDataWriter.java
+===================================================================
+--- ftf_vote_01/srcJava/org/omg/dds/type/builtin/KeyedBytesDataWriter.java	(revision 140)
++++ ftf_vote_01/srcJava/org/omg/dds/type/builtin/KeyedBytesDataWriter.java	(working copy)
+@@ -63,15 +63,6 @@
+             byte[] bytes,
+             int offset,
+             int length,
+-            InstanceHandle handle)
+-    throws TimeoutException;
+-
+-    public void write(
+-            String key,
+-            byte[] bytes,
+-            int offset,
+-            int length,
+-            InstanceHandle handle,
+             Time sourceTimestamp)
+     throws TimeoutException;
+ 
+@@ -80,7 +71,6 @@
+             byte[] bytes,
+             int offset,
+             int length,
+-            InstanceHandle handle,
+             long sourceTimestamp,
+             TimeUnit unit)
+     throws TimeoutException;
+Index: ftf_vote_01/srcJava/org/omg/dds/type/builtin/KeyedStringDataWriter.java
+===================================================================
+--- ftf_vote_01/srcJava/org/omg/dds/type/builtin/KeyedStringDataWriter.java	(revision 140)
++++ ftf_vote_01/srcJava/org/omg/dds/type/builtin/KeyedStringDataWriter.java	(working copy)
+@@ -50,20 +50,15 @@
+ 
+     public void write(String key, String str) throws TimeoutException;
+ 
+-    public void write(String key, String str, InstanceHandle handle)
+-    throws TimeoutException;
+-
+     public void write(
+             String key,
+             String str,
+-            InstanceHandle handle,
+             Time sourceTimestamp)
+     throws TimeoutException;
+ 
+     public void write(
+             String key,
+             String str,
+-            InstanceHandle handle,
+             long sourceTimestamp,
+             TimeUnit unit)
+     throws TimeoutException;
+Index: ftf_vote_01/srcJava/org/omg/dds/type/builtin/BytesDataWriter.java
+===================================================================
+--- ftf_vote_01/srcJava/org/omg/dds/type/builtin/BytesDataWriter.java	(revision 140)
++++ ftf_vote_01/srcJava/org/omg/dds/type/builtin/BytesDataWriter.java	(working copy)
+@@ -21,7 +21,6 @@
+ import java.util.concurrent.TimeUnit;
+ import java.util.concurrent.TimeoutException;
+ 
+-import org.omg.dds.core.InstanceHandle;
+ import org.omg.dds.core.Time;
+ import org.omg.dds.pub.DataWriter;
+ 
+@@ -35,14 +34,6 @@
+             byte[] bytes,
+             int offset,
+             int length,
+-            InstanceHandle handle)
+-    throws TimeoutException;
+-
+-    public void write(
+-            byte[] bytes,
+-            int offset,
+-            int length,
+-            InstanceHandle handle,
+             Time sourceTimestamp)
+     throws TimeoutException;
+ 
+@@ -50,7 +41,6 @@
+             byte[] bytes,
+             int offset,
+             int length,
+-            InstanceHandle handle,
+             long sourceTimestamp,
+             TimeUnit unit)
+     throws TimeoutException;
+Index: ftf_vote_01/srcJava/org/omg/dds/type/typeobject/MemberProperty.java
+===================================================================
+--- ftf_vote_01/srcJava/org/omg/dds/type/typeobject/MemberProperty.java	(revision 140)
++++ ftf_vote_01/srcJava/org/omg/dds/type/typeobject/MemberProperty.java	(working copy)
+@@ -57,12 +57,12 @@
+      * 
+      * @return  this
+      */
+-    public MemberProperty setType(int type);
++    public MemberProperty setTypeId(int type);
+ 
+     /**
+      * @return the type
+      */
+-    public int getType();
++    public int getTypeId();
+ 
+     /**
+      * @param name the name to set
