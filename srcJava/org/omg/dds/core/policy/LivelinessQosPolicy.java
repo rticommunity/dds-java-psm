@@ -104,7 +104,9 @@ import org.omg.dds.topic.Topic;
  * are notified within a leaseDuration from the time the LIVELINESS changed.
  */
 public interface LivelinessQosPolicy
-extends QosPolicy<LivelinessQosPolicy, ModifiableLivelinessQosPolicy> {
+extends QosPolicy<LivelinessQosPolicy, ModifiableLivelinessQosPolicy>,
+        RequestedOffered<LivelinessQosPolicy>
+{
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

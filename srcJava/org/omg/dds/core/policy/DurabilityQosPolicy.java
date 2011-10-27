@@ -126,7 +126,9 @@ import org.omg.dds.topic.Topic;
  * @see DurabilityServiceQosPolicy#getServiceCleanupDelay()
  */
 public interface DurabilityQosPolicy
-extends QosPolicy<DurabilityQosPolicy, ModifiableDurabilityQosPolicy> {
+extends QosPolicy<DurabilityQosPolicy, ModifiableDurabilityQosPolicy>,
+        RequestedOffered<DurabilityQosPolicy>
+{
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

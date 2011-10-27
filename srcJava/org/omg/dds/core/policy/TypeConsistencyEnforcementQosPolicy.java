@@ -24,7 +24,8 @@ import org.omg.dds.type.BitBound;
 
 public interface TypeConsistencyEnforcementQosPolicy
 extends QosPolicy<TypeConsistencyEnforcementQosPolicy,
-                  ModifiableTypeConsistencyEnforcementQosPolicy>
+                  ModifiableTypeConsistencyEnforcementQosPolicy>,
+        RequestedOffered<TypeConsistencyEnforcementQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Properties

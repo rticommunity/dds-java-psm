@@ -1,0 +1,262 @@
+
+Property changes on: .
+___________________________________________________________________
+Modified: svn:mergeinfo
+   Merged /trunk:r155,167
+
+
+Property changes on: specification
+___________________________________________________________________
+Modified: svn:mergeinfo
+   Merged /trunk/specification:r155,167
+
+Index: srcJava/org/omg/dds/core/policy/DataRepresentationQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DataRepresentationQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/DataRepresentationQosPolicy.java	(working copy)
+@@ -25,7 +25,8 @@
+ 
+ public interface DataRepresentationQosPolicy
+ extends QosPolicy<DataRepresentationQosPolicy,
+-                  ModifiableDataRepresentationQosPolicy>
++                  ModifiableDataRepresentationQosPolicy>,
++        RequestedOffered<DataRepresentationQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Properties
+Index: srcJava/org/omg/dds/core/policy/DeadlineQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DeadlineQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/DeadlineQosPolicy.java	(working copy)
+@@ -69,7 +69,9 @@
+  * minimum_separation."
+  */
+ public interface DeadlineQosPolicy
+-extends QosPolicy<DeadlineQosPolicy, ModifiableDeadlineQosPolicy> {
++extends QosPolicy<DeadlineQosPolicy, ModifiableDeadlineQosPolicy>,
++        RequestedOffered<DeadlineQosPolicy>
++{
+     public Duration getPeriod();
+ 
+ }
+Index: srcJava/org/omg/dds/core/policy/DurabilityQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DurabilityQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/DurabilityQosPolicy.java	(working copy)
+@@ -126,7 +126,9 @@
+  * @see DurabilityServiceQosPolicy#getServiceCleanupDelay()
+  */
+ public interface DurabilityQosPolicy
+-extends QosPolicy<DurabilityQosPolicy, ModifiableDurabilityQosPolicy> {
++extends QosPolicy<DurabilityQosPolicy, ModifiableDurabilityQosPolicy>,
++        RequestedOffered<DurabilityQosPolicy>
++{
+     // -----------------------------------------------------------------------
+     // Methods
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/core/policy/ReliabilityQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/ReliabilityQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/ReliabilityQosPolicy.java	(working copy)
+@@ -68,7 +68,9 @@
+  * @see ResourceLimitsQosPolicy
+  */
+ public interface ReliabilityQosPolicy
+-extends QosPolicy<ReliabilityQosPolicy, ModifiableReliabilityQosPolicy> {
++extends QosPolicy<ReliabilityQosPolicy, ModifiableReliabilityQosPolicy>,
++        RequestedOffered<ReliabilityQosPolicy>
++{
+     // -----------------------------------------------------------------------
+     // Methods
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/core/policy/PresentationQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/PresentationQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/PresentationQosPolicy.java	(working copy)
+@@ -77,7 +77,9 @@
+  * </ol>
+  */
+ public interface PresentationQosPolicy
+-extends QosPolicy<PresentationQosPolicy, ModifiablePresentationQosPolicy> {
++extends QosPolicy<PresentationQosPolicy, ModifiablePresentationQosPolicy>,
++        RequestedOffered<PresentationQosPolicy>
++{
+     // -----------------------------------------------------------------------
+     // Methods
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/core/policy/LivelinessQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/LivelinessQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/LivelinessQosPolicy.java	(working copy)
+@@ -104,7 +104,9 @@
+  * are notified within a leaseDuration from the time the LIVELINESS changed.
+  */
+ public interface LivelinessQosPolicy
+-extends QosPolicy<LivelinessQosPolicy, ModifiableLivelinessQosPolicy> {
++extends QosPolicy<LivelinessQosPolicy, ModifiableLivelinessQosPolicy>,
++        RequestedOffered<LivelinessQosPolicy>
++{
+     // -----------------------------------------------------------------------
+     // Methods
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/core/policy/DestinationOrderQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DestinationOrderQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/DestinationOrderQosPolicy.java	(working copy)
+@@ -64,7 +64,9 @@
+  */
+ public interface DestinationOrderQosPolicy
+ extends QosPolicy<DestinationOrderQosPolicy,
+-        ModifiableDestinationOrderQosPolicy> {
++                  ModifiableDestinationOrderQosPolicy>,
++        RequestedOffered<DestinationOrderQosPolicy>
++{
+     // -----------------------------------------------------------------------
+     // Methods
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/core/policy/OwnershipQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/OwnershipQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/OwnershipQosPolicy.java	(working copy)
+@@ -38,7 +38,9 @@
+  * @see OwnershipStrengthQosPolicy
+  */
+ public interface OwnershipQosPolicy
+-extends QosPolicy<OwnershipQosPolicy, ModifiableOwnershipQosPolicy> {
++extends QosPolicy<OwnershipQosPolicy, ModifiableOwnershipQosPolicy>,
++        RequestedOffered<OwnershipQosPolicy>
++{
+     // -----------------------------------------------------------------------
+     // Methods
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcementQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcementQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcementQosPolicy.java	(working copy)
+@@ -24,7 +24,8 @@
+ 
+ public interface TypeConsistencyEnforcementQosPolicy
+ extends QosPolicy<TypeConsistencyEnforcementQosPolicy,
+-                  ModifiableTypeConsistencyEnforcementQosPolicy>
++                  ModifiableTypeConsistencyEnforcementQosPolicy>,
++        RequestedOffered<TypeConsistencyEnforcementQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Properties
+Index: ../../trunk/srcJava/org/omg/dds/core/policy/RequestedOffered.java
+===================================================================
+--- ../../trunk/srcJava/org/omg/dds/core/policy/RequestedOffered.java	(revision 0)
++++ ../../trunk/srcJava/org/omg/dds/core/policy/RequestedOffered.java	(revision 155)
+@@ -0,0 +1,49 @@
++/* Copyright 2011, Object Management Group, Inc.
++ * Copyright 2011, PrismTech, Inc.
++ * Copyright 2011, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++
++/**
++ * This interface is implemented by QoS policies that enforce a Request/Offer
++ * contract between publications and subscriptions -- that is, for which the
++ * level of service offered by the publication is greater than or equal to
++ * that requested by the subscription.
++ * 
++ * Details of this contract are provided in each of the implementing types.
++ */
++public interface RequestedOffered<SELF>
++{
++    /**
++     * Use the object returned by this method to evaluate the Request/Offer
++     * relationship with another instance of this policy. If <code>this</code>
++     * policy were to be offered by a {@link org.omg.dds.pub.DataWriter} (or
++     * {@link org.omg.dds.pub.Publisher}), and the other policy provided to
++     * {@link Comparable#compareTo(Object)} were to be requested by a
++     * {@link org.omg.dds.sub.DataReader} (or
++     * {@link org.omg.dds.sub.Subscriber}), that method will indicate whether
++     * the policy offered is less than (i.e. not compatible with), equal to
++     * (i.e. compatible with), or greater than (i.e. compatible with) the
++     * policy requested.
++     * 
++     * @return  a {@link Comparable} object capable of evaluating the
++     *          Request/Offer relationship between two instances of this QoS
++     *          policy.
++     */
++    public Comparable<SELF> offer();
++}
+
+Property changes on: ../../trunk/srcJava/org/omg/dds/core/policy/RequestedOffered.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/RequestedOffered.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/RequestedOffered.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/RequestedOffered.java	(working copy)
+@@ -26,24 +26,25 @@
+  * that requested by the subscription.
+  * 
+  * Details of this contract are provided in each of the implementing types.
++ * 
++ * @param   <SELF>      The QoS policy interface that extends this interface.
+  */
+ public interface RequestedOffered<SELF>
+ {
+     /**
+      * Use the object returned by this method to evaluate the Request/Offer
+-     * relationship with another instance of this policy. If <code>this</code>
+-     * policy were to be offered by a {@link org.omg.dds.pub.DataWriter} (or
+-     * {@link org.omg.dds.pub.Publisher}), and the other policy provided to
+-     * {@link Comparable#compareTo(Object)} were to be requested by a
+-     * {@link org.omg.dds.sub.DataReader} (or
+-     * {@link org.omg.dds.sub.Subscriber}), that method will indicate whether
+-     * the policy offered is less than (i.e. not compatible with), equal to
+-     * (i.e. compatible with), or greater than (i.e. compatible with) the
+-     * policy requested.
++     * relationship with another instance of this policy. If this policy is
++     * <em>offered</em> by a {@link org.omg.dds.pub.DataWriter} (or
++     * {@link org.omg.dds.pub.Publisher}), any other policy evaluated as less
++     * than or equal to it by the {@link Comparable} may be compatibly
++     * <em>requested</em> by a {@link org.omg.dds.sub.DataReader} (or
++     * {@link org.omg.dds.sub.Subscriber}). Similarly, if this policy is
++     * <em>requested</em>, any other policy that is greater than or equal to
++     * it may be compatibly <em>offered</em>.
+      * 
+      * @return  a {@link Comparable} object capable of evaluating the
+-     *          Request/Offer relationship between two instances of this QoS
+-     *          policy.
++     *          Request/Offer relationship between two instances of the QoS
++     *          policy identified by the type parameter <code>SELF</code>.
+      */
+-    public Comparable<SELF> offer();
++    public Comparable<SELF> requestedOfferedContract();
+ }
+Index: srcJava/org/omg/dds/core/policy/LatencyBudgetQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/LatencyBudgetQosPolicy.java	(revision 165)
++++ srcJava/org/omg/dds/core/policy/LatencyBudgetQosPolicy.java	(working copy)
+@@ -52,7 +52,9 @@
+  * to true.
+  */
+ public interface LatencyBudgetQosPolicy
+-extends QosPolicy<LatencyBudgetQosPolicy, ModifiableLatencyBudgetQosPolicy> {
++extends QosPolicy<LatencyBudgetQosPolicy, ModifiableLatencyBudgetQosPolicy>,
++        RequestedOffered<LatencyBudgetQosPolicy>
++{
+     public Duration getDuration();
+ 
+ }
