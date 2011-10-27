@@ -78,11 +78,10 @@ extends Status<RequestedIncompatibleQosStatus> {
     public abstract int getTotalCountChange();
 
     /**
-     * The {@link org.omg.dds.core.policy.QosPolicy.Id} of one of the
-     * policies that was found to be incompatible the last time an
-     * incompatibility was detected.
+     * The class of one of the policies that was found to be incompatible the
+     * last time an incompatibility was detected.
      */
-    public abstract QosPolicy.Id getLastPolicyId();
+    public abstract Class<? extends QosPolicy<?, ?>> getLastPolicyClass();
 
     /**
      * A list containing for each policy the total number of times that the

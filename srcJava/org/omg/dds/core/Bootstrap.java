@@ -27,7 +27,6 @@ import java.util.concurrent.TimeUnit;
 import org.omg.dds.core.modifiable.ModifiableDuration;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableTime;
-import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.status.InconsistentTopicStatus;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.LivelinessLostStatus;
@@ -419,12 +418,6 @@ public abstract class Bootstrap implements DDSObject {
         public abstract GuardCondition newGuardCondition();
 
         public abstract WaitSet newWaitSet();
-
-
-        // --- QoS: ----------------------------------------------------------
-
-        public abstract QosPolicy.Id getQosPolicyId(
-                Class<? extends QosPolicy<?, ?>> policyClass);
 
 
         // --- Status: -------------------------------------------------------
