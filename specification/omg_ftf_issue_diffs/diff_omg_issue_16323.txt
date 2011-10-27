@@ -1,0 +1,67 @@
+
+Property changes on: specification
+___________________________________________________________________
+Modified: svn:mergeinfo
+   Merged /trunk/specification:r122,134
+
+Index: srcJava/org/omg/dds/type/typeobject/Bit.java
+===================================================================
+--- srcJava/org/omg/dds/type/typeobject/Bit.java	(revision 162)
++++ srcJava/org/omg/dds/type/typeobject/Bit.java	(revision 163)
+@@ -25,7 +25,7 @@
+ 
+ @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
+ @Nested
+-public interface Bit extends ModifiableValue<Bit, Bit>
++public interface Bit extends Comparable<Bit>, ModifiableValue<Bit, Bit>
+ {
+     /**
+      * @param index the index to set
+Index: srcJava/org/omg/dds/core/InstanceHandle.java
+===================================================================
+--- srcJava/org/omg/dds/core/InstanceHandle.java	(revision 162)
++++ srcJava/org/omg/dds/core/InstanceHandle.java	(revision 163)
+@@ -25,7 +25,8 @@
+  * An opaque handle that can be used to refer to a local or remote entity.
+  */
+ public abstract class InstanceHandle
+-implements Value<InstanceHandle, ModifiableInstanceHandle>
++implements Comparable<InstanceHandle>,
++           Value<InstanceHandle, ModifiableInstanceHandle>
+ {
+     // -----------------------------------------------------------------------
+     // Private Constants
+Index: srcJava/org/omg/dds/core/Duration.java
+===================================================================
+--- srcJava/org/omg/dds/core/Duration.java	(revision 162)
++++ srcJava/org/omg/dds/core/Duration.java	(revision 163)
+@@ -30,7 +30,8 @@
+  */
+ @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
+ @Nested
+-public abstract class Duration implements Value<Duration, ModifiableDuration>
++public abstract class Duration
++implements Comparable<Duration>, Value<Duration, ModifiableDuration>
+ {
+     // -----------------------------------------------------------------------
+     // Private Constants
+Index: srcJava/org/omg/dds/core/Time.java
+===================================================================
+--- srcJava/org/omg/dds/core/Time.java	(revision 162)
++++ srcJava/org/omg/dds/core/Time.java	(revision 163)
+@@ -31,7 +31,8 @@
+  */
+ @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
+ @Nested
+-public abstract class Time implements Value<Time, ModifiableTime>
++public abstract class Time
++implements Comparable<Time>, Value<Time, ModifiableTime>
+ {
+     // -----------------------------------------------------------------------
+     // Private Constants
+
+Property changes on: .
+___________________________________________________________________
+Modified: svn:mergeinfo
+   Merged /trunk:r122,134
+
