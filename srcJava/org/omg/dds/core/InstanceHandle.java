@@ -25,7 +25,8 @@ import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
  * An opaque handle that can be used to refer to a local or remote entity.
  */
 public abstract class InstanceHandle
-implements Value<InstanceHandle, ModifiableInstanceHandle>
+implements Comparable<InstanceHandle>,
+           Value<InstanceHandle, ModifiableInstanceHandle>
 {
     // -----------------------------------------------------------------------
     // Private Constants

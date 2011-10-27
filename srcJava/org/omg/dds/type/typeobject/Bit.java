@@ -25,7 +25,7 @@ import org.omg.dds.type.Nested;
 
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
-public interface Bit extends ModifiableValue<Bit, Bit>
+public interface Bit extends Comparable<Bit>, ModifiableValue<Bit, Bit>
 {
     /**
      * @param index the index to set
