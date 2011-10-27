@@ -20,7 +20,7 @@ package org.omg.dds.core.status;
 
 import java.util.Set;
 
-import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.modifiable.ModifiableValue;
@@ -54,24 +54,24 @@ implements ModifiableValue<SELF, SELF> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param env       Identifies the Service instance to which the
+     * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      */
     public static Set<Class<? extends Status<?>>> allStatuses(
-            ServiceEnvironment env)
+            Bootstrap bootstrap)
     {
-        return env.getSPI().allStatusKinds();
+        return bootstrap.getSPI().allStatusKinds();
     }
 
 
     /**
-     * @param env Identifies the Service instance to which the
+     * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      */
     public static Set<Class<? extends Status<?>>> noStatuses(
-            ServiceEnvironment env)
+            Bootstrap bootstrap)
     {
-        return env.getSPI().noStatusKinds();
+        return bootstrap.getSPI().noStatusKinds();
     }
 
 

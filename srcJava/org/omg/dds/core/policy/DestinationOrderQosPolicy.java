@@ -64,9 +64,7 @@ import org.omg.dds.topic.Topic;
  */
 public interface DestinationOrderQosPolicy
 extends QosPolicy<DestinationOrderQosPolicy,
-                  ModifiableDestinationOrderQosPolicy>,
-        RequestedOffered<DestinationOrderQosPolicy>
-{
+        ModifiableDestinationOrderQosPolicy> {
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------

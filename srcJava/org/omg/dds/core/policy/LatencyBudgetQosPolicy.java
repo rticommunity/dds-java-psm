@@ -52,9 +52,7 @@ import org.omg.dds.topic.Topic;
  * to true.
  */
 public interface LatencyBudgetQosPolicy
-extends QosPolicy<LatencyBudgetQosPolicy, ModifiableLatencyBudgetQosPolicy>,
-        RequestedOffered<LatencyBudgetQosPolicy>
-{
+extends QosPolicy<LatencyBudgetQosPolicy, ModifiableLatencyBudgetQosPolicy> {
     public Duration getDuration();
 
 }
