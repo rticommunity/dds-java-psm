@@ -40,9 +40,6 @@ import org.omg.dds.core.status.SampleRejectedStatus;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.core.status.SubscriptionMatchedStatus;
 import org.omg.dds.domain.DomainParticipantFactory;
-import org.omg.dds.sub.InstanceState;
-import org.omg.dds.sub.SampleState;
-import org.omg.dds.sub.ViewState;
 import org.omg.dds.type.TypeSupport;
 import org.omg.dds.type.dynamic.DynamicTypeFactory;
 
@@ -453,16 +450,5 @@ public abstract class Bootstrap implements DDSObject {
         newSubscriptionMatchedStatus();
 
         public abstract InconsistentTopicStatus newInconsistentTopicStatus();
-
-
-        // --- Sample & Instance Life Cycle: ---------------------------------
-
-        public abstract Set<InstanceState> anyInstanceStateSet();
-
-        public abstract Set<InstanceState> notAliveInstanceStateSet();
-
-        public abstract Set<SampleState> anySampleStateSet();
-
-        public abstract Set<ViewState> anyViewStateSet();
     }
 }

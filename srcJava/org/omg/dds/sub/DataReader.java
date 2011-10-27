@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
@@ -117,9 +118,7 @@ extends DomainEntity<DataReader<TYPE>,
      *          samples with one of these instance states.
      */
     public ReadCondition<TYPE> createReadCondition(
-            Collection<SampleState> sampleStates,
-            Collection<ViewState> viewStates,
-            Collection<InstanceState> instanceStates);
+            Subscriber.ReaderState states);
 
     /**
      * This operation creates a QueryCondition. The returned QueryCondition
@@ -155,9 +154,7 @@ extends DomainEntity<DataReader<TYPE>,
      * @see     #createQueryCondition(String, List)
      */
     public QueryCondition<TYPE> createQueryCondition(
-            Collection<SampleState> sampleStates,
-            Collection<ViewState> viewStates,
-            Collection<InstanceState> instanceStates,
+            Subscriber.ReaderState states,
             String queryExpression,
             List<String> queryParameters);
 
@@ -361,378 +358,339 @@ extends DomainEntity<DataReader<TYPE>,
     // --- Type-specific interface: ------------------------------------------
 
     /**
-     * TODO: Add JavaDoc.
+     * This operation accesses a collection of samples from this DataReader.
+     * It behaves exactly like {@link #read(Query)} except that the
+     * collection of returned samples is not constrained by any Query.
      * 
      * @return  a non-null unmodifiable iterator over loaned samples.
+     * 
+     * @see     #read(Query)
+     * @see     #read(List)
+     * @see     #read(List, Query)
+     * @see     #readNextSample(Sample)
+     * @see     #take()
      */
     public Sample.Iterator<TYPE> read();
-    public Sample.Iterator<TYPE> read(
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
 
     /**
-     * TODO: Add JavaDoc.
+     * This operation accesses a collection of samples from this DataReader.
+     * The returned samples will be limited by the given {@link Query}. The
+     * setting of the {@link org.omg.dds.core.policy.PresentationQosPolicy}
+     * may impose further limits on the returned samples.
      * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void read(
-            List<Sample<TYPE>> samples);
-
-    /**
-     * TODO: Add JavaDoc.
+     * <ol>
+     *     <li>If
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         is
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#INSTANCE},
+     *         then samples belonging to the same data instance are consecutive.
+     *         </li>
+     *     <li>If
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         is
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#TOPIC}
+     *         and
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         is set to false, then samples belonging to the same data
+     *         instance are consecutive.</li>
+     *     <li>If
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         is
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#TOPIC}
+     *         and
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         is set to true, then samples belonging to the same instance
+     *         may or may not be consecutive. This is because to preserve
+     *         order it may be necessary to mix samples from different
+     *         instances.</li>
+     *     <li>If
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         is
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
+     *         and
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         is set to false, then samples belonging to the same data
+     *         instance are consecutive.</li>
+     *     <li>If
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         is
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
+     *         and
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         is set to true, then the returned collection contains at most
+     *         one sample. The difference in this case is due to the fact
+     *         that it is required that the application is able to read
+     *         samples belonging to different DataReader objects in a
+     *         specific order.
+     *         </li>
+     * </ol>
      * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void read(
-            List<Sample<TYPE>> samples,
-            int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
+     * In any case, the relative order between the samples of one instance is
+     * consistent with the
+     * {@link org.omg.dds.core.policy.DestinationOrderQosPolicy}:
+     * 
+     * <ul>
+     *     <li>If
+     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy#getKind()}
+     *         is
+     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy.Kind#BY_RECEPTION_TIMESTAMP},
+     *         samples belonging to the same instances will appear in the
+     *         relative order in which they were received (FIFO, earlier
+     *         samples ahead of the later samples).</li>
+     *     <li>If
+     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy#getKind()}
+     *         is
+     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy.Kind#BY_SOURCE_TIMESTAMP},
+     *         samples belonging to the same instances will appear in the
+     *         relative order implied by the result of
+     *         {@link Sample#getSourceTimestamp()} (FIFO, smaller values of
+     *         the source time stamp ahead of the larger values).<li>
+     * </ul>
+     * 
+     * In addition to the sample data, the read operation also provides
+     * sample meta-information ("sample info"). See {@link Sample}.
+     * 
+     * The returned samples are "loaned" by the DataReader. The use of this
+     * variant allows for zero-copy (assuming the implementation supports it)
+     * access to the data and the application will need to "return the loan"
+     * to the DataReader using the {@link Sample.Iterator#returnLoan()}
+     * operation.
+     * 
+     * Some elements in the returned collection may not have valid data. If
+     * the instance state in the Sample is
+     * {@link InstanceState#NOT_ALIVE_DISPOSED} or
+     * {@link InstanceState#NOT_ALIVE_NO_WRITERS}, then the last sample for
+     * that instance in the collection, that is, the one with
+     * {@link Sample#getSampleRank()} == 0, does not contain valid data.
+     * Samples that contain no data do not count towards the limits imposed
+     * by the {@link org.omg.dds.core.policy.ResourceLimitsQosPolicy}.
+     * 
+     * The act of reading a sample sets its sample state to
+     * {@link SampleState#READ}. If the sample belongs to the most recent
+     * generation of the instance, it will also set the view state of the
+     * instance to {@link ViewState#NOT_NEW}. It will not affect the
+     * instance state of the instance.
+     * 
+     * If the DataReader has no samples that meet the constraints, the
+     * return value will be a non-null iterator that provides no samples.
      * 
      * @return  a non-null unmodifiable iterator over loaned samples.
+     * 
+     * @see     #read()
+     * @see     #read(List)
+     * @see     #read(List, Query)
+     * @see     #readNextSample(Sample)
+     * @see     #take(Query)
+     * @see     #createQuery(InstanceHandle, int, boolean)
+     */
+    public Sample.Iterator<TYPE> read(Query<TYPE> query);
+
+    /**
+     * This operation accesses a collection of samples from this DataReader.
+     * It behaves exactly like {@link #read()} except that the returned
+     * samples are not "on loan" from the Service; they are deeply copied to
+     * the application.
+     * 
+     * The read operation will copy the data and meta-information into the
+     * elements already inside the given collection, overwriting any samples
+     * that might already be present. The use of this variant forces a copy
+     * but the application can control where the copy is placed and the
+     * application will not need to "return the loan."
+     * 
+     * @return  <code>samples</code>, for convenience.
+     * 
+     * @see     #read()
+     * @see     #read(Query)
+     * @see     #read(List, Query)
+     * @see     #readNextSample(Sample)
+     * @see     #take(List)
+     */
+    public List<Sample<TYPE>> read(List<Sample<TYPE>> samples);
+
+    /**
+     * This operation accesses a collection of samples from this DataReader.
+     * It behaves exactly like {@link #read(Query)} except that the returned
+     * samples are not "on loan" from the Service; they are deeply copied to
+     * the application.
+     * 
+     * The read operation will copy the data and meta-information into the
+     * elements already inside the given collection, overwriting any samples
+     * that might already be present. The use of this variant forces a copy
+     * but the application can control where the copy is placed and the
+     * application will not need to "return the loan."
+     * 
+     * @return  <code>samples</code>, for convenience.
+     * 
+     * @see     #read()
+     * @see     #read(Query)
+     * @see     #read(List)
+     * @see     #readNextSample(Sample)
+     * @see     #take(List, Query)
+     * @see     #createQuery(InstanceHandle, int, boolean)
+     */
+    public List<Sample<TYPE>> read(
+            List<Sample<TYPE>> samples,
+            Query<TYPE> query);
+
+    /**
+     * This operation accesses a collection of samples from this DataReader.
+     * It behaves exactly like {@link #take(Query)} except that the
+     * collection of returned samples is not constrained by any Query.
+     * 
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     * 
+     * @see     #take(Query)
+     * @see     #take(List)
+     * @see     #take(List, Query)
+     * @see     #takeNextSample(Sample)
+     * @see     #read()
      */
     public Sample.Iterator<TYPE> take();
-    public Sample.Iterator<TYPE> take(
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
 
     /**
-     * TODO: Add JavaDoc.
+     * This operation accesses a collection of samples from this DataReader.
+     * The number of samples returned is controlled by the
+     * {@link org.omg.dds.core.policy.PresentationQosPolicy} and other
+     * factors using the same logic as for {@link #read(Query)}.
      * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void take(
-            List<Sample<TYPE>> samples);
-
-    /**
-     * TODO: Add JavaDoc.
+     * The act of taking a sample removes it from the DataReader so it cannot
+     * be "read" or "taken" again. If the sample belongs to the most recent
+     * generation of the instance, it will also set the view state of the
+     * instance to {@link ViewState#NOT_NEW}. It will not affect the
+     * instance state of the instance.
      * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void take(
-            List<Sample<TYPE>> samples,
-            int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
+     * The behavior of the take operation follows the same rules than the
+     * read operation regarding the preconditions and postconditions for the
+     * arguments and return results. Similar to read, the take operation will
+     * "loan" elements to the application; this loan must then be returned by
+     * means of {@link Sample.Iterator#returnLoan()}. The only difference
+     * with read is that, as stated, the sample returned by take will no
+     * longer be accessible to successive calls to read or take.
+     * 
+     * If the DataReader has no samples that meet the constraints, the
+     * return value will be a non-null iterator that provides no samples.
      * 
      * @return  a non-null unmodifiable iterator over loaned samples.
+     * 
+     * @see     #take()
+     * @see     #take(List)
+     * @see     #take(List, Query)
+     * @see     #takeNextSample(Sample)
+     * @see     #read(Query)
+     * @see     #createQuery(InstanceHandle, int, boolean)
      */
-    public Sample.Iterator<TYPE> read(
-            ReadCondition<TYPE> condition);
+    public Sample.Iterator<TYPE> take(Query<TYPE> query);
 
     /**
-     * TODO: Add JavaDoc.
+     * This operation accesses a collection of samples from this DataReader.
+     * It behaves exactly like {@link #take()} except that the returned
+     * samples are not "on loan" from the Service; they are deeply copied to
+     * the application.
      * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
+     * The take operation will copy the data and meta-information into the
+     * elements already inside the given collection, overwriting any samples
+     * that might already be present. The use of this variant forces a copy
+     * but the application can control where the copy is placed and the
+     * application will not need to "return the loan."
+     * 
+     * @return  <code>samples</code>, for convenience.
+     * 
+     * @see     #take()
+     * @see     #take(Query)
+     * @see     #take(List, Query)
+     * @see     #takeNextSample(Sample)
+     * @see     #read(List)
      */
-    public void read(
+    public List<Sample<TYPE>> take(List<Sample<TYPE>> samples);
+
+    /**
+     * This operation accesses a collection of samples from this DataReader.
+     * It behaves exactly like {@link #take(Query)} except that the returned
+     * samples are not "on loan" from the Service; they are deeply copied to
+     * the application.
+     * 
+     * The take operation will copy the data and meta-information into the
+     * elements already inside the given collection, overwriting any samples
+     * that might already be present. The use of this variant forces a copy
+     * but the application can control where the copy is placed and the
+     * application will not need to "return the loan."
+     * 
+     * @return  <code>samples</code>, for convenience.
+     * 
+     * @see     #take()
+     * @see     #take(Query)
+     * @see     #take(List)
+     * @see     #takeNextSample(Sample)
+     * @see     #read(List, Query)
+     * @see     #createQuery(InstanceHandle, int, boolean)
+     */
+    public List<Sample<TYPE>> take(
             List<Sample<TYPE>> samples,
-            ReadCondition<TYPE> condition);
+            Query<TYPE> query);
 
     /**
-     * TODO: Add JavaDoc.
+     * This operation copies the next, non-previously accessed sample from
+     * this DataReader. The implied order among the samples stored in the
+     * DataReader is the same as for {@link #read(List, Query)}.
      * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void read(
-            List<Sample<TYPE>> samples,
-            int maxSamples,
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
+     * This operation is semantically equivalent to
+     * {@link #read(List, Query)} where {@link Query#getMaxSamples()}
+     * is 1, {@link Query#getReaderState()} followed by
+     * {@link Subscriber.ReaderState#getSampleStates()} ==
+     * {@link SampleState#NOT_READ}, {@link Query#getReaderState()} followed by
+     * {@link Subscriber.ReaderState#getViewStates()} contains all view
+     * states, and {@link Query#getReaderState()} followed by
+     * {@link Subscriber.ReaderState#getInstanceStates()} contains all
+     * instance states.
      * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> take(
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
+     * This operation provides a simplified API to "read" samples avoiding
+     * the need for the application to manage iterators and specify queries.
      * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void take(
-            List<Sample<TYPE>> samples,
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void take(
-            List<Sample<TYPE>> samples,
-            int maxSamples,
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
+     * If there is no unread data in the DataReader, the operation will
+     * return false and the provided sample is not modified.
      * 
      * @return  true if data was read or false if no data was available.
+     * 
+     * @see     #read()
+     * @see     #read(Query)
+     * @see     #read(List)
+     * @see     #read(List, Query)
+     * @see     #takeNextSample(Sample)
      */
-    public boolean readNext(
-            Sample<TYPE> sample);
+    public boolean readNextSample(Sample<TYPE> sample);
 
     /**
+     * This operation copies the next, non-previously accessed sample from
+     * this DataReader and "removes" it from the DataReader so it is no
+     * longer accessible. This operation is analogous to 
+     * {@link #readNextSample(Sample)} except for the fact that the sample is
+     * "removed" from the DataReader.
+     * 
+     * This operation is semantically equivalent to
+     * {@link #take(List, Query)} where {@link Query#getMaxSamples()}
+     * is 1, {@link Query#getReaderState()} followed by
+     * {@link Subscriber.ReaderState#getSampleStates()} ==
+     * {@link SampleState#NOT_READ}, {@link Query#getReaderState()} followed by
+     * {@link Subscriber.ReaderState#getViewStates()} contains all view
+     * states, and {@link Query#getReaderState()} followed by
+     * {@link Subscriber.ReaderState#getInstanceStates()} contains all
+     * instance states.
+     * 
+     * This operation provides a simplified API to "take" samples avoiding
+     * the need for the application to manage iterators and specify queries.
+     * 
+     * If there is no unread data in the DataReader, the operation will
+     * return false and the provided sample is not modified.
+     * 
      * @return  true if data was taken or false if no data was available.
-     */
-    public boolean takeNext(
-            Sample<TYPE> sample);
-
-    /**
-     * TODO: Add JavaDoc.
      * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
+     * @see     #take()
+     * @see     #take(Query)
+     * @see     #take(List)
+     * @see     #take(List, Query)
+     * @see     #readNextSample(Sample)
      */
-    public Sample.Iterator<TYPE> read(
-            InstanceHandle handle);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> read(
-            InstanceHandle handle,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void read(
-            List<Sample<TYPE>> samples,
-            InstanceHandle handle);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void read(
-            List<Sample<TYPE>> samples,
-            InstanceHandle handle,
-            int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> take(
-            InstanceHandle handle);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> take(
-            InstanceHandle handle,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void take(
-            List<Sample<TYPE>> samples,
-            InstanceHandle handle);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void take(
-            List<Sample<TYPE>> samples,
-            InstanceHandle handle,
-            int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> readNext(
-            InstanceHandle previousHandle);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> readNext(
-            InstanceHandle previousHandle,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void readNext(
-            List<Sample<TYPE>> samples,
-            InstanceHandle previousHandle);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void readNext(
-            List<Sample<TYPE>> samples,
-            InstanceHandle previousHandle,
-            int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> takeNext(
-            InstanceHandle previousHandle);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> takeNext(
-            InstanceHandle previousHandle,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void takeNext(
-            List<Sample<TYPE>> samples,
-            InstanceHandle previousHandle);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void takeNext(
-            List<Sample<TYPE>> samples,
-            InstanceHandle previousHandle,
-            int maxSamples,
-            Collection<SampleState> sampleStates, 
-            Collection<ViewState> viewStates, 
-            Collection<InstanceState> instanceStates);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> readNext(
-            InstanceHandle previousHandle,
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void readNext(
-            List<Sample<TYPE>> samples,
-            InstanceHandle previousHandle,
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void readNext(
-            List<Sample<TYPE>> samples,
-            InstanceHandle previousHandle,
-            int maxSamples,
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * @return  a non-null unmodifiable iterator over loaned samples.
-     */
-    public Sample.Iterator<TYPE> takeNext(
-            InstanceHandle previousHandle,
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void takeNext(
-            List<Sample<TYPE>> samples,
-            InstanceHandle previousHandle,
-            ReadCondition<TYPE> condition);
-
-    /**
-     * TODO: Add JavaDoc.
-     * 
-     * Copy samples into the provided collection, overwriting any samples that
-     * might already be present.
-     */
-    public void takeNext(
-            List<Sample<TYPE>> samples,
-            InstanceHandle previousHandle,
-            int maxSamples,
-            ReadCondition<TYPE> condition);
+    public boolean takeNextSample(Sample<TYPE> sample);
 
     /**
      * This operation can be used to retrieve the instance key that
@@ -777,4 +735,265 @@ extends DomainEntity<DataReader<TYPE>,
     public ModifiableInstanceHandle lookupInstance(
             ModifiableInstanceHandle handle,
             TYPE keyHolder);
+
+
+    // --- Query: ------------------------------------------------------------
+
+    /**
+     * Create and return a new query to read or take samples of the
+     * identified instance (or the "next" instance), regardless of
+     * {@link Subscriber.ReaderState}.
+     * 
+     * If isReadOrTakeNext is true, the actual instance is not directly
+     * specified. Rather the samples will all belong to the "next" instance
+     * with instance handle "greater" (according to some service-defined
+     * order) than the specified handle that has available samples.
+     * 
+     * The behavior of isReadOrTakeNext implies the existence of a total
+     * order "greater-than" relationship between the instance handles. The
+     * specifics of this relationship are not all important and are
+     * implementation specific. The important thing is that, according to the
+     * middleware, all instances are ordered relative to each other. This
+     * ordering is between the instance handles: It should not depend on the
+     * state of the instance (e.g., whether it has data or not) and must be
+     * defined even for instance handles that do not correspond to instances
+     * currently managed by the DataReader. For the purposes of the ordering
+     * it should be "as if" each instance handle was represented as a unique
+     * integer.
+     * 
+     * The behavior of {@link #read(Query)} or {@link #take(Query)} with
+     * isReadOrTakeNext == true is "as if" isReadOrTakeNext == false and the
+     * application passed the smallest instance handle among all the ones
+     * that (a) are greater than the given handle and (b) have available
+     * samples (i.e., samples that meet the constraints imposed by the
+     * Query).
+     * 
+     * A nil handle is guaranteed to be "less than" any valid instance
+     * handle. So the use of the parameter value handle ==
+     * {@link InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)} will
+     * return the samples for the instance which has the smallest
+     * instance handle among all the instances that contain available
+     * samples.
+     * 
+     * A value of isReadOrTakeNext == true is intended to be used in an
+     * application-driven iteration where the application starts by passing
+     * a nil handle, examines the samples returned, and then uses the
+     * instance handle returned in the {@link Sample} as the value of the
+     * handle argument to the next call to read or take. The iteration
+     * continues until no data remains.
+     * 
+     * Note that it is possible to pass isReadOrTakeNext == true with a
+     * non-nil handle that does not correspond to an instance currently
+     * managed by the DataReader. This is because as stated earlier the
+     * "greater-than" relationship is defined even for handles not managed by
+     * the DataReader. One practical situation where this may occur is when
+     * an application is iterating through all the instances, takes all the
+     * samples of a NOT_ALIVE_NO_WRITERS instance, returns the loan (at which
+     * point the instance information may be removed, and thus the handle
+     * becomes invalid), and tries to read the next instance.
+     * 
+     * @param handle            The instance to read or take. If this handle
+     *                          is null, or if it is nil and isReadOrTakeNext
+     *                          is false, the read or take will return samples
+     *                          of all available instances.
+     * @param maxSamples        The maximum number of samples to read or take
+     *                          at one time, or {@link Integer#MAX_VALUE} if
+     *                          all available samples should be returned.
+     * @param isReadOrTakeNext  If this flag is set to false,
+     *                          the read or take will return samples of the
+     *                          identified instance. If it is true, the read
+     *                          or take will return samples of the "next"
+     *                          instance in order. This behavior allows
+     *                          applications to easily iterate over the
+     *                          available data one instance at a time.
+     * 
+     * @return  a new Query.
+     * 
+     * @throws  IllegalArgumentException    if the handle is null and
+     *                                      isReadOrTakeNext is true, or if
+     *                                      the handle does not correspond to
+     *                                      an existing data object known to
+     *                                      this DataReader.
+     * 
+     * @see     #createQuery(InstanceHandle, int, boolean, ReadCondition)
+     * @see     #createQuery(InstanceHandle, int, boolean, org.omg.dds.sub.Subscriber.ReaderState)
+     * @see     #read(Query)
+     * @see     #take(Query)
+     */
+    public Query<TYPE> createQuery(
+            InstanceHandle handle,
+            int maxSamples,
+            boolean isReadOrTakeNext);
+
+    /**
+     * Create and return a new query to read or take samples of the
+     * identified instance (or the "next" instance) and with the given
+     * {@link Subscriber.ReaderState}.
+     * 
+     * The behavior of isReadOrTakeNext is the same as in
+     * {@link #createQuery(InstanceHandle, int, boolean)}.
+     * 
+     * @param handle            The instance to read or take. If this handle
+     *                          is null, or if it is nil and isReadOrTakeNext
+     *                          is false, the read or take will return samples
+     *                          of all available instances.
+     * @param maxSamples        The maximum number of samples to read or take
+     *                          at one time, or {@link Integer#MAX_VALUE} if
+     *                          all available samples should be returned.
+     * @param isReadOrTakeNext  If this flag is set to false,
+     *                          the read or take will return samples of the
+     *                          identified instance. If it is true, the read
+     *                          or take will return samples of the "next"
+     *                          instance in order. This behavior allows
+     *                          applications to easily iterate over the
+     *                          available data one instance at a time.
+     * @param state             The read or take will only return samples
+     *                          match these states.
+     * 
+     * @return  a new Query.
+     * 
+     * @throws  IllegalArgumentException    if the handle is null and
+     *                                      isReadOrTakeNext is true, or if
+     *                                      the handle does not correspond to
+     *                                      an existing data object known to
+     *                                      this DataReader.
+     * 
+     * @see     #createQuery(InstanceHandle, int, boolean)
+     * @see     #createQuery(InstanceHandle, int, boolean, ReadCondition)
+     * @see     #read(Query)
+     * @see     #take(Query)
+     */
+    public Query<TYPE> createQuery(
+            InstanceHandle handle,
+            int maxSamples,
+            boolean isReadOrTakeNext,
+            Subscriber.ReaderState state);
+
+    /**
+     * Create and return a new query to read or take samples of the
+     * identified instance (or the "next" instance), the availability of
+     * which would cause the given {@link ReadCondition} or
+     * {@link QueryCondition} to trigger.
+     * 
+     * In case the ReadCondition is a "plain" ReadCondition and not the
+     * specialized QueryCondition, this method is equivalent to calling
+     * {@link #createQuery(InstanceHandle, int, boolean, org.omg.dds.sub.Subscriber.ReaderState)}
+     * and passing a ReaderState consisting of the sample states, view
+     * states, and instance states from the corresponding attributes in the
+     * read condition. Using this operation, the application can avoid
+     * repeating the same parameters specified when creating the
+     * ReadCondition.
+     * 
+     * The behavior of isReadOrTakeNext is the same as in
+     * {@link #createQuery(InstanceHandle, int, boolean)}.
+     * 
+     * @param handle            The instance to read or take. If this handle
+     *                          is null, or if it is nil and isReadOrTakeNext
+     *                          is false, the read or take will return samples
+     *                          of all available instances.
+     * @param maxSamples        The maximum number of samples to read or take
+     *                          at one time, or {@link Integer#MAX_VALUE} if
+     *                          all available samples should be returned.
+     * @param isReadOrTakeNext  If this flag is set to false,
+     *                          the read or take will return samples of the
+     *                          identified instance. If it is true, the read
+     *                          or take will return samples of the "next"
+     *                          instance in order. This behavior allows
+     *                          applications to easily iterate over the
+     *                          available data one instance at a time.
+     * @param cond              The read or take will return those samples,
+     *                          the availability of which would cause this
+     *                          condition to trigger. A
+     *                          {@link QueryCondition}, to filter data
+     *                          samples based on the content, is especially
+     *                          useful.
+     * 
+     * @return  a new Query.
+     * 
+     * @throws  IllegalArgumentException        if the handle is null and
+     *                                          isReadOrTakeNext is true, or
+     *                                          if the handle does not
+     *                                          correspond to an existing
+     *                                          data object known to this
+     *                                          DataReader.
+     * @throws  PreconditionNotMetException     if the given condition is not
+     *                                          attached to this DataReader.
+     * 
+     * @see     #createQuery(InstanceHandle, int, boolean)
+     * @see     #createQuery(InstanceHandle, int, boolean, org.omg.dds.sub.Subscriber.ReaderState)
+     * @see     #read(Query)
+     * @see     #take(Query)
+     */
+    public Query<TYPE> createQuery(
+            InstanceHandle handle,
+            int maxSamples,
+            boolean isReadOrTakeNext,
+            ReadCondition<TYPE> cond);
+
+
+    /**
+     * A DataReader.Query encapsulates the various ways that an application
+     * can search for data to read or take from a {@link DataReader}.
+     */
+    public static interface Query<T> extends DDSObject, Cloneable {
+        // --- Query Access: --- //
+
+        /**
+         * If this method returns a non-nil handle, the application intends
+         * to read or take only those samples pertaining to the given
+         * instance (or the "next" instance). If it returns a nil handle, the
+         * application intends to read or take samples pertaining to all
+         * available instances.
+         * 
+         * This method shall never return null.
+         */
+        public InstanceHandle getInstance();
+
+        /**
+         * @return      the maximum number of samples to read or take at one
+         *              time, or {@link Integer#MAX_VALUE} if all available
+         *              samples should be returned.
+         */
+        public int getMaxSamples();
+
+        /**
+         * If this flag is set to false, the read or take will return samples
+         * of the identified instance. If it is true, the read or take will
+         * return samples of the "next" instance in order. This behavior
+         * allows applications to easily iterate over the available data one
+         * instance at a time.
+         * 
+         * If no particular instance is specified, this method shall always
+         * return false.
+         */
+        public boolean isReadOrTakeNext();
+
+        /**
+         * The application intends to read or take only those samples with
+         * the given ReaderState.
+         * 
+         * If this Query was initialized with a {@link ReadCondition} or
+         * {@link QueryCondition}, this method shall return the
+         * ReaderState associated with that condition.
+         * 
+         * The result shall be unmodifiable.
+         */
+        public Subscriber.ReaderState getReaderState();
+
+        /**
+         * The application intends only to read or take those samples, the
+         * availability of which would cause the given {@link ReadCondition}
+         * or {@link QueryCondition} to trigger.
+         */
+        public ReadCondition<T> getCondition();
+
+
+        // --- From Object: --------------------------------------------------
+
+        public Query<T> clone();
+
+        public boolean equals(Object other);
+
+        public int hashCode();
+    }
 }
