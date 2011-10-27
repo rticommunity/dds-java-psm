@@ -25,7 +25,8 @@ import org.omg.dds.core.policy.modifiable.ModifiableDataRepresentationQosPolicy;
 
 public interface DataRepresentationQosPolicy
 extends QosPolicy<DataRepresentationQosPolicy,
-                  ModifiableDataRepresentationQosPolicy>
+                  ModifiableDataRepresentationQosPolicy>,
+        RequestedOffered<DataRepresentationQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Properties

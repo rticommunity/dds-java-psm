@@ -26,24 +26,25 @@ package org.omg.dds.core.policy;
  * that requested by the subscription.
  * 
  * Details of this contract are provided in each of the implementing types.
+ * 
+ * @param   <SELF>      The QoS policy interface that extends this interface.
  */
 public interface RequestedOffered<SELF>
 {
     /**
      * Use the object returned by this method to evaluate the Request/Offer
-     * relationship with another instance of this policy. If <code>this</code>
-     * policy were to be offered by a {@link org.omg.dds.pub.DataWriter} (or
-     * {@link org.omg.dds.pub.Publisher}), and the other policy provided to
-     * {@link Comparable#compareTo(Object)} were to be requested by a
-     * {@link org.omg.dds.sub.DataReader} (or
-     * {@link org.omg.dds.sub.Subscriber}), that method will indicate whether
-     * the policy offered is less than (i.e. not compatible with), equal to
-     * (i.e. compatible with), or greater than (i.e. compatible with) the
-     * policy requested.
+     * relationship with another instance of this policy. If this policy is
+     * <em>offered</em> by a {@link org.omg.dds.pub.DataWriter} (or
+     * {@link org.omg.dds.pub.Publisher}), any other policy evaluated as less
+     * than or equal to it by the {@link Comparable} may be compatibly
+     * <em>requested</em> by a {@link org.omg.dds.sub.DataReader} (or
+     * {@link org.omg.dds.sub.Subscriber}). Similarly, if this policy is
+     * <em>requested</em>, any other policy that is greater than or equal to
+     * it may be compatibly <em>offered</em>.
      * 
      * @return  a {@link Comparable} object capable of evaluating the
-     *          Request/Offer relationship between two instances of this QoS
-     *          policy.
+     *          Request/Offer relationship between two instances of the QoS
+     *          policy identified by the type parameter <code>SELF</code>.
      */
-    public Comparable<SELF> offer();
+    public Comparable<SELF> requestedOfferedContract();
 }
