@@ -31,7 +31,7 @@ import org.omg.dds.type.Nested;
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
 public abstract class Duration
-implements Value<Duration, ModifiableDuration>, Comparable<Duration>
+implements Comparable<Duration>, Value<Duration, ModifiableDuration>
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -51,42 +51,37 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      * A duration of magnitude {@link Long#MAX_VALUE} indicates an infinite
      * duration, regardless of the units specified.
      * 
-     * @param env       Identifies the Service instance to which the new
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      * 
      * @see     #isInfinite()
-     * @see     #infiniteDuration(ServiceEnvironment)
+     * @see     #infiniteDuration(Bootstrap)
      */
     public static ModifiableDuration newDuration(
-            long duration,
-            TimeUnit unit,
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newDuration(duration, unit);
+            long duration, TimeUnit unit, Bootstrap bootstrap) {
+        return bootstrap.getSPI().newDuration(duration, unit);
     }
 
 
     /**
-     * @param env       Identifies the Service instance to which the
+     * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      * 
      * @return  An unmodifiable {@link Duration} of infinite length.
      */
-    public static Duration infiniteDuration(ServiceEnvironment env)
-    {
-        return env.getSPI().infiniteDuration();
+    public static Duration infiniteDuration(Bootstrap bootstrap) {
+        return bootstrap.getSPI().infiniteDuration();
     }
 
 
     /**
-     * @param env       Identifies the Service instance to which the
+     * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      * 
      * @return  A {@link Duration} of zero length.
      */
-    public static Duration zeroDuration(ServiceEnvironment env)
-    {
-        return env.getSPI().zeroDuration();
+    public static Duration zeroDuration(Bootstrap bootstrap) {
+        return bootstrap.getSPI().zeroDuration();
     }
 
 
@@ -175,9 +170,9 @@ implements Value<Duration, ModifiableDuration>, Comparable<Duration>
      * If this duration is infinite, the following relationship shall be
      * true:
      * 
-     * <code>this.equals(infiniteDuration(this.getEnvironment()))</code>
+     * <code>this.equals(infiniteDuration(this.getBootstrap()))</code>
      * 
-     * @see     #infiniteDuration(ServiceEnvironment)
+     * @see     #infiniteDuration(Bootstrap)
      */
     public abstract boolean isInfinite();
 

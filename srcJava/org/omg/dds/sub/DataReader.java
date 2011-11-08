@@ -770,8 +770,8 @@ extends DomainEntity<DataReader<TYPE>,
      * 
      * A nil handle is guaranteed to be "less than" any valid instance
      * handle. So the use of the parameter value handle ==
-     * {@link InstanceHandle#nilHandle(org.omg.dds.core.ServiceEnvironment)}
-     * will return the samples for the instance which has the smallest
+     * {@link InstanceHandle#nilHandle(org.omg.dds.core.Bootstrap)} will
+     * return the samples for the instance which has the smallest
      * instance handle among all the instances that contain available
      * samples.
      * 

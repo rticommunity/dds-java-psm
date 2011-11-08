@@ -32,7 +32,7 @@ import org.omg.dds.type.Nested;
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
 public abstract class Time
-implements Value<Time, ModifiableTime>, Comparable<Time>
+implements Comparable<Time>, Value<Time, ModifiableTime>
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -54,29 +54,25 @@ implements Value<Time, ModifiableTime>, Comparable<Time>
      * 
      * <code>t.isValid() == false</code>
      * 
-     * @param env       Identifies the Service instance to which the new
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      * 
      * @see     #isValid()
      */
     public static ModifiableTime newTime(
-            long time,
-            TimeUnit units,
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newTime(time, units);
+            long time, TimeUnit units, Bootstrap bootstrap) {
+        return bootstrap.getSPI().newTime(time, units);
     }
 
 
     /**
-     * @param env       Identifies the Service instance to which the
+     * @param bootstrap Identifies the Service instance to which the
      *                  object will belong.
      *                  
      * @return      An unmodifiable {@link Time} that is not valid.
      */
-    public static Time invalidTime(ServiceEnvironment env)
-    {
-        return env.getSPI().invalidTime();
+    public static Time invalidTime(Bootstrap bootstrap) {
+        return bootstrap.getSPI().invalidTime();
     }
 
 
