@@ -3,9 +3,8 @@
  * 
  * <ul>
  *     <li>Read communication statuses: i.e., those that are related to
- *         arrival of data, namely
- *         {@link org.omg.dds.core.status.DataOnReadersStatus} and
- *         {@link org.omg.dds.core.status.DataAvailableStatus}.</li>
+ *         arrival of data, namely {@link DataOnReadersStatus} and
+ *         {@link DataAvailableStatus}.</li>
  *     <li>Plain communication statuses: i.e., all the others.</li>
  * </ul>
  * 
@@ -52,9 +51,9 @@
  * does not reset the communication status.
  * 
  * For example, the value of the StatusChangedFlag associated with the
- * {@link org.omg.dds.core.status.RequestedDeadlineMissedStatus} will become
- * true each time new deadline occurs (which increases the totalCount field
- * within RequestedDeadlineMissedStatus). The value changes to false when the
+ * {@link RequestedDeadlineMissedStatus} will become true each time new
+ * deadline occurs (which increases the totalCount field within
+ * RequestedDeadlineMissedStatus). The value changes to false when the
  * application accesses the status via
  * {@link org.omg.dds.sub.DataReader#getRequestedDeadlineMissedStatus(RequestedDeadlineMissedStatus)}.
  * 

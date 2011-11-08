@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.topic.Topic;
 
 
@@ -41,12 +41,12 @@ public abstract class SampleLostStatus extends Status<SampleLostStatus> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param env       Identifies the Service instance to which the new
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
-    public static SampleLostStatus newSampleLostStatus(ServiceEnvironment env)
+    public static SampleLostStatus newSampleLostStatus(Bootstrap bootstrap)
     {
-        return env.getSPI().newSampleLostStatus();
+        return bootstrap.getSPI().newSampleLostStatus();
     }
 
 
