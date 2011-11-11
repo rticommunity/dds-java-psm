@@ -423,9 +423,11 @@ extends DomainEntity<Subscriber,
      * This operation is equivalent to calling
      * {@link #getDataReaders(Collection, Collection, Collection, Collection)}
      * with any sample state
-     * ({@link Subscriber.ReaderState#withAnySampleState()}), any view state
-     * ({@link Subscriber.ReaderState#withAnyViewState()}), and any instance
-     * state ({@link Subscriber.ReaderState#withAnyInstanceState()}).
+     * ({@link SampleState#anySampleStateSet(org.omg.dds.core.Bootstrap)}),
+     * any view state
+     * ({@link ViewState#anyViewStateSet(org.omg.dds.core.Bootstrap)}), and
+     * any instance state
+     * ({@link InstanceState#anyInstanceStateSet(org.omg.dds.core.Bootstrap)}).
      * 
      * @param   readers         a container, into which this method will place
      *          its result.
