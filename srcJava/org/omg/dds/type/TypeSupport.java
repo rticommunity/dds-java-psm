@@ -18,7 +18,7 @@
 
 package org.omg.dds.type;
 
-import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.DDSObject;
 
 
@@ -44,13 +44,11 @@ public abstract class TypeSupport<TYPE> implements DDSObject
      * 
      * <code>newTypeSupport(type, type.getClass().getName(), bootstrap)</code>
      * 
-     * @see #newTypeSupport(Class, String, ServiceEnvironment)
+     * @see #newTypeSupport(Class, String, Bootstrap)
      */
     public static <TYPE> TypeSupport<TYPE> newTypeSupport(
-            Class<TYPE> type,
-            ServiceEnvironment env)
-    {
-        return newTypeSupport(type, type.getClass().getName(), env);
+            Class<TYPE> type, Bootstrap bootstrap) {
+        return newTypeSupport(type, type.getClass().getName(), bootstrap);
     }
 
 
@@ -72,21 +70,18 @@ public abstract class TypeSupport<TYPE> implements DDSObject
      *                          {@link org.omg.dds.domain.DomainParticipant}
      *                          with which the resulting
      *                          <code>TypeSupport</code> is used.
-     * @param env       Identifies the Service instance to which the new
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      * 
      * @return          A new <code>TypeSupport</code> object, which can
      *                  subsequently be used to create one or more
      *                  {@link org.omg.dds.topic.Topic}s.
      * 
-     * @see #newTypeSupport(Class, ServiceEnvironment)
+     * @see #newTypeSupport(Class, Bootstrap)
      */
     public static <TYPE> TypeSupport<TYPE> newTypeSupport(
-            Class<TYPE> type,
-            String registeredName,
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newTypeSupport(type, registeredName);
+            Class<TYPE> type, String registeredName, Bootstrap bootstrap) {
+        return bootstrap.getSPI().newTypeSupport(type, registeredName);
     }
 
 

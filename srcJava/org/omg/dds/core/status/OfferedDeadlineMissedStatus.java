@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.Bootstrap;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.pub.DataWriter;
@@ -46,13 +46,13 @@ extends Status<OfferedDeadlineMissedStatus> {
     // -----------------------------------------------------------------------
 
     /**
-     * @param env       Identifies the Service instance to which the new
+     * @param bootstrap Identifies the Service instance to which the new
      *                  object will belong.
      */
     public static OfferedDeadlineMissedStatus newOfferedDeadlineMissedStatus(
-            ServiceEnvironment env)
+            Bootstrap bootstrap)
     {
-        return env.getSPI().newOfferedDeadlineMissedStatus();
+        return bootstrap.getSPI().newOfferedDeadlineMissedStatus();
     }
 
 
