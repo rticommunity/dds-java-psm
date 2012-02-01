@@ -4,8 +4,8 @@
  * <ul>
  *     <li>Read communication statuses: i.e., those that are related to
  *         arrival of data, namely
- *         {@link org.omg.dds.core.status.DataOnReadersStatus} and
- *         {@link org.omg.dds.core.status.DataAvailableStatus}.</li>
+ *         {@link org.omg.dds.core.status.DataOnReadersEvent} and
+ *         {@link org.omg.dds.core.status.DataAvailableEvent}.</li>
  *     <li>Plain communication statuses: i.e., all the others.</li>
  * </ul>
  * 
@@ -137,7 +137,7 @@
  * 
  * <b>Conditions and Wait-sets</b>
  * 
- * As previously mentioned, {@link java.util.concurrent.locks.Condition}s (in
+ * As previously mentioned, {@link org.omg.dds.core.Condition}s (in
  * conjunction with {@link org.omg.dds.core.WaitSet}s) provide an alternative
  * mechanism to allow the middleware to communicate communication status
  * changes (including arrival of data) to the application.

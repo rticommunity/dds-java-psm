@@ -22,12 +22,6 @@ import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.QueryCondition;
-import org.omg.dds.sub.ReadCondition;
-import org.omg.dds.sub.Subscriber;
-
 
 /**
  * A WaitSet object allows an application to wait until one or more of the
@@ -35,7 +29,8 @@ import org.omg.dds.sub.Subscriber;
  * the timeout expires.
  * 
  * WaitSet is not necessarily associated with a single
- * {@link DomainParticipant} and could be used to wait on Condition objects
+ * {@link org.omg.dds.domain.DomainParticipant} and could be used to wait on
+ * Condition objects
  * associated with different DomainParticipant objects.
  * 
  * This mechanism is wait-based. Its general use pattern is as follows:
@@ -43,8 +38,9 @@ import org.omg.dds.sub.Subscriber;
  * <ul>
  *     <li>The application indicates which relevant information it wants to
  *         get by creating {@link Condition} objects
- *         ({@link StatusCondition}, {@link ReadCondition} or
- *         {@link QueryCondition}) and attaching them to a WaitSet.</li>
+ *         ({@link StatusCondition}, {@link org.omg.dds.sub.ReadCondition} or
+ *         {@link org.omg.dds.sub.QueryCondition}) and attaching them to a
+ *          WaitSet.</li>
  *     <li>It then waits on that WaitSet until the triggerValue of one or
  *         several Condition objects become true.</li>
  *     <li>It then uses the result of the wait (i.e., the list of Condition
@@ -54,14 +50,17 @@ import org.omg.dds.sub.Subscriber;
  *             <code>get&lt;<i>CommunicationStatus</i>&gt;</code> on the
  *             relevant Entity.</li>
  *         <li>{@link Entity#getStatusChanges(Collection)} and then
- *             {@link Subscriber#getDataReaders(Collection)} on the relevant
- *             Subscriber.</li>
+ *             {@link org.omg.dds.sub.Subscriber#getDataReaders(Collection)}
+ *             on the relevant Subscriber.</li>
  *         <li>{@link Entity#getStatusChanges(Collection)} and then
- *             {@link DataReader#read()}/{@link DataReader#take()} on the
+ *             {@link org.omg.dds.sub.DataReader#read()}/
+ *             {@link org.omg.dds.sub.DataReader#take()} on the
  *             relevant DataReader.</li>
- *         <li>Directly call {@link DataReader#read(ReadCondition)}/
- *             {@link DataReader#read(ReadCondition)} with the Condition as a
- *             parameter if it is a ReadCondition or a QueryCondition.</li>
+ *         <li>Directly call
+ *             {@link org.omg.dds.sub.DataReader#read(org.omg.dds.sub.DataReader.Query)}/
+ *             {@link org.omg.dds.sub.DataReader#take(org.omg.dds.sub.DataReader.Query)}
+ *             with the {@link org.omg.dds.sub.DataReader.Query} wrapping a
+ *             ReadCondition or a QueryCondition.</li>
  *         </ul></li>
  * </ul>
  * 

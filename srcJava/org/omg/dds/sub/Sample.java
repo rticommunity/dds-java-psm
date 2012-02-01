@@ -24,7 +24,6 @@ import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.modifiable.ModifiableTime;
 import org.omg.dds.core.modifiable.ModifiableValue;
-import org.omg.dds.core.policy.OwnershipQosPolicy;
 import org.omg.dds.pub.DataWriter;
 
 
@@ -231,17 +230,21 @@ extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
      * </ul>
      * 
      * The precise behavior events that cause the instanceState to change
-     * depends on the setting of the {@link OwnershipQosPolicy}:
+     * depends on the setting of the
+     * {@link org.omg.dds.core.policy.OwnershipQosPolicy}:
      * 
      * <ul>
-     *     <li>If {@link OwnershipQosPolicy#getKind()} is
-     *         {@link OwnershipQosPolicy.Kind#EXCLUSIVE}, then the
-     *         instanceState becomes NOT_ALIVE_DISPOSED only if the
+     *     <li>If {@link org.omg.dds.core.policy.OwnershipQosPolicy#getKind()}
+     *         is
+     *         {@link org.omg.dds.core.policy.OwnershipQosPolicy.Kind#EXCLUSIVE},
+     *         then the instanceState becomes NOT_ALIVE_DISPOSED only if the
      *         DataWriter that "owns" the instance explicitly disposes it.
      *         The instanceState becomes ALIVE again only if the DataWriter
      *         that owns the instance writes it.</li>
-     *     <li>If {@link OwnershipQosPolicy#getKind()} is
-     *         {@link OwnershipQosPolicy.Kind#SHARED}, then the instanceState
+     *     <li>If {@link org.omg.dds.core.policy.OwnershipQosPolicy#getKind()}
+     *         is
+     *         {@link org.omg.dds.core.policy.OwnershipQosPolicy.Kind#SHARED},
+     *         then the instanceState
      *         becomes NOT_ALIVE_DISPOSED if any DataWriter explicitly
      *         disposes the instance. The instanceState becomes ALIVE as soon
      *         as any DataWriter writes the instance again.</li>

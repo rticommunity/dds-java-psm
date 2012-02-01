@@ -52,6 +52,7 @@ limitations under the License.
                destdir="${class.dir}"
                excludes="**/CVS/*"
                classpath="${src.dir}"
+               includeantruntime="false"
         />
 
         <!-- Include license and copyright information -->

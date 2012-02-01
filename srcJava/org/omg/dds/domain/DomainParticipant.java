@@ -30,7 +30,6 @@ import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.OutOfResourcesException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.modifiable.ModifiableTime;
-import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.pub.DataWriter;
@@ -640,13 +639,14 @@ extends Entity<DomainParticipant,
     /**
      * This operation manually asserts the liveliness of the
      * DomainParticipant. This is used in combination with the
-     * {@link LivelinessQosPolicy} to indicate to the Service that the entity
-     * remains active.
+     * {@link org.omg.dds.core.policy.LivelinessQosPolicy} to indicate to the
+     * Service that the entity remains active.
      * 
      * This operation needs to only be used if the DomainParticipant contains
      * {@link DataWriter} entities with the
-     * {@link LivelinessQosPolicy#getKind()} set to
-     * {@link LivelinessQosPolicy.Kind#MANUAL_BY_PARTICIPANT} and it only
+     * {@link org.omg.dds.core.policy.LivelinessQosPolicy#getKind()} set to
+     * {@link org.omg.dds.core.policy.LivelinessQosPolicy.Kind#MANUAL_BY_PARTICIPANT}
+     * and it only
      * affects the liveliness of those DataWriter entities. Otherwise, it has
      * no effect.
      * 

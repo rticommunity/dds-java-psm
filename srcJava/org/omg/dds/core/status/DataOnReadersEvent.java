@@ -24,7 +24,6 @@ import org.omg.dds.sub.Subscriber;
 /**
  * New information is available.
  * 
- * @see DataOnReadersStatus
  * @see DataAvailableEvent
  */
 public abstract class DataOnReadersEvent

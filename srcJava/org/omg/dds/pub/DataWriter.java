@@ -31,10 +31,7 @@ import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.Time;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
-import org.omg.dds.core.policy.HistoryQosPolicy;
-import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
-import org.omg.dds.core.policy.ReliabilityQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.status.LivelinessLostStatus;
 import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
@@ -90,14 +87,16 @@ extends DomainEntity<DataWriter<TYPE>,
 
     /**
      * This operation is intended to be used only if the DataWriter has
-     * {@link ReliabilityQosPolicy#getKind()} set to
-     * {@link ReliabilityQosPolicy.Kind#RELIABLE}. Otherwise the operation
-     * will return immediately.
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} set to
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE}.
+     * Otherwise the operation will return immediately.
      * 
      * The operation blocks the calling thread until either all data written
      * by the DataWriter is acknowledged by all matched {@link DataReader}
-     * entities that have {@link ReliabilityQosPolicy#getKind()} set to
-     * {@link ReliabilityQosPolicy.Kind#RELIABLE}, or else the duration
+     * entities that have
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} set to
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE},
+     * or else the duration
      * specified by the maxWait parameter elapses, whichever happens first.
      * 
      * A normal return indicates that all the samples written have been
@@ -111,14 +110,16 @@ extends DomainEntity<DataWriter<TYPE>,
 
     /**
      * This operation is intended to be used only if the DataWriter has
-     * {@link ReliabilityQosPolicy#getKind()} set to
-     * {@link ReliabilityQosPolicy.Kind#RELIABLE}. Otherwise the operation
-     * will return immediately.
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} set to
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE}.
+     * Otherwise the operation will return immediately.
      * 
      * The operation blocks the calling thread until either all data written
      * by the DataWriter is acknowledged by all matched {@link DataReader}
-     * entities that have {@link ReliabilityQosPolicy#getKind()} set to
-     * {@link ReliabilityQosPolicy.Kind#RELIABLE}, or else the duration
+     * entities that have
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} set to
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE},
+     * or else the duration
      * specified by the maxWait parameter elapses, whichever happens first.
      * 
      * A normal return indicates that all the samples written have been
@@ -184,14 +185,16 @@ extends DomainEntity<DataWriter<TYPE>,
 
     /**
      * This operation manually asserts the liveliness of the DataWriter. This
-     * is used in combination with the {@link LivelinessQosPolicy} to
+     * is used in combination with the
+     * {@link org.omg.dds.core.policy.LivelinessQosPolicy} to
      * indicate to the Service that the entity remains active.
      * 
      * This operation need only be used if
-     * {@link LivelinessQosPolicy#getKind()} is either
-     * {@link LivelinessQosPolicy.Kind#MANUAL_BY_PARTICIPANT} or
-     * {@link LivelinessQosPolicy.Kind#MANUAL_BY_TOPIC}. Otherwise, it has
-     * no effect.
+     * {@link org.omg.dds.core.policy.LivelinessQosPolicy#getKind()} is either
+     * {@link org.omg.dds.core.policy.LivelinessQosPolicy.Kind#MANUAL_BY_PARTICIPANT}
+     * or
+     * {@link org.omg.dds.core.policy.LivelinessQosPolicy.Kind#MANUAL_BY_TOPIC}.
+     * Otherwise, it has no effect.
      * 
      * <b>Note</b> - Writing data via {@link #write(Object)} asserts
      * liveliness on the DataWriter itself and its DomainParticipant.
@@ -524,12 +527,15 @@ extends DomainEntity<DataWriter<TYPE>,
      * As a side effect, this operation asserts liveliness on the DataWriter
      * itself, the {@link Publisher} and the {@link DomainParticipant}.
      * 
-     * If {@link ReliabilityQosPolicy#getKind()} kind is set to
-     * {@link ReliabilityQosPolicy.Kind#RELIABLE}, the operation may block if
+     * If {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} kind
+     * is set to
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE},
+     * the operation may block if
      * the modification would cause data to be lost or else cause one of the
      * limits specified in {@link ResourceLimitsQosPolicy} to be exceeded.
      * Under these circumstances,
-     * {@link ReliabilityQosPolicy#getMaxBlockingTime()} configures the
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getMaxBlockingTime()}
+     * configures the
      * maximum time the operation may block waiting for space to become
      * available. If this duration elapses before the DataWriter is able to
      * store the modification without exceeding the limits, the operation
@@ -537,13 +543,14 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * Specifically, the DataWriter write operation may block in the
      * following situations (note that the list may not be exhaustive), even
-     * if {@link HistoryQosPolicy#getKind()} is
-     * {@link HistoryQosPolicy.Kind#KEEP_LAST}.
+     * if {@link org.omg.dds.core.policy.HistoryQosPolicy#getKind()} is
+     * {@link org.omg.dds.core.policy.HistoryQosPolicy.Kind#KEEP_LAST}.
      * 
      * <ul>
      *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
      *         {@link ResourceLimitsQosPolicy#getMaxInstances()} *
-     *         {@link HistoryQosPolicy#getDepth()}), then in the situation
+     *         {@link org.omg.dds.core.policy.HistoryQosPolicy#getDepth()}),
+     *         then in the situation
      *         where the max samples resource limit is exhausted the Service
      *         is allowed to discard samples of some other instance as long
      *         as at least one sample remains for such an instance. If it is
@@ -604,12 +611,15 @@ extends DomainEntity<DataWriter<TYPE>,
      * correspond to the value returned by {@link #registerInstance(Object)}
      * when the instance (identified by its key) was registered.
      * 
-     * If {@link ReliabilityQosPolicy#getKind()} kind is set to
-     * {@link ReliabilityQosPolicy.Kind#RELIABLE}, the operation may block if
+     * If {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} kind
+     * is set to
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE},
+     * the operation may block if
      * the modification would cause data to be lost or else cause one of the
      * limits specified in {@link ResourceLimitsQosPolicy} to be exceeded.
      * Under these circumstances,
-     * {@link ReliabilityQosPolicy#getMaxBlockingTime()} configures the
+     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getMaxBlockingTime()}
+     * configures the
      * maximum time the operation may block waiting for space to become
      * available. If this duration elapses before the DataWriter is able to
      * store the modification without exceeding the limits, the operation
@@ -617,13 +627,14 @@ extends DomainEntity<DataWriter<TYPE>,
      * 
      * Specifically, the DataWriter write operation may block in the
      * following situations (note that the list may not be exhaustive), even
-     * if {@link HistoryQosPolicy#getKind()} is
-     * {@link HistoryQosPolicy.Kind#KEEP_LAST}.
+     * if {@link org.omg.dds.core.policy.HistoryQosPolicy#getKind()} is
+     * {@link org.omg.dds.core.policy.HistoryQosPolicy.Kind#KEEP_LAST}.
      * 
      * <ul>
      *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
      *         {@link ResourceLimitsQosPolicy#getMaxInstances()} *
-     *         {@link HistoryQosPolicy#getDepth()}), then in the situation
+     *         {@link org.omg.dds.core.policy.HistoryQosPolicy#getDepth()}),
+     *         then in the situation
      *         where the max samples resource limit is exhausted the Service
      *         is allowed to discard samples of some other instance as long
      *         as at least one sample remains for such an instance. If it is
@@ -825,7 +836,7 @@ extends DomainEntity<DataWriter<TYPE>,
      * {@link #write(Object, InstanceHandle)}.
      * 
      * @throws  IllegalArgumentException    under the same circumstances as
-     *          {@link #dispose(Object, InstanceHandle)}.
+     *          {@link #dispose(InstanceHandle, Object)}.
      * @throws  PreconditionNotMetException under the same circumstances as
      *          {@link #dispose(InstanceHandle, Object)}.
      * @throws  OutOfResourcesException     under the same circumstances as
@@ -858,7 +869,7 @@ extends DomainEntity<DataWriter<TYPE>,
      * {@link #write(Object, InstanceHandle)}.
      * 
      * @throws  IllegalArgumentException    under the same circumstances as
-     *          {@link #dispose(Object, InstanceHandle)}.
+     *          {@link #dispose(InstanceHandle, Object)}.
      * @throws  PreconditionNotMetException under the same circumstances as
      *          {@link #dispose(InstanceHandle, Object)}.
      * @throws  OutOfResourcesException     under the same circumstances as

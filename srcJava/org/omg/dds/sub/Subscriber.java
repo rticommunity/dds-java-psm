@@ -28,6 +28,7 @@ import org.omg.dds.core.InconsistentPolicyException;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.policy.PresentationQosPolicy;
+import org.omg.dds.core.status.DataAvailableEvent;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.sub.modifiable.ModifiableDataReaderQos;
@@ -56,9 +57,12 @@ import org.omg.dds.type.builtin.StringDataReader;
  * through operations on the DataReaders.
  * 
  * All operations except for the inherited operations
- * {@link #setQos(SubscriberQos)}, {@link #getQos()},
- * {@link #setListener(SubscriberListener)}, {@link #getListener()},
- * {@link #enable()}, {@link #getStatusCondition()}, and
+ * {@link org.omg.dds.core.Entity#setQos(org.omg.dds.core.EntityQos)},
+ * {@link org.omg.dds.core.Entity#getQos()},
+ * {@link org.omg.dds.core.Entity#setListener(java.util.EventListener)},
+ * {@link org.omg.dds.core.Entity#getListener()},
+ * {@link org.omg.dds.core.Entity#enable()},
+ * {@link org.omg.dds.core.Entity#getStatusCondition()}, and
  * {@link #createDataReader(TopicDescription)} may fail with the exception
  * {@link NotEnabledException}.
  */
@@ -421,8 +425,7 @@ extends DomainEntity<Subscriber,
 
     /**
      * This operation is equivalent to calling
-     * {@link #getDataReaders(Collection, Collection, Collection, Collection)}
-     * with any sample state
+     * {@link #getDataReaders(Collection, ReaderState)} with any sample state
      * ({@link Subscriber.ReaderState#withAnySampleState()}), any view state
      * ({@link Subscriber.ReaderState#withAnyViewState()}), and any instance
      * state ({@link Subscriber.ReaderState#withAnyInstanceState()}).
@@ -433,12 +436,13 @@ extends DomainEntity<Subscriber,
      * @return  readers, as a convenience to facilitate chaining.
      * 
      * @throws  PreconditionNotMetException     if the Subscriber has
-     *          {@link PresentationQosPolicy#getAccessScope()} set to
-     *          {@link PresentationQosPolicy.AccessScopeKind#GROUP} and this
-     *          operation is not invoked inside a {@link #beginAccess()}/
-     *          {@link #endAccess()} block.
+     *          {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *          set to
+     *          {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
+     *          and this operation is not invoked inside a
+     *          {@link #beginAccess()}/{@link #endAccess()} block.
      * 
-     * @see     #getDataReaders(Collection, Collection, Collection, Collection)
+     * @see     #getDataReaders(Collection, ReaderState)
      * @see     #beginAccess()
      * @see     #endAccess()
      * @see     PresentationQosPolicy
@@ -448,17 +452,20 @@ extends DomainEntity<Subscriber,
 
     /**
      * This operation allows the application to access the {@link DataReader}
-     * objects that contain samples with the specified sampleStates,
-     * viewStates, and instanceStates.
+     * objects that contain samples with the specified sample states,
+     * view states, and instance states.
      * 
-     * If the {@link PresentationQosPolicy} of the Subscriber has
-     * {@link PresentationQosPolicy#getAccessScope()} set to
-     * {@link PresentationQosPolicy.AccessScopeKind#GROUP}, this operation
-     * should only be invoked inside a {@link #beginAccess()}/
+     * If the {@link org.omg.dds.core.policy.PresentationQosPolicy} of the
+     * Subscriber has
+     * {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     * set to
+     * {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP},
+     * this operation should only be invoked inside a {@link #beginAccess()}/
      * {@link #endAccess()} block. Otherwise it will fail with
      * {@link PreconditionNotMetException}.
      * 
-     * Depending on the setting of the {@link PresentationQosPolicy}, the
+     * Depending on the setting of the
+     * {@link org.omg.dds.core.policy.PresentationQosPolicy}, the
      * returned collection of DataReader objects may be a 'set' containing
      * each DataReader at most once in no specified order, or a 'list'
      * containing each DataReader one or more times in a specific order.
@@ -466,14 +473,18 @@ extends DomainEntity<Subscriber,
      * the collection may or may not implement {@link Set} or {@link List}).
      * 
      * <ol>
-     *     <li>If {@link PresentationQosPolicy#getAccessScope()} is
-     *         {@link PresentationQosPolicy.AccessScopeKind#INSTANCE} or
-     *         {@link PresentationQosPolicy.AccessScopeKind#TOPIC}, the
-     *         returned collection is a 'set'.</li>
-     *     <li>If {@link PresentationQosPolicy#getAccessScope()} is
-     *         {@link PresentationQosPolicy.AccessScopeKind#GROUP} and
-     *         {@link PresentationQosPolicy#isOrderedAccess()} is true, then
-     *         the returned collection is a 'list'.</li>
+     *     <li>If {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         is
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#INSTANCE}
+     *         or
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#TOPIC},
+     *         the returned collection is a 'set'.</li>
+     *     <li>If {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         is
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
+     *         and
+     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         is true, then the returned collection is a 'list'.</li>
      * </ol>
      * 
      * This difference is due to the fact that, in the second situation it
@@ -484,23 +495,18 @@ extends DomainEntity<Subscriber,
      * 
      * @param   readers         a container, into which this method will place
      *          its result.
-     * @param   sampleStates    a DataReader will only be placed into the
+     * @param   readerState     a DataReader will only be placed into the
      *          readers collection if it has data available with one of these
-     *          sample states.
-     * @param viewStates        a DataReader will only be placed into the
-     *          readers collection if it has data available with one of these
-     *          view states.
-     * @param instanceStates    a DataReader will only be placed into the
-     *          readers collection if it has data available with one of these
-     *          instance states.
+     *          sample states, view states, and instance states.
      * 
      * @return  readers, as a convenience to facilitate chaining.
      * 
      * @throws  PreconditionNotMetException     if the Subscriber has
-     *          {@link PresentationQosPolicy#getAccessScope()} set to
-     *          {@link PresentationQosPolicy.AccessScopeKind#GROUP} and this
-     *          operation is not invoked inside a {@link #beginAccess()}/
-     *          {@link #endAccess()} block.
+     *          {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *          set to
+     *          {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
+     *          and this operation is not invoked inside a
+     *          {@link #beginAccess()}/{@link #endAccess()} block.
      * 
      * @see     #getDataReaders(Collection)
      * @see     #beginAccess()
@@ -515,7 +521,7 @@ extends DomainEntity<Subscriber,
      * This operation invokes the operation
      * {@link DataReaderListener#onDataAvailable(org.omg.dds.core.status.DataAvailableEvent)}
      * on the DataReaderListener objects attached to contained DataReader
-     * entities with a {@link DataAvailableStatus} that is considered
+     * entities with a {@link DataAvailableEvent} that is considered
      * changed.
      * 
      * This operation is typically invoked from
@@ -531,9 +537,11 @@ extends DomainEntity<Subscriber,
      * Subscriber.
      * 
      * The application is required to use this operation only if the
-     * {@link PresentationQosPolicy} of the Subscriber has 
-     * {@link PresentationQosPolicy#getAccessScope()} equal to
-     * {@link PresentationQosPolicy.AccessScopeKind#GROUP}.
+     * {@link org.omg.dds.core.policy.PresentationQosPolicy} of the
+     * Subscriber has 
+     * {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     * equal to
+     * {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}.
      * 
      * In the aforementioned case, the operation must be called prior to
      * calling any of the sample-accessing operations, namely:
@@ -544,7 +552,8 @@ extends DomainEntity<Subscriber,
      * finished accessing the data samples it must call {@link #endAccess()}.
      * 
      * It is not required for the application to call {@link #beginAccess()}/
-     * {@link #endAccess()} if the {@link PresentationQosPolicy} has the
+     * {@link #endAccess()} if the
+     * {@link org.omg.dds.core.policy.PresentationQosPolicy} has the
      * access scope set to something other than 'GROUP'. Calling these
      * methods in this case is not considered an error and has no effect.
      * 

@@ -53,9 +53,13 @@ import org.omg.dds.type.builtin.StringDataWriter;
  * (time stamp, writer, etc.) as well as the QoS of the Publisher and the
  * DataWriter.
  * 
- * All operations except for {@link #setQos(PublisherQos)}, {@link #getQos()},
- * {@link #setListener(PublisherListener)}, {@link #getListener()},
- * {@link #enable()}, {@link #getStatusCondition()},
+ * All operations except for
+ * {@link org.omg.dds.core.Entity#setQos(org.omg.dds.core.EntityQos)},
+ * {@link org.omg.dds.core.Entity#getQos()},
+ * {@link org.omg.dds.core.Entity#setListener(java.util.EventListener)},
+ * {@link org.omg.dds.core.Entity#getListener()},
+ * {@link org.omg.dds.core.Entity#enable()},
+ * {@link org.omg.dds.core.Entity#getStatusCondition()},
  * {@link #createDataWriter(Topic)}, and {@link Publisher#close()} may fail
  * with the exception {@link NotEnabledException}.
  */
@@ -81,7 +85,8 @@ extends DomainEntity<Publisher,
      *         {@link Publisher#getDefaultDataWriterQos()}.</li>
      *     <li>Combine those two QoS policies and selectively modify policies
      *         as desired -- see
-     *         {@link #copyFromTopicQos(DataWriterQos, TopicQos)}.</li>
+     *         {@link #copyFromTopicQos(ModifiableDataWriterQos, TopicQos)}.
+     *         </li>
      *     <li>Use the resulting QoS policies to construct the DataWriter.
      *         </li>
      * </ul>
@@ -110,7 +115,8 @@ extends DomainEntity<Publisher,
      *         {@link Publisher#getDefaultDataWriterQos()}.</li>
      *     <li>Combine those two QoS policies and selectively modify policies
      *         as desired -- see
-     *         {@link #copyFromTopicQos(DataWriterQos, TopicQos)}.</li>
+     *         {@link #copyFromTopicQos(ModifiableDataWriterQos, TopicQos)}.
+     *         </li>
      *     <li>Use the resulting QoS policies to construct the DataWriter.
      *         </li>
      * </ul>

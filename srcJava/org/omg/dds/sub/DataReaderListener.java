@@ -36,7 +36,7 @@ import org.omg.dds.pub.DataWriter;
  * to have an associated listener. In this case, the associated listener must
  * be of concrete type DataReaderListener.
  * 
- * The operation {@link #onSubscriptionMatched(SubscriptionMatchedStatus)} is
+ * The operation {@link #onSubscriptionMatched(SubscriptionMatchedEvent)} is
  * intended to inform the application of the discovery of {@link DataWriter}
  * entities that match the DataReader. Some implementations of the service
  * may not propagate this information. In that case the DDS specification

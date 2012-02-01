@@ -30,7 +30,6 @@ import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
-import org.omg.dds.core.policy.DurabilityQosPolicy;
 import org.omg.dds.core.policy.HistoryQosPolicy;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
@@ -110,12 +109,9 @@ extends DomainEntity<DataReader<TYPE>,
      * This operation creates a ReadCondition. The returned ReadCondition
      * will be attached and belong to the DataReader.
      * 
-     * @param   sampleStates    The returned condition will only trigger on
-     *          samples with one of these sample states.
-     * @param   viewStates      The returned condition will only trigger on
-     *          samples with one of these view states.
-     * @param   instanceStates  The returned condition will only trigger on
-     *          samples with one of these instance states.
+     * @param   states  The returned condition will only trigger on samples
+     *          with one of these sample states, view states, and
+     *          instance states.
      */
     public ReadCondition<TYPE> createReadCondition(
             Subscriber.ReaderState states);
@@ -130,7 +126,7 @@ extends DomainEntity<DataReader<TYPE>,
      * @param   queryParameters A set of parameter values for the
      *          queryExpression.
      *
-     * @see     #createQueryCondition(Collection, Collection, Collection, String, List)
+     * @see     #createQueryCondition(org.omg.dds.sub.Subscriber.ReaderState, String, List)
      */
     public QueryCondition<TYPE> createQueryCondition(
             String queryExpression,
@@ -140,12 +136,9 @@ extends DomainEntity<DataReader<TYPE>,
      * This operation creates a QueryCondition. The returned QueryCondition
      * will be attached and belong to the DataReader.
      * 
-     * @param   sampleStates    The returned condition will only trigger on
-     *          samples with one of these sample states.
-     * @param   viewStates      The returned condition will only trigger on
-     *          samples with one of these view states.
-     * @param   instanceStates  The returned condition will only trigger on
-     *          samples with one of these instance states.
+     * @param   states  The returned condition will only trigger on samples
+     *          with one of these sample states, view states, and instance
+     *          states.
      * @param   queryExpression The returned condition will only trigger on
      *          samples that pass this content-based filter expression.
      * @param   queryParameters A set of parameter values for the
@@ -249,8 +242,8 @@ extends DomainEntity<DataReader<TYPE>,
 
     /**
      * This operation is intended only for DataReader entities for which
-     * {@link DurabilityQosPolicy#getKind()} is not
-     * {@link DurabilityQosPolicy.Kind#VOLATILE}.
+     * {@link org.omg.dds.core.policy.DurabilityQosPolicy#getKind()} is not
+     * {@link org.omg.dds.core.policy.DurabilityQosPolicy.Kind#VOLATILE}.
      * 
      * As soon as an application enables a non-VOLATILE DataReader it will
      * start receiving both "historical" data, i.e., the data that was
@@ -274,8 +267,8 @@ extends DomainEntity<DataReader<TYPE>,
 
     /**
      * This operation is intended only for DataReader entities for which
-     * {@link DurabilityQosPolicy#getKind()} is not
-     * {@link DurabilityQosPolicy.Kind#VOLATILE}.
+     * {@link org.omg.dds.core.policy.DurabilityQosPolicy#getKind()} is not
+     * {@link org.omg.dds.core.policy.DurabilityQosPolicy.Kind#VOLATILE}.
      * 
      * As soon as an application enables a non-VOLATILE DataReader it will
      * start receiving both "historical" data, i.e., the data that was

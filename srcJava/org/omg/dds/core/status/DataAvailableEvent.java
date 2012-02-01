@@ -26,7 +26,6 @@ import org.omg.dds.sub.DataReader;
  *
  * @param <TYPE>    The data type of the source {@link DataReader}.
  * 
- * @see DataAvailableStatus
  * @see DataOnReadersEvent
  */
 public abstract class DataAvailableEvent<TYPE>
