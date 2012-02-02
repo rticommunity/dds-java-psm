@@ -20,19 +20,32 @@ package org.omg.dds.core.policy;
 
 import java.util.List;
 
-import org.omg.dds.core.policy.modifiable.ModifiableDataRepresentationQosPolicy;
-
 
 public interface DataRepresentationQosPolicy
-extends QosPolicy<DataRepresentationQosPolicy,
-                  ModifiableDataRepresentationQosPolicy>,
-        RequestedOffered<DataRepresentationQosPolicy>
+extends QosPolicy, RequestedOffered<DataRepresentationQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
     public List<Short> getValue();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DataRepresentationQosPolicy withValue(List<Short> value);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DataRepresentationQosPolicy withValue(short... value);
 
 
 

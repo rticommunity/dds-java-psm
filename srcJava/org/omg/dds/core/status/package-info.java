@@ -56,7 +56,7 @@
  * true each time new deadline occurs (which increases the totalCount field
  * within RequestedDeadlineMissedStatus). The value changes to false when the
  * application accesses the status via
- * {@link org.omg.dds.sub.DataReader#getRequestedDeadlineMissedStatus(RequestedDeadlineMissedStatus)}.
+ * {@link org.omg.dds.sub.DataReader#getRequestedDeadlineMissedStatus()}.
  * 
  * <b>Changes in Read Communication Statuses</b>
  * 

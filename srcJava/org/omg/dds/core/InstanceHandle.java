@@ -18,15 +18,14 @@
 
 package org.omg.dds.core;
 
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import java.io.Serializable;
 
 
 /**
  * An opaque handle that can be used to refer to a local or remote entity.
  */
 public abstract class InstanceHandle
-implements Comparable<InstanceHandle>,
-           Value<InstanceHandle, ModifiableInstanceHandle>
+implements Comparable<InstanceHandle>, Serializable, DDSObject
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -71,8 +70,10 @@ implements Comparable<InstanceHandle>,
     public abstract boolean isNil();
 
 
-    // --- From Object: ------------------------------------------------------
+    // --- Modification: -----------------------------------------------------
 
-    @Override
-    public abstract InstanceHandle clone();
+    /**
+     * @return  a modifiable copy of this object's state.
+     */
+    public abstract ModifiableInstanceHandle modifiableCopy();
 }

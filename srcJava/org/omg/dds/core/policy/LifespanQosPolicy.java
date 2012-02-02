@@ -18,8 +18,9 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.policy.modifiable.ModifiableLifespanQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.topic.Topic;
 
@@ -55,8 +56,24 @@ import org.omg.dds.topic.Topic;
  * instead of the source time stamp in its computation of the "expiration
  * time."
  */
-public interface LifespanQosPolicy
-extends QosPolicy<LifespanQosPolicy, ModifiableLifespanQosPolicy> {
+public interface LifespanQosPolicy extends QosPolicy
+{
     public Duration getDuration();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public LifespanQosPolicy withDuration(Duration duration);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public LifespanQosPolicy withDuration(long duration, TimeUnit unit);
 }

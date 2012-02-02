@@ -18,11 +18,12 @@
 
 package org.omg.dds.type.builtin;
 
-import org.omg.dds.core.modifiable.ModifiableValue;
+import java.io.Serializable;
+
+import org.omg.dds.core.DDSObject;
 
 
-public interface KeyedBytes
-extends ModifiableValue<KeyedBytes, KeyedBytes>
+public interface KeyedBytes extends Cloneable, Serializable, DDSObject
 {
     /**
      * @return the key
@@ -54,4 +55,14 @@ extends ModifiableValue<KeyedBytes, KeyedBytes>
      * @return  this
      */
     public KeyedBytes setValue(byte value[], int offset, int length);
+
+
+    // -----------------------------------------------------------------------
+
+    /**
+     * Overwrite the state of this object with that of the given object.
+     */
+    public void copyFrom(KeyedBytes src);
+
+    public KeyedBytes clone();
 }

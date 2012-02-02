@@ -29,7 +29,8 @@ import org.omg.dds.sub.DataReader;
  * @see SampleLostStatus
  */
 public abstract class SampleLostEvent<TYPE>
-extends StatusChangedEvent<SampleLostEvent<TYPE>, DataReader<TYPE>> {
+extends StatusChangedEvent<DataReader<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -50,4 +51,10 @@ extends StatusChangedEvent<SampleLostEvent<TYPE>, DataReader<TYPE>> {
     protected SampleLostEvent(DataReader<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract SampleLostEvent<TYPE> clone();
 }

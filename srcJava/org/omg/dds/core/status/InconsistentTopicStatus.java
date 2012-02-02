@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.topic.Topic;
 
 
@@ -27,29 +26,13 @@ import org.omg.dds.topic.Topic;
  * 
  * @see InconsistentTopicEvent
  */
-public abstract class InconsistentTopicStatus
-extends Status<InconsistentTopicStatus> {
+public abstract class InconsistentTopicStatus extends Status
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = -1695476267550323893L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static InconsistentTopicStatus newInconsistentTopicStatus(
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newInconsistentTopicStatus();
-    }
 
 
 

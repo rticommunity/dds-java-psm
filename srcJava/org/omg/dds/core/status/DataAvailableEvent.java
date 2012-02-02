@@ -29,7 +29,8 @@ import org.omg.dds.sub.DataReader;
  * @see DataOnReadersEvent
  */
 public abstract class DataAvailableEvent<TYPE>
-extends StatusChangedEvent<DataAvailableEvent<TYPE>, DataReader<TYPE>> {
+extends StatusChangedEvent<DataReader<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -47,4 +48,10 @@ extends StatusChangedEvent<DataAvailableEvent<TYPE>, DataReader<TYPE>> {
     protected DataAvailableEvent(DataReader<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract DataAvailableEvent<TYPE> clone();
 }

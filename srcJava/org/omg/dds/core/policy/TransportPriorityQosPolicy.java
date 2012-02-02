@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableTransportPriorityQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.topic.Topic;
 
@@ -50,12 +49,20 @@ import org.omg.dds.topic.Topic;
  * transport. This mapping would then be used by the infrastructure when
  * propagating the data written by the DataWriter.
  */
-public interface TransportPriorityQosPolicy
-extends QosPolicy<TransportPriorityQosPolicy,
-                  ModifiableTransportPriorityQosPolicy> {
+public interface TransportPriorityQosPolicy extends QosPolicy
+{
     /**
      * @return the value
      */
     public int getValue();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public TransportPriorityQosPolicy withValue(int value);
 }

@@ -18,8 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
@@ -33,29 +32,13 @@ import org.omg.dds.topic.Topic;
  * @see PublicationMatchedEvent
  * @see SubscriptionMatchedStatus
  */
-public abstract class PublicationMatchedStatus
-extends Status<PublicationMatchedStatus> {
+public abstract class PublicationMatchedStatus extends Status
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = 275828934444687975L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static PublicationMatchedStatus newPublicationMatchedStatus(
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newPublicationMatchedStatus();
-    }
 
 
 
@@ -93,6 +76,5 @@ extends Status<PublicationMatchedStatus> {
      * Handle to the last {@link DataReader} that matched the
      * {@link DataWriter}, causing the status to change.
      */
-    public abstract ModifiableInstanceHandle getLastSubscriptionHandle();
-
+    public abstract InstanceHandle getLastSubscriptionHandle();
 }

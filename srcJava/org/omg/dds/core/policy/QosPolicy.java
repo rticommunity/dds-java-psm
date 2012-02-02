@@ -18,9 +18,11 @@
 
 package org.omg.dds.core.policy;
 
+import java.io.Serializable;
+
 import org.omg.dds.core.Condition;
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.Value;
 import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
 import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
 import org.omg.dds.domain.DomainParticipant;
@@ -64,6 +66,8 @@ import org.omg.dds.type.Nested;
  * have "immutable" semantics meaning that they can only be specified either
  * at Entity creation time or else prior to calling the
  * {@link Entity#enable()} operation on the Entity.
+ * 
+ * Objects of this type are immutable.
  * 
  * <b>Properties of QoS Policies</b>
  * 
@@ -115,8 +119,7 @@ import org.omg.dds.type.Nested;
  */
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
-public interface QosPolicy<UNMOD_SELF extends QosPolicy<UNMOD_SELF, MOD_SELF>,
-                           MOD_SELF extends UNMOD_SELF>
-extends Value<UNMOD_SELF, MOD_SELF> {
+public interface QosPolicy extends Serializable, DDSObject
+{
     // empty
 }

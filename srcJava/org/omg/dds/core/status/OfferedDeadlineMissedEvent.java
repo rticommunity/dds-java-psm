@@ -32,8 +32,8 @@ import org.omg.dds.pub.DataWriter;
  * @see RequestedDeadlineMissedEvent
  */
 public abstract class OfferedDeadlineMissedEvent<TYPE>
-extends StatusChangedEvent<OfferedDeadlineMissedEvent<TYPE>,
-                           DataWriter<TYPE>> {
+extends StatusChangedEvent<DataWriter<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -54,4 +54,10 @@ extends StatusChangedEvent<OfferedDeadlineMissedEvent<TYPE>,
     protected OfferedDeadlineMissedEvent(DataWriter<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract OfferedDeadlineMissedEvent<TYPE> clone();
 }

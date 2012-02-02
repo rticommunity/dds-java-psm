@@ -18,28 +18,17 @@
 
 package org.omg.dds.topic;
 
-import org.omg.dds.core.modifiable.ModifiableValue;
+import java.io.Serializable;
+
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
 
 
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
-public abstract class BuiltinTopicKey
-implements ModifiableValue<BuiltinTopicKey, BuiltinTopicKey>
+public interface BuiltinTopicKey extends Cloneable, Serializable, DDSObject
 {
-    // -----------------------------------------------------------------------
-    // Private Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = 5414777490591097112L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Instance Methods
-    // -----------------------------------------------------------------------
-
     /**
      * Copy the value of this key into the first four positions of the given
      * array.
@@ -53,11 +42,17 @@ implements ModifiableValue<BuiltinTopicKey, BuiltinTopicKey>
      * 
      * @return  The input array.
      */
-    public abstract int[] getValue(int[] dst);
+    public int[] getValue(int[] dst);
 
+
+    // -----------------------------------------------------------------------
+
+    /**
+     * Overwrite the state of this object with that of the given object.
+     */
+    public void copyFrom(BuiltinTopicKey src);
 
     // --- From Object: ------------------------------------------------------
 
-    @Override
-    public abstract BuiltinTopicKey clone();
+    public BuiltinTopicKey clone();
 }

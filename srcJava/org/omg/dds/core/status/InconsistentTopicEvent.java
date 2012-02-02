@@ -29,7 +29,8 @@ import org.omg.dds.topic.Topic;
  * @see InconsistentTopicStatus
  */
 public abstract class InconsistentTopicEvent<TYPE>
-extends StatusChangedEvent<InconsistentTopicEvent<TYPE>, Topic<TYPE>> {
+extends StatusChangedEvent<Topic<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -50,4 +51,10 @@ extends StatusChangedEvent<InconsistentTopicEvent<TYPE>, Topic<TYPE>> {
     protected InconsistentTopicEvent(Topic<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract InconsistentTopicEvent<TYPE> clone();
 }

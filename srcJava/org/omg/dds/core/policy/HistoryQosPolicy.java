@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableHistoryQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
@@ -77,8 +76,8 @@ import org.omg.dds.topic.Topic;
  * @see ReliabilityQosPolicy
  * @see ResourceLimitsQosPolicy
  */
-public interface HistoryQosPolicy
-extends QosPolicy<HistoryQosPolicy, ModifiableHistoryQosPolicy> {
+public interface HistoryQosPolicy extends QosPolicy
+{
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
@@ -92,6 +91,23 @@ extends QosPolicy<HistoryQosPolicy, ModifiableHistoryQosPolicy> {
      * @return the depth
      */
     public int getDepth();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public HistoryQosPolicy withKind(Kind kind);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public HistoryQosPolicy withDepth(int depth);
 
 
 

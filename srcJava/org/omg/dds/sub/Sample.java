@@ -18,12 +18,13 @@
 
 package org.omg.dds.sub;
 
+import java.io.Serializable;
 import java.util.ListIterator;
 
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
-import org.omg.dds.core.modifiable.ModifiableTime;
-import org.omg.dds.core.modifiable.ModifiableValue;
+import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.core.ModifiableTime;
 import org.omg.dds.pub.DataWriter;
 
 
@@ -115,8 +116,8 @@ import org.omg.dds.pub.DataWriter;
  * 
  * @param <TYPE>    The concrete type of the data encapsulated by this Sample.
  */
-public interface Sample<TYPE>
-extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
+public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
+{
     // -----------------------------------------------------------------------
     // Methods
     // -----------------------------------------------------------------------
@@ -401,6 +402,11 @@ extends ModifiableValue<Sample<TYPE>, Sample<TYPE>> {
      * @see     #getSampleRank()
      */
     public int getAbsoluteGenerationRank();
+
+
+    // --- From Object: ------------------------------------------------------
+
+    public Sample<TYPE> clone();
 
 
 

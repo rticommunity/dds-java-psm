@@ -19,7 +19,6 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.policy.modifiable.ModifiableEntityFactoryQosPolicy;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.pub.DataWriter;
@@ -64,11 +63,21 @@ import org.omg.dds.topic.Topic;
  * default, it is not necessary to explicitly call enable on newly created
  * entities.
  */
-public interface EntityFactoryQosPolicy
-extends QosPolicy<EntityFactoryQosPolicy, ModifiableEntityFactoryQosPolicy> {
+public interface EntityFactoryQosPolicy extends QosPolicy
+{
     /**
      * @return the autoEnableCreatedEntities
      */
     public boolean isAutoEnableCreatedEntities();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public EntityFactoryQosPolicy withAutoEnableCreatedEntities(
+            boolean autoEnableCreatedEntities);
 }

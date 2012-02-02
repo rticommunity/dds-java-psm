@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableWriterDataLifecycleQosPolicy;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
@@ -72,12 +71,21 @@ import org.omg.dds.pub.Publisher;
  * {@link Publisher#closeContainedEntities()} or
  * {@link DomainParticipant#closeContainedEntities()}.
  */
-public interface WriterDataLifecycleQosPolicy
-extends QosPolicy<WriterDataLifecycleQosPolicy,
-                  ModifiableWriterDataLifecycleQosPolicy> {
+public interface WriterDataLifecycleQosPolicy extends QosPolicy
+{
     /**
      * @return the autDisposeUnregisteredInstances
      */
     public boolean isAutDisposeUnregisteredInstances();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public WriterDataLifecycleQosPolicy withAutDisposeUnregisteredInstances(
+            boolean autDisposeUnregisteredInstances);
 }

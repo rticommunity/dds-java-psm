@@ -19,7 +19,6 @@
 package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.policy.modifiable.ModifiableUserDataQosPolicy;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
@@ -52,8 +51,8 @@ import org.omg.dds.sub.DataReader;
  * policies. The use of this QoS is not limited to security, rather it offers
  * a simple, yet flexible extensibility mechanism.
  */
-public interface UserDataQosPolicy
-extends QosPolicy<UserDataQosPolicy, ModifiableUserDataQosPolicy> {
+public interface UserDataQosPolicy extends QosPolicy
+{
     /**
      * Copy the data into the given array, starting at the index at the given
      * offset.
@@ -69,4 +68,14 @@ extends QosPolicy<UserDataQosPolicy, ModifiableUserDataQosPolicy> {
      * @return  the length of the <code>value</code> property.
      */
     public int getLength();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public UserDataQosPolicy withValue(byte value[], int offset, int length);
 }

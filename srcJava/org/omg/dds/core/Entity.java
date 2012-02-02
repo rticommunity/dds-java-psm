@@ -20,6 +20,7 @@ package org.omg.dds.core;
 
 import java.util.Collection;
 import java.util.EventListener;
+import java.util.Set;
 
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
@@ -39,14 +40,10 @@ import org.omg.dds.topic.TopicDescription;
  * This class is the abstract base class for all the DCPS objects that
  * support QoS policies, a listener and a status condition.
  * 
- * @param <SELF>        The most-derived DDS-standard interface implemented
- *                      by this entity.
  * @param <LISTENER>    The listener interface appropriate for this entity.
  * @param <QOS>         The QoS interface appropriate for this entity.
  */
-public interface Entity<SELF extends Entity<SELF, LISTENER, QOS>,
-                        LISTENER extends EventListener,
-                        QOS extends EntityQos<?, ?>>
+public interface Entity<LISTENER extends EventListener, QOS extends EntityQos>
 extends DDSObject
 {
     /**
@@ -94,7 +91,7 @@ extends DDSObject
      */
     public void setListener(
             LISTENER listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * This operation allows access to the existing set of QoS policies for
@@ -182,7 +179,7 @@ extends DDSObject
      *         default QoS policies) and listener</li>
      *     <li>{@link #getStatusCondition()}</li>
      *     <li>'factory' operations and {@link #close()}</li>
-     *     <li>{@link #getStatusChanges(Collection)} and other get status
+     *     <li>{@link #getStatusChanges()} and other get status
      *         operations (although the status of a disabled entity never
      *         changes)</li>
      *     <li>'lookup' operations</li>
@@ -216,7 +213,7 @@ extends DDSObject
      * {@link WaitSet} so that the application can wait for specific status
      * changes that affect the Entity.
      */
-    public StatusCondition<SELF> getStatusCondition();
+    public StatusCondition<?> getStatusCondition();
 
     /**
      * This operation retrieves the list of communication statuses in the
@@ -231,14 +228,9 @@ extends DDSObject
      * triggered on the Entity itself and does not include statuses that
      * apply to contained entities.
      * 
-     * @param   statuses    a container for the resulting statuses; its
-     *                      contents will be overwritten by the result of
-     *                      this operation.
-     * @return  the argument as a convenience in order to facilitate call
-     *          chaining. 
+     * @return  a new Set containing the triggered statuses. 
      */
-    public Collection<Class<? extends Status<?>>> getStatusChanges(
-            Collection<Class<? extends Status<?>>> statuses);
+    public Set<Class<? extends Status>> getStatusChanges();
 
     /**
      * @return  the {@link InstanceHandle} that represents the Entity.

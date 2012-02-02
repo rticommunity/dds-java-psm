@@ -30,17 +30,16 @@ import org.omg.dds.core.policy.LifespanQosPolicy;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
 import org.omg.dds.core.policy.OwnershipStrengthQosPolicy;
+import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.ReliabilityQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
-import org.omg.dds.pub.modifiable.ModifiableDataWriterQos;
 
 
-public interface DataWriterQos
-extends EntityQos<DataWriterQos, ModifiableDataWriterQos>
+public interface DataWriterQos extends EntityQos
 {
     /**
      * @return the durability
@@ -120,4 +119,9 @@ extends EntityQos<DataWriterQos, ModifiableDataWriterQos>
     public DataRepresentationQosPolicy getRepresentation();
 
     public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    public DataWriterQos withPolicy(QosPolicy policy);
 }

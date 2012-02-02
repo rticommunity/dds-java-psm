@@ -18,12 +18,13 @@
 
 package org.omg.dds.core.status;
 
+import java.io.Serializable;
 import java.util.Set;
 
-import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Entity;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.StatusCondition;
-import org.omg.dds.core.modifiable.ModifiableValue;
 
 
 /**
@@ -39,8 +40,8 @@ import org.omg.dds.core.modifiable.ModifiableValue;
  * 
  * @see StatusChangedEvent
  */
-public abstract class Status<SELF extends Status<SELF>>
-implements ModifiableValue<SELF, SELF> {
+public abstract class Status implements Serializable, DDSObject
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -57,7 +58,7 @@ implements ModifiableValue<SELF, SELF> {
      * @param env       Identifies the Service instance to which the
      *                  object will belong.
      */
-    public static Set<Class<? extends Status<?>>> allStatuses(
+    public static Set<Class<? extends Status>> allStatuses(
             ServiceEnvironment env)
     {
         return env.getSPI().allStatusKinds();
@@ -68,18 +69,9 @@ implements ModifiableValue<SELF, SELF> {
      * @param env Identifies the Service instance to which the
      *                  object will belong.
      */
-    public static Set<Class<? extends Status<?>>> noStatuses(
+    public static Set<Class<? extends Status>> noStatuses(
             ServiceEnvironment env)
     {
         return env.getSPI().noStatusKinds();
     }
-
-
-
-    // -----------------------------------------------------------------------
-    // Methods
-    // -----------------------------------------------------------------------
-
-    @Override
-    public abstract SELF clone();
 }

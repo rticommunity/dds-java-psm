@@ -20,12 +20,11 @@ package org.omg.dds.domain;
 
 import org.omg.dds.core.EntityQos;
 import org.omg.dds.core.policy.EntityFactoryQosPolicy;
+import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
-import org.omg.dds.domain.modifiable.ModifiableDomainParticipantQos;
 
 
-public interface DomainParticipantQos
-extends EntityQos<DomainParticipantQos, ModifiableDomainParticipantQos>
+public interface DomainParticipantQos extends EntityQos
 {
     /**
      * @return the userData
@@ -37,4 +36,8 @@ extends EntityQos<DomainParticipantQos, ModifiableDomainParticipantQos>
      */
     public EntityFactoryQosPolicy getEntityFactory();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    public DomainParticipantQos withPolicy(QosPolicy policy);
 }

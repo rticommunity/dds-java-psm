@@ -16,16 +16,12 @@
  * limitations under the License.
  */
 
-package org.omg.dds.core.modifiable;
+package org.omg.dds.core;
 
 import java.util.concurrent.TimeUnit;
 
-import org.omg.dds.core.Duration;
-import org.omg.dds.core.Time;
 
-
-public abstract class ModifiableTime
-extends Time implements ModifiableValue<Time, ModifiableTime>
+public abstract class ModifiableTime extends Time
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -39,47 +35,41 @@ extends Time implements ModifiableValue<Time, ModifiableTime>
     // Methods
     // -----------------------------------------------------------------------
 
-    // --- Data access: ------------------------------------------------------
+    /**
+     * Overwrite the state of this object with that of the given object.
+     */
+    public abstract void copyFrom(Time src);
 
     /**
-     * @return  this
+     * @return  an immutable copy of this object's state.
      */
-    public abstract ModifiableTime setTime(long time, TimeUnit unit);
+    public abstract Time immutableCopy();
+
+
+    // --- Data access: ------------------------------------------------------
+
+    public abstract void setTime(long time, TimeUnit unit);
 
 
     // --- Manipulation: -----------------------------------------------------
 
     /**
      * Increment this time by the given amount.
-     * 
-     * @return  this
      */
-    public abstract ModifiableTime add(Duration duration);
+    public abstract void add(Duration duration);
 
     /**
      * Increment this time by the given amount.
-     * 
-     * @return  this
      */
-    public abstract ModifiableTime add(long duration, TimeUnit unit);
+    public abstract void add(long duration, TimeUnit unit);
 
     /**
      * Decrement this time by the given amount.
-     * 
-     * @return  this
      */
-    public abstract ModifiableTime subtract(Duration duration);
+    public abstract void subtract(Duration duration);
 
     /**
      * Decrement this time by the given amount.
-     * 
-     * @return  this
      */
-    public abstract ModifiableTime subtract(long duration, TimeUnit unit);
-
-
-    // --- From Object: ------------------------------------------------------
-
-    @Override
-    public abstract ModifiableTime clone();
+    public abstract void subtract(long duration, TimeUnit unit);
 }

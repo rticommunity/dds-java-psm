@@ -19,6 +19,7 @@
 package org.omg.dds.core;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.omg.dds.core.status.Status;
 
@@ -42,7 +43,7 @@ import org.omg.dds.core.status.Status;
  * @param <ENTITY>      The type of the entity with which this condition is
  *                      associated.
  */
-public interface StatusCondition<ENTITY extends Entity<ENTITY, ?, ?>>
+public interface StatusCondition<ENTITY extends Entity<?, ?>>
 extends Condition {
     /**
      * This operation retrieves the list of communication statuses that are
@@ -52,10 +53,11 @@ extends Condition {
      * {@link #setEnabledStatuses(Collection)} or, if it was never called,
      * the default list.
      * 
+     * @return  a new Set of enabled statuses.
+     * 
      * @see     #setEnabledStatuses(Collection)
      */
-    public Collection<Class<? extends Status<?>>> getEnabledStatuses(
-            Collection<Class<? extends Status<?>>> statuses);
+    public Set<Class<? extends Status>> getEnabledStatuses();
 
     /**
      * This operation defines the list of communication statuses that are
@@ -74,10 +76,10 @@ extends Condition {
      * @param statuses  For which status changes the condition should trigger.
      *                  A null collection signifies all status changes.
      * 
-     * @see     #getEnabledStatuses(Collection)
+     * @see     #getEnabledStatuses()
      */
     public void setEnabledStatuses(
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * @return  the Entity associated with the StatusCondition. Note that

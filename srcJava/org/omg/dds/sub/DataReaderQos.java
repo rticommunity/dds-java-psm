@@ -27,16 +27,15 @@ import org.omg.dds.core.policy.HistoryQosPolicy;
 import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
+import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.ReaderDataLifecycleQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
-import org.omg.dds.sub.modifiable.ModifiableDataReaderQos;
 
 
-public interface DataReaderQos
-extends EntityQos<DataReaderQos, ModifiableDataReaderQos>
+public interface DataReaderQos extends EntityQos
 {
     /**
      * @return the durability
@@ -96,4 +95,9 @@ extends EntityQos<DataReaderQos, ModifiableDataReaderQos>
     public DataRepresentationQosPolicy getRepresentation();
 
     public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    public DataReaderQos withPolicy(QosPolicy policy);
 }

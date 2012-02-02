@@ -16,14 +16,10 @@
  * limitations under the License.
  */
 
-package org.omg.dds.core.modifiable;
-
-import org.omg.dds.core.InstanceHandle;
+package org.omg.dds.core;
 
 
-public abstract class ModifiableInstanceHandle
-extends InstanceHandle
-implements ModifiableValue<InstanceHandle, ModifiableInstanceHandle>
+public abstract class ModifiableInstanceHandle extends InstanceHandle
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -37,8 +33,13 @@ implements ModifiableValue<InstanceHandle, ModifiableInstanceHandle>
     // Instance Methods
     // -----------------------------------------------------------------------
 
-    // --- From Object: ------------------------------------------------------
+    /**
+     * Overwrite the state of this object with that of the given object.
+     */
+    public abstract void copyFrom(InstanceHandle src);
 
-    @Override
-    public abstract ModifiableInstanceHandle clone();
+    /**
+     * @return  an immutable copy of this object's state.
+     */
+    public abstract InstanceHandle immutableCopy();
 }

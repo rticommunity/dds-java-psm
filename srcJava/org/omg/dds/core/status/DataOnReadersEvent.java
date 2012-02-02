@@ -27,7 +27,8 @@ import org.omg.dds.sub.Subscriber;
  * @see DataAvailableEvent
  */
 public abstract class DataOnReadersEvent
-extends StatusChangedEvent<DataOnReadersEvent, Subscriber> {
+extends StatusChangedEvent<Subscriber>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -45,4 +46,10 @@ extends StatusChangedEvent<DataOnReadersEvent, Subscriber> {
     protected DataOnReadersEvent(Subscriber source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract DataOnReadersEvent clone();
 }

@@ -19,9 +19,9 @@
 package org.omg.dds.core.policy;
 
 import java.util.Collection;
+import java.util.Set;
 
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.policy.modifiable.ModifiablePartitionQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
 import org.omg.dds.sub.DataReader;
@@ -43,7 +43,7 @@ import org.omg.dds.sub.Subscriber;
  * A {@link DataWriter} within a Publisher only communicates with a
  * {@link DataReader} in a Subscriber if (in addition to matching the Topic
  * and having compatible QoS) the Publisher and Subscriber have a common
- * partition name string. Each string in the list that defines this QoS
+ * partition name string. Each string in the collection that defines this QoS
  * policy defines a partition name. A partition name may contain wild cards.
  * Sharing a common partition means that one of the partition names matches.
  * 
@@ -59,9 +59,9 @@ import org.omg.dds.sub.Subscriber;
  * other partition names using the same rules of string matching and
  * regular expression matching used for any other partition name.
  * 
- * The default value for is a zero-length sequence. The
- * zero-length sequence is treated as a special value equivalent to a
- * sequence containing a single element consisting of the empty string.
+ * The default value for is a zero-size collection. The
+ * zero-size collection is treated as a special value equivalent to a
+ * collection containing a single element consisting of the empty string.
  * 
  * This policy is changeable. A change of this policy can potentially modify
  * the "match" of existing DataReader and DataWriter entities. It may
@@ -88,10 +88,20 @@ import org.omg.dds.sub.Subscriber;
  * the other hand, the same data instance can be made available (published)
  * or requested (subscribed) on one or more partitions.
  */
-public interface PartitionQosPolicy
-extends QosPolicy<PartitionQosPolicy, ModifiablePartitionQosPolicy> {
+public interface PartitionQosPolicy extends QosPolicy
+{
     /**
      * @return  an unmodifiable collection of partition names.
      */
-    public Collection<String> getName();
+    public Set<String> getName();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public PartitionQosPolicy withName(Collection<String> name);
 }

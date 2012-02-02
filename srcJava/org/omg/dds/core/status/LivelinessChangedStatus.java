@@ -18,8 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
@@ -33,29 +32,13 @@ import org.omg.dds.topic.Topic;
  * @see LivelinessChangedEvent
  * @see LivelinessLostStatus
  */
-public abstract class LivelinessChangedStatus
-extends Status<LivelinessChangedStatus> {
+public abstract class LivelinessChangedStatus extends Status
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = -8771335633962700621L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static LivelinessChangedStatus newLivelinessChangedStatus(
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newLivelinessChangedStatus();
-    }
 
 
 
@@ -101,6 +84,5 @@ extends Status<LivelinessChangedStatus> {
      * Handle to the last {@link DataWriter} whose change in liveliness
      * caused this status to change.
      */
-    public abstract ModifiableInstanceHandle getLastPublicationHandle();
-
+    public abstract InstanceHandle getLastPublicationHandle();
 }

@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableResourceLimitsQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
@@ -69,9 +68,8 @@ import org.omg.dds.topic.Topic;
  * @see HistoryQosPolicy
  * @see ReliabilityQosPolicy
  */
-public interface ResourceLimitsQosPolicy
-extends QosPolicy<ResourceLimitsQosPolicy,
-                  ModifiableResourceLimitsQosPolicy> {
+public interface ResourceLimitsQosPolicy extends QosPolicy
+{
     public static final int LENGTH_UNLIMITED = -1;
 
 
@@ -90,4 +88,28 @@ extends QosPolicy<ResourceLimitsQosPolicy,
      */
     public int getMaxSamplesPerInstance();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ResourceLimitsQosPolicy withMaxSamples(int maxSamples);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ResourceLimitsQosPolicy withMaxInstances(int maxInstances);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ResourceLimitsQosPolicy withMaxSamplesPerInstance(
+            int maxSamplesPerInstance);
 }

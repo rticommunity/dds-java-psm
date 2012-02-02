@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
@@ -33,29 +32,13 @@ import org.omg.dds.sub.DataReader;
  * @see LivelinessChangedStatus
  * @see SubscriptionMatchedStatus
  */
-public abstract class LivelinessLostStatus
-extends Status<LivelinessLostStatus> {
+public abstract class LivelinessLostStatus extends Status
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = -8294734757039670162L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static LivelinessLostStatus newLivelinessLostStatus(
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newLivelinessLostStatus();
-    }
 
 
 

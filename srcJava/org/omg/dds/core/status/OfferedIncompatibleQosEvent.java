@@ -31,8 +31,8 @@ import org.omg.dds.pub.DataWriter;
  * @see RequestedIncompatibleQosEvent
  */
 public abstract class OfferedIncompatibleQosEvent<TYPE>
-extends StatusChangedEvent<OfferedIncompatibleQosEvent<TYPE>,
-                           DataWriter<TYPE>> {
+extends StatusChangedEvent<DataWriter<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -53,4 +53,10 @@ extends StatusChangedEvent<OfferedIncompatibleQosEvent<TYPE>,
     protected OfferedIncompatibleQosEvent(DataWriter<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract OfferedIncompatibleQosEvent<TYPE> clone();
 }

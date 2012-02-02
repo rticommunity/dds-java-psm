@@ -18,8 +18,9 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.policy.modifiable.ModifiableLatencyBudgetQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
@@ -52,9 +53,24 @@ import org.omg.dds.topic.Topic;
  * to true.
  */
 public interface LatencyBudgetQosPolicy
-extends QosPolicy<LatencyBudgetQosPolicy, ModifiableLatencyBudgetQosPolicy>,
-        RequestedOffered<LatencyBudgetQosPolicy>
+extends QosPolicy, RequestedOffered<LatencyBudgetQosPolicy>
 {
     public Duration getDuration();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public LatencyBudgetQosPolicy withDuration(Duration duration);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public LatencyBudgetQosPolicy withDuration(long duration, TimeUnit unit);
 }

@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableTopicDataQosPolicy;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
@@ -44,8 +43,8 @@ import org.omg.dds.topic.Topic;
  * {@link DomainParticipant#ignoreTopic(org.omg.dds.core.InstanceHandle)},
  * these QoS can assist an application to extend the provided QoS.
  */
-public interface TopicDataQosPolicy
-extends QosPolicy<TopicDataQosPolicy, ModifiableTopicDataQosPolicy> {
+public interface TopicDataQosPolicy extends QosPolicy
+{
     /**
      * Copy the data into the given array, starting at the index at the given
      * offset.
@@ -61,4 +60,14 @@ extends QosPolicy<TopicDataQosPolicy, ModifiableTopicDataQosPolicy> {
      * @return  the length of the <code>value</code> property.
      */
     public int getLength();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public TopicDataQosPolicy withValue(byte value[], int offset, int length);
 }

@@ -18,9 +18,10 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.policy.modifiable.ModifiableTimeBasedFilterQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 
@@ -77,9 +78,27 @@ import org.omg.dds.sub.DataReader;
  * @see HistoryQosPolicy
  * @see ReliabilityQosPolicy
  */
-public interface TimeBasedFilterQosPolicy
-extends QosPolicy<TimeBasedFilterQosPolicy,
-                  ModifiableTimeBasedFilterQosPolicy> {
+public interface TimeBasedFilterQosPolicy extends QosPolicy
+{
     public Duration getMinimumSeparation();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public TimeBasedFilterQosPolicy withMinimumSeparation(
+            Duration minimumSeparation);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public TimeBasedFilterQosPolicy withMinimumSeparation(
+            long minimumSeparation,
+            TimeUnit unit);
 }

@@ -18,9 +18,10 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Condition;
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.policy.modifiable.ModifiableDeadlineQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
@@ -69,9 +70,24 @@ import org.omg.dds.topic.Topic;
  * minimum_separation."
  */
 public interface DeadlineQosPolicy
-extends QosPolicy<DeadlineQosPolicy, ModifiableDeadlineQosPolicy>,
-        RequestedOffered<DeadlineQosPolicy>
+extends QosPolicy, RequestedOffered<DeadlineQosPolicy>
 {
     public Duration getPeriod();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DeadlineQosPolicy withPeriod(Duration period);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DeadlineQosPolicy withPeriod(long period, TimeUnit unit);
 }

@@ -18,12 +18,17 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.modifiable.ModifiableValue;
+import java.io.Serializable;
+
+import org.omg.dds.core.DDSObject;
 
 
-public interface QosPolicyCount
-extends ModifiableValue<QosPolicyCount, QosPolicyCount> {
-    public Class<? extends QosPolicy<?, ?>> getPolicyClass();
+/**
+ * Objects of this type are immutable.
+ */
+public interface QosPolicyCount extends Serializable, DDSObject
+{
+    public Class<? extends QosPolicy> getPolicyClass();
 
     /**
      * @return the count

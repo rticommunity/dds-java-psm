@@ -20,7 +20,6 @@ package org.omg.dds.core.status;
 
 import java.util.Set;
 
-import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
 import org.omg.dds.pub.DataWriter;
@@ -34,29 +33,13 @@ import org.omg.dds.topic.Topic;
  * @see RequestedIncompatibleQosEvent
  * @see OfferedIncompatibleQosStatus
  */
-public abstract class RequestedIncompatibleQosStatus
-extends Status<RequestedIncompatibleQosStatus> {
+public abstract class RequestedIncompatibleQosStatus extends Status
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = -2043838384277714409L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static RequestedIncompatibleQosStatus
-    newRequestedIncompatibleQosStatus(ServiceEnvironment env)
-    {
-        return env.getSPI().newRequestedIncompatibleQosStatus();
-    }
 
 
 
@@ -82,7 +65,7 @@ extends Status<RequestedIncompatibleQosStatus> {
      * The class of one of the policies that was found to be incompatible the
      * last time an incompatibility was detected.
      */
-    public abstract Class<? extends QosPolicy<?, ?>> getLastPolicyClass();
+    public abstract Class<? extends QosPolicy> getLastPolicyClass();
 
     /**
      * A list containing for each policy the total number of times that the

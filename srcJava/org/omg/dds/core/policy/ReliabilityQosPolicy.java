@@ -18,8 +18,9 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.policy.modifiable.ModifiableReliabilityQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
@@ -68,8 +69,7 @@ import org.omg.dds.topic.Topic;
  * @see ResourceLimitsQosPolicy
  */
 public interface ReliabilityQosPolicy
-extends QosPolicy<ReliabilityQosPolicy, ModifiableReliabilityQosPolicy>,
-        RequestedOffered<ReliabilityQosPolicy>
+extends QosPolicy, RequestedOffered<ReliabilityQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Methods
@@ -81,6 +81,32 @@ extends QosPolicy<ReliabilityQosPolicy, ModifiableReliabilityQosPolicy>,
     public Kind getKind();
 
     public Duration getMaxBlockingTime();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ReliabilityQosPolicy withKind(Kind kind);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ReliabilityQosPolicy withMaxBlockingTime(Duration maxBlockingTime);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ReliabilityQosPolicy withMaxBlockingTime(
+            long maxBlockingTime,
+            TimeUnit unit);
 
 
 

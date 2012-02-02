@@ -18,6 +18,7 @@
 
 package org.omg.dds.core;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.omg.dds.core.policy.QosPolicy;
@@ -46,41 +47,31 @@ import org.omg.dds.type.Extensibility;
  * resulting from adding the new policies on top of the previous is checked
  * for consistency. If the resulting QoS is inconsistent, the change of QoS
  * operation fails and the previous values are retained.
+ * 
+ * Objects of this type are immutable.
  */
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public interface EntityQos<UNMOD_SELF extends EntityQos<UNMOD_SELF, MOD_SELF>,
-                           MOD_SELF extends UNMOD_SELF>
-extends Value<UNMOD_SELF, MOD_SELF>, Map<Class<? extends QosPolicy<?, ?>>, QosPolicy<?, ?>>
+public interface EntityQos
+extends Map<Class<? extends QosPolicy>, QosPolicy>, Serializable, DDSObject
 {
     /**
      * @return  a reference to the corresponding policy in this
-     *          <code>EntityQos</code>. The returned object is not a copy;
-     *          changes to the returned object will be reflected in subsequent
-     *          accesses.
+     *          <code>EntityQos</code>.
      *
      * @see Map#get(Object)
      */
-    public <POLICY extends QosPolicy<POLICY, ?>> POLICY get(
-            Class<? extends QosPolicy<?, ?>> id);
+    public <POLICY extends QosPolicy> POLICY get(Class<POLICY> id);
+
+
+    // --- Modification: -----------------------------------------------------
 
     /**
-     * @throws  UnsupportedOperationException   if this <code>EntityQos</code>
-     *          is not a <code>ModifiableEntityQos</code>.
+     * Copy this object and override the value of the given policy.
+     * 
+     * @return  a new object
+     * 
+     * @throws  IllegalArgumentException        if the given policy is not
+     *          applicable to the concrete type of this EntityQos.
      */
-    public QosPolicy<?, ?> put(
-            Class<? extends QosPolicy<?, ?>> key,
-            QosPolicy<?, ?> value);
-
-    /**
-     * @throws  UnsupportedOperationException   always: the <tt>remove</tt>
-     *          operation is not supported by this map.
-     */
-    public QosPolicy<?, ?> remove(Object key);
-
-    /**
-     * @throws  UnsupportedOperationException   always: the <tt>clear</tt>
-     *          operation is not supported by this map.
-     */
-    public void clear();
-
+    public EntityQos withPolicy(QosPolicy policy);
 }

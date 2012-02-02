@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.Time;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.pub.DataWriter;
 
 

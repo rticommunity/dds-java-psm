@@ -46,13 +46,13 @@ import java.util.concurrent.TimeoutException;
  *     <li>It then uses the result of the wait (i.e., the list of Condition
  *         objects with triggerValue == true) to actually get the information
  *         by calling:<ul>
- *         <li>{@link Entity#getStatusChanges(Collection)} and then
+ *         <li>{@link Entity#getStatusChanges()} and then
  *             <code>get&lt;<i>CommunicationStatus</i>&gt;</code> on the
  *             relevant Entity.</li>
- *         <li>{@link Entity#getStatusChanges(Collection)} and then
+ *         <li>{@link Entity#getStatusChanges()} and then
  *             {@link org.omg.dds.sub.Subscriber#getDataReaders(Collection)}
  *             on the relevant Subscriber.</li>
- *         <li>{@link Entity#getStatusChanges(Collection)} and then
+ *         <li>{@link Entity#getStatusChanges()} and then
  *             {@link org.omg.dds.sub.DataReader#read()}/
  *             {@link org.omg.dds.sub.DataReader#take()} on the
  *             relevant DataReader.</li>

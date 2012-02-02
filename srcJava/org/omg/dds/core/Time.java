@@ -18,9 +18,9 @@
 
 package org.omg.dds.core;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
-import org.omg.dds.core.modifiable.ModifiableTime;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
 
@@ -32,7 +32,7 @@ import org.omg.dds.type.Nested;
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
 public abstract class Time
-implements Comparable<Time>, Value<Time, ModifiableTime>
+implements Comparable<Time>, Serializable, DDSObject
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -154,8 +154,10 @@ implements Comparable<Time>, Value<Time, ModifiableTime>
     public abstract boolean isValid();
 
 
-    // --- From Object: ------------------------------------------------------
+    // --- Modification: -----------------------------------------------------
 
-    @Override
-    public abstract Time clone();
+    /**
+     * @return  a modifiable copy of this object's state.
+     */
+    public abstract ModifiableTime modifiableCopy();
 }

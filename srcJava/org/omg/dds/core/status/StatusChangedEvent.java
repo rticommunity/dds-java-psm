@@ -20,8 +20,8 @@ package org.omg.dds.core.status;
 
 import java.util.EventObject;
 
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.Value;
 
 
 /**
@@ -29,11 +29,8 @@ import org.omg.dds.core.Value;
  * 
  * @see Status
  */
-public abstract class StatusChangedEvent<
-    SELF extends StatusChangedEvent<SELF, SOURCE>,
-    SOURCE extends Entity<SOURCE, ?, ?>>
-extends EventObject
-implements Value<SELF, SELF> {
+public abstract class StatusChangedEvent<SOURCE extends Entity<?, ?>>
+extends EventObject implements Cloneable, DDSObject {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -63,7 +60,7 @@ implements Value<SELF, SELF> {
 
 
     @Override
-    public abstract SELF clone();
+    public abstract StatusChangedEvent<SOURCE> clone();
 
 
     // --- SPI: --------------------------------------------------------------

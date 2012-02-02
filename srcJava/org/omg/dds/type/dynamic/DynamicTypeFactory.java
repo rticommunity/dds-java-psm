@@ -18,8 +18,8 @@
 
 package org.omg.dds.type.dynamic;
 
-import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.DDSObject;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.type.TypeKind;
 
 
@@ -61,4 +61,8 @@ public abstract class DynamicTypeFactory implements DDSObject
             String documentUrl, String typeName, String... includePaths);
     public abstract DynamicType loadTypeFromDocument(
             String document, String typeName, String... includePaths);
+
+    public abstract TypeDescriptor newTypeDescriptor();
+    public abstract MemberDescriptor newMemberDescriptor();
+    public abstract AnnotationDescriptor newAnnotationDescriptor();
 }

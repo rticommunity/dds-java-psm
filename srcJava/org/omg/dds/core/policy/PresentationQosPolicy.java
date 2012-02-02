@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiablePresentationQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
 import org.omg.dds.sub.DataReader;
@@ -77,8 +76,7 @@ import org.omg.dds.sub.Subscriber;
  * </ol>
  */
 public interface PresentationQosPolicy
-extends QosPolicy<PresentationQosPolicy, ModifiablePresentationQosPolicy>,
-        RequestedOffered<PresentationQosPolicy>
+extends QosPolicy, RequestedOffered<PresentationQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Methods
@@ -156,6 +154,30 @@ extends QosPolicy<PresentationQosPolicy, ModifiablePresentationQosPolicy>,
      * @see #getAccessScope()
      */
     public boolean isOrderedAccess();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public PresentationQosPolicy withAccessScope(AccessScopeKind accessScope);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public PresentationQosPolicy withCoherentAccess(boolean coherentAccess);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public PresentationQosPolicy withOrderedAccess(boolean orderedAccess);
 
 
 

@@ -31,8 +31,8 @@ import org.omg.dds.sub.DataReader;
  * @see OfferedIncompatibleQosEvent
  */
 public abstract class RequestedIncompatibleQosEvent<TYPE>
-extends StatusChangedEvent<RequestedIncompatibleQosEvent<TYPE>,
-                           DataReader<TYPE>> {
+extends StatusChangedEvent<DataReader<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -53,4 +53,10 @@ extends StatusChangedEvent<RequestedIncompatibleQosEvent<TYPE>,
     protected RequestedIncompatibleQosEvent(DataReader<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract RequestedIncompatibleQosEvent<TYPE> clone();
 }

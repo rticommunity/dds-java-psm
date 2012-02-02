@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableGroupDataQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.DataWriterListener;
 import org.omg.dds.pub.Publisher;
@@ -48,8 +47,8 @@ import org.omg.dds.sub.Subscriber;
  * matching policies similar to those of the {@link PartitionQosPolicy}
  * except the decision can be made based on an application-defined policy.
  */
-public interface GroupDataQosPolicy
-extends QosPolicy<GroupDataQosPolicy, ModifiableGroupDataQosPolicy> {
+public interface GroupDataQosPolicy extends QosPolicy
+{
     /**
      * Copy the data into the given array, starting at the index at the given
      * offset.
@@ -65,4 +64,14 @@ extends QosPolicy<GroupDataQosPolicy, ModifiableGroupDataQosPolicy> {
      * @return  the length of the <code>value</code> property.
      */
     public int getLength();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public GroupDataQosPolicy withValue(byte value[], int offset, int length);
 }

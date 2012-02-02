@@ -23,11 +23,10 @@ import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.GroupDataQosPolicy;
 import org.omg.dds.core.policy.PartitionQosPolicy;
 import org.omg.dds.core.policy.PresentationQosPolicy;
-import org.omg.dds.sub.modifiable.ModifiableSubscriberQos;
+import org.omg.dds.core.policy.QosPolicy;
 
 
-public interface SubscriberQos
-extends EntityQos<SubscriberQos, ModifiableSubscriberQos>
+public interface SubscriberQos extends EntityQos
 {
     /**
      * @return the presentation
@@ -49,4 +48,8 @@ extends EntityQos<SubscriberQos, ModifiableSubscriberQos>
      */
     public EntityFactoryQosPolicy getEntityFactory();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    public SubscriberQos withPolicy(QosPolicy policy);
 }

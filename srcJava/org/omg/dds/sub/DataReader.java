@@ -27,9 +27,10 @@ import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.policy.HistoryQosPolicy;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
@@ -90,10 +91,8 @@ import org.omg.dds.topic.TopicDescription;
  * @param <TYPE>    The concrete type of the data to be read.
  */
 public interface DataReader<TYPE>
-extends DomainEntity<DataReader<TYPE>,
-                     Subscriber,
-                     DataReaderListener<TYPE>,
-                     DataReaderQos> {
+extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
+{
     /**
      * Cast this data reader to the given type, or throw an exception if
      * the cast fails.
@@ -172,73 +171,48 @@ extends DomainEntity<DataReader<TYPE>,
      * This operation allows access to the SAMPLE_REJECTED communication
      * status.
      * 
-     * @param   status  a container, into which this method places it result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public SampleRejectedStatus getSampleRejectedStatus(
-            SampleRejectedStatus status);
+    public SampleRejectedStatus getSampleRejectedStatus();
 
     /**
      * This operation allows access to the LIVELINESS_CHANGED communication
      * status.
      * 
-     * @param   status  a container, into which this method places it result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public LivelinessChangedStatus getLivelinessChangedStatus(
-            LivelinessChangedStatus status);
+    public LivelinessChangedStatus getLivelinessChangedStatus();
 
     /**
      * This operation allows access to the REQUESTED_DEADLINE_MISSED
      * communication status.
      * 
-     * @param   status  a container, into which this method places it result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public RequestedDeadlineMissedStatus getRequestedDeadlineMissedStatus(
-            RequestedDeadlineMissedStatus status);
+    public RequestedDeadlineMissedStatus getRequestedDeadlineMissedStatus();
 
     /**
      * This operation allows access to the REQUESTED_INCOMPATIBLE_QOS
      * communication status.
      * 
-     * @param   status  a container, into which this method places it result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public RequestedIncompatibleQosStatus getRequestedIncompatibleQosStatus(
-            RequestedIncompatibleQosStatus status);
+    public RequestedIncompatibleQosStatus getRequestedIncompatibleQosStatus();
 
     /**
      * This operation allows access to the SUBSCRIPTION_MATCHED communication
      * status. 
      * 
-     * @param   status  a container, into which this method places it result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public SubscriptionMatchedStatus getSubscriptionMatchedStatus(
-            SubscriptionMatchedStatus status);
+    public SubscriptionMatchedStatus getSubscriptionMatchedStatus();
 
     /**
      * This operation allows access to the SAMPLE_LOST communication status.
      * 
-     * @param   status  a container, into which this method places its
-     *          result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public SampleLostStatus getSampleLostStatus(
-            SampleLostStatus status);
+    public SampleLostStatus getSampleLostStatus();
 
     /**
      * This operation is intended only for DataReader entities for which
@@ -728,6 +702,13 @@ extends DomainEntity<DataReader<TYPE>,
     public ModifiableInstanceHandle lookupInstance(
             ModifiableInstanceHandle handle,
             TYPE keyHolder);
+
+
+    // --- From Entity: ------------------------------------------------------
+
+    public StatusCondition<DataReader<TYPE>> getStatusCondition();
+
+    public Subscriber getParent();
 
 
     // --- Query: ------------------------------------------------------------

@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableOwnershipStrengthQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.topic.Topic;
 
@@ -39,12 +38,20 @@ import org.omg.dds.topic.Topic;
  * 
  * @see OwnershipQosPolicy
  */
-public interface OwnershipStrengthQosPolicy
-extends QosPolicy<OwnershipStrengthQosPolicy,
-                  ModifiableOwnershipStrengthQosPolicy> {
+public interface OwnershipStrengthQosPolicy extends QosPolicy
+{
     /**
      * @return the value
      */
     public int getValue();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public OwnershipStrengthQosPolicy withValue(int value);
 }

@@ -27,9 +27,9 @@ import org.omg.dds.core.Duration;
 import org.omg.dds.core.InconsistentPolicyException;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
+import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.pub.modifiable.ModifiableDataWriterQos;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicQos;
@@ -64,10 +64,7 @@ import org.omg.dds.type.builtin.StringDataWriter;
  * with the exception {@link NotEnabledException}.
  */
 public interface Publisher
-extends DomainEntity<Publisher,
-                     DomainParticipant,
-                     PublisherListener,
-                     PublisherQos>
+extends DomainEntity<PublisherListener, PublisherQos>
 {
     // --- Create (any) DataWriter: ------------------------------------------
 
@@ -85,7 +82,7 @@ extends DomainEntity<Publisher,
      *         {@link Publisher#getDefaultDataWriterQos()}.</li>
      *     <li>Combine those two QoS policies and selectively modify policies
      *         as desired -- see
-     *         {@link #copyFromTopicQos(ModifiableDataWriterQos, TopicQos)}.
+     *         {@link #copyFromTopicQos(DataWriterQos, TopicQos)}.
      *         </li>
      *     <li>Use the resulting QoS policies to construct the DataWriter.
      *         </li>
@@ -115,7 +112,7 @@ extends DomainEntity<Publisher,
      *         {@link Publisher#getDefaultDataWriterQos()}.</li>
      *     <li>Combine those two QoS policies and selectively modify policies
      *         as desired -- see
-     *         {@link #copyFromTopicQos(ModifiableDataWriterQos, TopicQos)}.
+     *         {@link #copyFromTopicQos(DataWriterQos, TopicQos)}.
      *         </li>
      *     <li>Use the resulting QoS policies to construct the DataWriter.
      *         </li>
@@ -136,7 +133,7 @@ extends DomainEntity<Publisher,
             Topic<TYPE> topic,
             DataWriterQos qos,
             DataWriterListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data writer.
@@ -152,7 +149,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create DataWriter for built-in bytes type: ------------------------
@@ -178,7 +175,7 @@ extends DomainEntity<Publisher,
             Topic<byte[]> topic,
             DataWriterQos qos,
             DataWriterListener<byte[]> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data writer for this built-in type.
@@ -194,7 +191,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<byte[]> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create DataWriter for built-in KeyedBytes type: -------------------
@@ -220,7 +217,7 @@ extends DomainEntity<Publisher,
             Topic<KeyedBytes> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data writer for this built-in type.
@@ -236,7 +233,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create DataWriter for built-in string type: -----------------------
@@ -262,7 +259,7 @@ extends DomainEntity<Publisher,
             Topic<String> topic,
             DataWriterQos qos,
             DataWriterListener<String> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data writer for this built-in type.
@@ -278,7 +275,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<String> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create DataWriter for built-in KeyedString type: ------------------
@@ -304,7 +301,7 @@ extends DomainEntity<Publisher,
             Topic<KeyedString> topic,
             DataWriterQos qos,
             DataWriterListener<KeyedString> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data writer for this built-in type.
@@ -320,7 +317,7 @@ extends DomainEntity<Publisher,
             String qosLibraryName,
             String qosProfileName,
             DataWriterListener<KeyedString> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Lookup operations: ------------------------------------------------
@@ -570,11 +567,20 @@ extends DomainEntity<Publisher,
      * one, as the application can still modify some policies prior to
      * applying the policies to the DataWriter.
      * 
-     * @param dst   the QoS whose policies are to be overwritten.
-     * @param src   the QoS from which the policies are to be taken.
+     * @param dwQos The QoS whose policies are to be overridden. This object
+     *              is not modified.
+     * @param tQos  The QoS from which the policies are to be taken. This
+     *              object is not modified.
      * 
-     * @return      dst, as a convenience to facilitate chaining.
+     * @return      A copy of dwQos with the applicable policies from tQos
+     *              applied to it.
      */
-    public ModifiableDataWriterQos copyFromTopicQos(
-            ModifiableDataWriterQos dst, TopicQos src);
+    public DataWriterQos copyFromTopicQos(DataWriterQos dwQos, TopicQos tQos);
+
+
+    // --- From Entity: ------------------------------------------------------
+
+    public StatusCondition<Publisher> getStatusCondition();
+
+    public DomainParticipant getParent();
 }

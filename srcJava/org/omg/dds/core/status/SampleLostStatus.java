@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.topic.Topic;
 
 
@@ -27,27 +26,13 @@ import org.omg.dds.topic.Topic;
  *
  * @see SampleLostEvent
  */
-public abstract class SampleLostStatus extends Status<SampleLostStatus> {
+public abstract class SampleLostStatus extends Status
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = 6522885693257415947L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static SampleLostStatus newSampleLostStatus(ServiceEnvironment env)
-    {
-        return env.getSPI().newSampleLostStatus();
-    }
 
 
 

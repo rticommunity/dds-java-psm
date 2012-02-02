@@ -24,21 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.omg.dds.core.modifiable.ModifiableDuration;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
-import org.omg.dds.core.modifiable.ModifiableTime;
-import org.omg.dds.core.status.InconsistentTopicStatus;
-import org.omg.dds.core.status.LivelinessChangedStatus;
-import org.omg.dds.core.status.LivelinessLostStatus;
-import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
-import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
-import org.omg.dds.core.status.PublicationMatchedStatus;
-import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
-import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
-import org.omg.dds.core.status.SampleLostStatus;
-import org.omg.dds.core.status.SampleRejectedStatus;
 import org.omg.dds.core.status.Status;
-import org.omg.dds.core.status.SubscriptionMatchedStatus;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.type.TypeSupport;
 import org.omg.dds.type.dynamic.DynamicTypeFactory;
@@ -433,8 +419,7 @@ public abstract class ServiceEnvironment implements DDSObject {
          * A duration of magnitude {@link Long#MAX_VALUE} indicates an
          * infinite duration, regardless of the units specified.
          */
-        public abstract ModifiableDuration newDuration(
-                long duration, TimeUnit unit);
+        public abstract Duration newDuration(long duration, TimeUnit unit);
 
         /**
          * @return      A {@link Duration} of infinite length.
@@ -478,36 +463,8 @@ public abstract class ServiceEnvironment implements DDSObject {
 
         // --- Status: -------------------------------------------------------
 
-        public abstract Set<Class<? extends Status<?>>> allStatusKinds();
+        public abstract Set<Class<? extends Status>> allStatusKinds();
 
-        public abstract Set<Class<? extends Status<?>>> noStatusKinds();
-
-        public abstract LivelinessLostStatus newLivelinessLostStatus();
-
-        public abstract OfferedDeadlineMissedStatus
-        newOfferedDeadlineMissedStatus();
-
-        public abstract OfferedIncompatibleQosStatus
-        newOfferedIncompatibleQosStatus();
-
-        public abstract PublicationMatchedStatus
-        newPublicationMatchedStatus();
-
-        public abstract LivelinessChangedStatus newLivelinessChangedStatus();
-
-        public abstract RequestedDeadlineMissedStatus
-        newRequestedDeadlineMissedStatus();
-
-        public abstract RequestedIncompatibleQosStatus
-        newRequestedIncompatibleQosStatus();
-
-        public abstract SampleLostStatus newSampleLostStatus();
-
-        public abstract SampleRejectedStatus newSampleRejectedStatus();
-
-        public abstract SubscriptionMatchedStatus
-        newSubscriptionMatchedStatus();
-
-        public abstract InconsistentTopicStatus newInconsistentTopicStatus();
+        public abstract Set<Class<? extends Status>> noStatusKinds();
     }
 }

@@ -25,11 +25,12 @@ import java.util.concurrent.TimeoutException;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.OutOfResourcesException;
 import org.omg.dds.core.PreconditionNotMetException;
+import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.Time;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
 import org.omg.dds.core.policy.DestinationOrderQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
@@ -64,10 +65,8 @@ import org.omg.dds.topic.Topic;
  *                  the topic.
  */
 public interface DataWriter<TYPE>
-extends DomainEntity<DataWriter<TYPE>,
-                     Publisher,
-                     DataWriterListener<TYPE>,
-                     DataWriterQos> {
+extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
+{
     /**
      * Cast this data writer to the given type, or throw an exception if
      * the cast fails.
@@ -135,53 +134,33 @@ extends DomainEntity<DataWriter<TYPE>,
      * This operation allows access to the LIVELINESS_LOST communication
      * status.
      * 
-     * @param   status  a container, into which this method will place its
-     *                  result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public LivelinessLostStatus getLivelinessLostStatus(
-            LivelinessLostStatus status);
+    public LivelinessLostStatus getLivelinessLostStatus();
 
     /**
      * This operation allows access to the OFFERED_DEADLINE_MISSED
      * communication status.
      * 
-     * @param   status  a container, into which this method will place its
-     *                  result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public OfferedDeadlineMissedStatus getOfferedDeadlineMissedStatus(
-            OfferedDeadlineMissedStatus status);
+    public OfferedDeadlineMissedStatus getOfferedDeadlineMissedStatus();
 
     /**
      * This operation allows access to the OFFERED_INCOMPATIBLE_QOS
      * communication status.
      * 
-     * @param   status  a container, into which this method will place its
-     *                  result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public OfferedIncompatibleQosStatus getOfferedIncompatibleQosStatus(
-            OfferedIncompatibleQosStatus status);
+    public OfferedIncompatibleQosStatus getOfferedIncompatibleQosStatus();
 
     /**
      * This operation allows access to the PUBLICATION_MATCHED
      * communication status.
      * 
-     * @param   status  a container, into which this method will place its
-     *                  result.
-     * @return  the input status, as a convenience to facilitate chaining.
-     * 
      * @see     org.omg.dds.core.status
      */
-    public PublicationMatchedStatus getPublicationMatchedStatus(
-            PublicationMatchedStatus status);
+    public PublicationMatchedStatus getPublicationMatchedStatus();
 
     /**
      * This operation manually asserts the liveliness of the DataWriter. This
@@ -929,4 +908,11 @@ extends DomainEntity<DataWriter<TYPE>,
     public ModifiableInstanceHandle lookupInstance(
             ModifiableInstanceHandle handle,
             TYPE keyHolder);
+
+
+    // --- From Entity: ------------------------------------------------------
+
+    public StatusCondition<DataWriter<TYPE>> getStatusCondition();
+
+    public Publisher getParent();
 }

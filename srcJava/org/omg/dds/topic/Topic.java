@@ -47,10 +47,8 @@ import org.omg.dds.pub.DataWriter;
  *                  topic.
  */
 public interface Topic<TYPE>
-extends TopicDescription<TYPE>, DomainEntity<Topic<TYPE>,
-                                             DomainParticipant,
-                                             TopicListener<TYPE>,
-                                             TopicQos> {
+extends TopicDescription<TYPE>, DomainEntity<TopicListener<TYPE>, TopicQos>
+{
     /**
      * This method allows the application to retrieve the
      * {@link InconsistentTopicStatus} of the Topic.
@@ -63,6 +61,12 @@ extends TopicDescription<TYPE>, DomainEntity<Topic<TYPE>,
      * @see     TopicListener
      * @see     StatusCondition
      */
-    public InconsistentTopicStatus getInconsistentTopicStatus(
-            InconsistentTopicStatus status);
+    public InconsistentTopicStatus getInconsistentTopicStatus();
+
+
+    // --- From Entity: ------------------------------------------------------
+
+    public StatusCondition<Topic<TYPE>> getStatusCondition();
+
+    public DomainParticipant getParent();
 }

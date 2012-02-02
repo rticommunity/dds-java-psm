@@ -18,7 +18,9 @@
 
 package org.omg.dds.topic;
 
-import org.omg.dds.core.modifiable.ModifiableValue;
+import java.io.Serializable;
+
+import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.ID;
@@ -26,31 +28,25 @@ import org.omg.dds.type.Key;
 
 
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public abstract class ParticipantBuiltinTopicData
-implements ModifiableValue<ParticipantBuiltinTopicData,
-                           ParticipantBuiltinTopicData>
+public interface ParticipantBuiltinTopicData
+extends Cloneable, Serializable, DDSObject
 {
-    // -----------------------------------------------------------------------
-    // Private Constants
-    // -----------------------------------------------------------------------
-
-    private static final long serialVersionUID = -1531303601733890381L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Instance Methods
-    // -----------------------------------------------------------------------
-
     @ID(0x0050) @Key
-    public abstract BuiltinTopicKey getKey();
+    public BuiltinTopicKey getKey();
 
     @ID(0x002C)
-    public abstract UserDataQosPolicy getUserData();
+    public UserDataQosPolicy getUserData();
+
+
+    // -----------------------------------------------------------------------
+
+    /**
+     * Overwrite the state of this object with that of the given object.
+     */
+    public void copyFrom(ParticipantBuiltinTopicData src);
 
 
     // --- From Object: ------------------------------------------------------
 
-    @Override
-    public abstract ParticipantBuiltinTopicData clone();
+    public ParticipantBuiltinTopicData clone();
 }

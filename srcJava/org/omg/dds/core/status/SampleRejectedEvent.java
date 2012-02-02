@@ -29,7 +29,8 @@ import org.omg.dds.sub.DataReader;
  * @see SampleRejectedStatus
  */
 public abstract class SampleRejectedEvent<TYPE>
-extends StatusChangedEvent<SampleRejectedEvent<TYPE>, DataReader<TYPE>> {
+extends StatusChangedEvent<DataReader<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -50,4 +51,10 @@ extends StatusChangedEvent<SampleRejectedEvent<TYPE>, DataReader<TYPE>> {
     protected SampleRejectedEvent(DataReader<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract SampleRejectedEvent<TYPE> clone();
 }

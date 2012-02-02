@@ -35,7 +35,8 @@ import org.omg.dds.sub.DataReader;
  * @see SubscriptionMatchedEvent
  */
 public abstract class LivelinessLostEvent<TYPE>
-extends StatusChangedEvent<LivelinessLostEvent<TYPE>, DataWriter<TYPE>> {
+extends StatusChangedEvent<DataWriter<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -56,4 +57,10 @@ extends StatusChangedEvent<LivelinessLostEvent<TYPE>, DataWriter<TYPE>> {
     protected LivelinessLostEvent(DataWriter<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract LivelinessLostEvent<TYPE> clone();
 }

@@ -18,20 +18,27 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableTypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.type.BitBound;
 
 
 public interface TypeConsistencyEnforcementQosPolicy
-extends QosPolicy<TypeConsistencyEnforcementQosPolicy,
-                  ModifiableTypeConsistencyEnforcementQosPolicy>,
-        RequestedOffered<TypeConsistencyEnforcementQosPolicy>
+extends QosPolicy, RequestedOffered<TypeConsistencyEnforcementQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Properties
     // -----------------------------------------------------------------------
 
     public Kind getKind();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public TypeConsistencyEnforcementQosPolicy withKind(Kind kind);
 
 
 

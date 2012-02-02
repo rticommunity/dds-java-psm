@@ -32,8 +32,8 @@ import org.omg.dds.sub.DataReader;
  * @see OfferedDeadlineMissedEvent
  */
 public abstract class RequestedDeadlineMissedEvent<TYPE>
-extends StatusChangedEvent<RequestedDeadlineMissedEvent<TYPE>,
-                           DataReader<TYPE>> {
+extends StatusChangedEvent<DataReader<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -54,4 +54,10 @@ extends StatusChangedEvent<RequestedDeadlineMissedEvent<TYPE>,
     protected RequestedDeadlineMissedEvent(DataReader<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract RequestedDeadlineMissedEvent<TYPE> clone();
 }

@@ -29,24 +29,15 @@ import org.omg.dds.domain.DomainParticipant;
  * DomainParticipant is a special kind of Entity, which acts as a container
  * of all other Entity, but itself cannot contain other DomainParticipant.
  * 
- * @param <SELF>        The most-derived DDS-standard interface implemented
- *                      by this entity.
- * @param <PARENT>      The most-derived DDS-standard interface implemented
- *                      by the entity that creates entities of this type.
  * @param <LISTENER>    The listener interface appropriate for this entity.
  * @param <QOS>         The QoS interface appropriate for this entity.
  */
-public interface DomainEntity<SELF extends DomainEntity<SELF,
-                                                        PARENT,
-                                                        LISTENER,
-                                                        QOS>,
-                              PARENT extends Entity<?, ?, ?>,
-                              LISTENER extends EventListener,
-                              QOS extends EntityQos<?, ?>>
-extends Entity<SELF, LISTENER, QOS>
+public interface DomainEntity<LISTENER extends EventListener,
+                              QOS extends EntityQos>
+extends Entity<LISTENER, QOS>
 {
     /**
      * @return  the factory object that created this entity.
      */
-    public PARENT getParent();
+    public Entity<?, ?> getParent();
 }

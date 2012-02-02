@@ -30,9 +30,7 @@ public interface DynamicData extends DDSObject, Cloneable
     public DynamicType getType();
 
     /**
-     * Modifying an element of the given list modifies the descriptor of this
-     * DynamicData object, not a copy. Adding to or removing from the list
-     * is not allowed.
+     * @return  an unmodifiable list.
      */
     public List<MemberDescriptor> getDescriptors();
 

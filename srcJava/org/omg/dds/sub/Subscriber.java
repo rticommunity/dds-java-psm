@@ -27,11 +27,11 @@ import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.InconsistentPolicyException;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
+import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.policy.PresentationQosPolicy;
 import org.omg.dds.core.status.DataAvailableEvent;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.sub.modifiable.ModifiableDataReaderQos;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;
@@ -67,10 +67,7 @@ import org.omg.dds.type.builtin.StringDataReader;
  * {@link NotEnabledException}.
  */
 public interface Subscriber
-extends DomainEntity<Subscriber,
-                     DomainParticipant,
-                     SubscriberListener,
-                     SubscriberQos>
+extends DomainEntity<SubscriberListener, SubscriberQos>
 {
     // --- Create (any) DataReader: ------------------------------------------
 
@@ -133,7 +130,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<TYPE> topic,
             DataReaderQos qos,
             DataReaderListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data reader.
@@ -149,7 +146,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create DataReader of built-in bytes type: -------------------------
@@ -175,7 +172,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<byte[]> topic,
             DataReaderQos qos,
             DataReaderListener<byte[]> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -191,7 +188,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<byte[]> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create DataReader of built-in KeyedBytes type: --------------------
@@ -217,7 +214,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<KeyedBytes> topic,
             DataReaderQos qos,
             DataReaderListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -233,7 +230,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<KeyedBytes> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create DataReader of built-in string type: ------------------------
@@ -259,7 +256,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<String> topic,
             DataReaderQos qos,
             DataReaderListener<String> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -275,7 +272,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<String> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create DataReader of built-in KeyedString type: -------------------
@@ -301,7 +298,7 @@ extends DomainEntity<Subscriber,
             TopicDescription<KeyedString> topic,
             DataReaderQos qos,
             DataReaderListener<KeyedString> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new data reader for this built-in type.
@@ -317,7 +314,7 @@ extends DomainEntity<Subscriber,
             String qosLibraryName,
             String qosProfileName,
             DataReaderListener<KeyedString> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Lookup operations: ------------------------------------------------
@@ -639,13 +636,22 @@ extends DomainEntity<Subscriber,
      * application can still modify some policies prior to applying the
      * policies to the DataReader.
      * 
-     * @param   dst     the QoS, the policies of which will be overwritten.
-     * @param   src     the source for the new policies to be copied.
+     * @param   drQos   The QoS, the policies of which will be overridden.
+     *                  This object is not modified.
+     * @param   tQos    The source for the new policies to be copied. This
+     *                  object is not modified.
      * 
-     * @return  dst, as a convenience to facilitate chaining.
+     * @return          A copy of drQos with the applicable policies from
+     *                  tQos applied to it.
      */
-    public ModifiableDataReaderQos copyFromTopicQos(
-            ModifiableDataReaderQos dst, TopicQos src);
+    public DataReaderQos copyFromTopicQos(DataReaderQos drQos, TopicQos tQos);
+
+
+    // --- From Entity: ------------------------------------------------------
+
+    public StatusCondition<Subscriber> getStatusCondition();
+
+    public DomainParticipant getParent();
 
 
     // --- ReaderState: ------------------------------------------------------

@@ -34,7 +34,8 @@ import org.omg.dds.topic.Topic;
  * @see PublicationMatchedEvent
  */
 public abstract class SubscriptionMatchedEvent<TYPE>
-extends StatusChangedEvent<SubscriptionMatchedEvent<TYPE>, DataReader<TYPE>> {
+extends StatusChangedEvent<DataReader<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -55,4 +56,10 @@ extends StatusChangedEvent<SubscriptionMatchedEvent<TYPE>, DataReader<TYPE>> {
     protected SubscriptionMatchedEvent(DataReader<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract SubscriptionMatchedEvent<TYPE> clone();
 }

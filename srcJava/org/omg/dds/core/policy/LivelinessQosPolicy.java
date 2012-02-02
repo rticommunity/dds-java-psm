@@ -18,10 +18,11 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.WaitSet;
-import org.omg.dds.core.policy.modifiable.ModifiableLivelinessQosPolicy;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
@@ -104,8 +105,7 @@ import org.omg.dds.topic.Topic;
  * are notified within a leaseDuration from the time the LIVELINESS changed.
  */
 public interface LivelinessQosPolicy
-extends QosPolicy<LivelinessQosPolicy, ModifiableLivelinessQosPolicy>,
-        RequestedOffered<LivelinessQosPolicy>
+extends QosPolicy, RequestedOffered<LivelinessQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Methods
@@ -117,6 +117,32 @@ extends QosPolicy<LivelinessQosPolicy, ModifiableLivelinessQosPolicy>,
     public Kind getKind();
 
     public Duration getLeaseDuration();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public LivelinessQosPolicy withKind(Kind kind);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public LivelinessQosPolicy withLeaseDuration(Duration leaseDuration);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public LivelinessQosPolicy withLeaseDuration(
+            long leaseDuration,
+            TimeUnit unit);
 
 
 

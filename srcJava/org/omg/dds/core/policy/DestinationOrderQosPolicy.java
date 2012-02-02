@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.policy.modifiable.ModifiableDestinationOrderQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
 import org.omg.dds.sub.DataReader;
@@ -63,9 +62,7 @@ import org.omg.dds.topic.Topic;
  * @see OwnershipQosPolicy
  */
 public interface DestinationOrderQosPolicy
-extends QosPolicy<DestinationOrderQosPolicy,
-                  ModifiableDestinationOrderQosPolicy>,
-        RequestedOffered<DestinationOrderQosPolicy>
+extends QosPolicy, RequestedOffered<DestinationOrderQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Methods
@@ -75,6 +72,16 @@ extends QosPolicy<DestinationOrderQosPolicy,
      * @return the kind
      */
     public Kind getKind();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DestinationOrderQosPolicy withKind(Kind kind);
 
 
 

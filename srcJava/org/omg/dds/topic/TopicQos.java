@@ -29,15 +29,15 @@ import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
 import org.omg.dds.core.policy.LifespanQosPolicy;
 import org.omg.dds.core.policy.LivelinessQosPolicy;
 import org.omg.dds.core.policy.OwnershipQosPolicy;
+import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.ReliabilityQosPolicy;
 import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
 import org.omg.dds.core.policy.TopicDataQosPolicy;
 import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
-import org.omg.dds.topic.modifiable.ModifiableTopicQos;
 
 
-public interface TopicQos extends EntityQos<TopicQos, ModifiableTopicQos>
+public interface TopicQos extends EntityQos
 {
     /**
      * @return the topicData
@@ -107,4 +107,9 @@ public interface TopicQos extends EntityQos<TopicQos, ModifiableTopicQos>
     public DataRepresentationQosPolicy getRepresentation();
 
     public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    public TopicQos withPolicy(QosPolicy policy);
 }

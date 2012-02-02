@@ -18,8 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.sub.DataReader;
 
 
@@ -28,29 +27,13 @@ import org.omg.dds.sub.DataReader;
  * 
  * @see SampleRejectedEvent
  */
-public abstract class SampleRejectedStatus
-extends Status<SampleRejectedStatus> {
+public abstract class SampleRejectedStatus extends Status
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = -612709680820262641L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static SampleRejectedStatus newSampleRejectedStatus(
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newSampleRejectedStatus();
-    }
 
 
 
@@ -79,7 +62,7 @@ extends Status<SampleRejectedStatus> {
      * Handle to the instance being updated by the last sample that was
      * rejected.
      */
-    public abstract ModifiableInstanceHandle getLastInstanceHandle();
+    public abstract InstanceHandle getLastInstanceHandle();
 
 
 

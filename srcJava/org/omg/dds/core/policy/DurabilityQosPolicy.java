@@ -20,7 +20,6 @@ package org.omg.dds.core.policy;
 
 import org.omg.dds.core.Condition;
 import org.omg.dds.core.WaitSet;
-import org.omg.dds.core.policy.modifiable.ModifiableDurabilityQosPolicy;
 import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
 import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
 import org.omg.dds.domain.DomainParticipant;
@@ -126,8 +125,7 @@ import org.omg.dds.topic.Topic;
  * @see DurabilityServiceQosPolicy#getServiceCleanupDelay()
  */
 public interface DurabilityQosPolicy
-extends QosPolicy<DurabilityQosPolicy, ModifiableDurabilityQosPolicy>,
-        RequestedOffered<DurabilityQosPolicy>
+extends QosPolicy, RequestedOffered<DurabilityQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Methods
@@ -137,6 +135,16 @@ extends QosPolicy<DurabilityQosPolicy, ModifiableDurabilityQosPolicy>,
      * @return the kind
      */
     public Kind getKind();
+
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DurabilityQosPolicy withKind(Kind kind);
 
 
 

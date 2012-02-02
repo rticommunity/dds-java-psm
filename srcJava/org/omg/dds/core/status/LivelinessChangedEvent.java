@@ -33,7 +33,8 @@ import org.omg.dds.sub.DataReader;
  * @see LivelinessLostEvent
  */
 public abstract class LivelinessChangedEvent<TYPE>
-extends StatusChangedEvent<LivelinessChangedEvent<TYPE>, DataReader<TYPE>> {
+extends StatusChangedEvent<DataReader<TYPE>>
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
@@ -54,4 +55,10 @@ extends StatusChangedEvent<LivelinessChangedEvent<TYPE>, DataReader<TYPE>> {
     protected LivelinessChangedEvent(DataReader<TYPE> source) {
         super(source);
     }
+
+
+    // --- From Object: ------------------------------------------------------
+
+    @Override
+    public abstract LivelinessChangedEvent<TYPE> clone();
 }

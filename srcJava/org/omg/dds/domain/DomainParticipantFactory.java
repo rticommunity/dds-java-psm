@@ -20,10 +20,10 @@ package org.omg.dds.domain;
 
 import java.util.Collection;
 
-import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.InconsistentPolicyException;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.status.Status;
 
 
@@ -101,7 +101,7 @@ public abstract class DomainParticipantFactory implements DDSObject
             int domainId,
             DomainParticipantQos qos,
             DomainParticipantListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * Create a new domain participant.
@@ -117,7 +117,7 @@ public abstract class DomainParticipantFactory implements DDSObject
             String qosLibraryName,
             String qosProfileName,
             DomainParticipantListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * This operation retrieves a previously created DomainParticipant

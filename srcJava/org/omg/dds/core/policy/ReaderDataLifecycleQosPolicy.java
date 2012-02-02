@@ -18,8 +18,9 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.policy.modifiable.ModifiableReaderDataLifecycleQosPolicy;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.sub.InstanceState;
 import org.omg.dds.sub.ViewState;
@@ -76,11 +77,46 @@ import org.omg.dds.sub.ViewState;
  * @see HistoryQosPolicy
  * @see ResourceLimitsQosPolicy
  */
-public interface ReaderDataLifecycleQosPolicy
-extends QosPolicy<ReaderDataLifecycleQosPolicy,
-                  ModifiableReaderDataLifecycleQosPolicy> {
+public interface ReaderDataLifecycleQosPolicy extends QosPolicy
+{
     public Duration getAutoPurgeNoWriterSamplesDelay();
 
     public Duration getAutoPurgeDisposedSamplesDelay();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ReaderDataLifecycleQosPolicy withAutoPurgeNoWriterSamplesDelay(
+            Duration autoPurgeNoWriterSamplesDelay);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ReaderDataLifecycleQosPolicy withAutoPurgeNoWriterSamplesDelay(
+            long autoPurgeNoWriterSamplesDelay,
+            TimeUnit unit);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ReaderDataLifecycleQosPolicy withAutoPurgeDisposedSamplesDelay(
+            Duration autoPurgeDisposedSamplesDelay);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public ReaderDataLifecycleQosPolicy withAutoPurgeDisposedSamplesDelay(
+            long autoPurgeDisposedSamplesDelay,
+            TimeUnit unit);
 }

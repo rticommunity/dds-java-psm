@@ -18,8 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.ServiceEnvironment;
-import org.omg.dds.core.modifiable.ModifiableInstanceHandle;
+import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.policy.DeadlineQosPolicy;
 import org.omg.dds.sub.DataReader;
 
@@ -31,29 +30,13 @@ import org.omg.dds.sub.DataReader;
  * @see RequestedDeadlineMissedEvent
  * @see OfferedDeadlineMissedStatus
  */
-public abstract class RequestedDeadlineMissedStatus
-extends Status<RequestedDeadlineMissedStatus> {
+public abstract class RequestedDeadlineMissedStatus extends Status
+{
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = 4552827018168249989L;
-
-
-
-    // -----------------------------------------------------------------------
-    // Object Life Cycle
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static RequestedDeadlineMissedStatus
-    newRequestedDeadlineMissedStatus(ServiceEnvironment env)
-    {
-        return env.getSPI().newRequestedDeadlineMissedStatus();
-    }
 
 
 
@@ -79,6 +62,5 @@ extends Status<RequestedDeadlineMissedStatus> {
      * Handle to the last instance in the {@link DataReader} for which a
      * deadline was detected.
      */
-    public abstract ModifiableInstanceHandle getLastInstanceHandle();
-
+    public abstract InstanceHandle getLastInstanceHandle();
 }

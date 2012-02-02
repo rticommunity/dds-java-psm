@@ -18,20 +18,22 @@
 
 package org.omg.dds.core;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
-import org.omg.dds.core.modifiable.ModifiableDuration;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
 
 
 /**
  * A span of elapsed time expressed with nanosecond precision.
+ * 
+ * Instances of this type are immutable.
  */
 @Extensibility(Extensibility.Kind.FINAL_EXTENSIBILITY)
 @Nested
 public abstract class Duration
-implements Comparable<Duration>, Value<Duration, ModifiableDuration>
+implements Comparable<Duration>, Serializable, DDSObject
 {
     // -----------------------------------------------------------------------
     // Private Constants
@@ -57,7 +59,7 @@ implements Comparable<Duration>, Value<Duration, ModifiableDuration>
      * @see     #isInfinite()
      * @see     #infiniteDuration(ServiceEnvironment)
      */
-    public static ModifiableDuration newDuration(
+    public static Duration newDuration(
             long duration,
             TimeUnit unit,
             ServiceEnvironment env)
@@ -182,8 +184,29 @@ implements Comparable<Duration>, Value<Duration, ModifiableDuration>
     public abstract boolean isInfinite();
 
 
-    // --- From Object: ------------------------------------------------------
+    // --- Manipulation: -----------------------------------------------------
 
-    @Override
-    public abstract Duration clone();
+    /**
+     * @return  a new Duration that is the sum of this Duration and the
+     *          given Duration.
+     */
+    public abstract Duration add(Duration duration);
+
+    /**
+     * @return  a new Duration that is the sum of this Duration and the
+     *          given duration.
+     */
+    public abstract Duration add(long duration, TimeUnit unit);
+
+    /**
+     * @return  a new Duration that is the difference after subtracting the
+     *          given Duration.
+     */
+    public abstract Duration subtract(Duration duration);
+
+    /**
+     * @return  a new Duration that is the difference after subtracting the
+     *          given Duration.
+     */
+    public abstract Duration subtract(long duration, TimeUnit unit);
 }

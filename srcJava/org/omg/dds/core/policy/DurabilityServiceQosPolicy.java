@@ -18,8 +18,9 @@
 
 package org.omg.dds.core.policy;
 
+import java.util.concurrent.TimeUnit;
+
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.policy.modifiable.ModifiableDurabilityServiceQosPolicy;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
@@ -46,9 +47,8 @@ import org.omg.dds.topic.Topic;
  * 
  * @see DurabilityQosPolicy
  */
-public interface DurabilityServiceQosPolicy
-extends QosPolicy<DurabilityServiceQosPolicy,
-                  ModifiableDurabilityServiceQosPolicy> {
+public interface DurabilityServiceQosPolicy extends QosPolicy
+{
     public Duration getServiceCleanupDelay();
 
     /**
@@ -76,4 +76,60 @@ extends QosPolicy<DurabilityServiceQosPolicy,
      */
     public int getMaxSamplesPerInstance();
 
+
+    // --- Modification: -----------------------------------------------------
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DurabilityServiceQosPolicy withServiceCleanupDelay(
+            Duration serviceCleanupDelay);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DurabilityServiceQosPolicy withServiceCleanupDelay(
+            long serviceCleanupDelay,
+            TimeUnit unit);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DurabilityServiceQosPolicy withHistoryKind(
+            HistoryQosPolicy.Kind historyKind);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DurabilityServiceQosPolicy withHistoryDepth(int historyDepth);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DurabilityServiceQosPolicy withMaxSamples(int maxSamples);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DurabilityServiceQosPolicy withMaxInstances(int maxInstances);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public DurabilityServiceQosPolicy withMaxSamplesPerInstance(
+            int maxSamplesPerInstance);
 }

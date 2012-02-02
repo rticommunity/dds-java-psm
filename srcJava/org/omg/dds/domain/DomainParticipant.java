@@ -27,9 +27,10 @@ import org.omg.dds.core.Duration;
 import org.omg.dds.core.Entity;
 import org.omg.dds.core.InconsistentPolicyException;
 import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableTime;
 import org.omg.dds.core.OutOfResourcesException;
 import org.omg.dds.core.PreconditionNotMetException;
-import org.omg.dds.core.modifiable.ModifiableTime;
+import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.pub.DataWriter;
@@ -78,9 +79,8 @@ import org.omg.dds.type.TypeSupport;
  * </ul>
  */
 public interface DomainParticipant
-extends Entity<DomainParticipant,
-               DomainParticipantListener,
-               DomainParticipantQos> {
+extends Entity<DomainParticipantListener, DomainParticipantQos>
+{
     // --- Create Publisher: -------------------------------------------------
 
     /**
@@ -113,7 +113,7 @@ extends Entity<DomainParticipant,
     public Publisher createPublisher(
             PublisherQos qos,
             PublisherListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * This operation creates a Publisher.
@@ -132,7 +132,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             PublisherListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     // --- Create Subscriber: ------------------------------------------------
 
@@ -166,7 +166,7 @@ extends Entity<DomainParticipant,
     public Subscriber createSubscriber(
             SubscriberQos qos,
             SubscriberListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * This operation creates a Subscriber.
@@ -185,7 +185,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             SubscriberListener listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * This operation allows access to the built-in Subscriber. Each
@@ -244,7 +244,7 @@ extends Entity<DomainParticipant,
             Class<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * This operation creates a Topic with the desired QoS policies and
@@ -268,7 +268,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             TopicListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Create Topic with explicit TypeSupport: ---------------------------
@@ -313,7 +313,7 @@ extends Entity<DomainParticipant,
             TypeSupport<TYPE> type,
             TopicQos qos,
             TopicListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
     /**
      * This operation creates a Topic with the desired QoS policies and
@@ -336,7 +336,7 @@ extends Entity<DomainParticipant,
             String qosLibraryName,
             String qosProfileName,
             TopicListener<TYPE> listener,
-            Collection<Class<? extends Status<?>>> statuses);
+            Collection<Class<? extends Status>> statuses);
 
 
     // --- Other operations: -------------------------------------------------
@@ -880,4 +880,9 @@ extends Entity<DomainParticipant,
      * @return  currentTime, as a convenience to facilitate chaining.
      */
     public ModifiableTime getCurrentTime(ModifiableTime currentTime);
+
+
+    // --- From Entity: ------------------------------------------------------
+
+    public StatusCondition<DomainParticipant> getStatusCondition();
 }
