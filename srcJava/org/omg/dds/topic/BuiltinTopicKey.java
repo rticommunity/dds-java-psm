@@ -30,19 +30,9 @@ import org.omg.dds.type.Nested;
 public interface BuiltinTopicKey extends Cloneable, Serializable, DDSObject
 {
     /**
-     * Copy the value of this key into the first four positions of the given
-     * array.
-     * 
-     * Service implementations that do not support the DDS-RTPS
-     * interoperability protocol may use a key length of only three, not
-     * four. Such implementations shall set index 3 in the given array to 0.
-     * 
-     * @param   dst     An array of length at least four integers. Any items
-     *                  at index 4 or higher will not be modified.
-     * 
-     * @return  The input array.
+     * Get a copy of the value.
      */
-    public int[] getValue(int[] dst);
+    public int[] getValue();
 
 
     // -----------------------------------------------------------------------
@@ -51,6 +41,7 @@ public interface BuiltinTopicKey extends Cloneable, Serializable, DDSObject
      * Overwrite the state of this object with that of the given object.
      */
     public void copyFrom(BuiltinTopicKey src);
+
 
     // --- From Object: ------------------------------------------------------
 

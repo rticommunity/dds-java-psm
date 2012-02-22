@@ -20,6 +20,7 @@ package org.omg.dds.domain;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -31,6 +32,7 @@ import org.omg.dds.core.ModifiableTime;
 import org.omg.dds.core.OutOfResourcesException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.StatusCondition;
+import org.omg.dds.core.Time;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.pub.DataWriter;
@@ -772,16 +774,15 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * should be "ignored" by means of the
      * {@link #ignoreParticipant(InstanceHandle)} operation.
      * 
-     * @param   participantHandles      a container, into which this method
-     *          will place handles to the discovered participants.
-     * 
-     * @return  participantHandles, as a convenience to facilitate chaining.
+     * @return  a new collection containing a copy of the information.
      * 
      * @throws  UnsupportedOperationException   If the infrastructure does
      *          not locally maintain the connectivity information.
+     * 
+     * @see     #getDiscoveredParticipantData(InstanceHandle)
+     * @see     #getDiscoveredTopics()
      */
-    public Collection<InstanceHandle> getDiscoveredParticipants(
-            Collection<InstanceHandle> participantHandles);
+    public Set<InstanceHandle> getDiscoveredParticipants();
 
     /**
      * This operation retrieves information on a DomainParticipant that has
@@ -790,24 +791,24 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * not have been "ignored" by means of the
      * {@link #ignoreParticipant(InstanceHandle)} operation.
      * 
-     * Use the operation {@link #getDiscoveredParticipants(Collection)} to
+     * Use the operation {@link #getDiscoveredParticipants()} to
      * find the DomainParticipants that are currently discovered.
      * 
-     * @param   participantData         a container, into which this method
-     *          will store the participant data.
      * @param   participantHandle       a handle to the participant, the data
      *          of which is to be retrieved.
      * 
-     * @return  participantData, as a convenience to facilitate chaining.
+     * @return  a new object containing a copy of the information.
      * 
      * @throws  PreconditionNotMetException     if the participantHandle
      *          does not correspond to a DomainParticipant such as is
      *          described above.
      * @throws  UnsupportedOperationException   If the infrastructure does
      *          not locally maintain the connectivity information.
+     * 
+     * @see     #getDiscoveredParticipants()
+     * @see     #getDiscoveredTopicData(InstanceHandle)
      */
     public ParticipantBuiltinTopicData getDiscoveredParticipantData(
-            ParticipantBuiltinTopicData participantData,
             InstanceHandle participantHandle);
 
     /**
@@ -816,16 +817,15 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * should be "ignored" by means of the
      * {@link #ignoreTopic(InstanceHandle)} operation.
      * 
-     * @param   topicHandles    a container, into which this method
-     *          will place handles to the discovered topics.
-     * 
-     * @return  topicHandles, as a convenience to facilitate chaining.
+     * @return  a new collection containing a copy of the information.
      * 
      * @throws  UnsupportedOperationException   If the infrastructure does
      *          not locally maintain the connectivity information.
+     * 
+     * @see     #getDiscoveredTopicData(InstanceHandle)
+     * @see     #getDiscoveredParticipants()
      */
-    public Collection<InstanceHandle> getDiscoveredTopics(
-            Collection<InstanceHandle> topicHandles);
+    public Set<InstanceHandle> getDiscoveredTopics();
 
     /**
      * This operation retrieves information on a {@link Topic} that has
@@ -834,15 +834,13 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * not have been "ignored" by means of the
      * {@link #ignoreTopic(InstanceHandle)} operation.
      * 
-     * Use the operation {@link #getDiscoveredTopics(Collection)} to
+     * Use the operation {@link #getDiscoveredTopics()} to
      * find the Topics that are currently discovered.
      * 
-     * @param   topicData       a container, into which this method
-     *          will store the participant data.
      * @param   topicHandle     a handle to the topic, the data
      *          of which is to be retrieved.
      * 
-     * @return  topicData, as a convenience to facilitate chaining.
+     * @return  a new object containing a copy of the information.
      * 
      * @throws  PreconditionNotMetException     if the topicHandle
      *          does not correspond to a Topic such as is described above.
@@ -850,9 +848,11 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      *          not locally maintain the connectivity information or if the
      *          infrastructure does not hold the information necessary to
      *          fill in the topicData.
+     * 
+     * @see     #getDiscoveredTopics()
+     * @see     #getDiscoveredParticipantData(InstanceHandle)
      */
     public TopicBuiltinTopicData getDiscoveredTopicData(
-            TopicBuiltinTopicData topicData,
             InstanceHandle topicHandle);
 
     /**
@@ -876,10 +876,13 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * the data updates it receives.
      * 
      * @param   currentTime     a container for the current time, which the
-     *          Service will overwrite with the result of this operation.
-     * @return  currentTime, as a convenience to facilitate chaining.
+     *          Service will overwrite with the result of this operation, or
+     *          null, if the Service should store the current time in a new
+     *          object.
+     * @return  currentTime, if it is non-null, or a new immutable Time
+     *          object otherwise
      */
-    public ModifiableTime getCurrentTime(ModifiableTime currentTime);
+    public Time getCurrentTime(ModifiableTime currentTime);
 
 
     // --- From Entity: ------------------------------------------------------

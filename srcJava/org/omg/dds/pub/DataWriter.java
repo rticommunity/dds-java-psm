@@ -18,7 +18,7 @@
 
 package org.omg.dds.pub;
 
-import java.util.Collection;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -198,15 +198,11 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * The operation may fail if the infrastructure does not locally maintain
      * the connectivity information.
      * 
-     * @param   subscriptionHandles     a container, into which this method
-     *          will place its result.
+     * @return  a new collection containing a copy of the information.
      * 
-     * @return  subscriptionHandles, as a convenience to facilitate chaining.
-     * 
-     * @see     #getMatchedSubscriptionData(SubscriptionBuiltinTopicData, InstanceHandle)
+     * @see     #getMatchedSubscriptionData(InstanceHandle)
      */
-    public Collection<InstanceHandle> getMatchedSubscriptions(
-            Collection<InstanceHandle> subscriptionHandles);
+    public Set<InstanceHandle> getMatchedSubscriptions();
 
     /**
      * This operation retrieves information on a subscription that is
@@ -215,16 +211,14 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * has not indicated should be "ignored" by means of
      * {@link DomainParticipant#ignoreSubscription(InstanceHandle)}.
      * 
-     * The operation {@link #getMatchedSubscriptions(Collection)} can be used
+     * The operation {@link #getMatchedSubscriptions()} can be used
      * to find the subscriptions that are currently matched with the
      * DataWriter.
      * 
-     * @param   subscriptionData        a container, into which this method
-     *          will place its result.
      * @param   subscriptionHandle      a handle to the subscription, the
      *          data of which is to be retrieved.
      * 
-     * @return  subscriptionData, as a convenience to facilitate chaining.
+     * @return  a new object containing a copy of the information.
      * 
      * @throws  IllegalArgumentException        if subscriptionHandle does
      *          not correspond to a subscription currently associated with
@@ -233,10 +227,9 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      *          not hold the information necessary to fill in the
      *          subscriptionData.
      *
-     * @see     #getMatchedSubscriptions(Collection)
+     * @see     #getMatchedSubscriptions()
      */
     public SubscriptionBuiltinTopicData getMatchedSubscriptionData(
-            SubscriptionBuiltinTopicData subscriptionData,
             InstanceHandle subscriptionHandle);
 
 

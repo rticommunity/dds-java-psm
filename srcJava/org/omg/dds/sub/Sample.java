@@ -81,10 +81,10 @@ import org.omg.dds.pub.DataWriter;
  *          identifies locally the {@link DataWriter} that modified the
  *          instance. The publicationHandle is the same {@link InstanceHandle}
  *          that is returned by the operation
- *          {@link DataReader#getMatchedPublications(java.util.Collection)}
+ *          {@link DataReader#getMatchedPublications()}
  *          on the DataReader and can also be used as a parameter to the
  *          operation
- *          {@link DataReader#getMatchedPublicationData(org.omg.dds.topic.PublicationBuiltinTopicData, InstanceHandle)}.</li>
+ *          {@link DataReader#getMatchedPublicationData(InstanceHandle)}.</li>
  * </ul>
  * 
  * <b>Interpretation of the Counters and Ranks</b>

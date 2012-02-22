@@ -18,8 +18,8 @@
 
 package org.omg.dds.sub;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -280,15 +280,11 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * The operation may fail if the infrastructure does not locally maintain
      * the connectivity information.
      * 
-     * @param   publicationHandles      a container, into which this method
-     *          will place its result.
+     * @return  a new collection containing a copy of the information.
      * 
-     * @return  publicationHandles, as a convenience to facilitate chaining.
-     * 
-     * @see     #getMatchedPublicationData(PublicationBuiltinTopicData, InstanceHandle)
+     * @see     #getMatchedPublicationData(InstanceHandle)
      */
-    public Collection<InstanceHandle> getMatchedPublications(
-            Collection<InstanceHandle> publicationHandles);
+    public Set<InstanceHandle> getMatchedPublications();
 
     /**
      * This operation retrieves information on a publication that is
@@ -297,16 +293,14 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * has not indicated should be "ignored" by means of
      * {@link DomainParticipant#ignorePublication(InstanceHandle)}.
      * 
-     * The operation {@link #getMatchedPublications(Collection)} can be used
+     * The operation {@link #getMatchedPublications()} can be used
      * to find the publications that are currently matched with the
      * DataReader.
      * 
-     * @param   publicationData         a container, into which this method
-     *          will place its result.
      * @param   publicationHandle       a handle to the publication, the
      *          data of which is to be retrieved.
      * 
-     * @return  subscriptionData, as a convenience to facilitate chaining.
+     * @return  a new object containing a copy of the information.
      * 
      * @throws  IllegalArgumentException        if the publicationHandle does
      *          not correspond to a publication currently associated with the
@@ -315,10 +309,9 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      *          not hold the information necessary to fill in the
      *          publicationData.
      *
-     * @see     #getMatchedPublications(Collection)
+     * @see     #getMatchedPublications()
      */
     public PublicationBuiltinTopicData getMatchedPublicationData(
-            PublicationBuiltinTopicData publicationData,
             InstanceHandle publicationHandle);
 
 

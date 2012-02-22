@@ -46,20 +46,9 @@ import org.omg.dds.topic.Topic;
 public interface TopicDataQosPolicy extends QosPolicy
 {
     /**
-     * Copy the data into the given array, starting at the index at the given
-     * offset.
-     * 
-     * @return  The total number of bytes in the data, independent of the
-     *          number of bytes copied. Callers can use this result to
-     *          determine if the output array is long enough or, if it is
-     *          long enough, what range within it contains valid data.
+     * Get a copy of the data.
      */
-    public int getValue(byte[] value, int offset);
-
-    /**
-     * @return  the length of the <code>value</code> property.
-     */
-    public int getLength();
+    public byte[] getValue();
 
 
     // --- Modification: -----------------------------------------------------
