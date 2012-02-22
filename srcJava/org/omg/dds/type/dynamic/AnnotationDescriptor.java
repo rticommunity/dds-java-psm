@@ -31,7 +31,7 @@ public interface AnnotationDescriptor extends Serializable, DDSObject
 {
     public String getValue(String key);
 
-    public Map<String, String> getAllValue(Map<String, String> value);
+    public Map<String, String> getAllValue();
 
     public boolean isConsistent();
 
