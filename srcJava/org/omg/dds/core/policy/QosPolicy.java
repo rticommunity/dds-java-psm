@@ -20,18 +20,7 @@ package org.omg.dds.core.policy;
 
 import java.io.Serializable;
 
-import org.omg.dds.core.Condition;
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.Entity;
-import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
-import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
-import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.pub.DataWriterListener;
-import org.omg.dds.pub.Publisher;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.DataReaderListener;
-import org.omg.dds.topic.Topic;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.Nested;
 
@@ -47,35 +36,39 @@ import org.omg.dds.type.Nested;
  * parameters must be set coherently to define a consistent value for a
  * QosPolicy.
  * 
- * Each {@link Entity} can be configured with a collection of QosPolicy.
- * However, any Entity cannot support any QosPolicy. For instance, a
- * {@link DomainParticipant} supports different QosPolicy than a {@link Topic}
- * or a {@link Publisher}.
- * 
+ * Each {@link org.omg.dds.core.Entity} can be configured with a collection
+ * of QosPolicy. However, any Entity cannot support any QosPolicy. For
+ * instance, a {@link org.omg.dds.domain.DomainParticipant} supports
+ * different QosPolicy than a {@link org.omg.dds.topic.Topic} or a
+ * {@link org.omg.dds.pub.Publisher}.
+ *
  * QosPolicy can be set when the Entity is created, or modified with the
- * {@link Entity#setQos(org.omg.dds.core.EntityQos)} method. Each QosPolicy
+ * {@link org.omg.dds.core.Entity#setQos(org.omg.dds.core.EntityQos)} method.
+ * Each QosPolicy
  * in collection list is treated independently from the others. This approach
  * has the advantage of being very extensible. However, there may be cases
  * where several policies are in conflict. Consistency checking is performed
  * each time the policies are modified via the
- * {@link Entity#setQos(org.omg.dds.core.EntityQos) }operation.
- * 
+ * {@link org.omg.dds.core.Entity#setQos(org.omg.dds.core.EntityQos)}
+ * operation.
+ *
  * When a policy is changed after being set to a given value, it is not
  * required that the new value be applied instantaneously; the Service is
  * allowed to apply it after a transition phase. In addition, some QosPolicy
  * have "immutable" semantics meaning that they can only be specified either
  * at Entity creation time or else prior to calling the
- * {@link Entity#enable()} operation on the Entity.
- * 
+ * {@link org.omg.dds.core.Entity#enable()} operation on the Entity.
+ *
  * Objects of this type are immutable.
  * 
  * <b>Properties of QoS Policies</b>
  * 
  * In several cases, for communications to occur properly (or efficiently), a
  * QosPolicy on the publisher side must be compatible with a corresponding
- * policy on the subscriber side. For example, if a {@link DataReader}
- * requests to receive data reliably while the corresponding
- * {@link DataWriter} defines a best-effort policy, communication will not
+ * policy on the subscriber side. For example, if a
+ * {@link org.omg.dds.sub.DataReader} requests to receive data reliably while
+ * the corresponding {@link org.omg.dds.pub.DataWriter} defines a best-effort
+ * policy, communication will not
  * happen as requested. To address this issue and maintain the desirable
  * decoupling of publication and subscription as much as possible, the
  * specification for QosPolicy follows the subscriber-requested,
@@ -86,13 +79,16 @@ import org.omg.dds.type.Nested;
  * with what is offered by the publisher side. If the two policies are
  * compatible, then communication will be established. If the two policies
  * are not compatible, the Service will not establish communications between
- * the two {@link Entity} objects and will record this fact by means of the
- * {@link OfferedIncompatibleQosStatus} status on the publisher end and
- * {@link RequestedIncompatibleQosStatus} status on the subscriber end. The
- * application can detect this fact by means of a listener (e.g.
- * {@link DataReaderListener} or {@link DataWriterListener}) or
- * {@link Condition}s.
- * 
+ * the two {@link org.omg.dds.core.Entity} objects and will record this fact
+ * by means of the
+ * {@link org.omg.dds.core.status.OfferedIncompatibleQosStatus} status on the
+ * publisher end and
+ * {@link org.omg.dds.core.status.RequestedIncompatibleQosStatus} status on
+ * the subscriber end. The application can detect this fact by means of a
+ * listener (e.g. {@link org.omg.dds.sub.DataReaderListener} or
+ * {@link org.omg.dds.pub.DataWriterListener}) or
+ * {@link org.omg.dds.core.Condition}s.
+ *
  * The QosPolicy objects that need to be set in a compatible manner between
  * the publisher and subscriber ends are indicated by the setting of the
  * "RxO" (Requested/Offered) property:
@@ -114,8 +110,8 @@ import org.omg.dds.type.Nested;
  * The "changeable" property determines whether the QosPolicy can be changed
  * after the Entity is enabled. In other words, a policy with "changeable"
  * setting of "NO" is considered "immutable" and can only be specified either
- * at {@link Entity} creation time or else prior to calling the
- * {@link Entity#enable()} operation.
+ * at {@link org.omg.dds.core.Entity} creation time or else prior to calling
+ * the {@link org.omg.dds.core.Entity#enable()} operation.
  */
 @Extensibility(Extensibility.Kind.EXTENSIBLE_EXTENSIBILITY)
 @Nested
