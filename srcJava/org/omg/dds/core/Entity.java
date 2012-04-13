@@ -18,6 +18,7 @@
 
 package org.omg.dds.core;
 
+import java.io.Closeable;
 import java.util.Collection;
 import java.util.EventListener;
 import java.util.Set;
@@ -45,7 +46,7 @@ import org.omg.dds.topic.TopicDescription;
  */
 public interface Entity<LISTENER extends EventListener,
                         QOS extends EntityQos<?>>
-extends DDSObject
+extends Closeable, DDSObject
 {
     /**
      * This operation allows access to the existing Listener attached to the

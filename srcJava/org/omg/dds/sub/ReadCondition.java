@@ -18,6 +18,7 @@
 
 package org.omg.dds.sub;
 
+import java.io.Closeable;
 import java.util.Set;
 
 import org.omg.dds.core.Condition;
@@ -76,8 +77,8 @@ import org.omg.dds.core.WaitSet;
  * @param <TYPE>    The concrete type of the data that can be read using the
  *                  the {@link DataReader} that created this ReadCondition.
  */
-public interface ReadCondition<TYPE>
-extends Condition {
+public interface ReadCondition<TYPE> extends Closeable, Condition
+{
     /**
      * This operation returns the set of sample states that are taken into
      * account to determine the triggerValue of the ReadCondition. These are

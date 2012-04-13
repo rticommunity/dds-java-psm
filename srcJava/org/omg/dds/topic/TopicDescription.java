@@ -18,6 +18,8 @@
 
 package org.omg.dds.topic;
 
+import java.io.Closeable;
+
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Entity;
 import org.omg.dds.domain.DomainParticipant;
@@ -40,7 +42,8 @@ import org.omg.dds.type.TypeSupport;
  *                  or subscribed by the readers and writers that use this
  *                  topic description.
  */
-public interface TopicDescription<TYPE> extends DDSObject {
+public interface TopicDescription<TYPE> extends Closeable, DDSObject
+{
     /**
      * @return  the {@link TypeSupport} used to create this TopicDescription.
      */
