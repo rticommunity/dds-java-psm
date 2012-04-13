@@ -125,4 +125,6 @@ extends EntityQos<QosPolicy.ForDataWriter>
     // --- Modification: -----------------------------------------------------
 
     public DataWriterQos withPolicy(QosPolicy.ForDataWriter policy);
+
+    public DataWriterQos withPolicies(QosPolicy.ForDataWriter... policy);
 }

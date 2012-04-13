@@ -869,16 +869,36 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * @param   handle          a handle indicating the instance whose value
      *          this method should get.
      *
-     * @return  keyHolder, as a convenience to facilitate chaining.
+     * @return  keyHolder, if it is non-null, or a new object otherwise.
      * 
      * @throws  IllegalArgumentException    if the handle does not correspond
      *          to an existing data object known to the DataWriter. If the
      *          implementation is not able to check invalid handles, then the
      *          result in this situation is unspecified.
+     *
+     * @see     #getKeyValue(InstanceHandle)
      */
-    public TYPE getKeyValue(
-            TYPE keyHolder, 
-            InstanceHandle handle);
+    public TYPE getKeyValue(TYPE keyHolder, InstanceHandle handle);
+
+    /**
+     * This operation can be used to retrieve the instance key that
+     * corresponds to an instance handle. The operation will only fill the
+     * fields that form the key inside the keyHolder instance.
+     * 
+     * @param   handle          a handle indicating the instance whose value
+     *          this method should get.
+     *
+     * @return  A new "key holder" object. The contents of the non-key fields
+     *          are unspecified.
+     * 
+     * @throws  IllegalArgumentException    if the handle does not correspond
+     *          to an existing data object known to the DataWriter. If the
+     *          implementation is not able to check invalid handles, then the
+     *          result in this situation is unspecified.
+     *
+     * @see     #getKeyValue(Object, InstanceHandle)
+     */
+    public TYPE getKeyValue(InstanceHandle handle);
 
     /**
      * This operation takes as a parameter an instance and returns a handle
@@ -896,11 +916,33 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * @param   keyHolder       a sample of the instance whose handle this
      *          method should look up.
      *
-     * @return  handle, as a convenience to facilitate chaining.
+     * @return  handle, if it is non-null, or a new object otherwise.
+     * 
+     * @see     #lookupInstance(Object)
      */
     public ModifiableInstanceHandle lookupInstance(
             ModifiableInstanceHandle handle,
             TYPE keyHolder);
+
+    /**
+     * This operation takes as a parameter an instance and returns a handle
+     * that can be used in subsequent operations that accept an instance
+     * handle as an argument. The instance parameter is only used for the
+     * purpose of examining the fields that define the key.
+     * 
+     * This operation does not register the instance in question. If the
+     * instance has not been previously registered, or if for any other
+     * reason the Service is unable to provide an instance handle, the
+     * Service will return a nil handle.
+     * 
+     * @param   keyHolder       a sample of the instance whose handle this
+     *          method should look up.
+     *
+     * @return  an immutable handle to the instance.
+     * 
+     * @see     #lookupInstance(ModifiableInstanceHandle, Object)
+     */
+    public InstanceHandle lookupInstance(TYPE keyHolder);
 
 
     // --- From Entity: ------------------------------------------------------

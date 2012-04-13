@@ -101,4 +101,6 @@ extends EntityQos<QosPolicy.ForDataReader>
     // --- Modification: -----------------------------------------------------
 
     public DataReaderQos withPolicy(QosPolicy.ForDataReader policy);
+
+    public DataReaderQos withPolicies(QosPolicy.ForDataReader... policy);
 }

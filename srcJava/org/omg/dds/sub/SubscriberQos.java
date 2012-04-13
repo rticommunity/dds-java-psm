@@ -53,4 +53,6 @@ extends EntityQos<QosPolicy.ForSubscriber>
     // --- Modification: -----------------------------------------------------
 
     public SubscriberQos withPolicy(QosPolicy.ForSubscriber policy);
+
+    public SubscriberQos withPolicies(QosPolicy.ForSubscriber... policy);
 }

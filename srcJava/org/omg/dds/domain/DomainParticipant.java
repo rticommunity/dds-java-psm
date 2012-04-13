@@ -879,10 +879,22 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      *          Service will overwrite with the result of this operation, or
      *          null, if the Service should store the current time in a new
      *          object.
-     * @return  currentTime, if it is non-null, or a new immutable Time
-     *          object otherwise
+     * @return  currentTime, if it is non-null, or a new object otherwise.
+     * 
+     * @see     #getCurrentTime()
      */
-    public Time getCurrentTime(ModifiableTime currentTime);
+    public ModifiableTime getCurrentTime(ModifiableTime currentTime);
+
+    /**
+     * This operation returns the current value of the time that the service
+     * uses to time stamp data writes and to set the reception time stamp for
+     * the data updates it receives.
+     * 
+     * @return  an immutable object containing the current time.
+     * 
+     * @see     #getCurrentTime(ModifiableTime)
+     */
+    public Time getCurrentTime();
 
 
     // --- From Entity: ------------------------------------------------------

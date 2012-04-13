@@ -42,4 +42,7 @@ extends EntityQos<QosPolicy.ForDomainParticipant>
 
     public DomainParticipantQos withPolicy(
             QosPolicy.ForDomainParticipant policy);
+
+    public DomainParticipantQos withPolicies(
+            QosPolicy.ForDomainParticipant... policy);
 }

@@ -76,4 +76,16 @@ extends Map<Class<? extends P>, P>, Serializable, DDSObject
      * @see     #withPolicies(QosPolicy...)
      */
     public EntityQos<P> withPolicy(P policy);
+
+    /**
+     * Copy this object and override the values of the given policies.
+     *
+     * @return  a new object
+     *
+     * @throws  IllegalArgumentException        if any given policy is not
+     *          applicable to the concrete type of this EntityQos.
+     *
+     * @see     #withPolicy(QosPolicy)
+     */
+    public EntityQos<P> withPolicies(P... policy);
 }

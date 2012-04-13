@@ -112,4 +112,6 @@ public interface TopicQos extends EntityQos<QosPolicy.ForTopic>
     // --- Modification: -----------------------------------------------------
 
     public TopicQos withPolicy(QosPolicy.ForTopic policy);
+
+    public TopicQos withPolicies(QosPolicy.ForTopic... policy);
 }

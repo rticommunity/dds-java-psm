@@ -53,4 +53,6 @@ extends EntityQos<QosPolicy.ForPublisher>
     // --- Modification: -----------------------------------------------------
 
     public PublisherQos withPolicy(QosPolicy.ForPublisher policy);
+
+    public PublisherQos withPolicies(QosPolicy.ForPublisher... policy);
 }

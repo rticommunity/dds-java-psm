@@ -29,28 +29,52 @@ import org.omg.dds.pub.DataWriter;
 
 public interface KeyedBytesDataWriter extends DataWriter<KeyedBytes> 
 {
+    /**
+     * @see     DataWriter#registerInstance(Object)
+     */
     public InstanceHandle registerInstance(String key)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#registerInstance(Object, Time)
+     */
     public InstanceHandle registerInstance(String key, Time sourceTimestamp)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#registerInstance(Object, long, TimeUnit)
+     */
     public InstanceHandle registerInstance(
             String key, long sourceTimestamp, TimeUnit unit)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#unregisterInstance(InstanceHandle, Object)
+     */
     public void unregisterInstance(String key) throws TimeoutException;
 
+    /**
+     * @see     DataWriter#unregisterInstance(InstanceHandle, Object, Time)
+     */
     public void unregisterInstance(String key, Time sourceTimestamp)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#unregisterInstance(InstanceHandle, Object, long, TimeUnit)
+     */
     public void unregisterInstance(
             String key, long sourceTimestamp, TimeUnit unit)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#write(Object)
+     */
     public void write(String key, byte[] bytes)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#write(Object)
+     */
     public void write(
             String key,
             byte[] bytes,
@@ -58,6 +82,9 @@ public interface KeyedBytesDataWriter extends DataWriter<KeyedBytes>
             int length)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#write(Object, Time)
+     */
     public void write(
             String key,
             byte[] bytes,
@@ -66,6 +93,9 @@ public interface KeyedBytesDataWriter extends DataWriter<KeyedBytes>
             Time sourceTimestamp)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#write(Object, long, TimeUnit)
+     */
     public void write(
             String key,
             byte[] bytes,
@@ -75,17 +105,37 @@ public interface KeyedBytesDataWriter extends DataWriter<KeyedBytes>
             TimeUnit unit)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#dispose(InstanceHandle, Object)
+     */
     public void dispose(String key) throws TimeoutException;
 
+    /**
+     * @see     DataWriter#dispose(InstanceHandle, Object, Time)
+     */
     public void dispose(String key, Time sourceTimestamp)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#dispose(InstanceHandle, Object, long, TimeUnit)
+     */
     public void dispose(String key, long sourceTimestamp, TimeUnit unit)
     throws TimeoutException;
 
+    /**
+     * @see     DataWriter#getKeyValue(Object, InstanceHandle)
+     */
     public StringBuilder getKeyValue(
             StringBuilder key, InstanceHandle handle);
 
+    /**
+     * @see     DataWriter#lookupInstance(ModifiableInstanceHandle, Object)
+     */
     public ModifiableInstanceHandle lookupInstance(
             ModifiableInstanceHandle handle, String key);
+
+    /**
+     * @see     DataWriter#lookupInstance(Object)
+     */
+    public InstanceHandle lookupInstance(String key);
 }
