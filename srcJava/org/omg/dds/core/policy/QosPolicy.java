@@ -121,5 +121,65 @@ import org.omg.dds.type.Nested;
 @Nested
 public interface QosPolicy extends Serializable, DDSObject
 {
-    // empty
+    /**
+     * A QosPolicy interface that implements this marker interface applies
+     * to {@link org.omg.dds.domain.DomainParticipantFactory} objects.
+     */
+    public static interface ForDomainParticipantFactory extends QosPolicy {
+        // empty
+    }
+
+
+    /**
+     * A QosPolicy interface that implements this marker interface applies
+     * to {@link org.omg.dds.domain.DomainParticipant} Entities.
+     */
+    public static interface ForDomainParticipant extends QosPolicy {
+        // empty
+    }
+
+
+    /**
+     * A QosPolicy interface that implements this marker interface applies
+     * to {@link org.omg.dds.pub.Publisher} Entities.
+     */
+    public static interface ForPublisher extends QosPolicy {
+        // empty
+    }
+
+
+    /**
+     * A QosPolicy interface that implements this marker interface applies
+     * to {@link org.omg.dds.sub.Subscriber} Entities.
+     */
+    public static interface ForSubscriber extends QosPolicy {
+        // empty
+    }
+
+
+    /**
+     * A QosPolicy interface that implements this marker interface applies
+     * to {@link org.omg.dds.topic.Topic} Entities.
+     */
+    public static interface ForTopic extends QosPolicy {
+        // empty
+    }
+
+
+    /**
+     * A QosPolicy interface that implements this marker interface applies
+     * to {@link org.omg.dds.pub.DataWriter} Entities.
+     */
+    public static interface ForDataWriter extends QosPolicy {
+        // empty
+    }
+
+
+    /**
+     * A QosPolicy interface that implements this marker interface applies
+     * to {@link org.omg.dds.sub.DataReader} Entities.
+     */
+    public static interface ForDataReader extends QosPolicy {
+        // empty
+    }
 }

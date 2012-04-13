@@ -26,7 +26,8 @@ import org.omg.dds.core.policy.PresentationQosPolicy;
 import org.omg.dds.core.policy.QosPolicy;
 
 
-public interface SubscriberQos extends EntityQos
+public interface SubscriberQos
+extends EntityQos<QosPolicy.ForSubscriber>
 {
     /**
      * @return the presentation
@@ -51,5 +52,5 @@ public interface SubscriberQos extends EntityQos
 
     // --- Modification: -----------------------------------------------------
 
-    public SubscriberQos withPolicy(QosPolicy policy);
+    public SubscriberQos withPolicy(QosPolicy.ForSubscriber policy);
 }

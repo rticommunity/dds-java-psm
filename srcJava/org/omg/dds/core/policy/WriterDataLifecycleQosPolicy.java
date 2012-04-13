@@ -71,7 +71,7 @@ import org.omg.dds.pub.Publisher;
  * {@link Publisher#closeContainedEntities()} or
  * {@link DomainParticipant#closeContainedEntities()}.
  */
-public interface WriterDataLifecycleQosPolicy extends QosPolicy
+public interface WriterDataLifecycleQosPolicy extends QosPolicy.ForDataWriter
 {
     /**
      * @return the autDisposeUnregisteredInstances

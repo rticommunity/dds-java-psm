@@ -43,7 +43,8 @@ import org.omg.dds.topic.TopicDescription;
  * @param <LISTENER>    The listener interface appropriate for this entity.
  * @param <QOS>         The QoS interface appropriate for this entity.
  */
-public interface Entity<LISTENER extends EventListener, QOS extends EntityQos>
+public interface Entity<LISTENER extends EventListener,
+                        QOS extends EntityQos<?>>
 extends DDSObject
 {
     /**

@@ -37,7 +37,7 @@ import org.omg.dds.core.policy.TransportPriorityQosPolicy;
 import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 
 
-public interface TopicQos extends EntityQos
+public interface TopicQos extends EntityQos<QosPolicy.ForTopic>
 {
     /**
      * @return the topicData
@@ -111,5 +111,5 @@ public interface TopicQos extends EntityQos
 
     // --- Modification: -----------------------------------------------------
 
-    public TopicQos withPolicy(QosPolicy policy);
+    public TopicQos withPolicy(QosPolicy.ForTopic policy);
 }

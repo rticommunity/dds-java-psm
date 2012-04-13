@@ -22,7 +22,10 @@ import org.omg.dds.type.BitBound;
 
 
 public interface TypeConsistencyEnforcementQosPolicy
-extends QosPolicy, RequestedOffered<TypeConsistencyEnforcementQosPolicy>
+extends QosPolicy.ForTopic,
+        QosPolicy.ForDataReader,
+        QosPolicy.ForDataWriter,
+        RequestedOffered<TypeConsistencyEnforcementQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Properties

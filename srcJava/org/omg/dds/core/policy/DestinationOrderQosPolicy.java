@@ -62,7 +62,10 @@ import org.omg.dds.topic.Topic;
  * @see OwnershipQosPolicy
  */
 public interface DestinationOrderQosPolicy
-extends QosPolicy, RequestedOffered<DestinationOrderQosPolicy>
+extends QosPolicy.ForTopic,
+        QosPolicy.ForDataReader,
+        QosPolicy.ForDataWriter,
+        RequestedOffered<DestinationOrderQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Methods

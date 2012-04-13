@@ -47,7 +47,8 @@ import org.omg.dds.topic.Topic;
  * 
  * @see DurabilityQosPolicy
  */
-public interface DurabilityServiceQosPolicy extends QosPolicy
+public interface DurabilityServiceQosPolicy
+extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
 {
     public Duration getServiceCleanupDelay();
 

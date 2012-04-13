@@ -23,7 +23,8 @@ import org.omg.dds.core.policy.EntityFactoryQosPolicy;
 import org.omg.dds.core.policy.QosPolicy;
 
 
-public interface DomainParticipantFactoryQos extends EntityQos
+public interface DomainParticipantFactoryQos
+extends EntityQos<QosPolicy.ForDomainParticipantFactory>
 {
     /**
      * @return the entityFactory
@@ -33,5 +34,6 @@ public interface DomainParticipantFactoryQos extends EntityQos
 
     // --- Modification: -----------------------------------------------------
 
-    public DomainParticipantFactoryQos withPolicy(QosPolicy policy);
+    public DomainParticipantFactoryQos withPolicy(
+            QosPolicy.ForDataWriter policy);
 }

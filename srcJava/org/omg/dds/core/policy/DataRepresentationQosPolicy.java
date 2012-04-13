@@ -22,7 +22,10 @@ import java.util.List;
 
 
 public interface DataRepresentationQosPolicy
-extends QosPolicy, RequestedOffered<DataRepresentationQosPolicy>
+extends QosPolicy.ForTopic,
+        QosPolicy.ForDataReader,
+        QosPolicy.ForDataWriter,
+        RequestedOffered<DataRepresentationQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Properties

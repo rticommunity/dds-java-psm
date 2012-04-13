@@ -38,7 +38,7 @@ import org.omg.dds.topic.Topic;
  * 
  * @see OwnershipQosPolicy
  */
-public interface OwnershipStrengthQosPolicy extends QosPolicy
+public interface OwnershipStrengthQosPolicy extends QosPolicy.ForDataWriter
 {
     /**
      * @return the value

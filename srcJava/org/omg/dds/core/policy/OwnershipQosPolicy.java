@@ -37,7 +37,10 @@ import org.omg.dds.topic.Topic;
  * @see OwnershipStrengthQosPolicy
  */
 public interface OwnershipQosPolicy
-extends QosPolicy, RequestedOffered<OwnershipQosPolicy>
+extends QosPolicy.ForTopic,
+        QosPolicy.ForDataReader,
+        QosPolicy.ForDataWriter,
+        RequestedOffered<OwnershipQosPolicy>
 {
     // -----------------------------------------------------------------------
     // Methods

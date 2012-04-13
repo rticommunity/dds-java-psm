@@ -70,7 +70,10 @@ import org.omg.dds.topic.Topic;
  * minimum_separation."
  */
 public interface DeadlineQosPolicy
-extends QosPolicy, RequestedOffered<DeadlineQosPolicy>
+extends QosPolicy.ForTopic,
+        QosPolicy.ForDataReader,
+        QosPolicy.ForDataWriter,
+        RequestedOffered<DeadlineQosPolicy>
 {
     public Duration getPeriod();
 

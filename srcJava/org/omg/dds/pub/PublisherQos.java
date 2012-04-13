@@ -26,7 +26,8 @@ import org.omg.dds.core.policy.PresentationQosPolicy;
 import org.omg.dds.core.policy.QosPolicy;
 
 
-public interface PublisherQos extends EntityQos
+public interface PublisherQos
+extends EntityQos<QosPolicy.ForPublisher>
 {
     /**
      * @return the presentation
@@ -51,5 +52,5 @@ public interface PublisherQos extends EntityQos
 
     // --- Modification: -----------------------------------------------------
 
-    public PublisherQos withPolicy(QosPolicy policy);
+    public PublisherQos withPolicy(QosPolicy.ForPublisher policy);
 }

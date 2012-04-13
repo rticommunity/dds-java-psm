@@ -63,7 +63,11 @@ import org.omg.dds.topic.Topic;
  * default, it is not necessary to explicitly call enable on newly created
  * entities.
  */
-public interface EntityFactoryQosPolicy extends QosPolicy
+public interface EntityFactoryQosPolicy
+extends QosPolicy.ForDomainParticipantFactory,
+        QosPolicy.ForDomainParticipant,
+        QosPolicy.ForPublisher,
+        QosPolicy.ForSubscriber
 {
     /**
      * @return the autoEnableCreatedEntities

@@ -76,7 +76,8 @@ import org.omg.dds.topic.Topic;
  * @see ReliabilityQosPolicy
  * @see ResourceLimitsQosPolicy
  */
-public interface HistoryQosPolicy extends QosPolicy
+public interface HistoryQosPolicy
+extends QosPolicy.ForTopic, QosPolicy.ForDataReader, QosPolicy.ForDataWriter
 {
     // -----------------------------------------------------------------------
     // Methods

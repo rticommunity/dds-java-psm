@@ -39,7 +39,8 @@ import org.omg.dds.core.policy.UserDataQosPolicy;
 import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
 
 
-public interface DataWriterQos extends EntityQos
+public interface DataWriterQos
+extends EntityQos<QosPolicy.ForDataWriter>
 {
     /**
      * @return the durability
@@ -123,5 +124,5 @@ public interface DataWriterQos extends EntityQos
 
     // --- Modification: -----------------------------------------------------
 
-    public DataWriterQos withPolicy(QosPolicy policy);
+    public DataWriterQos withPolicy(QosPolicy.ForDataWriter policy);
 }

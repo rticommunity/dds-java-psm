@@ -88,7 +88,8 @@ import org.omg.dds.sub.Subscriber;
  * the other hand, the same data instance can be made available (published)
  * or requested (subscribed) on one or more partitions.
  */
-public interface PartitionQosPolicy extends QosPolicy
+public interface PartitionQosPolicy
+extends QosPolicy.ForPublisher, QosPolicy.ForSubscriber
 {
     /**
      * @return  an unmodifiable collection of partition names.

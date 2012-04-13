@@ -56,7 +56,8 @@ import org.omg.dds.topic.Topic;
  * instead of the source time stamp in its computation of the "expiration
  * time."
  */
-public interface LifespanQosPolicy extends QosPolicy
+public interface LifespanQosPolicy
+extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
 {
     public Duration getDuration();
 

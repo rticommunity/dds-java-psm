@@ -47,7 +47,8 @@ import org.omg.dds.sub.Subscriber;
  * matching policies similar to those of the {@link PartitionQosPolicy}
  * except the decision can be made based on an application-defined policy.
  */
-public interface GroupDataQosPolicy extends QosPolicy
+public interface GroupDataQosPolicy
+extends QosPolicy.ForPublisher, QosPolicy.ForSubscriber
 {
     /**
      * Get a copy of the data.

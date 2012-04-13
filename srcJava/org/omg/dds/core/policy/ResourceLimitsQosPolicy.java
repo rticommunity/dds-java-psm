@@ -68,7 +68,8 @@ import org.omg.dds.topic.Topic;
  * @see HistoryQosPolicy
  * @see ReliabilityQosPolicy
  */
-public interface ResourceLimitsQosPolicy extends QosPolicy
+public interface ResourceLimitsQosPolicy
+extends QosPolicy.ForTopic, QosPolicy.ForDataReader, QosPolicy.ForDataWriter
 {
     public static final int LENGTH_UNLIMITED = -1;
 

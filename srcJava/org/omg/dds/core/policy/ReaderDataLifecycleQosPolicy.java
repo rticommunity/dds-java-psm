@@ -77,7 +77,7 @@ import org.omg.dds.sub.ViewState;
  * @see HistoryQosPolicy
  * @see ResourceLimitsQosPolicy
  */
-public interface ReaderDataLifecycleQosPolicy extends QosPolicy
+public interface ReaderDataLifecycleQosPolicy extends QosPolicy.ForDataReader
 {
     public Duration getAutoPurgeNoWriterSamplesDelay();
 

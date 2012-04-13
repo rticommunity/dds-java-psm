@@ -33,7 +33,7 @@ import org.omg.dds.domain.DomainParticipant;
  * @param <QOS>         The QoS interface appropriate for this entity.
  */
 public interface DomainEntity<LISTENER extends EventListener,
-                              QOS extends EntityQos>
+                              QOS extends EntityQos<?>>
 extends Entity<LISTENER, QOS>
 {
     /**

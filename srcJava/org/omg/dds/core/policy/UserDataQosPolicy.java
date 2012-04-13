@@ -51,7 +51,10 @@ import org.omg.dds.sub.DataReader;
  * policies. The use of this QoS is not limited to security, rather it offers
  * a simple, yet flexible extensibility mechanism.
  */
-public interface UserDataQosPolicy extends QosPolicy
+public interface UserDataQosPolicy
+extends QosPolicy.ForDomainParticipant,
+        QosPolicy.ForDataReader,
+        QosPolicy.ForDataWriter
 {
     /**
      * Get a copy of the data.

@@ -53,7 +53,10 @@ import org.omg.dds.topic.Topic;
  * to true.
  */
 public interface LatencyBudgetQosPolicy
-extends QosPolicy, RequestedOffered<LatencyBudgetQosPolicy>
+extends QosPolicy.ForTopic,
+        QosPolicy.ForDataReader,
+        QosPolicy.ForDataWriter,
+        RequestedOffered<LatencyBudgetQosPolicy>
 {
     public Duration getDuration();
 

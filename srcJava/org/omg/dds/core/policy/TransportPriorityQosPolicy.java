@@ -49,7 +49,8 @@ import org.omg.dds.topic.Topic;
  * transport. This mapping would then be used by the infrastructure when
  * propagating the data written by the DataWriter.
  */
-public interface TransportPriorityQosPolicy extends QosPolicy
+public interface TransportPriorityQosPolicy
+extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
 {
     /**
      * @return the value

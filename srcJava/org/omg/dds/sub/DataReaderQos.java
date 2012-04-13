@@ -35,7 +35,8 @@ import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 
 
-public interface DataReaderQos extends EntityQos
+public interface DataReaderQos
+extends EntityQos<QosPolicy.ForDataReader>
 {
     /**
      * @return the durability
@@ -99,5 +100,5 @@ public interface DataReaderQos extends EntityQos
 
     // --- Modification: -----------------------------------------------------
 
-    public DataReaderQos withPolicy(QosPolicy policy);
+    public DataReaderQos withPolicy(QosPolicy.ForDataReader policy);
 }

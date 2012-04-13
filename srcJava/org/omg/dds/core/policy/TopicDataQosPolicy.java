@@ -43,7 +43,7 @@ import org.omg.dds.topic.Topic;
  * {@link DomainParticipant#ignoreTopic(org.omg.dds.core.InstanceHandle)},
  * these QoS can assist an application to extend the provided QoS.
  */
-public interface TopicDataQosPolicy extends QosPolicy
+public interface TopicDataQosPolicy extends QosPolicy.ForTopic
 {
     /**
      * Get a copy of the data.

@@ -51,8 +51,8 @@ import org.omg.dds.type.Extensibility;
  * Objects of this type are immutable.
  */
 @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
-public interface EntityQos
-extends Map<Class<? extends QosPolicy>, QosPolicy>, Serializable, DDSObject
+public interface EntityQos<P extends QosPolicy>
+extends Map<Class<? extends P>, P>, Serializable, DDSObject
 {
     /**
      * @return  a reference to the corresponding policy in this
@@ -60,7 +60,7 @@ extends Map<Class<? extends QosPolicy>, QosPolicy>, Serializable, DDSObject
      *
      * @see Map#get(Object)
      */
-    public <POLICY extends QosPolicy> POLICY get(Class<POLICY> id);
+    public <POLICY extends P> POLICY get(Class<POLICY> id);
 
 
     // --- Modification: -----------------------------------------------------
@@ -72,6 +72,8 @@ extends Map<Class<? extends QosPolicy>, QosPolicy>, Serializable, DDSObject
      * 
      * @throws  IllegalArgumentException        if the given policy is not
      *          applicable to the concrete type of this EntityQos.
+     *
+     * @see     #withPolicies(QosPolicy...)
      */
-    public EntityQos withPolicy(QosPolicy policy);
+    public EntityQos<P> withPolicy(P policy);
 }

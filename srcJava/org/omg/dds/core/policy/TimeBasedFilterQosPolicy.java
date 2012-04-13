@@ -78,7 +78,7 @@ import org.omg.dds.sub.DataReader;
  * @see HistoryQosPolicy
  * @see ReliabilityQosPolicy
  */
-public interface TimeBasedFilterQosPolicy extends QosPolicy
+public interface TimeBasedFilterQosPolicy extends QosPolicy.ForDataReader
 {
     public Duration getMinimumSeparation();
 

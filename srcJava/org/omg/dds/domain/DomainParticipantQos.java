@@ -24,7 +24,8 @@ import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.UserDataQosPolicy;
 
 
-public interface DomainParticipantQos extends EntityQos
+public interface DomainParticipantQos
+extends EntityQos<QosPolicy.ForDomainParticipant>
 {
     /**
      * @return the userData
@@ -39,5 +40,6 @@ public interface DomainParticipantQos extends EntityQos
 
     // --- Modification: -----------------------------------------------------
 
-    public DomainParticipantQos withPolicy(QosPolicy policy);
+    public DomainParticipantQos withPolicy(
+            QosPolicy.ForDomainParticipant policy);
 }
