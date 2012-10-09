@@ -23,8 +23,8 @@ import java.util.Collection;
 import java.util.EventListener;
 import java.util.Set;
 
-import org.omg.dds.core.policy.EntityFactoryQosPolicy;
-import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
+import org.omg.dds.core.policy.EntityFactory;
+import org.omg.dds.core.policy.WriterDataLifecycle;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.pub.DataWriter;
@@ -163,10 +163,10 @@ extends Closeable, DDSObject
     /**
      * This operation enables the Entity. Entity objects can be created
      * either enabled or disabled. This is controlled by the value of the
-     * {@link EntityFactoryQosPolicy} on the corresponding factory for the
+     * {@link EntityFactory} on the corresponding factory for the
      * Entity.
      * 
-     * The default setting of {@link EntityFactoryQosPolicy} is such that, by
+     * The default setting of {@link EntityFactory} is such that, by
      * default, it is not necessary to explicitly call enable on newly
      * created entities.
      * 
@@ -194,12 +194,12 @@ extends Closeable, DDSObject
      *  It is legal to delete an Entity that has not been enabled by calling
      *  {@link #close()}. Entities created from a factory that is disabled
      *  are created disabled regardless of the setting of
-     *  {@link EntityFactoryQosPolicy}.
+     *  {@link EntityFactory}.
      *  
      *  Calling enable on an Entity whose factory is not enabled will fail
      *  with {@link PreconditionNotMetException}.
      *  
-     *  If {@link EntityFactoryQosPolicy#isAutoEnableCreatedEntities()} is
+     *  If {@link EntityFactory#isAutoEnableCreatedEntities()} is
      *  true, the enable operation on the factory will automatically enable
      *  all entities created from the factory.
      *  
@@ -262,7 +262,7 @@ extends Closeable, DDSObject
      * 
      * The deletion of a {@link DataWriter} will automatically unregister all
      * instances. Depending on the settings of the
-     * {@link WriterDataLifecycleQosPolicy}, the deletion of the DataWriter
+     * {@link WriterDataLifecycle}, the deletion of the DataWriter
      * may also dispose all instances.
      * 
      * @throws  PreconditionNotMetException     if close is called on an

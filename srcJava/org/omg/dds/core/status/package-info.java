@@ -79,11 +79,11 @@
  *         <li>The arrival of the notification that an instance has been
  *             disposed by:<ul>
  *             <li>the DataWriter that owns it if
- *                 {@link org.omg.dds.core.policy.OwnershipQosPolicy#getKind()}
- *                 = {@link org.omg.dds.core.policy.OwnershipQosPolicy.Kind#EXCLUSIVE}</li>
+ *                 {@link org.omg.dds.core.policy.Ownership#getKind()}
+ *                 = {@link org.omg.dds.core.policy.Ownership.Kind#EXCLUSIVE}</li>
  *             <li>or by any DataWriter if
- *                 {@link org.omg.dds.core.policy.OwnershipQosPolicy#getKind()}
- *                 = {@link org.omg.dds.core.policy.OwnershipQosPolicy.Kind#SHARED}.</li>
+ *                 {@link org.omg.dds.core.policy.Ownership#getKind()}
+ *                 = {@link org.omg.dds.core.policy.Ownership.Kind#SHARED}.</li>
  *             </ul></li>
  *         <li>The loss of liveliness of the DataWriter of an instance for
  *             which there is no other DataWriter.</li>

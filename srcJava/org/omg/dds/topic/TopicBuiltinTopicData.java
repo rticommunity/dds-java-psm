@@ -22,21 +22,21 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
-import org.omg.dds.core.policy.DeadlineQosPolicy;
-import org.omg.dds.core.policy.DestinationOrderQosPolicy;
-import org.omg.dds.core.policy.DurabilityQosPolicy;
-import org.omg.dds.core.policy.DurabilityServiceQosPolicy;
-import org.omg.dds.core.policy.HistoryQosPolicy;
-import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
-import org.omg.dds.core.policy.LifespanQosPolicy;
-import org.omg.dds.core.policy.LivelinessQosPolicy;
-import org.omg.dds.core.policy.OwnershipQosPolicy;
-import org.omg.dds.core.policy.ReliabilityQosPolicy;
-import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
-import org.omg.dds.core.policy.TopicDataQosPolicy;
-import org.omg.dds.core.policy.TransportPriorityQosPolicy;
-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
+import org.omg.dds.core.policy.DataRepresentation;
+import org.omg.dds.core.policy.Deadline;
+import org.omg.dds.core.policy.DestinationOrder;
+import org.omg.dds.core.policy.Durability;
+import org.omg.dds.core.policy.DurabilityService;
+import org.omg.dds.core.policy.History;
+import org.omg.dds.core.policy.LatencyBudget;
+import org.omg.dds.core.policy.Lifespan;
+import org.omg.dds.core.policy.Liveliness;
+import org.omg.dds.core.policy.Ownership;
+import org.omg.dds.core.policy.Reliability;
+import org.omg.dds.core.policy.ResourceLimits;
+import org.omg.dds.core.policy.TopicData;
+import org.omg.dds.core.policy.TransportPriority;
+import org.omg.dds.core.policy.TypeConsistencyEnforcement;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.ID;
 import org.omg.dds.type.Key;
@@ -76,85 +76,85 @@ extends Cloneable, Serializable, DDSObject
      * @return the durability
      */
     @ID(0x001D)
-    public DurabilityQosPolicy getDurability();
+    public Durability getDurability();
 
     /**
      * @return the durabilityService
      */
     @ID(0x001E)
-    public DurabilityServiceQosPolicy getDurabilityService();
+    public DurabilityService getDurabilityService();
 
     /**
      * @return the deadline
      */
     @ID(0x0023)
-    public DeadlineQosPolicy getDeadline();
+    public Deadline getDeadline();
 
     /**
      * @return the latencyBudget
      */
     @ID(0x0027)
-    public LatencyBudgetQosPolicy getLatencyBudget();
+    public LatencyBudget getLatencyBudget();
 
     /**
      * @return the liveliness
      */
     @ID(0x001B)
-    public LivelinessQosPolicy getLiveliness();
+    public Liveliness getLiveliness();
 
     /**
      * @return the reliability
      */
     @ID(0x001A)
-    public ReliabilityQosPolicy getReliability();
+    public Reliability getReliability();
 
     /**
      * @return the transportPriority
      */
     @ID(0x0049)
-    public TransportPriorityQosPolicy getTransportPriority();
+    public TransportPriority getTransportPriority();
 
     /**
      * @return the lifespan
      */
     @ID(0x002B)
-    public LifespanQosPolicy getLifespan();
+    public Lifespan getLifespan();
 
     /**
      * @return the destinationOrder
      */
     @ID(0x0025)
-    public DestinationOrderQosPolicy getDestinationOrder();
+    public DestinationOrder getDestinationOrder();
 
     /**
      * @return the history
      */
     @ID(0x0040)
-    public HistoryQosPolicy getHistory();
+    public History getHistory();
 
     /**
      * @return the resourceLimits
      */
     @ID(0x0041)
-    public ResourceLimitsQosPolicy getResourceLimits();
+    public ResourceLimits getResourceLimits();
 
     /**
      * @return the ownership
      */
     @ID(0x001F)
-    public OwnershipQosPolicy getOwnership();
+    public Ownership getOwnership();
 
     /**
      * @return the topicData
      */
     @ID(0x002E)
-    public TopicDataQosPolicy getTopicData();
+    public TopicData getTopicData();
 
     @ID(0x0073)
-    public DataRepresentationQosPolicy getRepresentation();
+    public DataRepresentation getRepresentation();
 
     @ID(0x0074)
-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
+    public TypeConsistencyEnforcement getTypeConsistency();
 
 
     // -----------------------------------------------------------------------

@@ -18,13 +18,13 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.policy.DeadlineQosPolicy;
+import org.omg.dds.core.policy.Deadline;
 import org.omg.dds.sub.DataReader;
 
 
 /**
  * The deadline that the {@link DataReader} was expecting through its
- * {@link DeadlineQosPolicy} was not respected for a specific instance.
+ * {@link Deadline} was not respected for a specific instance.
  *
  * @param <TYPE>    The data type of the source {@link DataReader}.
  * 

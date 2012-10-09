@@ -21,7 +21,7 @@ package org.omg.dds.topic;
 import java.io.Serializable;
 
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.policy.UserDataQosPolicy;
+import org.omg.dds.core.policy.UserData;
 import org.omg.dds.type.Extensibility;
 import org.omg.dds.type.ID;
 import org.omg.dds.type.Key;
@@ -35,7 +35,7 @@ extends Cloneable, Serializable, DDSObject
     public BuiltinTopicKey getKey();
 
     @ID(0x002C)
-    public UserDataQosPolicy getUserData();
+    public UserData getUserData();
 
 
     // -----------------------------------------------------------------------

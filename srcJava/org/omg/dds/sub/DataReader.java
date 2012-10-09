@@ -31,7 +31,7 @@ import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.NotEnabledException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.StatusCondition;
-import org.omg.dds.core.policy.HistoryQosPolicy;
+import org.omg.dds.core.policy.History;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
 import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
@@ -86,7 +86,7 @@ import org.omg.dds.topic.TopicDescription;
  * an atom of data information (i.e., a value for one instance). This
  * collection may contain samples related to the same or different instances
  * (identified by the key). Multiple samples can refer to the same instance
- * if the settings of the {@link HistoryQosPolicy} allow for it.
+ * if the settings of the {@link History} allow for it.
  * 
  * @param <TYPE>    The concrete type of the data to be read.
  */
@@ -216,8 +216,8 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
 
     /**
      * This operation is intended only for DataReader entities for which
-     * {@link org.omg.dds.core.policy.DurabilityQosPolicy#getKind()} is not
-     * {@link org.omg.dds.core.policy.DurabilityQosPolicy.Kind#VOLATILE}.
+     * {@link org.omg.dds.core.policy.Durability#getKind()} is not
+     * {@link org.omg.dds.core.policy.Durability.Kind#VOLATILE}.
      * 
      * As soon as an application enables a non-VOLATILE DataReader it will
      * start receiving both "historical" data, i.e., the data that was
@@ -241,8 +241,8 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
 
     /**
      * This operation is intended only for DataReader entities for which
-     * {@link org.omg.dds.core.policy.DurabilityQosPolicy#getKind()} is not
-     * {@link org.omg.dds.core.policy.DurabilityQosPolicy.Kind#VOLATILE}.
+     * {@link org.omg.dds.core.policy.Durability#getKind()} is not
+     * {@link org.omg.dds.core.policy.Durability.Kind#VOLATILE}.
      * 
      * As soon as an application enables a non-VOLATILE DataReader it will
      * start receiving both "historical" data, i.e., the data that was
@@ -335,48 +335,48 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
     /**
      * This operation accesses a collection of samples from this DataReader.
      * The returned samples will be limited by the given {@link Query}. The
-     * setting of the {@link org.omg.dds.core.policy.PresentationQosPolicy}
+     * setting of the {@link org.omg.dds.core.policy.Presentation}
      * may impose further limits on the returned samples.
      * 
      * <ol>
      *     <li>If
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
      *         is
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#INSTANCE},
+     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#INSTANCE},
      *         then samples belonging to the same data instance are consecutive.
      *         </li>
      *     <li>If
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
      *         is
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#TOPIC}
+     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#TOPIC}
      *         and
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
      *         is set to false, then samples belonging to the same data
      *         instance are consecutive.</li>
      *     <li>If
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
      *         is
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#TOPIC}
+     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#TOPIC}
      *         and
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
      *         is set to true, then samples belonging to the same instance
      *         may or may not be consecutive. This is because to preserve
      *         order it may be necessary to mix samples from different
      *         instances.</li>
      *     <li>If
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
      *         is
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
+     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP}
      *         and
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
      *         is set to false, then samples belonging to the same data
      *         instance are consecutive.</li>
      *     <li>If
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
+     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
      *         is
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
+     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP}
      *         and
-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
+     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
      *         is set to true, then the returned collection contains at most
      *         one sample. The difference in this case is due to the fact
      *         that it is required that the application is able to read
@@ -387,20 +387,20 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * 
      * In any case, the relative order between the samples of one instance is
      * consistent with the
-     * {@link org.omg.dds.core.policy.DestinationOrderQosPolicy}:
+     * {@link org.omg.dds.core.policy.DestinationOrder}:
      * 
      * <ul>
      *     <li>If
-     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy#getKind()}
+     *         {@link org.omg.dds.core.policy.DestinationOrder#getKind()}
      *         is
-     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy.Kind#BY_RECEPTION_TIMESTAMP},
+     *         {@link org.omg.dds.core.policy.DestinationOrder.Kind#BY_RECEPTION_TIMESTAMP},
      *         samples belonging to the same instances will appear in the
      *         relative order in which they were received (FIFO, earlier
      *         samples ahead of the later samples).</li>
      *     <li>If
-     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy#getKind()}
+     *         {@link org.omg.dds.core.policy.DestinationOrder#getKind()}
      *         is
-     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy.Kind#BY_SOURCE_TIMESTAMP},
+     *         {@link org.omg.dds.core.policy.DestinationOrder.Kind#BY_SOURCE_TIMESTAMP},
      *         samples belonging to the same instances will appear in the
      *         relative order implied by the result of
      *         {@link Sample#getSourceTimestamp()} (FIFO, smaller values of
@@ -423,7 +423,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * that instance in the collection, that is, the one with
      * {@link Sample#getSampleRank()} == 0, does not contain valid data.
      * Samples that contain no data do not count towards the limits imposed
-     * by the {@link org.omg.dds.core.policy.ResourceLimitsQosPolicy}.
+     * by the {@link org.omg.dds.core.policy.ResourceLimits}.
      * 
      * The act of reading a sample sets its sample state to
      * {@link SampleState#READ}. If the sample belongs to the most recent
@@ -510,7 +510,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
     /**
      * This operation accesses a collection of samples from this DataReader.
      * The number of samples returned is controlled by the
-     * {@link org.omg.dds.core.policy.PresentationQosPolicy} and other
+     * {@link org.omg.dds.core.policy.Presentation} and other
      * factors using the same logic as for {@link #read(Query)}.
      * 
      * The act of taking a sample removes it from the DataReader so it cannot

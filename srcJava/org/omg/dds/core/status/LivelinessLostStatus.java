@@ -18,14 +18,14 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.policy.LivelinessQosPolicy;
+import org.omg.dds.core.policy.Liveliness;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 
 
 /**
  * The liveliness that the {@link DataWriter} has committed through its
- * {@link LivelinessQosPolicy} was not respected; thus {@link DataReader}
+ * {@link Liveliness} was not respected; thus {@link DataReader}
  * entities will consider the DataWriter as no longer "active."
  *
  * @see LivelinessLostEvent

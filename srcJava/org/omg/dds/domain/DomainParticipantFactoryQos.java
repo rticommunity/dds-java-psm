@@ -19,7 +19,7 @@
 package org.omg.dds.domain;
 
 import org.omg.dds.core.EntityQos;
-import org.omg.dds.core.policy.EntityFactoryQosPolicy;
+import org.omg.dds.core.policy.EntityFactory;
 import org.omg.dds.core.policy.QosPolicy;
 
 
@@ -29,7 +29,7 @@ extends EntityQos<QosPolicy.ForDomainParticipantFactory>
     /**
      * @return the entityFactory
      */
-    public EntityFactoryQosPolicy getEntityFactory();
+    public EntityFactory getEntityFactory();
 
 
     // --- Modification: -----------------------------------------------------

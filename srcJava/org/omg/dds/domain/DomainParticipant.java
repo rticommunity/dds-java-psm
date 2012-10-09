@@ -33,7 +33,7 @@ import org.omg.dds.core.OutOfResourcesException;
 import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.Time;
-import org.omg.dds.core.policy.UserDataQosPolicy;
+import org.omg.dds.core.policy.UserData;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
@@ -546,7 +546,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * remote participants offered by means of the "DCPSParticipant" built-in
      * Topic, to provide, for example, access control. Application data can
      * be associated with a DomainParticipant by means of the
-     * {@link UserDataQosPolicy}. This application data is propagated as a
+     * {@link UserData}. This application data is propagated as a
      * field in the built-in topic and can be used by an application to
      * implement its own access control policy.
      * 
@@ -641,13 +641,13 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
     /**
      * This operation manually asserts the liveliness of the
      * DomainParticipant. This is used in combination with the
-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy} to indicate to the
+     * {@link org.omg.dds.core.policy.Liveliness} to indicate to the
      * Service that the entity remains active.
      * 
      * This operation needs to only be used if the DomainParticipant contains
      * {@link DataWriter} entities with the
-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy#getKind()} set to
-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy.Kind#MANUAL_BY_PARTICIPANT}
+     * {@link org.omg.dds.core.policy.Liveliness#getKind()} set to
+     * {@link org.omg.dds.core.policy.Liveliness.Kind#MANUAL_BY_PARTICIPANT}
      * and it only
      * affects the liveliness of those DataWriter entities. Otherwise, it has
      * no effect.
