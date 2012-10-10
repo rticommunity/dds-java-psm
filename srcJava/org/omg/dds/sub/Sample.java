@@ -415,7 +415,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
     // -----------------------------------------------------------------------
 
     public static interface Iterator<IT_DATA>
-    extends ListIterator<Sample<IT_DATA>> {
+    extends java.io.Closeable, ListIterator<Sample<IT_DATA>> {
         /**
          * This operation indicates to that the application is done accessing
          * the list of Samples obtained by some earlier invocation of
@@ -436,13 +436,13 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
          * calls "loaned" buffers to the application. The situations in which
          * this occurs are described in the documentation for
          * {@link DataReader#read()} and {@link DataReader#take()}. However,
-         * calling returnLoan on a collection that does not have a loan is
+         * calling close on a collection that does not have a loan is
          * safe and has no side effects.
          * 
          * @see DataReader#read()
          * @see DataReader#take()
          */
-        public void returnLoan();
+        public void close() throws java.io.IOException;
 
         // --- From ListIterator: --------------------------------------------
         /**
