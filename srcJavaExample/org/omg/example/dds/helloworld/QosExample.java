@@ -19,7 +19,7 @@
 package org.omg.example.dds.helloworld;
 
 import org.omg.dds.core.ServiceEnvironment;
-import org.omg.dds.core.policy.EntityFactoryQosPolicy;
+import org.omg.dds.core.policy.EntityFactory;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.domain.DomainParticipantQos;
@@ -35,7 +35,7 @@ public final class QosExample {
 
         // Get unmodifiable QoS for inspection:
         DomainParticipantQos dpq = dp.getQos();
-        EntityFactoryQosPolicy pol = dpq.getEntityFactory();
+        EntityFactory pol = dpq.getEntityFactory();
         System.out.println(pol);
 
         // Set QoS:

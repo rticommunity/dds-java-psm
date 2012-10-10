@@ -1,0 +1,635 @@
+Index: srcJava/org/omg/dds/pub/PublisherQos.java
+===================================================================
+--- srcJava/org/omg/dds/pub/PublisherQos.java	(revision 184)
++++ srcJava/org/omg/dds/pub/PublisherQos.java	(revision 185)
+@@ -26,7 +26,8 @@
+ import org.omg.dds.core.policy.QosPolicy;
+ 
+ 
+-public interface PublisherQos extends EntityQos
++public interface PublisherQos
++extends EntityQos<QosPolicy.ForPublisher>
+ {
+     /**
+      * @return the presentation
+@@ -51,5 +52,5 @@
+ 
+     // --- Modification: -----------------------------------------------------
+ 
+-    public PublisherQos withPolicy(QosPolicy policy);
++    public PublisherQos withPolicy(QosPolicy.ForPublisher policy);
+ }
+Index: srcJava/org/omg/dds/pub/DataWriterQos.java
+===================================================================
+--- srcJava/org/omg/dds/pub/DataWriterQos.java	(revision 184)
++++ srcJava/org/omg/dds/pub/DataWriterQos.java	(revision 185)
+@@ -39,7 +39,8 @@
+ import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
+ 
+ 
+-public interface DataWriterQos extends EntityQos
++public interface DataWriterQos
++extends EntityQos<QosPolicy.ForDataWriter>
+ {
+     /**
+      * @return the durability
+@@ -123,5 +124,5 @@
+ 
+     // --- Modification: -----------------------------------------------------
+ 
+-    public DataWriterQos withPolicy(QosPolicy policy);
++    public DataWriterQos withPolicy(QosPolicy.ForDataWriter policy);
+ }
+Index: srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java
+===================================================================
+--- srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java	(revision 184)
++++ srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java	(revision 185)
+@@ -23,7 +23,8 @@
+ import org.omg.dds.core.policy.QosPolicy;
+ 
+ 
+-public interface DomainParticipantFactoryQos extends EntityQos
++public interface DomainParticipantFactoryQos
++extends EntityQos<QosPolicy.ForDomainParticipantFactory>
+ {
+     /**
+      * @return the entityFactory
+@@ -33,5 +34,6 @@
+ 
+     // --- Modification: -----------------------------------------------------
+ 
+-    public DomainParticipantFactoryQos withPolicy(QosPolicy policy);
++    public DomainParticipantFactoryQos withPolicy(
++            QosPolicy.ForDataWriter policy);
+ }
+Index: srcJava/org/omg/dds/domain/DomainParticipantQos.java
+===================================================================
+--- srcJava/org/omg/dds/domain/DomainParticipantQos.java	(revision 184)
++++ srcJava/org/omg/dds/domain/DomainParticipantQos.java	(revision 185)
+@@ -24,7 +24,8 @@
+ import org.omg.dds.core.policy.UserDataQosPolicy;
+ 
+ 
+-public interface DomainParticipantQos extends EntityQos
++public interface DomainParticipantQos
++extends EntityQos<QosPolicy.ForDomainParticipant>
+ {
+     /**
+      * @return the userData
+@@ -39,5 +40,6 @@
+ 
+     // --- Modification: -----------------------------------------------------
+ 
+-    public DomainParticipantQos withPolicy(QosPolicy policy);
++    public DomainParticipantQos withPolicy(
++            QosPolicy.ForDomainParticipant policy);
+ }
+Index: srcJava/org/omg/dds/core/EntityQos.java
+===================================================================
+--- srcJava/org/omg/dds/core/EntityQos.java	(revision 184)
++++ srcJava/org/omg/dds/core/EntityQos.java	(revision 185)
+@@ -51,8 +51,8 @@
+  * Objects of this type are immutable.
+  */
+ @Extensibility(Extensibility.Kind.MUTABLE_EXTENSIBILITY)
+-public interface EntityQos
+-extends Map<Class<? extends QosPolicy>, QosPolicy>, Serializable, DDSObject
++public interface EntityQos<P extends QosPolicy>
++extends Map<Class<? extends P>, P>, Serializable, DDSObject
+ {
+     /**
+      * @return  a reference to the corresponding policy in this
+@@ -60,7 +60,7 @@
+      *
+      * @see Map#get(Object)
+      */
+-    public <POLICY extends QosPolicy> POLICY get(Class<POLICY> id);
++    public <POLICY extends P> POLICY get(Class<POLICY> id);
+ 
+ 
+     // --- Modification: -----------------------------------------------------
+@@ -72,6 +72,8 @@
+      * 
+      * @throws  IllegalArgumentException        if the given policy is not
+      *          applicable to the concrete type of this EntityQos.
++     *
++     * @see     #withPolicies(QosPolicy...)
+      */
+-    public EntityQos withPolicy(QosPolicy policy);
++    public EntityQos<P> withPolicy(P policy);
+ }
+Index: srcJava/org/omg/dds/core/DomainEntity.java
+===================================================================
+--- srcJava/org/omg/dds/core/DomainEntity.java	(revision 184)
++++ srcJava/org/omg/dds/core/DomainEntity.java	(revision 185)
+@@ -33,7 +33,7 @@
+  * @param <QOS>         The QoS interface appropriate for this entity.
+  */
+ public interface DomainEntity<LISTENER extends EventListener,
+-                              QOS extends EntityQos>
++                              QOS extends EntityQos<?>>
+ extends Entity<LISTENER, QOS>
+ {
+     /**
+Index: srcJava/org/omg/dds/core/Entity.java
+===================================================================
+--- srcJava/org/omg/dds/core/Entity.java	(revision 184)
++++ srcJava/org/omg/dds/core/Entity.java	(revision 185)
+@@ -43,7 +43,8 @@
+  * @param <LISTENER>    The listener interface appropriate for this entity.
+  * @param <QOS>         The QoS interface appropriate for this entity.
+  */
+-public interface Entity<LISTENER extends EventListener, QOS extends EntityQos>
++public interface Entity<LISTENER extends EventListener,
++                        QOS extends EntityQos<?>>
+ extends DDSObject
+ {
+     /**
+Index: srcJava/org/omg/dds/core/policy/DataRepresentationQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DataRepresentationQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/DataRepresentationQosPolicy.java	(revision 185)
+@@ -22,7 +22,10 @@
+ 
+ 
+ public interface DataRepresentationQosPolicy
+-extends QosPolicy, RequestedOffered<DataRepresentationQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<DataRepresentationQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Properties
+Index: srcJava/org/omg/dds/core/policy/OwnershipStrengthQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/OwnershipStrengthQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/OwnershipStrengthQosPolicy.java	(revision 185)
+@@ -38,7 +38,7 @@
+  * 
+  * @see OwnershipQosPolicy
+  */
+-public interface OwnershipStrengthQosPolicy extends QosPolicy
++public interface OwnershipStrengthQosPolicy extends QosPolicy.ForDataWriter
+ {
+     /**
+      * @return the value
+Index: srcJava/org/omg/dds/core/policy/TransportPriorityQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TransportPriorityQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/TransportPriorityQosPolicy.java	(revision 185)
+@@ -49,7 +49,8 @@
+  * transport. This mapping would then be used by the infrastructure when
+  * propagating the data written by the DataWriter.
+  */
+-public interface TransportPriorityQosPolicy extends QosPolicy
++public interface TransportPriorityQosPolicy
++extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
+ {
+     /**
+      * @return the value
+Index: srcJava/org/omg/dds/core/policy/HistoryQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/HistoryQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/HistoryQosPolicy.java	(revision 185)
+@@ -76,7 +76,8 @@
+  * @see ReliabilityQosPolicy
+  * @see ResourceLimitsQosPolicy
+  */
+-public interface HistoryQosPolicy extends QosPolicy
++public interface HistoryQosPolicy
++extends QosPolicy.ForTopic, QosPolicy.ForDataReader, QosPolicy.ForDataWriter
+ {
+     // -----------------------------------------------------------------------
+     // Methods
+Index: srcJava/org/omg/dds/core/policy/LifespanQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/LifespanQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/LifespanQosPolicy.java	(revision 185)
+@@ -56,7 +56,8 @@
+  * instead of the source time stamp in its computation of the "expiration
+  * time."
+  */
+-public interface LifespanQosPolicy extends QosPolicy
++public interface LifespanQosPolicy
++extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
+ {
+     public Duration getDuration();
+ 
+Index: srcJava/org/omg/dds/core/policy/TimeBasedFilterQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TimeBasedFilterQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/TimeBasedFilterQosPolicy.java	(revision 185)
+@@ -78,7 +78,7 @@
+  * @see HistoryQosPolicy
+  * @see ReliabilityQosPolicy
+  */
+-public interface TimeBasedFilterQosPolicy extends QosPolicy
++public interface TimeBasedFilterQosPolicy extends QosPolicy.ForDataReader
+ {
+     public Duration getMinimumSeparation();
+ 
+Index: srcJava/org/omg/dds/core/policy/EntityFactoryQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/EntityFactoryQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/EntityFactoryQosPolicy.java	(revision 185)
+@@ -63,7 +63,11 @@
+  * default, it is not necessary to explicitly call enable on newly created
+  * entities.
+  */
+-public interface EntityFactoryQosPolicy extends QosPolicy
++public interface EntityFactoryQosPolicy
++extends QosPolicy.ForDomainParticipantFactory,
++        QosPolicy.ForDomainParticipant,
++        QosPolicy.ForPublisher,
++        QosPolicy.ForSubscriber
+ {
+     /**
+      * @return the autoEnableCreatedEntities
+Index: srcJava/org/omg/dds/core/policy/DeadlineQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DeadlineQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/DeadlineQosPolicy.java	(revision 185)
+@@ -70,7 +70,10 @@
+  * minimum_separation."
+  */
+ public interface DeadlineQosPolicy
+-extends QosPolicy, RequestedOffered<DeadlineQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<DeadlineQosPolicy>
+ {
+     public Duration getPeriod();
+ 
+Index: srcJava/org/omg/dds/core/policy/DurabilityQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DurabilityQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/DurabilityQosPolicy.java	(revision 185)
+@@ -125,7 +125,10 @@
+  * @see DurabilityServiceQosPolicy#getServiceCleanupDelay()
+  */
+ public interface DurabilityQosPolicy
+-extends QosPolicy, RequestedOffered<DurabilityQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<DurabilityQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Methods
+Index: srcJava/org/omg/dds/core/policy/TopicDataQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TopicDataQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/TopicDataQosPolicy.java	(revision 185)
+@@ -43,7 +43,7 @@
+  * {@link DomainParticipant#ignoreTopic(org.omg.dds.core.InstanceHandle)},
+  * these QoS can assist an application to extend the provided QoS.
+  */
+-public interface TopicDataQosPolicy extends QosPolicy
++public interface TopicDataQosPolicy extends QosPolicy.ForTopic
+ {
+     /**
+      * Get a copy of the data.
+Index: srcJava/org/omg/dds/core/policy/UserDataQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/UserDataQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/UserDataQosPolicy.java	(revision 185)
+@@ -51,7 +51,10 @@
+  * policies. The use of this QoS is not limited to security, rather it offers
+  * a simple, yet flexible extensibility mechanism.
+  */
+-public interface UserDataQosPolicy extends QosPolicy
++public interface UserDataQosPolicy
++extends QosPolicy.ForDomainParticipant,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter
+ {
+     /**
+      * Get a copy of the data.
+Index: srcJava/org/omg/dds/core/policy/ReliabilityQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/ReliabilityQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/ReliabilityQosPolicy.java	(revision 185)
+@@ -69,7 +69,10 @@
+  * @see ResourceLimitsQosPolicy
+  */
+ public interface ReliabilityQosPolicy
+-extends QosPolicy, RequestedOffered<ReliabilityQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<ReliabilityQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Methods
+Index: srcJava/org/omg/dds/core/policy/ResourceLimitsQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/ResourceLimitsQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/ResourceLimitsQosPolicy.java	(revision 185)
+@@ -68,7 +68,8 @@
+  * @see HistoryQosPolicy
+  * @see ReliabilityQosPolicy
+  */
+-public interface ResourceLimitsQosPolicy extends QosPolicy
++public interface ResourceLimitsQosPolicy
++extends QosPolicy.ForTopic, QosPolicy.ForDataReader, QosPolicy.ForDataWriter
+ {
+     public static final int LENGTH_UNLIMITED = -1;
+ 
+Index: srcJava/org/omg/dds/core/policy/PartitionQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/PartitionQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/PartitionQosPolicy.java	(revision 185)
+@@ -88,7 +88,8 @@
+  * the other hand, the same data instance can be made available (published)
+  * or requested (subscribed) on one or more partitions.
+  */
+-public interface PartitionQosPolicy extends QosPolicy
++public interface PartitionQosPolicy
++extends QosPolicy.ForPublisher, QosPolicy.ForSubscriber
+ {
+     /**
+      * @return  an unmodifiable collection of partition names.
+Index: srcJava/org/omg/dds/core/policy/PresentationQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/PresentationQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/PresentationQosPolicy.java	(revision 185)
+@@ -76,7 +76,9 @@
+  * </ol>
+  */
+ public interface PresentationQosPolicy
+-extends QosPolicy, RequestedOffered<PresentationQosPolicy>
++extends QosPolicy.ForPublisher,
++        QosPolicy.ForSubscriber,
++        RequestedOffered<PresentationQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Methods
+Index: srcJava/org/omg/dds/core/policy/ReaderDataLifecycleQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/ReaderDataLifecycleQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/ReaderDataLifecycleQosPolicy.java	(revision 185)
+@@ -77,7 +77,7 @@
+  * @see HistoryQosPolicy
+  * @see ResourceLimitsQosPolicy
+  */
+-public interface ReaderDataLifecycleQosPolicy extends QosPolicy
++public interface ReaderDataLifecycleQosPolicy extends QosPolicy.ForDataReader
+ {
+     public Duration getAutoPurgeNoWriterSamplesDelay();
+ 
+Index: srcJava/org/omg/dds/core/policy/LivelinessQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/LivelinessQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/LivelinessQosPolicy.java	(revision 185)
+@@ -105,7 +105,10 @@
+  * are notified within a leaseDuration from the time the LIVELINESS changed.
+  */
+ public interface LivelinessQosPolicy
+-extends QosPolicy, RequestedOffered<LivelinessQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<LivelinessQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Methods
+Index: srcJava/org/omg/dds/core/policy/DestinationOrderQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DestinationOrderQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/DestinationOrderQosPolicy.java	(revision 185)
+@@ -62,7 +62,10 @@
+  * @see OwnershipQosPolicy
+  */
+ public interface DestinationOrderQosPolicy
+-extends QosPolicy, RequestedOffered<DestinationOrderQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<DestinationOrderQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Methods
+Index: srcJava/org/omg/dds/core/policy/OwnershipQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/OwnershipQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/OwnershipQosPolicy.java	(revision 185)
+@@ -37,7 +37,10 @@
+  * @see OwnershipStrengthQosPolicy
+  */
+ public interface OwnershipQosPolicy
+-extends QosPolicy, RequestedOffered<OwnershipQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<OwnershipQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Methods
+Index: srcJava/org/omg/dds/core/policy/QosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/QosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/QosPolicy.java	(revision 185)
+@@ -121,5 +121,65 @@
+ @Nested
+ public interface QosPolicy extends Serializable, DDSObject
+ {
+-    // empty
++    /**
++     * A QosPolicy interface that implements this marker interface applies
++     * to {@link org.omg.dds.domain.DomainParticipantFactory} objects.
++     */
++    public static interface ForDomainParticipantFactory extends QosPolicy {
++        // empty
++    }
++
++
++    /**
++     * A QosPolicy interface that implements this marker interface applies
++     * to {@link org.omg.dds.domain.DomainParticipant} Entities.
++     */
++    public static interface ForDomainParticipant extends QosPolicy {
++        // empty
++    }
++
++
++    /**
++     * A QosPolicy interface that implements this marker interface applies
++     * to {@link org.omg.dds.pub.Publisher} Entities.
++     */
++    public static interface ForPublisher extends QosPolicy {
++        // empty
++    }
++
++
++    /**
++     * A QosPolicy interface that implements this marker interface applies
++     * to {@link org.omg.dds.sub.Subscriber} Entities.
++     */
++    public static interface ForSubscriber extends QosPolicy {
++        // empty
++    }
++
++
++    /**
++     * A QosPolicy interface that implements this marker interface applies
++     * to {@link org.omg.dds.topic.Topic} Entities.
++     */
++    public static interface ForTopic extends QosPolicy {
++        // empty
++    }
++
++
++    /**
++     * A QosPolicy interface that implements this marker interface applies
++     * to {@link org.omg.dds.pub.DataWriter} Entities.
++     */
++    public static interface ForDataWriter extends QosPolicy {
++        // empty
++    }
++
++
++    /**
++     * A QosPolicy interface that implements this marker interface applies
++     * to {@link org.omg.dds.sub.DataReader} Entities.
++     */
++    public static interface ForDataReader extends QosPolicy {
++        // empty
++    }
+ }
+Index: srcJava/org/omg/dds/core/policy/WriterDataLifecycleQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/WriterDataLifecycleQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/WriterDataLifecycleQosPolicy.java	(revision 185)
+@@ -71,7 +71,7 @@
+  * {@link Publisher#closeContainedEntities()} or
+  * {@link DomainParticipant#closeContainedEntities()}.
+  */
+-public interface WriterDataLifecycleQosPolicy extends QosPolicy
++public interface WriterDataLifecycleQosPolicy extends QosPolicy.ForDataWriter
+ {
+     /**
+      * @return the autDisposeUnregisteredInstances
+Index: srcJava/org/omg/dds/core/policy/GroupDataQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/GroupDataQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/GroupDataQosPolicy.java	(revision 185)
+@@ -47,7 +47,8 @@
+  * matching policies similar to those of the {@link PartitionQosPolicy}
+  * except the decision can be made based on an application-defined policy.
+  */
+-public interface GroupDataQosPolicy extends QosPolicy
++public interface GroupDataQosPolicy
++extends QosPolicy.ForPublisher, QosPolicy.ForSubscriber
+ {
+     /**
+      * Get a copy of the data.
+Index: srcJava/org/omg/dds/core/policy/DurabilityServiceQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DurabilityServiceQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/DurabilityServiceQosPolicy.java	(revision 185)
+@@ -47,7 +47,8 @@
+  * 
+  * @see DurabilityQosPolicy
+  */
+-public interface DurabilityServiceQosPolicy extends QosPolicy
++public interface DurabilityServiceQosPolicy
++extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
+ {
+     public Duration getServiceCleanupDelay();
+ 
+Index: srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcementQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcementQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcementQosPolicy.java	(revision 185)
+@@ -22,7 +22,10 @@
+ 
+ 
+ public interface TypeConsistencyEnforcementQosPolicy
+-extends QosPolicy, RequestedOffered<TypeConsistencyEnforcementQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<TypeConsistencyEnforcementQosPolicy>
+ {
+     // -----------------------------------------------------------------------
+     // Properties
+Index: srcJava/org/omg/dds/core/policy/LatencyBudgetQosPolicy.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/LatencyBudgetQosPolicy.java	(revision 184)
++++ srcJava/org/omg/dds/core/policy/LatencyBudgetQosPolicy.java	(revision 185)
+@@ -53,7 +53,10 @@
+  * to true.
+  */
+ public interface LatencyBudgetQosPolicy
+-extends QosPolicy, RequestedOffered<LatencyBudgetQosPolicy>
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<LatencyBudgetQosPolicy>
+ {
+     public Duration getDuration();
+ 
+Index: srcJava/org/omg/dds/sub/DataReaderQos.java
+===================================================================
+--- srcJava/org/omg/dds/sub/DataReaderQos.java	(revision 184)
++++ srcJava/org/omg/dds/sub/DataReaderQos.java	(revision 185)
+@@ -35,7 +35,8 @@
+ import org.omg.dds.core.policy.UserDataQosPolicy;
+ 
+ 
+-public interface DataReaderQos extends EntityQos
++public interface DataReaderQos
++extends EntityQos<QosPolicy.ForDataReader>
+ {
+     /**
+      * @return the durability
+@@ -99,5 +100,5 @@
+ 
+     // --- Modification: -----------------------------------------------------
+ 
+-    public DataReaderQos withPolicy(QosPolicy policy);
++    public DataReaderQos withPolicy(QosPolicy.ForDataReader policy);
+ }
+Index: srcJava/org/omg/dds/sub/SubscriberQos.java
+===================================================================
+--- srcJava/org/omg/dds/sub/SubscriberQos.java	(revision 184)
++++ srcJava/org/omg/dds/sub/SubscriberQos.java	(revision 185)
+@@ -26,7 +26,8 @@
+ import org.omg.dds.core.policy.QosPolicy;
+ 
+ 
+-public interface SubscriberQos extends EntityQos
++public interface SubscriberQos
++extends EntityQos<QosPolicy.ForSubscriber>
+ {
+     /**
+      * @return the presentation
+@@ -51,5 +52,5 @@
+ 
+     // --- Modification: -----------------------------------------------------
+ 
+-    public SubscriberQos withPolicy(QosPolicy policy);
++    public SubscriberQos withPolicy(QosPolicy.ForSubscriber policy);
+ }
+Index: srcJava/org/omg/dds/topic/TopicQos.java
+===================================================================
+--- srcJava/org/omg/dds/topic/TopicQos.java	(revision 184)
++++ srcJava/org/omg/dds/topic/TopicQos.java	(revision 185)
+@@ -37,7 +37,7 @@
+ import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
+ 
+ 
+-public interface TopicQos extends EntityQos
++public interface TopicQos extends EntityQos<QosPolicy.ForTopic>
+ {
+     /**
+      * @return the topicData
+@@ -111,5 +111,5 @@
+ 
+     // --- Modification: -----------------------------------------------------
+ 
+-    public TopicQos withPolicy(QosPolicy policy);
++    public TopicQos withPolicy(QosPolicy.ForTopic policy);
+ }

@@ -1,0 +1,4647 @@
+Index: srcJava/org/omg/dds/pub/PublisherQos.java
+===================================================================
+--- srcJava/org/omg/dds/pub/PublisherQos.java	(revision 190)
++++ srcJava/org/omg/dds/pub/PublisherQos.java	(working copy)
+@@ -19,10 +19,10 @@
+ package org.omg.dds.pub;
+ 
+ import org.omg.dds.core.EntityQos;
+-import org.omg.dds.core.policy.EntityFactoryQosPolicy;
+-import org.omg.dds.core.policy.GroupDataQosPolicy;
+-import org.omg.dds.core.policy.PartitionQosPolicy;
+-import org.omg.dds.core.policy.PresentationQosPolicy;
++import org.omg.dds.core.policy.EntityFactory;
++import org.omg.dds.core.policy.GroupData;
++import org.omg.dds.core.policy.Partition;
++import org.omg.dds.core.policy.Presentation;
+ import org.omg.dds.core.policy.QosPolicy;
+ 
+ 
+@@ -32,22 +32,22 @@
+     /**
+      * @return the presentation
+      */
+-    public PresentationQosPolicy getPresentation();
++    public Presentation getPresentation();
+ 
+     /**
+      * @return the partition
+      */
+-    public PartitionQosPolicy getPartition();
++    public Partition getPartition();
+ 
+     /**
+      * @return the groupData
+      */
+-    public GroupDataQosPolicy getGroupData();
++    public GroupData getGroupData();
+ 
+     /**
+      * @return the entityFactory
+      */
+-    public EntityFactoryQosPolicy getEntityFactory();
++    public EntityFactory getEntityFactory();
+ 
+ 
+     // --- Modification: -----------------------------------------------------
+Index: srcJava/org/omg/dds/pub/DataWriter.java
+===================================================================
+--- srcJava/org/omg/dds/pub/DataWriter.java	(revision 190)
++++ srcJava/org/omg/dds/pub/DataWriter.java	(working copy)
+@@ -31,9 +31,9 @@
+ import org.omg.dds.core.PreconditionNotMetException;
+ import org.omg.dds.core.StatusCondition;
+ import org.omg.dds.core.Time;
+-import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+-import org.omg.dds.core.policy.OwnershipQosPolicy;
+-import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
++import org.omg.dds.core.policy.DestinationOrder;
++import org.omg.dds.core.policy.Ownership;
++import org.omg.dds.core.policy.ResourceLimits;
+ import org.omg.dds.core.status.LivelinessLostStatus;
+ import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
+ import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
+@@ -86,15 +86,15 @@
+ 
+     /**
+      * This operation is intended to be used only if the DataWriter has
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} set to
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE}.
++     * {@link org.omg.dds.core.policy.Reliability#getKind()} set to
++     * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE}.
+      * Otherwise the operation will return immediately.
+      * 
+      * The operation blocks the calling thread until either all data written
+      * by the DataWriter is acknowledged by all matched {@link DataReader}
+      * entities that have
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} set to
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE},
++     * {@link org.omg.dds.core.policy.Reliability#getKind()} set to
++     * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE},
+      * or else the duration
+      * specified by the maxWait parameter elapses, whichever happens first.
+      * 
+@@ -109,15 +109,15 @@
+ 
+     /**
+      * This operation is intended to be used only if the DataWriter has
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} set to
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE}.
++     * {@link org.omg.dds.core.policy.Reliability#getKind()} set to
++     * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE}.
+      * Otherwise the operation will return immediately.
+      * 
+      * The operation blocks the calling thread until either all data written
+      * by the DataWriter is acknowledged by all matched {@link DataReader}
+      * entities that have
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} set to
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE},
++     * {@link org.omg.dds.core.policy.Reliability#getKind()} set to
++     * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE},
+      * or else the duration
+      * specified by the maxWait parameter elapses, whichever happens first.
+      * 
+@@ -165,14 +165,14 @@
+     /**
+      * This operation manually asserts the liveliness of the DataWriter. This
+      * is used in combination with the
+-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy} to
++     * {@link org.omg.dds.core.policy.Liveliness} to
+      * indicate to the Service that the entity remains active.
+      * 
+      * This operation need only be used if
+-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy#getKind()} is either
+-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy.Kind#MANUAL_BY_PARTICIPANT}
++     * {@link org.omg.dds.core.policy.Liveliness#getKind()} is either
++     * {@link org.omg.dds.core.policy.Liveliness.Kind#MANUAL_BY_PARTICIPANT}
+      * or
+-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy.Kind#MANUAL_BY_TOPIC}.
++     * {@link org.omg.dds.core.policy.Liveliness.Kind#MANUAL_BY_TOPIC}.
+      * Otherwise, it has no effect.
+      * 
+      * <b>Note</b> - Writing data via {@link #write(Object)} asserts
+@@ -280,7 +280,7 @@
+      * where the application desires to specify the value for the source
+      * time stamp. The source time stamp potentially affects the relative
+      * order in which readers observe events from multiple writers. For
+-     * details see {@link DestinationOrderQosPolicy}.
++     * details see {@link DestinationOrder}.
+      * 
+      * This operation may block and exit with {@link TimeoutException} under
+      * the same circumstances described for the {@link #write(Object)}.
+@@ -304,7 +304,7 @@
+      * where the application desires to specify the value for the source
+      * time stamp. The source time stamp potentially affects the relative
+      * order in which readers observe events from multiple writers. For
+-     * details see {@link DestinationOrderQosPolicy}.
++     * details see {@link DestinationOrder}.
+      * 
+      * This operation may block and exit with {@link TimeoutException} under
+      * the same circumstances described for the {@link #write(Object)}.
+@@ -355,7 +355,7 @@
+      * instance.
+      * 
+      * This operation can affect the ownership of the data instance (see
+-     * {@link OwnershipQosPolicy}). If the DataWriter was the exclusive owner
++     * {@link Ownership}). If the DataWriter was the exclusive owner
+      * of the instance, then calling this method will relinquish that
+      * ownership.
+      * 
+@@ -411,7 +411,7 @@
+      * instance.
+      * 
+      * This operation can affect the ownership of the data instance (see
+-     * {@link OwnershipQosPolicy}). If the DataWriter was the exclusive owner
++     * {@link Ownership}). If the DataWriter was the exclusive owner
+      * of the instance, then calling this method will relinquish that
+      * ownership.
+      * 
+@@ -444,7 +444,7 @@
+      * instead in the cases where the application desires to specify the
+      * value for the source time stamp. The source time stamp potentially
+      * affects the relative order in which readers observe events from
+-     * multiple writers. For details see {@link DestinationOrderQosPolicy}.
++     * multiple writers. For details see {@link DestinationOrder}.
+      * 
+      * The constraints on the values of the handle parameter and the
+      * corresponding error behavior are the same specified for the
+@@ -469,7 +469,7 @@
+      * instead in the cases where the application desires to specify the
+      * value for the source time stamp. The source time stamp potentially
+      * affects the relative order in which readers observe events from
+-     * multiple writers. For details see {@link DestinationOrderQosPolicy}.
++     * multiple writers. For details see {@link DestinationOrder}.
+      * 
+      * The constraints on the values of the handle parameter and the
+      * corresponding error behavior are the same specified for the
+@@ -494,19 +494,19 @@
+      * operation is used, the Service will automatically supply the value of
+      * the source time stamp that is made available to {@link DataReader}
+      * objects by means of {@link Sample#getSourceTimestamp()}. See also
+-     * {@link DestinationOrderQosPolicy}.
++     * {@link DestinationOrder}.
+      * 
+      * As a side effect, this operation asserts liveliness on the DataWriter
+      * itself, the {@link Publisher} and the {@link DomainParticipant}.
+      * 
+-     * If {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} kind
++     * If {@link org.omg.dds.core.policy.Reliability#getKind()} kind
+      * is set to
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE},
++     * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE},
+      * the operation may block if
+      * the modification would cause data to be lost or else cause one of the
+-     * limits specified in {@link ResourceLimitsQosPolicy} to be exceeded.
++     * limits specified in {@link ResourceLimits} to be exceeded.
+      * Under these circumstances,
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getMaxBlockingTime()}
++     * {@link org.omg.dds.core.policy.Reliability#getMaxBlockingTime()}
+      * configures the
+      * maximum time the operation may block waiting for space to become
+      * available. If this duration elapses before the DataWriter is able to
+@@ -515,21 +515,21 @@
+      * 
+      * Specifically, the DataWriter write operation may block in the
+      * following situations (note that the list may not be exhaustive), even
+-     * if {@link org.omg.dds.core.policy.HistoryQosPolicy#getKind()} is
+-     * {@link org.omg.dds.core.policy.HistoryQosPolicy.Kind#KEEP_LAST}.
++     * if {@link org.omg.dds.core.policy.History#getKind()} is
++     * {@link org.omg.dds.core.policy.History.Kind#KEEP_LAST}.
+      * 
+      * <ul>
+-     *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
+-     *         {@link ResourceLimitsQosPolicy#getMaxInstances()} *
+-     *         {@link org.omg.dds.core.policy.HistoryQosPolicy#getDepth()}),
++     *     <li>If ({@link ResourceLimits#getMaxSamples()} &lt;
++     *         {@link ResourceLimits#getMaxInstances()} *
++     *         {@link org.omg.dds.core.policy.History#getDepth()}),
+      *         then in the situation
+      *         where the max samples resource limit is exhausted the Service
+      *         is allowed to discard samples of some other instance as long
+      *         as at least one sample remains for such an instance. If it is
+      *         still not possible to make space available to store the
+      *         modification, the writer is allowed to block.</li>
+-     *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
+-     *         {@link ResourceLimitsQosPolicy#getMaxInstances()}), then the
++     *     <li>If ({@link ResourceLimits#getMaxSamples()} &lt;
++     *         {@link ResourceLimits#getMaxInstances()}), then the
+      *         DataWriter may block regardless of the HISTORY depth.</li>
+      * </ul>
+      * 
+@@ -572,7 +572,7 @@
+      * operation is used, the Service will automatically supply the value of
+      * the source time stamp that is made available to {@link DataReader}
+      * objects by means of {@link Sample#getSourceTimestamp()}. See also
+-     * {@link DestinationOrderQosPolicy}.
++     * {@link DestinationOrder}.
+      * 
+      * As a side effect, this operation asserts liveliness on the DataWriter
+      * itself, the {@link Publisher} and the {@link DomainParticipant}.
+@@ -583,14 +583,14 @@
+      * correspond to the value returned by {@link #registerInstance(Object)}
+      * when the instance (identified by its key) was registered.
+      * 
+-     * If {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getKind()} kind
++     * If {@link org.omg.dds.core.policy.Reliability#getKind()} kind
+      * is set to
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy.Kind#RELIABLE},
++     * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE},
+      * the operation may block if
+      * the modification would cause data to be lost or else cause one of the
+-     * limits specified in {@link ResourceLimitsQosPolicy} to be exceeded.
++     * limits specified in {@link ResourceLimits} to be exceeded.
+      * Under these circumstances,
+-     * {@link org.omg.dds.core.policy.ReliabilityQosPolicy#getMaxBlockingTime()}
++     * {@link org.omg.dds.core.policy.Reliability#getMaxBlockingTime()}
+      * configures the
+      * maximum time the operation may block waiting for space to become
+      * available. If this duration elapses before the DataWriter is able to
+@@ -599,21 +599,21 @@
+      * 
+      * Specifically, the DataWriter write operation may block in the
+      * following situations (note that the list may not be exhaustive), even
+-     * if {@link org.omg.dds.core.policy.HistoryQosPolicy#getKind()} is
+-     * {@link org.omg.dds.core.policy.HistoryQosPolicy.Kind#KEEP_LAST}.
++     * if {@link org.omg.dds.core.policy.History#getKind()} is
++     * {@link org.omg.dds.core.policy.History.Kind#KEEP_LAST}.
+      * 
+      * <ul>
+-     *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
+-     *         {@link ResourceLimitsQosPolicy#getMaxInstances()} *
+-     *         {@link org.omg.dds.core.policy.HistoryQosPolicy#getDepth()}),
++     *     <li>If ({@link ResourceLimits#getMaxSamples()} &lt;
++     *         {@link ResourceLimits#getMaxInstances()} *
++     *         {@link org.omg.dds.core.policy.History#getDepth()}),
+      *         then in the situation
+      *         where the max samples resource limit is exhausted the Service
+      *         is allowed to discard samples of some other instance as long
+      *         as at least one sample remains for such an instance. If it is
+      *         still not possible to make space available to store the
+      *         modification, the writer is allowed to block.</li>
+-     *     <li>If ({@link ResourceLimitsQosPolicy#getMaxSamples()} &lt;
+-     *         {@link ResourceLimitsQosPolicy#getMaxInstances()}), then the
++     *     <li>If ({@link ResourceLimits#getMaxSamples()} &lt;
++     *         {@link ResourceLimits#getMaxInstances()}), then the
+      *         DataWriter may block regardless of the HISTORY depth.</li>
+      * </ul>
+      * 
+@@ -661,7 +661,7 @@
+      * the value for the source time stamp that is made available to
+      * {@link DataReader} objects by means of
+      * {@link Sample#getSourceTimestamp()}. See also
+-     * {@link DestinationOrderQosPolicy}.
++     * {@link DestinationOrder}.
+      * 
+      * The constraints on the values of the handle parameter and the
+      * corresponding error behavior are the same specified for
+@@ -695,7 +695,7 @@
+      * the value for the source time stamp that is made available to
+      * {@link DataReader} objects by means of
+      * {@link Sample#getSourceTimestamp()}. See also
+-     * {@link DestinationOrderQosPolicy}.
++     * {@link DestinationOrder}.
+      * 
+      * The constraints on the values of the handle parameter and the
+      * corresponding error behavior are the same specified for
+Index: srcJava/org/omg/dds/pub/DataWriterQos.java
+===================================================================
+--- srcJava/org/omg/dds/pub/DataWriterQos.java	(revision 190)
++++ srcJava/org/omg/dds/pub/DataWriterQos.java	(working copy)
+@@ -19,24 +19,24 @@
+ package org.omg.dds.pub;
+ 
+ import org.omg.dds.core.EntityQos;
+-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
+-import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+-import org.omg.dds.core.policy.DurabilityQosPolicy;
+-import org.omg.dds.core.policy.DurabilityServiceQosPolicy;
+-import org.omg.dds.core.policy.HistoryQosPolicy;
+-import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
+-import org.omg.dds.core.policy.LifespanQosPolicy;
+-import org.omg.dds.core.policy.LivelinessQosPolicy;
+-import org.omg.dds.core.policy.OwnershipQosPolicy;
+-import org.omg.dds.core.policy.OwnershipStrengthQosPolicy;
++import org.omg.dds.core.policy.DataRepresentation;
++import org.omg.dds.core.policy.Deadline;
++import org.omg.dds.core.policy.DestinationOrder;
++import org.omg.dds.core.policy.Durability;
++import org.omg.dds.core.policy.DurabilityService;
++import org.omg.dds.core.policy.History;
++import org.omg.dds.core.policy.LatencyBudget;
++import org.omg.dds.core.policy.Lifespan;
++import org.omg.dds.core.policy.Liveliness;
++import org.omg.dds.core.policy.Ownership;
++import org.omg.dds.core.policy.OwnershipStrength;
+ import org.omg.dds.core.policy.QosPolicy;
+-import org.omg.dds.core.policy.ReliabilityQosPolicy;
+-import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
+-import org.omg.dds.core.policy.TransportPriorityQosPolicy;
+-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
+-import org.omg.dds.core.policy.UserDataQosPolicy;
+-import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
++import org.omg.dds.core.policy.Reliability;
++import org.omg.dds.core.policy.ResourceLimits;
++import org.omg.dds.core.policy.TransportPriority;
++import org.omg.dds.core.policy.TypeConsistencyEnforcement;
++import org.omg.dds.core.policy.UserData;
++import org.omg.dds.core.policy.WriterDataLifecycle;
+ 
+ 
+ public interface DataWriterQos
+@@ -45,81 +45,81 @@
+     /**
+      * @return the durability
+      */
+-    public DurabilityQosPolicy getDurability();
++    public Durability getDurability();
+ 
+     /**
+      * @return the durabilityService
+      */
+-    public DurabilityServiceQosPolicy getDurabilityService();
++    public DurabilityService getDurabilityService();
+ 
+     /**
+      * @return the deadline
+      */
+-    public DeadlineQosPolicy getDeadline();
++    public Deadline getDeadline();
+ 
+     /**
+      * @return the latencyBudget
+      */
+-    public LatencyBudgetQosPolicy getLatencyBudget();
++    public LatencyBudget getLatencyBudget();
+ 
+     /**
+      * @return the liveliness
+      */
+-    public LivelinessQosPolicy getLiveliness();
++    public Liveliness getLiveliness();
+ 
+     /**
+      * @return the reliability
+      */
+-    public ReliabilityQosPolicy getReliability();
++    public Reliability getReliability();
+ 
+     /**
+      * @return the destinationOrder
+      */
+-    public DestinationOrderQosPolicy getDestinationOrder();
++    public DestinationOrder getDestinationOrder();
+ 
+     /**
+      * @return the history
+      */
+-    public HistoryQosPolicy getHistory();
++    public History getHistory();
+ 
+     /**
+      * @return the resourceLimits
+      */
+-    public ResourceLimitsQosPolicy getResourceLimits();
++    public ResourceLimits getResourceLimits();
+ 
+     /**
+      * @return the transportPriority
+      */
+-    public TransportPriorityQosPolicy getTransportPriority();
++    public TransportPriority getTransportPriority();
+ 
+     /**
+      * @return the lifespan
+      */
+-    public LifespanQosPolicy getLifespan();
++    public Lifespan getLifespan();
+ 
+     /**
+      * @return the userData
+      */
+-    public UserDataQosPolicy getUserData();
++    public UserData getUserData();
+ 
+     /**
+      * @return the ownership
+      */
+-    public OwnershipQosPolicy getOwnership();
++    public Ownership getOwnership();
+ 
+     /**
+      * @return the ownershipStrength
+      */
+-    public OwnershipStrengthQosPolicy getOwnershipStrength();
++    public OwnershipStrength getOwnershipStrength();
+ 
+     /**
+      * @return the writerDataLifecycle
+      */
+-    public WriterDataLifecycleQosPolicy getWriterDataLifecycle();
++    public WriterDataLifecycle getWriterDataLifecycle();
+ 
+-    public DataRepresentationQosPolicy getRepresentation();
++    public DataRepresentation getRepresentation();
+ 
+-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
++    public TypeConsistencyEnforcement getTypeConsistency();
+ 
+ 
+     // --- Modification: -----------------------------------------------------
+Index: srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java
+===================================================================
+--- srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java	(revision 190)
++++ srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java	(working copy)
+@@ -19,7 +19,7 @@
+ package org.omg.dds.domain;
+ 
+ import org.omg.dds.core.EntityQos;
+-import org.omg.dds.core.policy.EntityFactoryQosPolicy;
++import org.omg.dds.core.policy.EntityFactory;
+ import org.omg.dds.core.policy.QosPolicy;
+ 
+ 
+@@ -29,7 +29,7 @@
+     /**
+      * @return the entityFactory
+      */
+-    public EntityFactoryQosPolicy getEntityFactory();
++    public EntityFactory getEntityFactory();
+ 
+ 
+     // --- Modification: -----------------------------------------------------
+Index: srcJava/org/omg/dds/domain/DomainParticipant.java
+===================================================================
+--- srcJava/org/omg/dds/domain/DomainParticipant.java	(revision 190)
++++ srcJava/org/omg/dds/domain/DomainParticipant.java	(working copy)
+@@ -33,7 +33,7 @@
+ import org.omg.dds.core.PreconditionNotMetException;
+ import org.omg.dds.core.StatusCondition;
+ import org.omg.dds.core.Time;
+-import org.omg.dds.core.policy.UserDataQosPolicy;
++import org.omg.dds.core.policy.UserData;
+ import org.omg.dds.core.status.Status;
+ import org.omg.dds.pub.DataWriter;
+ import org.omg.dds.pub.Publisher;
+@@ -546,7 +546,7 @@
+      * remote participants offered by means of the "DCPSParticipant" built-in
+      * Topic, to provide, for example, access control. Application data can
+      * be associated with a DomainParticipant by means of the
+-     * {@link UserDataQosPolicy}. This application data is propagated as a
++     * {@link UserData}. This application data is propagated as a
+      * field in the built-in topic and can be used by an application to
+      * implement its own access control policy.
+      * 
+@@ -641,13 +641,13 @@
+     /**
+      * This operation manually asserts the liveliness of the
+      * DomainParticipant. This is used in combination with the
+-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy} to indicate to the
++     * {@link org.omg.dds.core.policy.Liveliness} to indicate to the
+      * Service that the entity remains active.
+      * 
+      * This operation needs to only be used if the DomainParticipant contains
+      * {@link DataWriter} entities with the
+-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy#getKind()} set to
+-     * {@link org.omg.dds.core.policy.LivelinessQosPolicy.Kind#MANUAL_BY_PARTICIPANT}
++     * {@link org.omg.dds.core.policy.Liveliness#getKind()} set to
++     * {@link org.omg.dds.core.policy.Liveliness.Kind#MANUAL_BY_PARTICIPANT}
+      * and it only
+      * affects the liveliness of those DataWriter entities. Otherwise, it has
+      * no effect.
+Index: srcJava/org/omg/dds/domain/DomainParticipantQos.java
+===================================================================
+--- srcJava/org/omg/dds/domain/DomainParticipantQos.java	(revision 190)
++++ srcJava/org/omg/dds/domain/DomainParticipantQos.java	(working copy)
+@@ -19,9 +19,9 @@
+ package org.omg.dds.domain;
+ 
+ import org.omg.dds.core.EntityQos;
+-import org.omg.dds.core.policy.EntityFactoryQosPolicy;
++import org.omg.dds.core.policy.EntityFactory;
+ import org.omg.dds.core.policy.QosPolicy;
+-import org.omg.dds.core.policy.UserDataQosPolicy;
++import org.omg.dds.core.policy.UserData;
+ 
+ 
+ public interface DomainParticipantQos
+@@ -30,12 +30,12 @@
+     /**
+      * @return the userData
+      */
+-    public UserDataQosPolicy getUserData();
++    public UserData getUserData();
+ 
+     /**
+      * @return the entityFactory
+      */
+-    public EntityFactoryQosPolicy getEntityFactory();
++    public EntityFactory getEntityFactory();
+ 
+ 
+     // --- Modification: -----------------------------------------------------
+Index: srcJava/org/omg/dds/core/status/RequestedDeadlineMissedStatus.java
+===================================================================
+--- srcJava/org/omg/dds/core/status/RequestedDeadlineMissedStatus.java	(revision 190)
++++ srcJava/org/omg/dds/core/status/RequestedDeadlineMissedStatus.java	(working copy)
+@@ -19,13 +19,13 @@
+ package org.omg.dds.core.status;
+ 
+ import org.omg.dds.core.InstanceHandle;
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
++import org.omg.dds.core.policy.Deadline;
+ import org.omg.dds.sub.DataReader;
+ 
+ 
+ /**
+  * The deadline that the {@link DataReader} was expecting through its
+- * {@link DeadlineQosPolicy} was not respected for a specific instance.
++ * {@link Deadline} was not respected for a specific instance.
+  *
+  * @see RequestedDeadlineMissedEvent
+  * @see OfferedDeadlineMissedStatus
+Index: srcJava/org/omg/dds/core/status/OfferedDeadlineMissedEvent.java
+===================================================================
+--- srcJava/org/omg/dds/core/status/OfferedDeadlineMissedEvent.java	(revision 190)
++++ srcJava/org/omg/dds/core/status/OfferedDeadlineMissedEvent.java	(working copy)
+@@ -18,13 +18,13 @@
+ 
+ package org.omg.dds.core.status;
+ 
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
++import org.omg.dds.core.policy.Deadline;
+ import org.omg.dds.pub.DataWriter;
+ 
+ 
+ /**
+  * The deadline that the {@link DataWriter} has committed through its
+- * {@link DeadlineQosPolicy} was not respected for a specific instance.
++ * {@link Deadline} was not respected for a specific instance.
+  *
+  * @param <TYPE>    The data type of the source {@link DataWriter}.
+  * 
+Index: srcJava/org/omg/dds/core/status/OfferedDeadlineMissedStatus.java
+===================================================================
+--- srcJava/org/omg/dds/core/status/OfferedDeadlineMissedStatus.java	(revision 190)
++++ srcJava/org/omg/dds/core/status/OfferedDeadlineMissedStatus.java	(working copy)
+@@ -19,13 +19,13 @@
+ package org.omg.dds.core.status;
+ 
+ import org.omg.dds.core.InstanceHandle;
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
++import org.omg.dds.core.policy.Deadline;
+ import org.omg.dds.pub.DataWriter;
+ 
+ 
+ /**
+  * The deadline that the {@link DataWriter} has committed through its
+- * {@link DeadlineQosPolicy} was not respected for a specific instance.
++ * {@link Deadline} was not respected for a specific instance.
+  *
+  * @see OfferedDeadlineMissedEvent
+  * @see RequestedDeadlineMissedStatus
+Index: srcJava/org/omg/dds/core/status/LivelinessLostEvent.java
+===================================================================
+--- srcJava/org/omg/dds/core/status/LivelinessLostEvent.java	(revision 190)
++++ srcJava/org/omg/dds/core/status/LivelinessLostEvent.java	(working copy)
+@@ -18,14 +18,14 @@
+ 
+ package org.omg.dds.core.status;
+ 
+-import org.omg.dds.core.policy.LivelinessQosPolicy;
++import org.omg.dds.core.policy.Liveliness;
+ import org.omg.dds.pub.DataWriter;
+ import org.omg.dds.sub.DataReader;
+ 
+ 
+ /**
+  * The liveliness that the {@link DataWriter} has committed through its
+- * {@link LivelinessQosPolicy} was not respected; thus {@link DataReader}
++ * {@link Liveliness} was not respected; thus {@link DataReader}
+  * entities will consider the DataWriter as no longer "active."
+  *
+  * @param <TYPE>    The data type of the source {@link DataWriter}.
+Index: srcJava/org/omg/dds/core/status/LivelinessLostStatus.java
+===================================================================
+--- srcJava/org/omg/dds/core/status/LivelinessLostStatus.java	(revision 190)
++++ srcJava/org/omg/dds/core/status/LivelinessLostStatus.java	(working copy)
+@@ -18,14 +18,14 @@
+ 
+ package org.omg.dds.core.status;
+ 
+-import org.omg.dds.core.policy.LivelinessQosPolicy;
++import org.omg.dds.core.policy.Liveliness;
+ import org.omg.dds.pub.DataWriter;
+ import org.omg.dds.sub.DataReader;
+ 
+ 
+ /**
+  * The liveliness that the {@link DataWriter} has committed through its
+- * {@link LivelinessQosPolicy} was not respected; thus {@link DataReader}
++ * {@link Liveliness} was not respected; thus {@link DataReader}
+  * entities will consider the DataWriter as no longer "active."
+  *
+  * @see LivelinessLostEvent
+Index: srcJava/org/omg/dds/core/status/package-info.java
+===================================================================
+--- srcJava/org/omg/dds/core/status/package-info.java	(revision 190)
++++ srcJava/org/omg/dds/core/status/package-info.java	(working copy)
+@@ -79,11 +79,11 @@
+  *         <li>The arrival of the notification that an instance has been
+  *             disposed by:<ul>
+  *             <li>the DataWriter that owns it if
+- *                 {@link org.omg.dds.core.policy.OwnershipQosPolicy#getKind()}
+- *                 = {@link org.omg.dds.core.policy.OwnershipQosPolicy.Kind#EXCLUSIVE}</li>
++ *                 {@link org.omg.dds.core.policy.Ownership#getKind()}
++ *                 = {@link org.omg.dds.core.policy.Ownership.Kind#EXCLUSIVE}</li>
+  *             <li>or by any DataWriter if
+- *                 {@link org.omg.dds.core.policy.OwnershipQosPolicy#getKind()}
+- *                 = {@link org.omg.dds.core.policy.OwnershipQosPolicy.Kind#SHARED}.</li>
++ *                 {@link org.omg.dds.core.policy.Ownership#getKind()}
++ *                 = {@link org.omg.dds.core.policy.Ownership.Kind#SHARED}.</li>
+  *             </ul></li>
+  *         <li>The loss of liveliness of the DataWriter of an instance for
+  *             which there is no other DataWriter.</li>
+Index: srcJava/org/omg/dds/core/status/RequestedDeadlineMissedEvent.java
+===================================================================
+--- srcJava/org/omg/dds/core/status/RequestedDeadlineMissedEvent.java	(revision 190)
++++ srcJava/org/omg/dds/core/status/RequestedDeadlineMissedEvent.java	(working copy)
+@@ -18,13 +18,13 @@
+ 
+ package org.omg.dds.core.status;
+ 
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
++import org.omg.dds.core.policy.Deadline;
+ import org.omg.dds.sub.DataReader;
+ 
+ 
+ /**
+  * The deadline that the {@link DataReader} was expecting through its
+- * {@link DeadlineQosPolicy} was not respected for a specific instance.
++ * {@link Deadline} was not respected for a specific instance.
+  *
+  * @param <TYPE>    The data type of the source {@link DataReader}.
+  * 
+Index: srcJava/org/omg/dds/core/Entity.java
+===================================================================
+--- srcJava/org/omg/dds/core/Entity.java	(revision 190)
++++ srcJava/org/omg/dds/core/Entity.java	(working copy)
+@@ -23,8 +23,8 @@
+ import java.util.EventListener;
+ import java.util.Set;
+ 
+-import org.omg.dds.core.policy.EntityFactoryQosPolicy;
+-import org.omg.dds.core.policy.WriterDataLifecycleQosPolicy;
++import org.omg.dds.core.policy.EntityFactory;
++import org.omg.dds.core.policy.WriterDataLifecycle;
+ import org.omg.dds.core.status.Status;
+ import org.omg.dds.domain.DomainParticipant;
+ import org.omg.dds.pub.DataWriter;
+@@ -163,10 +163,10 @@
+     /**
+      * This operation enables the Entity. Entity objects can be created
+      * either enabled or disabled. This is controlled by the value of the
+-     * {@link EntityFactoryQosPolicy} on the corresponding factory for the
++     * {@link EntityFactory} on the corresponding factory for the
+      * Entity.
+      * 
+-     * The default setting of {@link EntityFactoryQosPolicy} is such that, by
++     * The default setting of {@link EntityFactory} is such that, by
+      * default, it is not necessary to explicitly call enable on newly
+      * created entities.
+      * 
+@@ -194,12 +194,12 @@
+      *  It is legal to delete an Entity that has not been enabled by calling
+      *  {@link #close()}. Entities created from a factory that is disabled
+      *  are created disabled regardless of the setting of
+-     *  {@link EntityFactoryQosPolicy}.
++     *  {@link EntityFactory}.
+      *  
+      *  Calling enable on an Entity whose factory is not enabled will fail
+      *  with {@link PreconditionNotMetException}.
+      *  
+-     *  If {@link EntityFactoryQosPolicy#isAutoEnableCreatedEntities()} is
++     *  If {@link EntityFactory#isAutoEnableCreatedEntities()} is
+      *  true, the enable operation on the factory will automatically enable
+      *  all entities created from the factory.
+      *  
+@@ -262,7 +262,7 @@
+      * 
+      * The deletion of a {@link DataWriter} will automatically unregister all
+      * instances. Depending on the settings of the
+-     * {@link WriterDataLifecycleQosPolicy}, the deletion of the DataWriter
++     * {@link WriterDataLifecycle}, the deletion of the DataWriter
+      * may also dispose all instances.
+      * 
+      * @throws  PreconditionNotMetException     if close is called on an
+Index: srcJava/org/omg/dds/core/policy/Lifespan.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/Lifespan.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/Lifespan.java	(revision 191)
+@@ -0,0 +1,80 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.concurrent.TimeUnit;
++
++import org.omg.dds.core.Duration;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * Specifies the maximum duration of validity of the data written by the
++ * {@link DataWriter}. The default value of the lifespan duration is infinite.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> N/A
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * The purpose of this QoS is to avoid delivering "stale" data to the
++ * application.
++ * 
++ * Each data sample written by the DataWriter has an associated "expiration
++ * time" beyond which the data should not be delivered to any application.
++ * Once the sample expires, the data will be removed from the DataReader
++ * caches as well as from the transient and persistent information caches.
++ * 
++ * The "expiration time" of each sample is computed by adding the duration
++ * specified by the LIFESPAN QoS to the source time stamp. As described in
++ * {@link DataWriter#write(Object)} and
++ * {@link DataWriter#write(Object, org.omg.dds.core.Time)}, the source time
++ * stamp is either automatically computed by the Service each time the
++ * write operation is called, or else supplied by the application.
++ * 
++ * This QoS relies on the sender and receiving applications having their
++ * clocks sufficiently synchronized. If this is not the case and the Service
++ * can detect it, the DataReader is allowed to use the reception time stamp
++ * instead of the source time stamp in its computation of the "expiration
++ * time."
++ */
++public interface Lifespan
++extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
++{
++    public Duration getDuration();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Lifespan withDuration(Duration duration);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Lifespan withDuration(long duration, TimeUnit unit);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\Lifespan.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/TimeBasedFilter.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TimeBasedFilter.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/TimeBasedFilter.java	(revision 191)
+@@ -0,0 +1,104 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.concurrent.TimeUnit;
++
++import org.omg.dds.core.Duration;
++import org.omg.dds.core.Entity;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++
++
++/**
++ * Filter that allows a {@link DataReader} to specify that it is interested
++ * only in (potentially) a subset of the values of the data. The filter
++ * states that the DataReader does not want to receive more than one value
++ * each minimumSeparation, regardless of how fast the changes occur. It is
++ * inconsistent for a DataReader to have a minimumSeparation longer than the
++ * result of its {@link Deadline#getPeriod()}. By default,
++ * minimumSeparation = 0, indicating that the DataReader is potentially
++ * interested in all values.
++ * 
++ * <b>Concerns:</b> {@link DataReader}
++ * 
++ * <b>RxO:</b> N/A
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * The TIME_BASED_FILTER applies to each instance separately, that is, the
++ * constraint is that the DataReader does not want to see more than one
++ * sample of each instance per minumumSeparation period.
++ * 
++ * This setting allows a DataReader to further decouple itself from the
++ * {@link DataWriter} objects. It can be used to protect applications that
++ * are running on a heterogeneous network where some nodes are capable of
++ * generating data much faster than others can consume it. It also
++ * accommodates the fact that for fast-changing data different subscribers
++ * may have different requirements as to how frequently they need to be
++ * notified of the most current values.
++ * 
++ * The setting of a TIME_BASED_FILTER, that is, the selection of a
++ * minimumSeparation with a value greater than zero is compatible with all
++ * settings of the HISTORY and RELIABILITY QoS. The TIME_BASED_FILTER
++ * specifies the samples that are of interest to the DataReader. The HISTORY
++ * and RELIABILITY QoS affect the behavior of the middleware with respect to
++ * the samples that have been determined to be of interest to the DataReader,
++ * that is, they apply after the TIME_BASED_FILTER has been applied.
++ * 
++ * In the case where the reliability QoS kind is RELIABLE then in steady
++ * state, defined as the situation where the DataWriter does not write new
++ * samples for a period "long" compared to the minimumSeparation, the system
++ * should guarantee delivery the last sample to the DataReader.
++ * 
++ * The setting of the TIME_BASED_FILTER minimumSeparation must be consistent
++ * with the DEADLINE period. For these two QoS policies to be consistent they
++ * must verify that "period >= minimumSeparation." An attempt to set these
++ * policies in an inconsistent manner when an entity is created via a
++ * {@link Entity#setQos(org.omg.dds.core.EntityQos)} operation will cause the
++ * operation to fail.
++ * 
++ * @see Deadline
++ * @see History
++ * @see Reliability
++ */
++public interface TimeBasedFilter extends QosPolicy.ForDataReader
++{
++    public Duration getMinimumSeparation();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public TimeBasedFilter withMinimumSeparation(
++            Duration minimumSeparation);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public TimeBasedFilter withMinimumSeparation(
++            long minimumSeparation,
++            TimeUnit unit);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\TimeBasedFilter.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/Deadline.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/Deadline.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/Deadline.java	(revision 191)
+@@ -0,0 +1,96 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.concurrent.TimeUnit;
++
++import org.omg.dds.core.Condition;
++import org.omg.dds.core.Duration;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * {@link DataReader} expects a new sample updating the value of each
++ * instance at least once every deadline period. The {@link DataWriter}
++ * indicates that the application commits to write a new value (using the
++ * DataWriter) for each instance managed by the DataWriter at least once
++ * every deadline period. It is inconsistent for a DataReader to have a
++ * deadline period less than the result of its
++ * {@link TimeBasedFilter#getMinimumSeparation()}. The default value
++ * of the deadline period is infinite.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> Yes
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * This policy is useful for cases where a {@link Topic} is expected to have
++ * each instance updated periodically. On the publishing side this setting
++ * establishes a contract that the application must meet. On the subscribing
++ * side the setting establishes a minimum requirement for the remote
++ * publishers that are expected to supply the data values.
++ * 
++ * When the Service "matches" a DataWriter and a DataReader it checks whether
++ * the settings are compatible (i.e., offered deadline period<= requested
++ * deadline period). If they are not, the two entities are informed (via the
++ * listener or {@link Condition} mechanism) of the incompatibility of the QoS
++ * settings and communication will not occur.
++ * 
++ * Assuming that the reader and writer ends have compatible settings, the
++ * fulfillment of this contract is monitored by the Service and the
++ * application is informed of any violations by means of the proper listener
++ * or condition.
++ * 
++ * The value offered is considered compatible with the value requested if and
++ * only if the inequality "offered deadline period <= requested deadline
++ * period" evaluates to true.
++ * 
++ * The setting of the DEADLINE policy must be set consistently with that of
++ * the {@link TimeBasedFilter}. For these two policies to be
++ * consistent the settings must be such that "deadline period >=
++ * minimum_separation."
++ */
++public interface Deadline
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<Deadline>
++{
++    public Duration getPeriod();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Deadline withPeriod(Duration period);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Deadline withPeriod(long period, TimeUnit unit);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\Deadline.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/Durability.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/Durability.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/Durability.java	(revision 191)
+@@ -0,0 +1,200 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.core.Condition;
++import org.omg.dds.core.WaitSet;
++import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
++import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
++import org.omg.dds.domain.DomainParticipant;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.sub.InstanceState;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * This policy expresses if the data should "outlive" their writing time.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> Yes
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * The decoupling between {@link DataReader} and {@link DataWriter} offered
++ * by the Publish/Subscribe paradigm allows an application to write data even
++ * if there are no current readers on the network. Moreover, a DataReader
++ * that joins the network after some data has been written could potentially
++ * be interested in accessing the most current values of the data as well as
++ * potentially some history. This QoS policy controls whether the Service
++ * will actually make data available to late-joining readers. Note that
++ * although related, this does not strictly control what data the Service
++ * will maintain internally. That is, the Service may choose to maintain some
++ * data for its own purposes (e.g., flow control) and yet not make it
++ * available to late-joining readers if the {@link Durability} is
++ * set to {@link Durability.Kind#VOLATILE}.
++ * 
++ * The value offered is considered compatible with the value requested if and
++ * only if the inequality offered kind >= requested kind evaluates to true.
++ * For the purposes of this inequality, the values of
++ * {@link Durability.Kind} are considered ordered such that
++ * VOLATILE < TRANSIENT_LOCAL < TRANSIENT < PERSISTENT.
++ * 
++ * For the purpose of implementing the {@link Durability.Kind}
++ * TRANSIENT or PERSISTENT, the service behaves "as if" for each {@link Topic}
++ * that has TRANSIENT or PERSISTENT DURABILITY kind there was a corresponding
++ * "built-in" {@link DataReader} and {@link DataWriter} configured to have
++ * the same DURABILITY kind. In other words, it is "as if" somewhere in the
++ * system (possibly on a remote node) there was a "built-in durability
++ * DataReader" that subscribed to that Topic and a "built-in durability
++ * DataWriter" that published that Topic as needed for the new subscribers
++ * that join the system.
++ * 
++ * For each Topic, the built-in fictitious "persistence service" DataReader
++ * and DataWriter has its QoS configured from the Topic QoS of the
++ * corresponding Topic. In other words, it is "as-if" the service first did
++ * {@link DomainParticipant#findTopic(String, org.omg.dds.core.Duration)} to
++ * access the Topic, and then used the QoS from the Topic to configure the
++ * fictitious built-in entities.
++ * 
++ * A consequence of this model is that the transient or persistence service
++ * can be configured by means of setting the proper QoS on the Topic.
++ * 
++ * For a given Topic, the usual request/offered semantics apply to the
++ * matching between any DataWriter in the system that writes the Topic and
++ * the built-in transient/persistent DataReader for that Topic; similarly for
++ * the built-in transient/persistent DataWriter for a Topic and any
++ * DataReader for the Topic. As a consequence, a DataWriter that has an
++ * incompatible QoS with respect to what the Topic specified will not send
++ * its data to the transient/persistent service, and a DataReader that has an
++ * incompatible QoS with respect to the specified in the Topic will not get
++ * data from it.
++ * 
++ * Incompatibilities between local DataReader/DataWriter entities and the
++ * corresponding fictitious "built-in transient/persistent entities" cause
++ * the {@link RequestedIncompatibleQosStatus}/
++ * {@link OfferedIncompatibleQosStatus} to change and the corresponding
++ * Listener invocations and/or signaling of {@link Condition} and
++ * {@link WaitSet} objects as they would with non-fictitious entities.
++ * 
++ * The setting of the serviceCleanupDelay controls when the TRANSIENT or
++ * PERSISTENT service is able to remove all information regarding a data
++ * instances. Information on a data instances is maintained until the
++ * following conditions are met:
++ * 
++ * <ol>
++ *      <li>the instance has been explicitly disposed (instanceState =
++ *          {@link InstanceState#NOT_ALIVE_DISPOSED}),</li>
++ *      <li>and while in the NOT_ALIVE_DISPOSED state the system detects that
++ *          there are no more "alive" {@link DataWriter} entities writing the
++ *          instance, that is, all existing writers either unregister the
++ *          instance (call
++ *          {@link DataWriter#unregisterInstance(org.omg.dds.core.InstanceHandle)})
++ *          or lose their liveliness,</li>
++ *      <li>and a time interval longer that serviceCleanupDelay has elapsed
++ *          since the moment the service detected that the previous two
++ *          conditions were met.</li>
++ * </ol>
++ * 
++ * The utility of the serviceCleanupDelay is apparent in the situation where
++ * an application disposes an instance and it crashes before it has a chance
++ * to complete additional tasks related to the disposition. Upon restart the
++ * application may ask for initial data to regain its state and the delay
++ * introduced by the serviceCleanupDelay will allow the restarted application
++ * to receive the information on the disposed instance and complete the
++ * interrupted tasks.
++ * 
++ * @see DurabilityService
++ * @see DurabilityService#getServiceCleanupDelay()
++ */
++public interface Durability
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<Durability>
++{
++    // -----------------------------------------------------------------------
++    // Methods
++    // -----------------------------------------------------------------------
++
++    /**
++     * @return the kind
++     */
++    public Kind getKind();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Durability withKind(Kind kind);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    public enum Kind {
++        /**
++         * The Service does not need to keep any samples of data instances on
++         * behalf of any {@link DataReader} that is not known by the
++         * {@link DataWriter} at the time the instance is written. In other
++         * words the Service will only attempt to provide the data to
++         * existing subscribers. This is the default kind.
++         */
++        VOLATILE,
++
++        /**
++         * The Service will attempt to keep some samples so that they can be
++         * delivered to any potential late-joining {@link DataReader}. Which
++         * particular samples are kept depends on other QoS such as
++         * {@link History} and {@link ResourceLimits}.
++         * 
++         * For TRANSIENT_LOCAL, the service is only required to keep the data
++         * in the memory of the {@link DataWriter} that wrote the data and
++         * the data is not required to survive the DataWriter.
++         */
++        TRANSIENT_LOCAL,
++
++        /**
++         * The Service will attempt to keep some samples so that they can be
++         * delivered to any potential late-joining {@link DataReader}. Which
++         * particular samples are kept depends on other QoS such as
++         * {@link History} and {@link ResourceLimits}.
++         * 
++         * For TRANSIENT, the service is only required to keep the data in
++         * memory and not in permanent storage; but the data is not tied to
++         * the life cycle of the {@link DataWriter} and will, in general,
++         * survive it. Support for TRANSIENT kind is optional.
++         */
++        TRANSIENT,
++
++        /**
++         * Data is kept on permanent storage, so that they can outlive a
++         * system session. Support for PERSISTENT kind is optional.
++         */
++        PERSISTENT
++    }
++
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\Durability.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/UserData.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/UserData.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/UserData.java	(revision 191)
+@@ -0,0 +1,73 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.core.Entity;
++import org.omg.dds.domain.DomainParticipant;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++
++
++/**
++ * User data not known by the middleware, but distributed by means of
++ * built-in topics. The default value is an empty (zero-sized) sequence.
++ * 
++ * <b>Concerns:</b> {@link DomainParticipant}, {@link DataReader},
++ *                 {@link DataWriter}
++ * 
++ * <b>RxO:</b> No
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * The purpose of this QoS is to allow the application to attach additional
++ * information to the created {@link Entity} objects such that when a remote
++ * application discovers their existence it can access that information and
++ * use it for its own purposes. One possible use of this QoS is to attach
++ * security credentials or some other information that can be used by the
++ * remote application to authenticate the source. In combination with
++ * operations such as
++ * {@link DomainParticipant#ignoreParticipant(org.omg.dds.core.InstanceHandle)},
++ * {@link DomainParticipant#ignorePublication(org.omg.dds.core.InstanceHandle)},
++ * {@link DomainParticipant#ignoreSubscription(org.omg.dds.core.InstanceHandle)},
++ * and
++ * {@link DomainParticipant#ignoreTopic(org.omg.dds.core.InstanceHandle)}
++ * these QoS can assist an application to define and enforce its own security
++ * policies. The use of this QoS is not limited to security, rather it offers
++ * a simple, yet flexible extensibility mechanism.
++ */
++public interface UserData
++extends QosPolicy.ForDomainParticipant,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter
++{
++    /**
++     * Get a copy of the data.
++     */
++    public byte[] getValue();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public UserData withValue(byte value[], int offset, int length);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\UserData.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/Partition.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/Partition.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/Partition.java	(revision 191)
+@@ -0,0 +1,108 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.Collection;
++import java.util.Set;
++
++import org.omg.dds.core.Entity;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.pub.Publisher;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.sub.Subscriber;
++
++
++/**
++ * This policy allows the introduction of a logical partition concept inside
++ * the "physical" partition induced by a domain. It consists of a set of
++ * strings that introduces a logical partition among the topics
++ * visible by the {@link Publisher} and {@link Subscriber}.
++ * 
++ * <b>Concerns:</b> {@link Publisher}, {@link Subscriber}
++ * 
++ * <b>RxO:</b> No
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * A {@link DataWriter} within a Publisher only communicates with a
++ * {@link DataReader} in a Subscriber if (in addition to matching the Topic
++ * and having compatible QoS) the Publisher and Subscriber have a common
++ * partition name string. Each string in the collection that defines this QoS
++ * policy defines a partition name. A partition name may contain wild cards.
++ * Sharing a common partition means that one of the partition names matches.
++ * 
++ * Failure to match partitions is not considered an "incompatible" QoS and
++ * does not trigger any listeners nor conditions.
++ * 
++ * This policy is changeable. A change of this policy can potentially modify
++ * the "match" of existing DataReader and DataWriter entities. It may
++ * establish new "matches" that did not exist before, or break existing
++ * matches.
++ * 
++ * The empty string ("") is considered a valid partition that is matched with
++ * other partition names using the same rules of string matching and
++ * regular expression matching used for any other partition name.
++ * 
++ * The default value for is a zero-size collection. The
++ * zero-size collection is treated as a special value equivalent to a
++ * collection containing a single element consisting of the empty string.
++ * 
++ * This policy is changeable. A change of this policy can potentially modify
++ * the "match" of existing DataReader and DataWriter entities. It may
++ * establish new "matches" that did not exist before, or break existing
++ * matches.
++ * 
++ * PARTITION names can be regular expressions and include wild cards as
++ * defined by the POSIX fnmatch API (1003.2-1992 section B.6). Either
++ * {@link Publisher} or {@link Subscriber} may include regular expressions in
++ * partition names, but no two names that both contain wild cards will ever
++ * be considered to match. This means that although regular expressions may
++ * be used both at publisher as well as subscriber side, the service will not
++ * try to match two regular expressions (between publishers and subscribers).
++ * 
++ * Partitions are different from creating {@link Entity} objects in different
++ * domains in several ways. First, entities belonging to different domains
++ * are completely isolated from each other; there is no traffic, meta-traffic
++ * or any other way for an application or the Service itself to see entities
++ * in a domain it does not belong to. Second, an Entity can only belong to
++ * one domain whereas an Entity can be in multiple partitions. Finally, as
++ * far as the DDS Service is concerned, each unique data instance is
++ * identified by the tuple (domainId, Topic, key). Therefore two Entity
++ * objects in different domains cannot refer to the same data instance. On
++ * the other hand, the same data instance can be made available (published)
++ * or requested (subscribed) on one or more partitions.
++ */
++public interface Partition
++extends QosPolicy.ForPublisher, QosPolicy.ForSubscriber
++{
++    /**
++     * @return  an unmodifiable collection of partition names.
++     */
++    public Set<String> getName();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Partition withName(Collection<String> name);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\Partition.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/Reliability.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/Reliability.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/Reliability.java	(revision 191)
+@@ -0,0 +1,144 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.concurrent.TimeUnit;
++
++import org.omg.dds.core.Duration;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * This policy indicates the level of reliability requested by a
++ * {@link DataReader} or offered by a {@link DataWriter}. These levels are
++ * ordered, {@link Kind#BEST_EFFORT} being lower than {@link Kind#RELIABLE}.
++ * A DataWriter offering a level is implicitly offering all levels below.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> Yes
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * The setting of this policy has a dependency on the setting of the
++ * {@link ResourceLimits}. In case the RELIABILITY kind is set to
++ * RELIABLE the {@link DataWriter#write(Object)} operation may block if the
++ * modification would cause data to be lost or else cause one of the limits
++ * specified in the RESOURCE_LIMITS to be exceeded. Under these circumstances,
++ * the RELIABILITY maxBlockingTime configures the maximum duration the write
++ * operation may block.
++ * 
++ * If the RELIABILITY kind is set to RELIABLE, data samples originating from
++ * a single DataWriter cannot be made available to the DataReader if there
++ * are previous data samples that have not been received yet due to a
++ * communication error. In other words, the service will repair the error and
++ * retransmit data samples as needed in order to reconstruct a correct
++ * snapshot of the DataWriter history before it is accessible by the
++ * DataReader.
++ * 
++ * If the RELIABILITY kind is set to BEST_EFFORT, the service will not
++ * retransmit missing data samples. However, for data samples originating
++ * from any one DataWriter the service will ensure they are stored in the
++ * DataReader history in the same order they originated in the DataWriter. In
++ * other words, the DataReader may miss some data samples but it will never
++ * see the value of a data object change from a newer value to an older value.
++ * 
++ * The value offered is considered compatible with the value requested if and
++ * only if the inequality "offered kind &gt;= requested kind" evaluates to
++ * true. For the purposes of this inequality, the values of RELIABILITY kind
++ * are considered ordered such that BEST_EFFORT &lt; RELIABLE.
++ * 
++ * @see ResourceLimits
++ */
++public interface Reliability
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<Reliability>
++{
++    // -----------------------------------------------------------------------
++    // Methods
++    // -----------------------------------------------------------------------
++
++    /**
++     * @return the kind
++     */
++    public Kind getKind();
++
++    public Duration getMaxBlockingTime();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Reliability withKind(Kind kind);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Reliability withMaxBlockingTime(Duration maxBlockingTime);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Reliability withMaxBlockingTime(
++            long maxBlockingTime,
++            TimeUnit unit);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    public enum Kind {
++        /**
++         * Indicates that it is acceptable to not retry propagation of any
++         * samples. Presumably new values for the samples are generated often
++         * enough that it is not necessary to re-send or acknowledge any
++         * samples. This is the default value for {@link DataReader}s and
++         * {@link Topic}s.
++         */
++        BEST_EFFORT,
++
++        /**
++         * Specifies the Service will attempt to deliver all samples in its
++         * history. Missed samples may be retried. In steady-state (no
++         * modifications communicated via the {@link DataWriter}) the
++         * middleware guarantees that all samples in the DataWriter history
++         * will eventually be delivered to all the {@link DataReader} objects.
++         * Outside steady state the {@link History} and
++         * {@link ResourceLimits} will determine how samples become
++         * part of the history and whether samples can be discarded from it.
++         * This is the default value for DataWriters.
++         */
++        RELIABLE
++    }
++
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\Reliability.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/ResourceLimits.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/ResourceLimits.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/ResourceLimits.java	(revision 191)
+@@ -0,0 +1,116 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * Specifies the resources that the Service can consume in order to meet the
++ * requested QoS.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> No
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * This policy controls the resources that the Service can use in order to
++ * meet the requirements imposed by the application and other QoS settings.
++ * 
++ * If the DataWriter objects are communicating samples faster than they are
++ * ultimately taken by the DataReader objects, the middleware will eventually
++ * hit against some of the QoS-imposed resource limits. Note that this may
++ * occur when just a single DataReader cannot keep up with its corresponding
++ * DataWriter. The behavior in this case depends on the setting for the
++ * {@link Reliability}. If reliability is
++ * {@link Reliability.Kind#BEST_EFFORT}, then the Service is allowed
++ * to drop samples. If the reliability is
++ * {@link Reliability.Kind#RELIABLE}, the Service will block the
++ * DataWriter or discard the sample at the DataReader in order not to lose
++ * existing samples (so that the sample can be resent at a later time).
++ * 
++ * The constant {@link #LENGTH_UNLIMITED} may be used to indicate the absence
++ * of a particular limit. For example setting maxSamplesPerInstance to
++ * LENGH_UNLIMITED will cause the middleware to not enforce this particular
++ * limit.
++ * 
++ * The setting of RESOURCE_LIMITS maxSamples must be consistent with the
++ * maxSamplesPerInstance. For these two values to be consistent they must
++ * verify that "max_samples &gt;= max_samples_per_instance."
++ * 
++ * The setting of RESOURCE_LIMITS maxSamplesPerInstance must be consistent
++ * with the HISTORY depth. For these two QoS to be consistent, they must
++ * verify that "depth &lt;= maxSamplesPerInstance."
++ * 
++ * An attempt to set this policy to inconsistent values when an entity is
++ * created or via a <code>setQos</code> operation will cause the operation to
++ * fail.
++ * 
++ * @see History
++ * @see Reliability
++ */
++public interface ResourceLimits
++extends QosPolicy.ForTopic, QosPolicy.ForDataReader, QosPolicy.ForDataWriter
++{
++    public static final int LENGTH_UNLIMITED = -1;
++
++
++    /**
++     * @return the maxSamples
++     */
++    public int getMaxSamples();
++
++    /**
++     * @return the maxInstances
++     */
++    public int getMaxInstances();
++
++    /**
++     * @return the maxSamplesPerInstance
++     */
++    public int getMaxSamplesPerInstance();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public ResourceLimits withMaxSamples(int maxSamples);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public ResourceLimits withMaxInstances(int maxInstances);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public ResourceLimits withMaxSamplesPerInstance(
++            int maxSamplesPerInstance);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\ResourceLimits.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/ReaderDataLifecycle.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/ReaderDataLifecycle.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/ReaderDataLifecycle.java	(revision 191)
+@@ -0,0 +1,122 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.concurrent.TimeUnit;
++
++import org.omg.dds.core.Duration;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.sub.InstanceState;
++import org.omg.dds.sub.ViewState;
++
++
++/**
++ * Specifies the behavior of the {@link DataReader} with regards to the life
++ * cycle of the data instances it manages.
++ * 
++ * <b>Concerns:</b> {@link DataReader}
++ * 
++ * <b>RxO:</b> N/A
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * This policy controls the behavior of the DataReader with regards to the
++ * lifecycle of the data instances it manages, that is, the data instance
++ * that have been received and for which the DataReader maintains some
++ * internal resources.
++ * 
++ * The DataReader internally maintains the samples that have not been taken
++ * by the application, subject to the constraints imposed by other QoS
++ * policies such as {@link History} and
++ * {@link ResourceLimits}.
++ * 
++ * The DataReader also maintains information regarding the identity,
++ * {@link ViewState} and {@link InstanceState} of data instances even after
++ * all samples have been 'taken.' This is needed to properly compute the
++ * states when future samples arrive.
++ * 
++ * Under normal circumstances the DataReader can only reclaim all resources
++ * for instances for which there are no writers and for which all samples
++ * have been 'taken.' The last sample the DataReader will have taken for that
++ * instance will have an instance state of either
++ * {@link InstanceState#NOT_ALIVE_NO_WRITERS} or
++ * {@link InstanceState#NOT_ALIVE_DISPOSED} depending on whether the last
++ * writer that had ownership of the instance disposed it or not. In the
++ * absence of the READER_DATA_LIFECYCLE QoS this behavior could cause
++ * problems if the application "forgets" to 'take' those samples. The
++ * 'untaken' samples will prevent the DataReader from reclaiming the
++ * resources and they would remain in the DataReader indefinitely.
++ * 
++ * The autoPurgeNoWriterSamplesDelay defines the maximum duration for which
++ * the DataReader will maintain information regarding an instance once its
++ * instance state becomes NOT_ALIVE_NO_WRITERS. After this time elapses, the
++ * DataReader will purge all internal information regarding the instance; any
++ * untaken samples will also be lost.
++ * 
++ * The autoPurgeDisposedSamplesDelay defines the maximum duration for which
++ * the DataReader will maintain samples for an instance once its instance
++ * state becomes NOT_ALIVE_DISPOSED. After this time elapses, the DataReader
++ * will purge all samples for the instance.
++ * 
++ * @see History
++ * @see ResourceLimits
++ */
++public interface ReaderDataLifecycle extends QosPolicy.ForDataReader
++{
++    public Duration getAutoPurgeNoWriterSamplesDelay();
++
++    public Duration getAutoPurgeDisposedSamplesDelay();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public ReaderDataLifecycle withAutoPurgeNoWriterSamplesDelay(
++            Duration autoPurgeNoWriterSamplesDelay);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public ReaderDataLifecycle withAutoPurgeNoWriterSamplesDelay(
++            long autoPurgeNoWriterSamplesDelay,
++            TimeUnit unit);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public ReaderDataLifecycle withAutoPurgeDisposedSamplesDelay(
++            Duration autoPurgeDisposedSamplesDelay);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public ReaderDataLifecycle withAutoPurgeDisposedSamplesDelay(
++            long autoPurgeDisposedSamplesDelay,
++            TimeUnit unit);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\ReaderDataLifecycle.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/Liveliness.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/Liveliness.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/Liveliness.java	(revision 191)
+@@ -0,0 +1,189 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.concurrent.TimeUnit;
++
++import org.omg.dds.core.Duration;
++import org.omg.dds.core.Entity;
++import org.omg.dds.core.WaitSet;
++import org.omg.dds.core.status.LivelinessChangedStatus;
++import org.omg.dds.core.status.Status;
++import org.omg.dds.domain.DomainParticipant;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * Determines the mechanism and parameters used by the application to
++ * determine whether an {@link Entity} is "active" (alive). The "liveliness"
++ * status of an Entity is used to maintain instance ownership in combination
++ * with the setting of the {@link Ownership}. The application is
++ * also informed via an Entity {@link Status} change when an Entity is no
++ * longer alive. The {@link DataReader} requests that liveliness of the
++ * writers is maintained by the requested means and loss of liveliness is
++ * detected with delay not to exceed the leaseDuration. The {@link DataWriter}
++ * commits to signaling its liveliness using the stated means at intervals
++ * not to exceed the leaseDuration. The default kind is
++ * {@link Liveliness.Kind#AUTOMATIC} and the default value of the
++ * leaseDuration is infinite.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> Yes
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * This policy has several settings to support both data objects that are
++ * updated periodically as well as those that are changed sporadically. It
++ * also allows customizing for different application requirements in terms of
++ * the kinds of failures that will be detected by the liveliness mechanism.
++ * 
++ * The {@link Kind#AUTOMATIC} liveliness setting is most appropriate for
++ * applications that only need to detect failures at the process level, but
++ * not application-logic failures within a process. The Service takes
++ * responsibility for renewing the leases at the required rates and thus, as
++ * long as the local process where a {@link DomainParticipant} is running and
++ * the link connecting it to remote participants remains connected, the
++ * entities within the DomainParticipant will be considered alive. This
++ * requires the lowest overhead.
++ * 
++ * The MANUAL settings ({@link Kind#MANUAL_BY_PARTICIPANT},
++ * {@link Kind#MANUAL_BY_TOPIC}) require the application on the publishing
++ * side to periodically assert the liveliness before the lease expires to
++ * indicate the corresponding Entity is still alive. The action can be
++ * explicit by calling the <code>assertLiveliness</code> operations
++ * ({@link DataWriter#assertLiveliness()},
++ * {@link DomainParticipant#assertLiveliness()}) or implicit by writing some
++ * data.
++ * 
++ * The two possible manual settings control the granularity at which the
++ * application must assert liveliness.
++ * 
++ * <ul>
++ *      <li>The setting MANUAL_BY_PARTICIPANT requires only that one Entity
++ *          within the publisher is asserted to be alive to deduce all other
++ *          Entity objects within the same DomainParticipant are also alive.
++ *      <li>The setting MANUAL_BY_TOPIC requires that at least one instance
++ *          within the DataWriter is asserted.</li>
++ * </ul>
++ * 
++ * The value offered is considered compatible with the value requested if and
++ * only if the following conditions are met:
++ * 
++ * <ol>
++ *      <li>the inequality "offered kind &gt;= requested kind" evaluates to
++ *          true. For the purposes of this inequality, the values of
++ *          LIVELINESS kind are considered ordered such that:
++ *          <code>AUTOMATIC &lt; MANUAL_BY_PARTICIPANT &lt; MANUAL_BY_TOPIC
++ *          </code>.</li>
++ *      <li>the inequality "offered leaseDuration <= requested
++ *          leaseDuration" evaluates to true.</li>
++ * </ol>
++ * 
++ * Changes in LIVELINESS must be detected by the Service with a
++ * time granularity greater or equal to the leaseDuration. This ensures that
++ * the value of the {@link LivelinessChangedStatus} is updated at least once
++ * during each leaseDuration and the related Listeners and {@link WaitSet}s
++ * are notified within a leaseDuration from the time the LIVELINESS changed.
++ */
++public interface Liveliness
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<Liveliness>
++{
++    // -----------------------------------------------------------------------
++    // Methods
++    // -----------------------------------------------------------------------
++
++    /**
++     * @return the kind
++     */
++    public Kind getKind();
++
++    public Duration getLeaseDuration();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Liveliness withKind(Kind kind);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Liveliness withLeaseDuration(Duration leaseDuration);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Liveliness withLeaseDuration(
++            long leaseDuration,
++            TimeUnit unit);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    public enum Kind {
++        /**
++         * The infrastructure will automatically signal liveliness for the
++         * {@link DataWriter}s at least as often as required by the
++         * leaseDuration.
++         */
++        AUTOMATIC,
++
++        /**
++         * The user application takes responsibility to signal liveliness to
++         * the Service. Liveliness must be asserted at least once every
++         * leaseDuration otherwise the Service will assume the corresponding
++         * {@link Entity} is no longer "active/alive."
++         * 
++         * The Service will assume that as long as at least one {@link Entity}
++         * within the {@link DomainParticipant} has asserted its liveliness
++         * the other Entities in that same DomainParticipant are also alive.
++         */
++        MANUAL_BY_PARTICIPANT,
++
++        /**
++         * The user application takes responsibility to signal liveliness to
++         * the Service. Liveliness must be asserted at least once every
++         * leaseDuration otherwise the Service will assume the corresponding
++         * {@link Entity} is no longer "active/alive."
++         * 
++         * The Service will only assume liveliness of the {@link DataWriter}
++         * if the application has asserted liveliness of that DataWriter
++         * itself.
++         */
++        MANUAL_BY_TOPIC
++    }
++
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\Liveliness.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/GroupData.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/GroupData.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/GroupData.java	(revision 191)
+@@ -0,0 +1,67 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.pub.DataWriterListener;
++import org.omg.dds.pub.Publisher;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.sub.DataReaderListener;
++import org.omg.dds.sub.Subscriber;
++
++
++/**
++ * User data not known by the middleware, but distributed by means of
++ * built-in topics. The default value is an empty (zero-sized) sequence.
++ * 
++ * <b>Concerns:</b> {@link Publisher}, {@link Subscriber}
++ * 
++ * <b>RxO:</b> No
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * The purpose of this QoS is to allow the application to attach additional
++ * information to the created {@link Publisher} or {@link Subscriber}. The
++ * value of the GROUP_DATA is available to the application on the
++ * {@link DataReader} and {@link DataWriter} entities and is propagated by
++ * means of the built-in topics.
++ * 
++ * This QoS can be used by an application combination with the
++ * {@link DataReaderListener} and {@link DataWriterListener} to implement
++ * matching policies similar to those of the {@link Partition}
++ * except the decision can be made based on an application-defined policy.
++ */
++public interface GroupData
++extends QosPolicy.ForPublisher, QosPolicy.ForSubscriber
++{
++    /**
++     * Get a copy of the data.
++     */
++    public byte[] getValue();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public GroupData withValue(byte value[], int offset, int length);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\GroupData.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/WriterDataLifecycle.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/WriterDataLifecycle.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/WriterDataLifecycle.java	(revision 191)
+@@ -0,0 +1,91 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.domain.DomainParticipant;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.pub.Publisher;
++
++
++/**
++ * Specifies the behavior of the {@link DataWriter} with regards to the life
++ * cycle of the data instances it manages.
++ * 
++ * <b>Concerns:</b> {@link DataWriter}
++ * 
++ * <b>RxO:</b> N/A
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * This policy controls the behavior of the DataWriter with regards to the
++ * lifecycle of the data instances it manages, that is, the data instances
++ * that have been either explicitly registered with the DataWriter using the
++ * {@link DataWriter#registerInstance(Object)} operations or implicitly by
++ * directly writing the data (see {@link DataWriter#write(Object)}).
++ * 
++ * The autodisposeUnregisteredInstances flag controls the behavior when the
++ * DataWriter unregisters an instance by means of the
++ * {@link DataWriter#unregisterInstance(org.omg.dds.core.InstanceHandle)}
++ * operations:
++ * 
++ * <ul>
++ *     <li>The setting "autodisposeUnregisteredInstances = true' causes the
++ *         DataWriter to dispose the instance each time it is unregistered.
++ *         The behavior is identical to explicitly calling one of the
++ *         {@link DataWriter#dispose(org.omg.dds.core.InstanceHandle)}
++ *         operations on the instance prior to calling the unregister
++ *         operation.</li>
++ * 
++ *     <li>The setting 'autodisposeUnregisteredInstances = false' will not
++ *         cause this automatic disposition upon unregistering. The
++ *         application can still call one of the dispose operations prior to
++ *         unregistering the instance and accomplish the same effect.
++ *         Refer to Section 7.1.3.23.3 of the DDS specification, "Semantic
++ *         difference between unregister_instance and dispose", for a
++ *         description of the consequences of disposing and unregistering
++ *         instances.</li>
++ * </ul>
++ * 
++ * Note that the deletion of a DataWriter automatically unregisters all data
++ * instances it manages (see {@link DataWriter#close()}). Therefore the
++ * setting of the autodisposeUnregisteredInstances flag will determine
++ * whether instances are ultimately disposed when the DataWriter is deleted
++ * either directly by means of the {@link DataWriter#close()} operation or
++ * indirectly as a consequence of calling
++ * {@link Publisher#closeContainedEntities()} or
++ * {@link DomainParticipant#closeContainedEntities()}.
++ */
++public interface WriterDataLifecycle extends QosPolicy.ForDataWriter
++{
++    /**
++     * @return the autDisposeUnregisteredInstances
++     */
++    public boolean isAutDisposeUnregisteredInstances();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public WriterDataLifecycle withAutDisposeUnregisteredInstances(
++            boolean autDisposeUnregisteredInstances);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\WriterDataLifecycle.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/DurabilityService.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DurabilityService.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/DurabilityService.java	(revision 191)
+@@ -0,0 +1,136 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.concurrent.TimeUnit;
++
++import org.omg.dds.core.Duration;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * Specifies the configuration of the durability service. That is, the
++ * service that implements the {@link Durability.Kind} of
++ * {@link Durability.Kind#TRANSIENT} and
++ * {@link Durability.Kind#PERSISTENT}.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> No
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * This policy is used to configure the {@link History} and the
++ * {@link ResourceLimits} used by the fictitious {@link DataReader}
++ * and {@link DataWriter} used by the "persistence service." The "persistence
++ * service" is the one responsible for implementing
++ * {@link Durability.Kind#TRANSIENT} and
++ * {@link Durability.Kind#PERSISTENT}.
++ * 
++ * @see Durability
++ */
++public interface DurabilityService
++extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
++{
++    public Duration getServiceCleanupDelay();
++
++    /**
++     * @return the historyKind
++     */
++    public History.Kind getHistoryKind();
++
++    /**
++     * @return the historyDepth
++     */
++    public int getHistoryDepth();
++
++    /**
++     * @return the maxSamples
++     */
++    public int getMaxSamples();
++
++    /**
++     * @return the maxInstances
++     */
++    public int getMaxInstances();
++
++    /**
++     * @return the maxSamplesPerInstance
++     */
++    public int getMaxSamplesPerInstance();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DurabilityService withServiceCleanupDelay(
++            Duration serviceCleanupDelay);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DurabilityService withServiceCleanupDelay(
++            long serviceCleanupDelay,
++            TimeUnit unit);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DurabilityService withHistoryKind(
++            History.Kind historyKind);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DurabilityService withHistoryDepth(int historyDepth);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DurabilityService withMaxSamples(int maxSamples);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DurabilityService withMaxInstances(int maxInstances);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DurabilityService withMaxSamplesPerInstance(
++            int maxSamplesPerInstance);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\DurabilityService.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/LatencyBudget.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/LatencyBudget.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/LatencyBudget.java	(revision 191)
+@@ -0,0 +1,79 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.concurrent.TimeUnit;
++
++import org.omg.dds.core.Duration;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * Specifies the maximum acceptable delay from the time the data is written
++ * until the data is inserted in the receiver's application cache and the
++ * receiving application is notified of the fact. This policy is a hint to
++ * the Service, not something that must be monitored or enforced. The Service
++ * is not required to track or alert the user of any violation. The default
++ * value of the duration is zero indicating that the delay should be
++ * minimized.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> Yes
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * This policy provides a means for the application to indicate to the
++ * middleware the "urgency" of the data communication. By having a non-zero
++ * duration the Service can optimize its internal operation.
++ * 
++ * This policy is considered a hint. There is no specified mechanism as to
++ * how the service should take advantage of this hint.
++ * 
++ * The value offered is considered compatible with the value requested if and
++ * only if the inequality "offered duration <= requested duration" evaluates
++ * to true.
++ */
++public interface LatencyBudget
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<LatencyBudget>
++{
++    public Duration getDuration();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public LatencyBudget withDuration(Duration duration);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public LatencyBudget withDuration(long duration, TimeUnit unit);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\LatencyBudget.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/DataRepresentation.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DataRepresentation.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/DataRepresentation.java	(revision 191)
+@@ -0,0 +1,64 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import java.util.List;
++
++
++public interface DataRepresentation
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<DataRepresentation>
++{
++    // -----------------------------------------------------------------------
++    // Properties
++    // -----------------------------------------------------------------------
++
++    public List<Short> getValue();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DataRepresentation withValue(List<Short> value);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DataRepresentation withValue(short... value);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    public static final class Id
++    {
++        public static final short XCDR_DATA_REPRESENTATION = 0;
++        public static final short XML_DATA_REPRESENTATION = 1;
++    }
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\DataRepresentation.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/History.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/History.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/History.java	(revision 191)
+@@ -0,0 +1,149 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * Specifies the behavior of the Service in the case where the value of a
++ * sample changes (one or more times) before it can be successfully
++ * communicated to one or more existing subscribers. This QoS policy controls
++ * whether the Service should deliver only the most recent value, attempt to
++ * deliver all intermediate values, or do something in between. On the
++ * publishing side this policy controls the samples that should be maintained
++ * by the DataWriter on behalf of existing DataReader entities. The behavior
++ * with regards to a DataReader entities discovered after a sample is written
++ * is controlled by the {@link Durability}. On the subscribing side
++ * it controls the samples that should be maintained until the application
++ * "takes" them from the Service via {@link DataReader#take()}.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> No
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * <ol>
++ *     <li>This policy controls the behavior of the Service when the value of
++ *         an instance changes before it is finally communicated to some of
++ *         its existing DataReader entities.</li>
++ * 
++ *     <li>If the kind is set to {@link Kind#KEEP_LAST}, then the Service
++ *         will only attempt to keep the latest values of the instance and
++ *         discard the older ones. In this case, the value of depth regulates
++ *         the maximum number of values (up to and including the most current
++ *         one) the Service will maintain and deliver. The default (and most
++ *         common setting) for depth is one, indicating that only the most
++ *         recent value should be delivered.</li>
++ * 
++ *     <li>If the kind is set to {@link Kind#KEEP_ALL}, then the Service will
++ *         attempt to maintain and deliver all the values of the instance to
++ *         existing subscribers. The resources that the Service can use to
++ *         keep this history are limited by the settings of the
++ *         {@link ResourceLimits}. If the limit is reached, then the
++ *         behavior of the Service will depend on the
++ *         {@link Reliability}. If the reliability kind is
++ *         {@link Reliability.Kind#BEST_EFFORT}, then the old values
++ *         will be discarded. If reliability is
++ *         {@link Reliability.Kind#RELIABLE}, then the Service will
++ *         block the DataWriter until it can deliver the necessary old values
++ *         to all subscribers.</li>
++ * </ol>
++ * 
++ * The setting of HISTORY depth must be consistent with the RESOURCE_LIMITS
++ * maxSamplesPerInstance. For these two QoS to be consistent, they must
++ * verify that depth &lt;= maxSamplesPerInstance.
++ * 
++ * @see Reliability
++ * @see ResourceLimits
++ */
++public interface History
++extends QosPolicy.ForTopic, QosPolicy.ForDataReader, QosPolicy.ForDataWriter
++{
++    // -----------------------------------------------------------------------
++    // Methods
++    // -----------------------------------------------------------------------
++
++    /**
++     * @return the kind
++     */
++    public Kind getKind();
++
++    /**
++     * @return the depth
++     */
++    public int getDepth();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public History withKind(Kind kind);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public History withDepth(int depth);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    public enum Kind {
++        /**
++         * On the publishing side, the Service will only attempt to keep the
++         * most recent "depth" samples ({@link History#getDepth()})
++         * of each instance of data (identified by its key) managed by the
++         * {@link DataWriter}. On the subscribing side, the DataReader will
++         * only attempt to keep the most recent "depth" samples received for
++         * each instance (identified by its key) until the application
++         * "takes" them via {@link DataReader#take()}. KEEP_LAST is the
++         * default kind. The default value of depth is 1. If a value other
++         * than 1 is specified, it must be consistent with the settings of
++         * the {@link ResourceLimits}.
++         */
++        KEEP_LAST,
++
++        /**
++         * On the publishing side, the Service will attempt to keep all
++         * samples (representing each value written) of each instance of data
++         * (identified by its key) managed by the {@link DataWriter} until
++         * they can be delivered to all subscribers. On the subscribing side,
++         * the Service will attempt to keep all samples of each instance of
++         * data (identified by its key) managed by the {@link DataReader}.
++         * These samples are kept until the application "takes" them from the
++         * Service via {@link DataReader#take()}. The setting of depth has no
++         * effect. Its implied value is
++         * {@link ResourceLimits#LENGTH_UNLIMITED}.
++         */
++        KEEP_ALL
++    }
++
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\History.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/EntityFactory.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/EntityFactory.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/EntityFactory.java	(revision 191)
+@@ -0,0 +1,87 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.core.Entity;
++import org.omg.dds.domain.DomainParticipant;
++import org.omg.dds.domain.DomainParticipantFactory;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.pub.Publisher;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.sub.Subscriber;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * Controls the behavior of the {@link Entity} when acting as a factory for
++ * other entities. In other words, configures the side-effects of the
++ * <code>create_*</code> operations.
++ * 
++ * <b>Concerns:</b> {@link DomainParticipantFactory},
++ *                  {@link DomainParticipant}, {@link Publisher},
++ *                  {@link Subscriber}
++ * 
++ * <b>RxO:</b> No
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * This policy controls the behavior of the Entity as a factory for other entities.
++ * 
++ * This policy concerns only DomainParticipant (as factory for Publisher,
++ * Subscriber, and {@link Topic}), Publisher (as factory for
++ * {@link DataWriter}), and Subscriber (as factory for {@link DataReader}).
++ * 
++ * This policy is mutable. A change in the policy affects only the entities
++ * created after the change; not the previously created entities.
++ *  
++ * The setting of autoenableCreatedEntities to true indicates that the
++ * factory <code>create&lt;<i>entity</i>&gt;</code> operation will
++ * automatically invoke the {@link Entity#enable()} operation each time a new
++ * Entity is created. Therefore, the Entity returned by
++ * <code>create&lt;<i>entity</i>&gt;</code> will already be enabled. A
++ * setting of false indicates that the Entity will not be automatically
++ * enabled. The application will need to enable it explicitly by means of the
++ * enable operation.
++ * 
++ * The default setting of autoenableCreatedEntities = true means that, by
++ * default, it is not necessary to explicitly call enable on newly created
++ * entities.
++ */
++public interface EntityFactory
++extends QosPolicy.ForDomainParticipantFactory,
++        QosPolicy.ForDomainParticipant,
++        QosPolicy.ForPublisher,
++        QosPolicy.ForSubscriber
++{
++    /**
++     * @return the autoEnableCreatedEntities
++     */
++    public boolean isAutoEnableCreatedEntities();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public EntityFactory withAutoEnableCreatedEntities(
++            boolean autoEnableCreatedEntities);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\EntityFactory.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/TopicData.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TopicData.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/TopicData.java	(revision 191)
+@@ -0,0 +1,62 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.domain.DomainParticipant;
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * User data not known by the middleware, but distributed by means of
++ * built-in topics. The default value is an empty (zero-sized) sequence.
++ * 
++ * <b>Concerns:</b> {@link Topic}
++ * 
++ * <b>RxO:</b> No
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * The purpose of this QoS is to allow the application to attach additional
++ * information to the created {@link Topic}s such that when a remote
++ * application discovers their existence it can examine the information and
++ * use it in an application-defined way. In combination with the listeners on
++ * the {@link DataReader} and {@link DataWriter} as well as by means of
++ * operations such as
++ * {@link DomainParticipant#ignoreTopic(org.omg.dds.core.InstanceHandle)},
++ * these QoS can assist an application to extend the provided QoS.
++ */
++public interface TopicData extends QosPolicy.ForTopic
++{
++    /**
++     * Get a copy of the data.
++     */
++    public byte[] getValue();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public TopicData withValue(byte value[], int offset, int length);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\TopicData.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/Presentation.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/Presentation.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/Presentation.java	(revision 191)
+@@ -0,0 +1,214 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.pub.Publisher;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.sub.Subscriber;
++
++
++/**
++ * Specifies how the samples representing changes to data instances are
++ * presented to the subscribing application. This policy affects the
++ * application's ability to specify and receive coherent changes and to see
++ * the relative order of changes. The accessScope determines the largest
++ * scope spanning the entities for which the order and coherency of changes
++ * can be preserved. The two booleans control whether coherent access and
++ * ordered access are supported within the scope accessScope.
++ * 
++ * <b>Concerns:</b> {@link Publisher}, {@link Subscriber}
++ * 
++ * <b>RxO:</b> Yes
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * This QoS policy controls the extent to which changes to data instances can
++ * be made dependent on each other and also the kind of dependencies that can
++ * be propagated and maintained by the Service.
++ * 
++ * The setting of coherentAccess controls whether the Service will
++ * preserve the groupings of changes made by the publishing application
++ * by means of the operations {@link Publisher#beginCoherentChanges()} and
++ * {@link Publisher#endCoherentChanges()}.
++ * 
++ * The setting of orderedAccess controls whether the Service will preserve
++ * the order of changes.
++ * 
++ * The granularity is controlled by the setting of the accessScope.
++ * 
++ * Note that this QoS policy controls the scope at which related changes are
++ * made available to the subscriber. This means the subscriber <em>can</em>
++ * access the changes in a coherent manner and in the proper order; however,
++ * it does not necessarily imply that the Subscriber <em>will</em> indeed
++ * access the changes in the correct order. For that to occur, the
++ * application at the subscriber end must use the proper logic in reading the
++ * DataReader objects.
++ * 
++ * The value offered is considered compatible with the value requested if and
++ * only if the following conditions are met:
++ * 
++ * <ol>
++ *      <li>The inequality "offered access_scope >= requested access_scope"
++ *          evaluates to true. For the purposes of this inequality, the
++ *          values of {@link Presentation.AccessScopeKind} are
++ *          considered ordered such that INSTANCE < TOPIC < GROUP.</li>
++ *      <li>Requested coherentAccess is false, or else both offered and
++ *          requested coherentAccess are true.</li>
++ *      <li>Requested orderedAccess is false, or else both offered and
++ *          requested orderedAccess are true.</li>
++ * </ol>
++ */
++public interface Presentation
++extends QosPolicy.ForPublisher,
++        QosPolicy.ForSubscriber,
++        RequestedOffered<Presentation>
++{
++    // -----------------------------------------------------------------------
++    // Methods
++    // -----------------------------------------------------------------------
++
++    /**
++     * @return the accessScope
++     */
++    public AccessScopeKind getAccessScope();
++
++    /**
++     * If coherentAccess is set, then the accessScope controls the maximum
++     * extent of coherent changes. The behavior is as follows:
++     * 
++     * <ul>
++     *      <li>If accessAcope is set to
++     *          {@link Presentation.AccessScopeKind#INSTANCE}, the
++     *          use of {@link Publisher#beginCoherentChanges()} and
++     *          {@link Publisher#endCoherentChanges()} has no effect on how
++     *          the subscriber can access the data because with the scope
++     *          limited to each instance, changes to separate instances are
++     *          considered independent and thus cannot be grouped by a
++     *          coherent change.
++     *      <li>If accessScope is set to
++     *          {@link Presentation.AccessScopeKind#TOPIC}, then
++     *          coherent changes (indicated by their enclosure within calls to
++     *          {@link Publisher#beginCoherentChanges()} and
++     *          {@link Publisher#endCoherentChanges()}) will be made available
++     *          as such to each remote {@link DataReader} independently. That
++     *          is, changes made to instances within each individual
++     *          {@link DataWriter} will be available as coherent with respect
++     *          to other changes to instances in that same DataWriter, but
++     *          will not be grouped with changes made to instances belonging
++     *          to a different DataWriter.
++     *      <li>If accessScope is set to
++     *          {@link Presentation.AccessScopeKind#GROUP}, then
++     *          coherent changes made to instances through a DataWriter
++     *          attached to a common {@link Publisher} are made available as
++     *          a unit to remote subscribers.</li>
++     * </ul>
++     * 
++     * @see #getAccessScope()
++     */
++    public boolean isCoherentAccess();
++
++    /**
++     * If orderedAccess is set, then the accessScope controls the maximum
++     * extent for which order will be preserved by the Service.
++     * 
++     * <ul>
++     *  <li>If accessScope is set to
++     *      {@link Presentation.AccessScopeKind#INSTANCE} (the
++     *      lowest level), then changes to each instance are considered
++     *      unordered relative to changes to any other instance. That means
++     *      that changes (creations, deletions, modifications) made to two
++     *      instances are not necessarily seen in the order they occur. This
++     *      is the case even if it is the same application thread making the
++     *      changes using the same {@link DataWriter}.</li>
++     *  <li>If accessScope is set to
++     *      {@link Presentation.AccessScopeKind#TOPIC}, changes
++     *      (creations, deletions, modifications) made by a single
++     *      {@link DataWriter} are made available to subscribers in the same
++     *      order they occur. Changes made to instances through different
++     *      DataWriter entities are not necessarily seen in the order they
++     *      occur. This is the case, even if the changes are made by a single
++     *      application thread using DataWriter objects attached to the same
++     *      {@link Publisher}.</li>
++     *  <li>Finally, if accessScope is set to
++     *      {@link Presentation.AccessScopeKind#GROUP}, changes made
++     *      to instances via DataWriter entities attached to the same
++     *      Publisher object are made available to subscribers on the same
++     *      order they occur.</li>
++     * </ul>
++     * 
++     * @see #getAccessScope()
++     */
++    public boolean isOrderedAccess();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Presentation withAccessScope(AccessScopeKind accessScope);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Presentation withCoherentAccess(boolean coherentAccess);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Presentation withOrderedAccess(boolean orderedAccess);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    public enum AccessScopeKind {
++        /**
++         * Scope spans only a single instance. Indicates that changes to one
++         * instance need not be coherent nor ordered with respect to changes
++         * to any other instance. In other words, order and coherent changes
++         * apply to each instance separately. This is the default accessScope.
++         */
++        INSTANCE,
++
++        /**
++         * Scope spans to all instances within the same {@link DataWriter}
++         * (or {@link DataReader}), but not across instances in different
++         * DataWriter (or DataReader).
++         */
++        TOPIC,
++
++        /**
++         * [optional] Scope spans to all instances belonging to
++         * {@link DataWriter} (or {@link DataReader}) entities within the
++         * same {@link Publisher} (or {@link Subscriber}).
++         */
++        GROUP
++    }
++
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\Presentation.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/DestinationOrder.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/DestinationOrder.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/DestinationOrder.java	(revision 191)
+@@ -0,0 +1,114 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.pub.Publisher;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.sub.Subscriber;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * Controls the criteria used to determine the logical order among changes
++ * made by {@link Publisher} entities to the same instance of data (i.e.,
++ * matching Topic and key). The default kind is
++ * {@link DestinationOrder.Kind#BY_RECEPTION_TIMESTAMP}.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> Yes
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * This policy controls how each subscriber resolves the final value of a
++ * data instance that is written by multiple DataWriter objects (which may be
++ * associated with different Publisher objects) running on different nodes.
++ * 
++ * The setting {@link Kind#BY_RECEPTION_TIMESTAMP} indicates that, assuming
++ * the {@link Ownership} allows it, the latest received value for
++ * the instance should be the one whose value is kept. This is the default
++ * value.
++ * 
++ * The setting {@link Kind#BY_SOURCE_TIMESTAMP} indicates that, assuming the
++ * {@link Ownership} allows it, a time stamp placed at the source
++ * should be used. This is the only setting that, in the case of concurrent
++ * same-strength DataWriter objects updating the same instance, ensures all
++ * subscribers will end up with the same final value for the instance. The
++ * mechanism to set the source time stamp is middleware dependent.
++ * 
++ * The value offered is considered compatible with the value requested if and
++ * only if the inequality "offered kind &gt;= requested kind" evaluates to
++ * true. For the purposes of this inequality, the values of DESTINATION_ORDER
++ * kind are considered ordered such that BY_RECEPTION_TIMESTAMP &lt;
++ * BY_SOURCE_TIMESTAMP.
++ * 
++ * @see Ownership
++ */
++public interface DestinationOrder
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<DestinationOrder>
++{
++    // -----------------------------------------------------------------------
++    // Methods
++    // -----------------------------------------------------------------------
++
++    /**
++     * @return the kind
++     */
++    public Kind getKind();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public DestinationOrder withKind(Kind kind);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    public enum Kind {
++        /**
++         * Indicates that data is ordered based on the reception time at each
++         * {@link Subscriber}. Since each subscriber may receive the data at
++         * different times there is no guaranteed that the changes will be
++         * seen in the same order. Consequently, it is possible for each
++         * subscriber to end up with a different final value for the data.
++         */
++        BY_RECEPTION_TIMESTAMP,
++
++        /**
++         * Indicates that data is ordered based on a time stamp placed at the
++         * source (by the Service or by the application). In any case this
++         * guarantees a consistent final value for the data in all
++         * subscribers.
++         */
++        BY_SOURCE_TIMESTAMP
++    }
++
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\DestinationOrder.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/Ownership.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/Ownership.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/Ownership.java	(revision 191)
+@@ -0,0 +1,91 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.sub.DataReader;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * [optional] Specifies whether it is allowed for multiple {@link DataWriter}s
++ * to write the same instance of the data and if so, how these modifications
++ * should be arbitrated.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> Yes
++ * 
++ * <b>Changeable:</b> No
++ * 
++ * @see OwnershipStrength
++ */
++public interface Ownership
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<Ownership>
++{
++    // -----------------------------------------------------------------------
++    // Methods
++    // -----------------------------------------------------------------------
++
++    /**
++     * @return the kind
++     */
++    public Kind getKind();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Ownership withKind(Kind kind);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    public enum Kind {
++        /**
++         * Indicates shared ownership for each instance. Multiple writers are
++         * allowed to update the same instance and all the updates are made
++         * available to the readers. In other words there is no concept of an
++         * "owner" for the instances. This is the default behavior.
++         */
++        SHARED,
++
++        /**
++         * Indicates each instance can only be owned by one
++         * {@link DataWriter}, but the owner of an instance can change
++         * dynamically. The selection of the owner is controlled by the
++         * setting of the {@link OwnershipStrength}. The owner is
++         * always set to be the highest-strength DataWriter object among the
++         * ones currently "active" (as determined by the
++         * {@link Liveliness}).
++         */
++        EXCLUSIVE
++    }
++
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\Ownership.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcement.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcement.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/TypeConsistencyEnforcement.java	(revision 191)
+@@ -0,0 +1,60 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.type.BitBound;
++
++
++public interface TypeConsistencyEnforcement
++extends QosPolicy.ForTopic,
++        QosPolicy.ForDataReader,
++        QosPolicy.ForDataWriter,
++        RequestedOffered<TypeConsistencyEnforcement>
++{
++    // -----------------------------------------------------------------------
++    // Properties
++    // -----------------------------------------------------------------------
++
++    public Kind getKind();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public TypeConsistencyEnforcement withKind(Kind kind);
++
++
++
++    // -----------------------------------------------------------------------
++    // Types
++    // -----------------------------------------------------------------------
++
++    @BitBound(16)
++    public static enum Kind
++    {
++        EXACT_TYPE_TYPE_CONSISTENCY,
++        EXACT_NAME_TYPE_CONSISTENCY,
++        DECLARED_TYPE_CONSISTENCY,
++        ASSIGNABLE_TYPE_CONSISTENCY
++    }
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\TypeConsistencyEnforcement.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/OwnershipStrength.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/OwnershipStrength.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/OwnershipStrength.java	(revision 191)
+@@ -0,0 +1,57 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * [optional] Specifies the value of the "strength" used to arbitrate among
++ * multiple {@link DataWriter} objects that attempt to modify the same
++ * instance of a data object (identified by {@link Topic} + key). This policy
++ * only applies if the {@link Ownership#getKind()} is
++ * {@link Ownership.Kind#EXCLUSIVE}. The default value of the
++ * ownership strength is zero.
++ * 
++ * <b>Concerns:</b> {@link DataWriter}
++ * 
++ * <b>RxO:</b> N/A
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * @see Ownership
++ */
++public interface OwnershipStrength extends QosPolicy.ForDataWriter
++{
++    /**
++     * @return the value
++     */
++    public int getValue();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public OwnershipStrength withValue(int value);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\OwnershipStrength.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/core/policy/TransportPriority.java
+===================================================================
+--- srcJava/org/omg/dds/core/policy/TransportPriority.java	(revision 0)
++++ srcJava/org/omg/dds/core/policy/TransportPriority.java	(revision 191)
+@@ -0,0 +1,69 @@
++/* Copyright 2010, Object Management Group, Inc.
++ * Copyright 2010, PrismTech, Inc.
++ * Copyright 2010, Real-Time Innovations, Inc.
++ * All rights reserved.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package org.omg.dds.core.policy;
++
++import org.omg.dds.pub.DataWriter;
++import org.omg.dds.topic.Topic;
++
++
++/**
++ * This policy is a hint to the infrastructure as to how to set the priority
++ * of the underlying transport used to send the data. The default value is
++ * zero.
++ * 
++ * <b>Concerns:</b> {@link Topic}, {@link DataWriter}
++ * 
++ * <b>RxO:</b> N/A
++ * 
++ * <b>Changeable:</b> Yes
++ * 
++ * The purpose of this QoS is to allow the application to take advantage of
++ * transports capable of sending messages with different priorities.
++ * 
++ * This policy is considered a hint. The policy depends on the ability of the
++ * underlying transports to set a priority on the messages they send. Any
++ * value within the range of a 32-bit signed integer may be chosen; higher
++ * values indicate higher priority. However, any further interpretation of
++ * this policy is specific to a particular transport and a particular
++ * implementation of the Service. For example, a particular transport is
++ * permitted to treat a range of priority values as equivalent to one
++ * another. It is expected that during transport configuration the
++ * application would provide a mapping between the values of the
++ * TRANSPORT_PRIORITY set on DataWriter and the values meaningful to each
++ * transport. This mapping would then be used by the infrastructure when
++ * propagating the data written by the DataWriter.
++ */
++public interface TransportPriority
++extends QosPolicy.ForTopic, QosPolicy.ForDataWriter
++{
++    /**
++     * @return the value
++     */
++    public int getValue();
++
++
++    // --- Modification: -----------------------------------------------------
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public TransportPriority withValue(int value);
++}
+
+Property changes on: srcJava\org\omg\dds\core\policy\TransportPriority.java
+___________________________________________________________________
+Added: svn:eol-style
+   + native
+
+Index: srcJava/org/omg/dds/sub/Subscriber.java
+===================================================================
+--- srcJava/org/omg/dds/sub/Subscriber.java	(revision 190)
++++ srcJava/org/omg/dds/sub/Subscriber.java	(working copy)
+@@ -28,7 +28,7 @@
+ import org.omg.dds.core.NotEnabledException;
+ import org.omg.dds.core.PreconditionNotMetException;
+ import org.omg.dds.core.StatusCondition;
+-import org.omg.dds.core.policy.PresentationQosPolicy;
++import org.omg.dds.core.policy.Presentation;
+ import org.omg.dds.core.status.DataAvailableEvent;
+ import org.omg.dds.core.status.Status;
+ import org.omg.dds.domain.DomainParticipant;
+@@ -433,16 +433,16 @@
+      * @return  readers, as a convenience to facilitate chaining.
+      * 
+      * @throws  PreconditionNotMetException     if the Subscriber has
+-     *          {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *          {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *          set to
+-     *          {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
++     *          {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP}
+      *          and this operation is not invoked inside a
+      *          {@link #beginAccess()}/{@link #endAccess()} block.
+      * 
+      * @see     #getDataReaders(Collection, ReaderState)
+      * @see     #beginAccess()
+      * @see     #endAccess()
+-     * @see     PresentationQosPolicy
++     * @see     Presentation
+      */
+     public Collection<DataReader<?>> getDataReaders(
+             Collection<DataReader<?>> readers);
+@@ -452,17 +452,17 @@
+      * objects that contain samples with the specified sample states,
+      * view states, and instance states.
+      * 
+-     * If the {@link org.omg.dds.core.policy.PresentationQosPolicy} of the
++     * If the {@link org.omg.dds.core.policy.Presentation} of the
+      * Subscriber has
+-     * {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     * {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      * set to
+-     * {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP},
++     * {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP},
+      * this operation should only be invoked inside a {@link #beginAccess()}/
+      * {@link #endAccess()} block. Otherwise it will fail with
+      * {@link PreconditionNotMetException}.
+      * 
+      * Depending on the setting of the
+-     * {@link org.omg.dds.core.policy.PresentationQosPolicy}, the
++     * {@link org.omg.dds.core.policy.Presentation}, the
+      * returned collection of DataReader objects may be a 'set' containing
+      * each DataReader at most once in no specified order, or a 'list'
+      * containing each DataReader one or more times in a specific order.
+@@ -470,17 +470,17 @@
+      * the collection may or may not implement {@link Set} or {@link List}).
+      * 
+      * <ol>
+-     *     <li>If {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *     <li>If {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#INSTANCE}
++     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#INSTANCE}
+      *         or
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#TOPIC},
++     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#TOPIC},
+      *         the returned collection is a 'set'.</li>
+-     *     <li>If {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *     <li>If {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
++     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP}
+      *         and
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
++     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
+      *         is true, then the returned collection is a 'list'.</li>
+      * </ol>
+      * 
+@@ -499,16 +499,16 @@
+      * @return  readers, as a convenience to facilitate chaining.
+      * 
+      * @throws  PreconditionNotMetException     if the Subscriber has
+-     *          {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *          {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *          set to
+-     *          {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
++     *          {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP}
+      *          and this operation is not invoked inside a
+      *          {@link #beginAccess()}/{@link #endAccess()} block.
+      * 
+      * @see     #getDataReaders(Collection)
+      * @see     #beginAccess()
+      * @see     #endAccess()
+-     * @see     PresentationQosPolicy
++     * @see     Presentation
+      */
+     public Collection<DataReader<?>> getDataReaders(
+             Collection<DataReader<?>> readers,
+@@ -534,11 +534,11 @@
+      * Subscriber.
+      * 
+      * The application is required to use this operation only if the
+-     * {@link org.omg.dds.core.policy.PresentationQosPolicy} of the
++     * {@link org.omg.dds.core.policy.Presentation} of the
+      * Subscriber has 
+-     * {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     * {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      * equal to
+-     * {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}.
++     * {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP}.
+      * 
+      * In the aforementioned case, the operation must be called prior to
+      * calling any of the sample-accessing operations, namely:
+@@ -550,7 +550,7 @@
+      * 
+      * It is not required for the application to call {@link #beginAccess()}/
+      * {@link #endAccess()} if the
+-     * {@link org.omg.dds.core.policy.PresentationQosPolicy} has the
++     * {@link org.omg.dds.core.policy.Presentation} has the
+      * access scope set to something other than 'GROUP'. Calling these
+      * methods in this case is not considered an error and has no effect.
+      * 
+@@ -559,7 +559,7 @@
+      * as many times as it called beginAccess.
+      * 
+      * @see     #endAccess()
+-     * @see     PresentationQosPolicy
++     * @see     Presentation
+      */
+     public void beginAccess();
+ 
+Index: srcJava/org/omg/dds/sub/DataReaderQos.java
+===================================================================
+--- srcJava/org/omg/dds/sub/DataReaderQos.java	(revision 190)
++++ srcJava/org/omg/dds/sub/DataReaderQos.java	(working copy)
+@@ -19,20 +19,20 @@
+ package org.omg.dds.sub;
+ 
+ import org.omg.dds.core.EntityQos;
+-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
+-import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+-import org.omg.dds.core.policy.DurabilityQosPolicy;
+-import org.omg.dds.core.policy.HistoryQosPolicy;
+-import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
+-import org.omg.dds.core.policy.LivelinessQosPolicy;
+-import org.omg.dds.core.policy.OwnershipQosPolicy;
++import org.omg.dds.core.policy.DataRepresentation;
++import org.omg.dds.core.policy.Deadline;
++import org.omg.dds.core.policy.DestinationOrder;
++import org.omg.dds.core.policy.Durability;
++import org.omg.dds.core.policy.History;
++import org.omg.dds.core.policy.LatencyBudget;
++import org.omg.dds.core.policy.Liveliness;
++import org.omg.dds.core.policy.Ownership;
+ import org.omg.dds.core.policy.QosPolicy;
+-import org.omg.dds.core.policy.ReaderDataLifecycleQosPolicy;
+-import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
+-import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
+-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
+-import org.omg.dds.core.policy.UserDataQosPolicy;
++import org.omg.dds.core.policy.ReaderDataLifecycle;
++import org.omg.dds.core.policy.ResourceLimits;
++import org.omg.dds.core.policy.TimeBasedFilter;
++import org.omg.dds.core.policy.TypeConsistencyEnforcement;
++import org.omg.dds.core.policy.UserData;
+ 
+ 
+ public interface DataReaderQos
+@@ -41,61 +41,61 @@
+     /**
+      * @return the durability
+      */
+-    public DurabilityQosPolicy getDurability();
++    public Durability getDurability();
+ 
+     /**
+      * @return the deadline
+      */
+-    public DeadlineQosPolicy getDeadline();
++    public Deadline getDeadline();
+ 
+     /**
+      * @return the latencyBudget
+      */
+-    public LatencyBudgetQosPolicy getLatencyBudget();
++    public LatencyBudget getLatencyBudget();
+ 
+     /**
+      * @return the liveliness
+      */
+-    public LivelinessQosPolicy getLiveliness();
++    public Liveliness getLiveliness();
+ 
+     /**
+      * @return the destinationOrder
+      */
+-    public DestinationOrderQosPolicy getDestinationOrder();
++    public DestinationOrder getDestinationOrder();
+ 
+     /**
+      * @return the history
+      */
+-    public HistoryQosPolicy getHistory();
++    public History getHistory();
+ 
+     /**
+      * @return the resourceLimits
+      */
+-    public ResourceLimitsQosPolicy getResourceLimits();
++    public ResourceLimits getResourceLimits();
+ 
+     /**
+      * @return the userData
+      */
+-    public UserDataQosPolicy getUserData();
++    public UserData getUserData();
+ 
+     /**
+      * @return the ownership
+      */
+-    public OwnershipQosPolicy getOwnership();
++    public Ownership getOwnership();
+ 
+     /**
+      * @return the timeBasedFilter
+      */
+-    public TimeBasedFilterQosPolicy getTimeBasedFilter();
++    public TimeBasedFilter getTimeBasedFilter();
+ 
+     /**
+      * @return the readerDataLifecycle
+      */
+-    public ReaderDataLifecycleQosPolicy getReaderDataLifecycle();
++    public ReaderDataLifecycle getReaderDataLifecycle();
+ 
+-    public DataRepresentationQosPolicy getRepresentation();
++    public DataRepresentation getRepresentation();
+ 
+-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
++    public TypeConsistencyEnforcement getTypeConsistency();
+ 
+ 
+     // --- Modification: -----------------------------------------------------
+Index: srcJava/org/omg/dds/sub/Sample.java
+===================================================================
+--- srcJava/org/omg/dds/sub/Sample.java	(revision 190)
++++ srcJava/org/omg/dds/sub/Sample.java	(working copy)
+@@ -232,19 +232,19 @@
+      * 
+      * The precise behavior events that cause the instanceState to change
+      * depends on the setting of the
+-     * {@link org.omg.dds.core.policy.OwnershipQosPolicy}:
++     * {@link org.omg.dds.core.policy.Ownership}:
+      * 
+      * <ul>
+-     *     <li>If {@link org.omg.dds.core.policy.OwnershipQosPolicy#getKind()}
++     *     <li>If {@link org.omg.dds.core.policy.Ownership#getKind()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.OwnershipQosPolicy.Kind#EXCLUSIVE},
++     *         {@link org.omg.dds.core.policy.Ownership.Kind#EXCLUSIVE},
+      *         then the instanceState becomes NOT_ALIVE_DISPOSED only if the
+      *         DataWriter that "owns" the instance explicitly disposes it.
+      *         The instanceState becomes ALIVE again only if the DataWriter
+      *         that owns the instance writes it.</li>
+-     *     <li>If {@link org.omg.dds.core.policy.OwnershipQosPolicy#getKind()}
++     *     <li>If {@link org.omg.dds.core.policy.Ownership#getKind()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.OwnershipQosPolicy.Kind#SHARED},
++     *         {@link org.omg.dds.core.policy.Ownership.Kind#SHARED},
+      *         then the instanceState
+      *         becomes NOT_ALIVE_DISPOSED if any DataWriter explicitly
+      *         disposes the instance. The instanceState becomes ALIVE as soon
+Index: srcJava/org/omg/dds/sub/SubscriberQos.java
+===================================================================
+--- srcJava/org/omg/dds/sub/SubscriberQos.java	(revision 190)
++++ srcJava/org/omg/dds/sub/SubscriberQos.java	(working copy)
+@@ -19,10 +19,10 @@
+ package org.omg.dds.sub;
+ 
+ import org.omg.dds.core.EntityQos;
+-import org.omg.dds.core.policy.EntityFactoryQosPolicy;
+-import org.omg.dds.core.policy.GroupDataQosPolicy;
+-import org.omg.dds.core.policy.PartitionQosPolicy;
+-import org.omg.dds.core.policy.PresentationQosPolicy;
++import org.omg.dds.core.policy.EntityFactory;
++import org.omg.dds.core.policy.GroupData;
++import org.omg.dds.core.policy.Partition;
++import org.omg.dds.core.policy.Presentation;
+ import org.omg.dds.core.policy.QosPolicy;
+ 
+ 
+@@ -32,22 +32,22 @@
+     /**
+      * @return the presentation
+      */
+-    public PresentationQosPolicy getPresentation();
++    public Presentation getPresentation();
+ 
+     /**
+      * @return the partition
+      */
+-    public PartitionQosPolicy getPartition();
++    public Partition getPartition();
+ 
+     /**
+      * @return the groupData
+      */
+-    public GroupDataQosPolicy getGroupData();
++    public GroupData getGroupData();
+ 
+     /**
+      * @return the entityFactory
+      */
+-    public EntityFactoryQosPolicy getEntityFactory();
++    public EntityFactory getEntityFactory();
+ 
+ 
+     // --- Modification: -----------------------------------------------------
+Index: srcJava/org/omg/dds/sub/DataReader.java
+===================================================================
+--- srcJava/org/omg/dds/sub/DataReader.java	(revision 190)
++++ srcJava/org/omg/dds/sub/DataReader.java	(working copy)
+@@ -31,7 +31,7 @@
+ import org.omg.dds.core.NotEnabledException;
+ import org.omg.dds.core.PreconditionNotMetException;
+ import org.omg.dds.core.StatusCondition;
+-import org.omg.dds.core.policy.HistoryQosPolicy;
++import org.omg.dds.core.policy.History;
+ import org.omg.dds.core.status.LivelinessChangedStatus;
+ import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
+ import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
+@@ -86,7 +86,7 @@
+  * an atom of data information (i.e., a value for one instance). This
+  * collection may contain samples related to the same or different instances
+  * (identified by the key). Multiple samples can refer to the same instance
+- * if the settings of the {@link HistoryQosPolicy} allow for it.
++ * if the settings of the {@link History} allow for it.
+  * 
+  * @param <TYPE>    The concrete type of the data to be read.
+  */
+@@ -216,8 +216,8 @@
+ 
+     /**
+      * This operation is intended only for DataReader entities for which
+-     * {@link org.omg.dds.core.policy.DurabilityQosPolicy#getKind()} is not
+-     * {@link org.omg.dds.core.policy.DurabilityQosPolicy.Kind#VOLATILE}.
++     * {@link org.omg.dds.core.policy.Durability#getKind()} is not
++     * {@link org.omg.dds.core.policy.Durability.Kind#VOLATILE}.
+      * 
+      * As soon as an application enables a non-VOLATILE DataReader it will
+      * start receiving both "historical" data, i.e., the data that was
+@@ -241,8 +241,8 @@
+ 
+     /**
+      * This operation is intended only for DataReader entities for which
+-     * {@link org.omg.dds.core.policy.DurabilityQosPolicy#getKind()} is not
+-     * {@link org.omg.dds.core.policy.DurabilityQosPolicy.Kind#VOLATILE}.
++     * {@link org.omg.dds.core.policy.Durability#getKind()} is not
++     * {@link org.omg.dds.core.policy.Durability.Kind#VOLATILE}.
+      * 
+      * As soon as an application enables a non-VOLATILE DataReader it will
+      * start receiving both "historical" data, i.e., the data that was
+@@ -335,48 +335,48 @@
+     /**
+      * This operation accesses a collection of samples from this DataReader.
+      * The returned samples will be limited by the given {@link Query}. The
+-     * setting of the {@link org.omg.dds.core.policy.PresentationQosPolicy}
++     * setting of the {@link org.omg.dds.core.policy.Presentation}
+      * may impose further limits on the returned samples.
+      * 
+      * <ol>
+      *     <li>If
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#INSTANCE},
++     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#INSTANCE},
+      *         then samples belonging to the same data instance are consecutive.
+      *         </li>
+      *     <li>If
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#TOPIC}
++     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#TOPIC}
+      *         and
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
++     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
+      *         is set to false, then samples belonging to the same data
+      *         instance are consecutive.</li>
+      *     <li>If
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#TOPIC}
++     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#TOPIC}
+      *         and
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
++     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
+      *         is set to true, then samples belonging to the same instance
+      *         may or may not be consecutive. This is because to preserve
+      *         order it may be necessary to mix samples from different
+      *         instances.</li>
+      *     <li>If
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
++     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP}
+      *         and
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
++     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
+      *         is set to false, then samples belonging to the same data
+      *         instance are consecutive.</li>
+      *     <li>If
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#getAccessScope()}
++     *         {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy.AccessScopeKind#GROUP}
++     *         {@link org.omg.dds.core.policy.Presentation.AccessScopeKind#GROUP}
+      *         and
+-     *         {@link org.omg.dds.core.policy.PresentationQosPolicy#isOrderedAccess()}
++     *         {@link org.omg.dds.core.policy.Presentation#isOrderedAccess()}
+      *         is set to true, then the returned collection contains at most
+      *         one sample. The difference in this case is due to the fact
+      *         that it is required that the application is able to read
+@@ -387,20 +387,20 @@
+      * 
+      * In any case, the relative order between the samples of one instance is
+      * consistent with the
+-     * {@link org.omg.dds.core.policy.DestinationOrderQosPolicy}:
++     * {@link org.omg.dds.core.policy.DestinationOrder}:
+      * 
+      * <ul>
+      *     <li>If
+-     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy#getKind()}
++     *         {@link org.omg.dds.core.policy.DestinationOrder#getKind()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy.Kind#BY_RECEPTION_TIMESTAMP},
++     *         {@link org.omg.dds.core.policy.DestinationOrder.Kind#BY_RECEPTION_TIMESTAMP},
+      *         samples belonging to the same instances will appear in the
+      *         relative order in which they were received (FIFO, earlier
+      *         samples ahead of the later samples).</li>
+      *     <li>If
+-     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy#getKind()}
++     *         {@link org.omg.dds.core.policy.DestinationOrder#getKind()}
+      *         is
+-     *         {@link org.omg.dds.core.policy.DestinationOrderQosPolicy.Kind#BY_SOURCE_TIMESTAMP},
++     *         {@link org.omg.dds.core.policy.DestinationOrder.Kind#BY_SOURCE_TIMESTAMP},
+      *         samples belonging to the same instances will appear in the
+      *         relative order implied by the result of
+      *         {@link Sample#getSourceTimestamp()} (FIFO, smaller values of
+@@ -423,7 +423,7 @@
+      * that instance in the collection, that is, the one with
+      * {@link Sample#getSampleRank()} == 0, does not contain valid data.
+      * Samples that contain no data do not count towards the limits imposed
+-     * by the {@link org.omg.dds.core.policy.ResourceLimitsQosPolicy}.
++     * by the {@link org.omg.dds.core.policy.ResourceLimits}.
+      * 
+      * The act of reading a sample sets its sample state to
+      * {@link SampleState#READ}. If the sample belongs to the most recent
+@@ -510,7 +510,7 @@
+     /**
+      * This operation accesses a collection of samples from this DataReader.
+      * The number of samples returned is controlled by the
+-     * {@link org.omg.dds.core.policy.PresentationQosPolicy} and other
++     * {@link org.omg.dds.core.policy.Presentation} and other
+      * factors using the same logic as for {@link #read(Query)}.
+      * 
+      * The act of taking a sample removes it from the DataReader so it cannot
+Index: srcJava/org/omg/dds/topic/TopicQos.java
+===================================================================
+--- srcJava/org/omg/dds/topic/TopicQos.java	(revision 190)
++++ srcJava/org/omg/dds/topic/TopicQos.java	(working copy)
+@@ -19,22 +19,22 @@
+ package org.omg.dds.topic;
+ 
+ import org.omg.dds.core.EntityQos;
+-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
+-import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+-import org.omg.dds.core.policy.DurabilityQosPolicy;
+-import org.omg.dds.core.policy.DurabilityServiceQosPolicy;
+-import org.omg.dds.core.policy.HistoryQosPolicy;
+-import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
+-import org.omg.dds.core.policy.LifespanQosPolicy;
+-import org.omg.dds.core.policy.LivelinessQosPolicy;
+-import org.omg.dds.core.policy.OwnershipQosPolicy;
++import org.omg.dds.core.policy.DataRepresentation;
++import org.omg.dds.core.policy.Deadline;
++import org.omg.dds.core.policy.DestinationOrder;
++import org.omg.dds.core.policy.Durability;
++import org.omg.dds.core.policy.DurabilityService;
++import org.omg.dds.core.policy.History;
++import org.omg.dds.core.policy.LatencyBudget;
++import org.omg.dds.core.policy.Lifespan;
++import org.omg.dds.core.policy.Liveliness;
++import org.omg.dds.core.policy.Ownership;
+ import org.omg.dds.core.policy.QosPolicy;
+-import org.omg.dds.core.policy.ReliabilityQosPolicy;
+-import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
+-import org.omg.dds.core.policy.TopicDataQosPolicy;
+-import org.omg.dds.core.policy.TransportPriorityQosPolicy;
+-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
++import org.omg.dds.core.policy.Reliability;
++import org.omg.dds.core.policy.ResourceLimits;
++import org.omg.dds.core.policy.TopicData;
++import org.omg.dds.core.policy.TransportPriority;
++import org.omg.dds.core.policy.TypeConsistencyEnforcement;
+ 
+ 
+ public interface TopicQos extends EntityQos<QosPolicy.ForTopic>
+@@ -42,71 +42,71 @@
+     /**
+      * @return the topicData
+      */
+-    public TopicDataQosPolicy getTopicData();
++    public TopicData getTopicData();
+ 
+     /**
+      * @return the durability
+      */
+-    public DurabilityQosPolicy getDurability();
++    public Durability getDurability();
+ 
+     /**
+      * @return the durabilityService
+      */
+-    public DurabilityServiceQosPolicy getDurabilityService();
++    public DurabilityService getDurabilityService();
+ 
+     /**
+      * @return the deadline
+      */
+-    public DeadlineQosPolicy getDeadline();
++    public Deadline getDeadline();
+ 
+     /**
+      * @return the latencyBudget
+      */
+-    public LatencyBudgetQosPolicy getLatencyBudget();
++    public LatencyBudget getLatencyBudget();
+ 
+     /**
+      * @return the liveliness
+      */
+-    public LivelinessQosPolicy getLiveliness();
++    public Liveliness getLiveliness();
+ 
+     /**
+      * @return the reliability
+      */
+-    public ReliabilityQosPolicy getReliability();
++    public Reliability getReliability();
+ 
+     /**
+      * @return the destinationOrder
+      */
+-    public DestinationOrderQosPolicy getDestinationOrder();
++    public DestinationOrder getDestinationOrder();
+ 
+     /**
+      * @return the history
+      */
+-    public HistoryQosPolicy getHistory();
++    public History getHistory();
+ 
+     /**
+      * @return the resourceLimits
+      */
+-    public ResourceLimitsQosPolicy getResourceLimits();
++    public ResourceLimits getResourceLimits();
+ 
+     /**
+      * @return the transportPriority
+      */
+-    public TransportPriorityQosPolicy getTransportPriority();
++    public TransportPriority getTransportPriority();
+ 
+     /**
+      * @return the lifespan
+      */
+-    public LifespanQosPolicy getLifespan();
++    public Lifespan getLifespan();
+ 
+     /**
+      * @return the ownership
+      */
+-    public OwnershipQosPolicy getOwnership();
++    public Ownership getOwnership();
+ 
+-    public DataRepresentationQosPolicy getRepresentation();
++    public DataRepresentation getRepresentation();
+ 
+-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
++    public TypeConsistencyEnforcement getTypeConsistency();
+ 
+ 
+     // --- Modification: -----------------------------------------------------
+Index: srcJava/org/omg/dds/topic/SubscriptionBuiltinTopicData.java
+===================================================================
+--- srcJava/org/omg/dds/topic/SubscriptionBuiltinTopicData.java	(revision 190)
++++ srcJava/org/omg/dds/topic/SubscriptionBuiltinTopicData.java	(working copy)
+@@ -22,21 +22,21 @@
+ import java.util.List;
+ 
+ import org.omg.dds.core.DDSObject;
+-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
+-import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+-import org.omg.dds.core.policy.DurabilityQosPolicy;
+-import org.omg.dds.core.policy.GroupDataQosPolicy;
+-import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
+-import org.omg.dds.core.policy.LivelinessQosPolicy;
+-import org.omg.dds.core.policy.OwnershipQosPolicy;
+-import org.omg.dds.core.policy.PartitionQosPolicy;
+-import org.omg.dds.core.policy.PresentationQosPolicy;
+-import org.omg.dds.core.policy.ReliabilityQosPolicy;
+-import org.omg.dds.core.policy.TimeBasedFilterQosPolicy;
+-import org.omg.dds.core.policy.TopicDataQosPolicy;
+-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
+-import org.omg.dds.core.policy.UserDataQosPolicy;
++import org.omg.dds.core.policy.DataRepresentation;
++import org.omg.dds.core.policy.Deadline;
++import org.omg.dds.core.policy.DestinationOrder;
++import org.omg.dds.core.policy.Durability;
++import org.omg.dds.core.policy.GroupData;
++import org.omg.dds.core.policy.LatencyBudget;
++import org.omg.dds.core.policy.Liveliness;
++import org.omg.dds.core.policy.Ownership;
++import org.omg.dds.core.policy.Partition;
++import org.omg.dds.core.policy.Presentation;
++import org.omg.dds.core.policy.Reliability;
++import org.omg.dds.core.policy.TimeBasedFilter;
++import org.omg.dds.core.policy.TopicData;
++import org.omg.dds.core.policy.TypeConsistencyEnforcement;
++import org.omg.dds.core.policy.UserData;
+ import org.omg.dds.type.Extensibility;
+ import org.omg.dds.type.ID;
+ import org.omg.dds.type.Key;
+@@ -82,85 +82,85 @@
+      * @return the durability
+      */
+     @ID(0x001D)
+-    public DurabilityQosPolicy getDurability();
++    public Durability getDurability();
+ 
+     /**
+      * @return the deadline
+      */
+     @ID(0x0023)
+-    public DeadlineQosPolicy getDeadline();
++    public Deadline getDeadline();
+ 
+     /**
+      * @return the latencyBudget
+      */
+     @ID(0x0027)
+-    public LatencyBudgetQosPolicy getLatencyBudget();
++    public LatencyBudget getLatencyBudget();
+ 
+     /**
+      * @return the liveliness
+      */
+     @ID(0x001B)
+-    public LivelinessQosPolicy getLiveliness();
++    public Liveliness getLiveliness();
+ 
+     /**
+      * @return the reliability
+      */
+     @ID(0x001A)
+-    public ReliabilityQosPolicy getReliability();
++    public Reliability getReliability();
+ 
+     /**
+      * @return the ownership
+      */
+     @ID(0x001F)
+-    public OwnershipQosPolicy getOwnership();
++    public Ownership getOwnership();
+ 
+     /**
+      * @return the destinationOrder
+      */
+     @ID(0x0025)
+-    public DestinationOrderQosPolicy getDestinationOrder();
++    public DestinationOrder getDestinationOrder();
+ 
+     /**
+      * @return the userData
+      */
+     @ID(0x002C)
+-    public UserDataQosPolicy getUserData();
++    public UserData getUserData();
+ 
+     /**
+      * @return the timeBasedFilter
+      */
+     @ID(0x0004)
+-    public TimeBasedFilterQosPolicy getTimeBasedFilter();
++    public TimeBasedFilter getTimeBasedFilter();
+ 
+     /**
+      * @return the presentation
+      */
+     @ID(0x0021)
+-    public PresentationQosPolicy getPresentation();
++    public Presentation getPresentation();
+ 
+     /**
+      * @return the partition
+      */
+     @ID(0x0029)
+-    public PartitionQosPolicy getPartition();
++    public Partition getPartition();
+ 
+     /**
+      * @return the topicData
+      */
+     @ID(0x002E)
+-    public TopicDataQosPolicy getTopicData();
++    public TopicData getTopicData();
+ 
+     /**
+      * @return the groupData
+      */
+     @ID(0x002D)
+-    public GroupDataQosPolicy getGroupData();
++    public GroupData getGroupData();
+ 
+     @ID(0x0073)
+-    public DataRepresentationQosPolicy getRepresentation();
++    public DataRepresentation getRepresentation();
+ 
+     @ID(0x0074)
+-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
++    public TypeConsistencyEnforcement getTypeConsistency();
+ 
+ 
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/topic/PublicationBuiltinTopicData.java
+===================================================================
+--- srcJava/org/omg/dds/topic/PublicationBuiltinTopicData.java	(revision 190)
++++ srcJava/org/omg/dds/topic/PublicationBuiltinTopicData.java	(working copy)
+@@ -22,23 +22,23 @@
+ import java.util.List;
+ 
+ import org.omg.dds.core.DDSObject;
+-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
+-import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+-import org.omg.dds.core.policy.DurabilityQosPolicy;
+-import org.omg.dds.core.policy.DurabilityServiceQosPolicy;
+-import org.omg.dds.core.policy.GroupDataQosPolicy;
+-import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
+-import org.omg.dds.core.policy.LifespanQosPolicy;
+-import org.omg.dds.core.policy.LivelinessQosPolicy;
+-import org.omg.dds.core.policy.OwnershipQosPolicy;
+-import org.omg.dds.core.policy.OwnershipStrengthQosPolicy;
+-import org.omg.dds.core.policy.PartitionQosPolicy;
+-import org.omg.dds.core.policy.PresentationQosPolicy;
+-import org.omg.dds.core.policy.ReliabilityQosPolicy;
+-import org.omg.dds.core.policy.TopicDataQosPolicy;
+-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
+-import org.omg.dds.core.policy.UserDataQosPolicy;
++import org.omg.dds.core.policy.DataRepresentation;
++import org.omg.dds.core.policy.Deadline;
++import org.omg.dds.core.policy.DestinationOrder;
++import org.omg.dds.core.policy.Durability;
++import org.omg.dds.core.policy.DurabilityService;
++import org.omg.dds.core.policy.GroupData;
++import org.omg.dds.core.policy.LatencyBudget;
++import org.omg.dds.core.policy.Lifespan;
++import org.omg.dds.core.policy.Liveliness;
++import org.omg.dds.core.policy.Ownership;
++import org.omg.dds.core.policy.OwnershipStrength;
++import org.omg.dds.core.policy.Partition;
++import org.omg.dds.core.policy.Presentation;
++import org.omg.dds.core.policy.Reliability;
++import org.omg.dds.core.policy.TopicData;
++import org.omg.dds.core.policy.TypeConsistencyEnforcement;
++import org.omg.dds.core.policy.UserData;
+ import org.omg.dds.type.Extensibility;
+ import org.omg.dds.type.ID;
+ import org.omg.dds.type.Key;
+@@ -84,97 +84,97 @@
+      * @return the durability
+      */
+     @ID(0x001D)
+-    public DurabilityQosPolicy getDurability();
++    public Durability getDurability();
+ 
+     /**
+      * @return the durabilityService
+      */
+     @ID(0x001E)
+-    public DurabilityServiceQosPolicy getDurabilityService();
++    public DurabilityService getDurabilityService();
+ 
+     /**
+      * @return the deadline
+      */
+     @ID(0x0023)
+-    public DeadlineQosPolicy getDeadline();
++    public Deadline getDeadline();
+ 
+     /**
+      * @return the latencyBudget
+      */
+     @ID(0x0027)
+-    public LatencyBudgetQosPolicy getLatencyBudget();
++    public LatencyBudget getLatencyBudget();
+ 
+     /**
+      * @return the liveliness
+      */
+     @ID(0x001B)
+-    public LivelinessQosPolicy getLiveliness();
++    public Liveliness getLiveliness();
+ 
+     /**
+      * @return the reliability
+      */
+     @ID(0x001A)
+-    public ReliabilityQosPolicy getReliability();
++    public Reliability getReliability();
+ 
+     /**
+      * @return the lifespan
+      */
+     @ID(0x002B)
+-    public LifespanQosPolicy getLifespan();
++    public Lifespan getLifespan();
+ 
+     /**
+      * @return the userData
+      */
+     @ID(0x002C)
+-    public UserDataQosPolicy getUserData();
++    public UserData getUserData();
+ 
+     /**
+      * @return the ownership
+      */
+     @ID(0x001F)
+-    public OwnershipQosPolicy getOwnership();
++    public Ownership getOwnership();
+ 
+     /**
+      * @return the ownershipStrength
+      */
+     @ID(0x0006)
+-    public OwnershipStrengthQosPolicy getOwnershipStrength();
++    public OwnershipStrength getOwnershipStrength();
+ 
+     /**
+      * @return the destinationOrder
+      */
+     @ID(0x0025)
+-    public DestinationOrderQosPolicy getDestinationOrder();
++    public DestinationOrder getDestinationOrder();
+ 
+     /**
+      * @return the presentation
+      */
+     @ID(0x0021)
+-    public PresentationQosPolicy getPresentation();
++    public Presentation getPresentation();
+ 
+     /**
+      * @return the partition
+      */
+     @ID(0x0029)
+-    public PartitionQosPolicy getPartition();
++    public Partition getPartition();
+ 
+     /**
+      * @return the topicData
+      */
+     @ID(0x002E)
+-    public TopicDataQosPolicy getTopicData();
++    public TopicData getTopicData();
+ 
+     /**
+      * @return the groupData
+      */
+     @ID(0x002D)
+-    public GroupDataQosPolicy getGroupData();
++    public GroupData getGroupData();
+ 
+     @ID(0x0073)
+-    public DataRepresentationQosPolicy getRepresentation();
++    public DataRepresentation getRepresentation();
+ 
+     @ID(0x0074)
+-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
++    public TypeConsistencyEnforcement getTypeConsistency();
+ 
+ 
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/topic/TopicBuiltinTopicData.java
+===================================================================
+--- srcJava/org/omg/dds/topic/TopicBuiltinTopicData.java	(revision 190)
++++ srcJava/org/omg/dds/topic/TopicBuiltinTopicData.java	(working copy)
+@@ -22,21 +22,21 @@
+ import java.util.List;
+ 
+ import org.omg.dds.core.DDSObject;
+-import org.omg.dds.core.policy.DataRepresentationQosPolicy;
+-import org.omg.dds.core.policy.DeadlineQosPolicy;
+-import org.omg.dds.core.policy.DestinationOrderQosPolicy;
+-import org.omg.dds.core.policy.DurabilityQosPolicy;
+-import org.omg.dds.core.policy.DurabilityServiceQosPolicy;
+-import org.omg.dds.core.policy.HistoryQosPolicy;
+-import org.omg.dds.core.policy.LatencyBudgetQosPolicy;
+-import org.omg.dds.core.policy.LifespanQosPolicy;
+-import org.omg.dds.core.policy.LivelinessQosPolicy;
+-import org.omg.dds.core.policy.OwnershipQosPolicy;
+-import org.omg.dds.core.policy.ReliabilityQosPolicy;
+-import org.omg.dds.core.policy.ResourceLimitsQosPolicy;
+-import org.omg.dds.core.policy.TopicDataQosPolicy;
+-import org.omg.dds.core.policy.TransportPriorityQosPolicy;
+-import org.omg.dds.core.policy.TypeConsistencyEnforcementQosPolicy;
++import org.omg.dds.core.policy.DataRepresentation;
++import org.omg.dds.core.policy.Deadline;
++import org.omg.dds.core.policy.DestinationOrder;
++import org.omg.dds.core.policy.Durability;
++import org.omg.dds.core.policy.DurabilityService;
++import org.omg.dds.core.policy.History;
++import org.omg.dds.core.policy.LatencyBudget;
++import org.omg.dds.core.policy.Lifespan;
++import org.omg.dds.core.policy.Liveliness;
++import org.omg.dds.core.policy.Ownership;
++import org.omg.dds.core.policy.Reliability;
++import org.omg.dds.core.policy.ResourceLimits;
++import org.omg.dds.core.policy.TopicData;
++import org.omg.dds.core.policy.TransportPriority;
++import org.omg.dds.core.policy.TypeConsistencyEnforcement;
+ import org.omg.dds.type.Extensibility;
+ import org.omg.dds.type.ID;
+ import org.omg.dds.type.Key;
+@@ -76,85 +76,85 @@
+      * @return the durability
+      */
+     @ID(0x001D)
+-    public DurabilityQosPolicy getDurability();
++    public Durability getDurability();
+ 
+     /**
+      * @return the durabilityService
+      */
+     @ID(0x001E)
+-    public DurabilityServiceQosPolicy getDurabilityService();
++    public DurabilityService getDurabilityService();
+ 
+     /**
+      * @return the deadline
+      */
+     @ID(0x0023)
+-    public DeadlineQosPolicy getDeadline();
++    public Deadline getDeadline();
+ 
+     /**
+      * @return the latencyBudget
+      */
+     @ID(0x0027)
+-    public LatencyBudgetQosPolicy getLatencyBudget();
++    public LatencyBudget getLatencyBudget();
+ 
+     /**
+      * @return the liveliness
+      */
+     @ID(0x001B)
+-    public LivelinessQosPolicy getLiveliness();
++    public Liveliness getLiveliness();
+ 
+     /**
+      * @return the reliability
+      */
+     @ID(0x001A)
+-    public ReliabilityQosPolicy getReliability();
++    public Reliability getReliability();
+ 
+     /**
+      * @return the transportPriority
+      */
+     @ID(0x0049)
+-    public TransportPriorityQosPolicy getTransportPriority();
++    public TransportPriority getTransportPriority();
+ 
+     /**
+      * @return the lifespan
+      */
+     @ID(0x002B)
+-    public LifespanQosPolicy getLifespan();
++    public Lifespan getLifespan();
+ 
+     /**
+      * @return the destinationOrder
+      */
+     @ID(0x0025)
+-    public DestinationOrderQosPolicy getDestinationOrder();
++    public DestinationOrder getDestinationOrder();
+ 
+     /**
+      * @return the history
+      */
+     @ID(0x0040)
+-    public HistoryQosPolicy getHistory();
++    public History getHistory();
+ 
+     /**
+      * @return the resourceLimits
+      */
+     @ID(0x0041)
+-    public ResourceLimitsQosPolicy getResourceLimits();
++    public ResourceLimits getResourceLimits();
+ 
+     /**
+      * @return the ownership
+      */
+     @ID(0x001F)
+-    public OwnershipQosPolicy getOwnership();
++    public Ownership getOwnership();
+ 
+     /**
+      * @return the topicData
+      */
+     @ID(0x002E)
+-    public TopicDataQosPolicy getTopicData();
++    public TopicData getTopicData();
+ 
+     @ID(0x0073)
+-    public DataRepresentationQosPolicy getRepresentation();
++    public DataRepresentation getRepresentation();
+ 
+     @ID(0x0074)
+-    public TypeConsistencyEnforcementQosPolicy getTypeConsistency();
++    public TypeConsistencyEnforcement getTypeConsistency();
+ 
+ 
+     // -----------------------------------------------------------------------
+Index: srcJava/org/omg/dds/topic/ParticipantBuiltinTopicData.java
+===================================================================
+--- srcJava/org/omg/dds/topic/ParticipantBuiltinTopicData.java	(revision 190)
++++ srcJava/org/omg/dds/topic/ParticipantBuiltinTopicData.java	(working copy)
+@@ -21,7 +21,7 @@
+ import java.io.Serializable;
+ 
+ import org.omg.dds.core.DDSObject;
+-import org.omg.dds.core.policy.UserDataQosPolicy;
++import org.omg.dds.core.policy.UserData;
+ import org.omg.dds.type.Extensibility;
+ import org.omg.dds.type.ID;
+ import org.omg.dds.type.Key;
+@@ -35,7 +35,7 @@
+     public BuiltinTopicKey getKey();
+ 
+     @ID(0x002C)
+-    public UserDataQosPolicy getUserData();
++    public UserData getUserData();
+ 
+ 
+     // -----------------------------------------------------------------------
+Index: specification/dds_java_psm_submission.docx
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: specification/dds_java_psm_submission_with_change_bars.docx
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
