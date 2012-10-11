@@ -99,7 +99,12 @@ public class GreetingSubscribingApp {
                     System.out.println("Data: " + dt);
                 }
             } finally {
-                it.returnLoan();
+        		try {
+        			it.close();
+        		}
+        		catch (java.io.IOException e) {
+        	    	System.out.println(e);	
+        		}
             }
         }
     }
