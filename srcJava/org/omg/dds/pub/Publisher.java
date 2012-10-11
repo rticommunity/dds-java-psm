@@ -135,22 +135,6 @@ extends DomainEntity<PublisherListener, PublisherQos>
             DataWriterListener<TYPE> listener,
             Collection<Class<? extends Status>> statuses);
 
-    /**
-     * Create a new data writer.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     *
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public <TYPE> DataWriter<TYPE> createDataWriter(
-            Topic<TYPE> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataWriterListener<TYPE> listener,
-            Collection<Class<? extends Status>> statuses);
-
 
     // --- Create DataWriter for built-in bytes type: ------------------------
 
@@ -174,22 +158,6 @@ extends DomainEntity<PublisherListener, PublisherQos>
     public BytesDataWriter createBytesDataWriter(
             Topic<byte[]> topic,
             DataWriterQos qos,
-            DataWriterListener<byte[]> listener,
-            Collection<Class<? extends Status>> statuses);
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public BytesDataWriter createBytesDataWriter(
-            Topic<byte[]> topic,
-            String qosLibraryName,
-            String qosProfileName,
             DataWriterListener<byte[]> listener,
             Collection<Class<? extends Status>> statuses);
 
@@ -219,22 +187,6 @@ extends DomainEntity<PublisherListener, PublisherQos>
             DataWriterListener<KeyedBytes> listener,
             Collection<Class<? extends Status>> statuses);
 
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public KeyedBytesDataWriter createKeyedBytesDataWriter(
-            Topic<KeyedBytes> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataWriterListener<KeyedBytes> listener,
-            Collection<Class<? extends Status>> statuses);
-
 
     // --- Create DataWriter for built-in string type: -----------------------
 
@@ -261,22 +213,6 @@ extends DomainEntity<PublisherListener, PublisherQos>
             DataWriterListener<String> listener,
             Collection<Class<? extends Status>> statuses);
 
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public StringDataWriter createStringDataWriter(
-            Topic<String> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataWriterListener<String> listener,
-            Collection<Class<? extends Status>> statuses);
-
 
     // --- Create DataWriter for built-in KeyedString type: ------------------
 
@@ -300,22 +236,6 @@ extends DomainEntity<PublisherListener, PublisherQos>
     public KeyedStringDataWriter createKeyedStringDataWriter(
             Topic<KeyedString> topic,
             DataWriterQos qos,
-            DataWriterListener<KeyedString> listener,
-            Collection<Class<? extends Status>> statuses);
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public KeyedStringDataWriter createKeyedStringDataWriter(
-            Topic<KeyedString> topic,
-            String qosLibraryName,
-            String qosProfileName,
             DataWriterListener<KeyedString> listener,
             Collection<Class<? extends Status>> statuses);
 
@@ -542,13 +462,6 @@ extends DomainEntity<PublisherListener, PublisherQos>
      * @see     #getDefaultDataWriterQos()
      */
     public void setDefaultDataWriterQos(DataWriterQos qos);
-
-    /**
-     * @see     #setDefaultDataWriterQos(DataWriterQos)
-     */
-    public void setDefaultDataWriterQos(
-            String qosLibraryName,
-            String qosProfileName);
 
     /**
      * This operation copies the policies in the {@link Topic} QoS to the

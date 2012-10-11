@@ -104,22 +104,6 @@ public abstract class DomainParticipantFactory implements DDSObject
             Collection<Class<? extends Status>> statuses);
 
     /**
-     * Create a new domain participant.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     *
-     * @see     #createParticipant(int, DomainParticipantQos, DomainParticipantListener, Collection)
-     */
-    public abstract DomainParticipant createParticipant(
-            int domainId,
-            String qosLibraryName,
-            String qosProfileName,
-            DomainParticipantListener listener,
-            Collection<Class<? extends Status>> statuses);
-
-    /**
      * This operation retrieves a previously created DomainParticipant
      * belonging to specified domain ID. If no such DomainParticipant exists,
      * the operation will return null.
@@ -183,12 +167,5 @@ public abstract class DomainParticipantFactory implements DDSObject
      * @see     #getDefaultParticipantQos()
      */
     public abstract void setDefaultParticipantQos(DomainParticipantQos qos);
-
-    /**
-     * @see     #setDefaultParticipantQos(DomainParticipantQos)
-     */
-    public abstract void setDefaultParticipantQos(
-            String qosLibraryName,
-            String qosProfileName);
 
 }

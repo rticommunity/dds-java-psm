@@ -117,25 +117,6 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
             PublisherListener listener,
             Collection<Class<? extends Status>> statuses);
 
-    /**
-     * This operation creates a Publisher.
-     * 
-     * The created Publisher belongs to the DomainParticipant that is its
-     * factory.
-     * 
-     * @param   listener    The listener to be attached.
-     * @param   statuses    Of which status changes the listener should be
-     *                      notified. A null collection signifies all status
-     *                      changes.
-     * 
-     * @see     #createPublisher(PublisherQos, PublisherListener, Collection)
-     */
-    public Publisher createPublisher(
-            String qosLibraryName,
-            String qosProfileName,
-            PublisherListener listener,
-            Collection<Class<? extends Status>> statuses);
-
     // --- Create Subscriber: ------------------------------------------------
 
     /**
@@ -167,25 +148,6 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      */
     public Subscriber createSubscriber(
             SubscriberQos qos,
-            SubscriberListener listener,
-            Collection<Class<? extends Status>> statuses);
-
-    /**
-     * This operation creates a Subscriber.
-     * 
-     * The created Subscriber belongs to the DomainParticipant that is its
-     * factory.
-     * 
-     * @param   listener    The listener to be attached.
-     * @param   statuses    Of which status changes the listener should be
-     *                      notified. A null collection signifies all status
-     *                      changes.
-     * 
-     * @see     #createSubscriber(SubscriberQos, SubscriberListener, Collection)
-     */
-    public Subscriber createSubscriber(
-            String qosLibraryName,
-            String qosProfileName,
             SubscriberListener listener,
             Collection<Class<? extends Status>> statuses);
 
@@ -248,31 +210,6 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
             TopicListener<TYPE> listener,
             Collection<Class<? extends Status>> statuses);
 
-    /**
-     * This operation creates a Topic with the desired QoS policies and
-     * attaches to it the specified TopicListener.
-     * 
-     * The created Topic belongs to the DomainParticipant that is its
-     * factory.
-     * 
-     * @param   topicName   The name of the new Topic.
-     * @param   type        The type of all samples to be published and
-     *                      subscribed over the new Topic. The Service will
-     *                      attempt to locate an appropriate
-     *                      {@link TypeSupport} instance based on this type.
-     * @param   statuses    Of which status changes the listener should be
-     *                      notified. A null collection signifies all status
-     *                      changes.
-     */
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            Class<TYPE> type,
-            String qosLibraryName,
-            String qosProfileName,
-            TopicListener<TYPE> listener,
-            Collection<Class<? extends Status>> statuses);
-
-
     // --- Create Topic with explicit TypeSupport: ---------------------------
 
     /**
@@ -316,30 +253,6 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
             TopicQos qos,
             TopicListener<TYPE> listener,
             Collection<Class<? extends Status>> statuses);
-
-    /**
-     * This operation creates a Topic with the desired QoS policies and
-     * attaches to it the specified TopicListener.
-     * 
-     * The created Topic belongs to the DomainParticipant that is its
-     * factory.
-     * 
-     * @param   topicName   The name of the new Topic.
-     * @param   type        A {@link TypeSupport} representing the type of
-     *                      all samples to be published and subscribed over
-     *                      the new Topic.
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     */
-    public <TYPE> Topic<TYPE> createTopic(
-            String topicName,
-            TypeSupport<TYPE> type,
-            String qosLibraryName,
-            String qosProfileName,
-            TopicListener<TYPE> listener,
-            Collection<Class<? extends Status>> statuses);
-
 
     // --- Other operations: -------------------------------------------------
 
@@ -689,13 +602,6 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
     public void setDefaultPublisherQos(PublisherQos qos);
 
     /**
-     * @see     #setDefaultPublisherQos(PublisherQos)
-     */
-    public void setDefaultPublisherQos(
-            String qosLibraryName,
-            String qosProfileName);
-
-    /**
      * This operation retrieves the default value of the Subscriber QoS, that
      * is, the QoS policies which will be used for newly created
      * {@link Subscriber} entities in the case where the QoS policies are
@@ -726,13 +632,6 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
     public void setDefaultSubscriberQos(SubscriberQos qos);
 
     /**
-     * @see     #setDefaultSubscriberQos(SubscriberQos)
-     */
-    public void setDefaultSubscriberQos(
-            String qosLibraryName,
-            String qosProfileName);
-
-    /**
      * This operation retrieves the default value of the Topic QoS, that is,
      * the QoS policies which will be used for newly created {@link Topic}
      * entities in the case where the QoS policies are defaulted in the
@@ -760,13 +659,6 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * @see     #getDefaultTopicQos()
      */
     public void setDefaultTopicQos(TopicQos qos);
-
-    /**
-     * @see     #setDefaultTopicQos(TopicQos)
-     */
-    public void setDefaultTopicQos(
-            String qosLibraryName,
-            String qosProfileName);
 
     /**
      * This operation retrieves the list of DomainParticipants that have been

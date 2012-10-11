@@ -132,22 +132,6 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
             DataReaderListener<TYPE> listener,
             Collection<Class<? extends Status>> statuses);
 
-    /**
-     * Create a new data reader.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     *
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public <TYPE> DataReader<TYPE> createDataReader(
-            TopicDescription<TYPE> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<TYPE> listener,
-            Collection<Class<? extends Status>> statuses);
-
 
     // --- Create DataReader of built-in bytes type: -------------------------
 
@@ -171,22 +155,6 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
     public BytesDataReader createBytesDataReader(
             TopicDescription<byte[]> topic,
             DataReaderQos qos,
-            DataReaderListener<byte[]> listener,
-            Collection<Class<? extends Status>> statuses);
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic,
-            String qosLibraryName,
-            String qosProfileName,
             DataReaderListener<byte[]> listener,
             Collection<Class<? extends Status>> statuses);
 
@@ -216,22 +184,6 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
             DataReaderListener<KeyedBytes> listener,
             Collection<Class<? extends Status>> statuses);
 
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<KeyedBytes> listener,
-            Collection<Class<? extends Status>> statuses);
-
 
     // --- Create DataReader of built-in string type: ------------------------
 
@@ -258,22 +210,6 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
             DataReaderListener<String> listener,
             Collection<Class<? extends Status>> statuses);
 
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic,
-            String qosLibraryName,
-            String qosProfileName,
-            DataReaderListener<String> listener,
-            Collection<Class<? extends Status>> statuses);
-
 
     // --- Create DataReader of built-in KeyedString type: -------------------
 
@@ -297,22 +233,6 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
     public KeyedStringDataReader createKeyedStringDataReader(
             TopicDescription<KeyedString> topic,
             DataReaderQos qos,
-            DataReaderListener<KeyedString> listener,
-            Collection<Class<? extends Status>> statuses);
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic,
-            String qosLibraryName,
-            String qosProfileName,
             DataReaderListener<KeyedString> listener,
             Collection<Class<? extends Status>> statuses);
 
@@ -415,7 +335,7 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      *          closed because the application has called a
      *          {@link DataReader#read()} or {@link DataReader#take()}
      *          operation and has not called the corresponding
-     *          {@link Sample.Iterator#returnLoan()} operation to return the
+     *          {@link Sample.Iterator#close()} operation to return the
      *          loaned samples.
      */
     public void closeContainedEntities();
@@ -611,13 +531,6 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      * @see     #getDefaultDataReaderQos()
      */
     public void setDefaultDataReaderQos(DataReaderQos qos);
-
-    /**
-     * @see     #setDefaultDataReaderQos(DataReaderQos)
-     */
-    public void setDefaultDataReaderQos(
-            String qosLibraryName,
-            String qosProfileName);
 
     /**
      * This operation copies the policies in the {@link TopicQos} to the

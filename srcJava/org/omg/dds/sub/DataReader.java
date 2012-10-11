@@ -413,7 +413,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * The returned samples are "loaned" by the DataReader. The use of this
      * variant allows for zero-copy (assuming the implementation supports it)
      * access to the data and the application will need to "return the loan"
-     * to the DataReader using the {@link Sample.Iterator#returnLoan()}
+     * to the DataReader using the {@link Sample.Iterator#close()}
      * operation.
      * 
      * Some elements in the returned collection may not have valid data. If
@@ -523,7 +523,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * read operation regarding the preconditions and postconditions for the
      * arguments and return results. Similar to read, the take operation will
      * "loan" elements to the application; this loan must then be returned by
-     * means of {@link Sample.Iterator#returnLoan()}. The only difference
+     * means of {@link Sample.Iterator#close()}. The only difference
      * with read is that, as stated, the sample returned by take will no
      * longer be accessible to successive calls to read or take.
      * 
