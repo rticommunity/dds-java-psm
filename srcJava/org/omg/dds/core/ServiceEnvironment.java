@@ -23,11 +23,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.lang.String;
 
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.type.TypeSupport;
 import org.omg.dds.type.dynamic.DynamicTypeFactory;
+import org.omg.dds.core.QosProvider;
 
 
 /**
@@ -459,7 +461,21 @@ public abstract class ServiceEnvironment implements DDSObject {
         public abstract GuardCondition newGuardCondition();
 
         public abstract WaitSet newWaitSet();
-
+        
+        // --- QoS Provider --------------------------------------------------
+        /** Create a QosProvider fetching QoS configuration from the specified URI.    
+         *  The URI determines the how the Qos configuration is fetched and the    
+         *  format in which it is represented. This specification requires compliant   
+         *  implementations to support at least one file based configuration using    
+         *  the XML syntax defined as part of the DDS for CCM specification (formal/12.02.01).
+         *  
+         *  @param uri The uniform resource identifier. For example,
+         *             "file:///somewhere/on/disk/qos-config.xml"
+         *             "http:///somewhere.org/here/json-config.json"      
+         *  @param profile Name of a profile in the document obtained via the uri
+         *  @return a new QosProvider object
+         */
+        public abstract QosProvider newQosProvider(String uri, String profile);
 
         // --- Status: -------------------------------------------------------
 
