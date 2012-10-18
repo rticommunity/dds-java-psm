@@ -721,6 +721,16 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
 
     public Subscriber getParent();
 
+    /**
+     * Provides a {@link Selector} that can be used to refine what {@link #read} or 
+     * {@link #take} methods return. 
+     * 
+     * @return The {@link Selector} object returned by this method
+     *         is the default selector. By default it selects {@link Integer#MAX_VALUE} 
+     *         samples.  This is equivalent to calling {@link DataReader#read} without 
+     *         any parameters. 
+     * */
+    
     public Selector<TYPE> select();
     
     /**
