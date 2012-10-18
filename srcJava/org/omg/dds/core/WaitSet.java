@@ -57,9 +57,9 @@ import java.util.concurrent.TimeoutException;
  *             {@link org.omg.dds.sub.DataReader#take()} on the
  *             relevant DataReader.</li>
  *         <li>Directly call
- *             {@link org.omg.dds.sub.DataReader#read(org.omg.dds.sub.DataReader.Query)}/
- *             {@link org.omg.dds.sub.DataReader#take(org.omg.dds.sub.DataReader.Query)}
- *             with the {@link org.omg.dds.sub.DataReader.Query} wrapping a
+ *             {@link org.omg.dds.sub.DataReader#read(org.omg.dds.sub.DataReader.Selector)}/
+ *             {@link org.omg.dds.sub.DataReader#take(org.omg.dds.sub.DataReader.Selector)}
+ *             with the {@link org.omg.dds.sub.DataReader.Selector} wrapping a
  *             ReadCondition or a QueryCondition.</li>
  *         </ul></li>
  * </ul>

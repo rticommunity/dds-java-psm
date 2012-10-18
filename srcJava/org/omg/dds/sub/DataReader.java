@@ -319,14 +319,14 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
 
     /**
      * This operation accesses a collection of samples from this DataReader.
-     * It behaves exactly like {@link #read(Query)} except that the
-     * collection of returned samples is not constrained by any Query.
+     * It behaves exactly like {@link #read(Selector)} except that the
+     * collection of returned samples is not constrained by any Selector.
      * 
      * @return  a non-null unmodifiable iterator over loaned samples.
      * 
-     * @see     #read(Query)
+     * @see     #read(Selector)
      * @see     #read(List)
-     * @see     #read(List, Query)
+     * @see     #read(List, Selector)
      * @see     #readNextSample(Sample)
      * @see     #take()
      */
@@ -334,7 +334,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
 
     /**
      * This operation accesses a collection of samples from this DataReader.
-     * The returned samples will be limited by the given {@link Query}. The
+     * The returned samples will be limited by the given {@link Selector}. The
      * setting of the {@link org.omg.dds.core.policy.Presentation}
      * may impose further limits on the returned samples.
      * 
@@ -438,12 +438,11 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * 
      * @see     #read()
      * @see     #read(List)
-     * @see     #read(List, Query)
+     * @see     #read(List, Selector)
      * @see     #readNextSample(Sample)
-     * @see     #take(Query)
-     * @see     #createQuery(InstanceHandle, int, boolean)
+     * @see     #take(Selector)
      */
-    public Sample.Iterator<TYPE> read(Query<TYPE> query);
+    public Sample.Iterator<TYPE> read(Selector<TYPE> query);
 
     /**
      * This operation accesses a collection of samples from this DataReader.
@@ -460,8 +459,8 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @return  <code>samples</code>, for convenience.
      * 
      * @see     #read()
-     * @see     #read(Query)
-     * @see     #read(List, Query)
+     * @see     #read(Selector)
+     * @see     #read(List, Selector)
      * @see     #readNextSample(Sample)
      * @see     #take(List)
      */
@@ -469,7 +468,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
 
     /**
      * This operation accesses a collection of samples from this DataReader.
-     * It behaves exactly like {@link #read(Query)} except that the returned
+     * It behaves exactly like {@link #read(Selector)} except that the returned
      * samples are not "on loan" from the Service; they are deeply copied to
      * the application.
      * 
@@ -482,26 +481,25 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @return  <code>samples</code>, for convenience.
      * 
      * @see     #read()
-     * @see     #read(Query)
+     * @see     #read(Selector)
      * @see     #read(List)
      * @see     #readNextSample(Sample)
-     * @see     #take(List, Query)
-     * @see     #createQuery(InstanceHandle, int, boolean)
+     * @see     #take(List, Selector)
      */
     public List<Sample<TYPE>> read(
             List<Sample<TYPE>> samples,
-            Query<TYPE> query);
+            Selector<TYPE> selector);
 
     /**
      * This operation accesses a collection of samples from this DataReader.
-     * It behaves exactly like {@link #take(Query)} except that the
-     * collection of returned samples is not constrained by any Query.
+     * It behaves exactly like {@link #take(Selector)} except that the
+     * collection of returned samples is not constrained by any Selector.
      * 
      * @return  a non-null unmodifiable iterator over loaned samples.
      * 
-     * @see     #take(Query)
+     * @see     #take(Selector)
      * @see     #take(List)
-     * @see     #take(List, Query)
+     * @see     #take(List, Selector)
      * @see     #takeNextSample(Sample)
      * @see     #read()
      */
@@ -511,7 +509,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * This operation accesses a collection of samples from this DataReader.
      * The number of samples returned is controlled by the
      * {@link org.omg.dds.core.policy.Presentation} and other
-     * factors using the same logic as for {@link #read(Query)}.
+     * factors using the same logic as for {@link #read(Selector)}.
      * 
      * The act of taking a sample removes it from the DataReader so it cannot
      * be "read" or "taken" again. If the sample belongs to the most recent
@@ -534,12 +532,11 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * 
      * @see     #take()
      * @see     #take(List)
-     * @see     #take(List, Query)
+     * @see     #take(List, Selector)
      * @see     #takeNextSample(Sample)
-     * @see     #read(Query)
-     * @see     #createQuery(InstanceHandle, int, boolean)
+     * @see     #read(Selector)
      */
-    public Sample.Iterator<TYPE> take(Query<TYPE> query);
+    public Sample.Iterator<TYPE> take(Selector<TYPE> query);
 
     /**
      * This operation accesses a collection of samples from this DataReader.
@@ -556,8 +553,8 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @return  <code>samples</code>, for convenience.
      * 
      * @see     #take()
-     * @see     #take(Query)
-     * @see     #take(List, Query)
+     * @see     #take(Selector)
+     * @see     #take(List, Selector)
      * @see     #takeNextSample(Sample)
      * @see     #read(List)
      */
@@ -565,7 +562,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
 
     /**
      * This operation accesses a collection of samples from this DataReader.
-     * It behaves exactly like {@link #take(Query)} except that the returned
+     * It behaves exactly like {@link #take(Selector)} except that the returned
      * samples are not "on loan" from the Service; they are deeply copied to
      * the application.
      * 
@@ -578,28 +575,27 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @return  <code>samples</code>, for convenience.
      * 
      * @see     #take()
-     * @see     #take(Query)
+     * @see     #take(Selector)
      * @see     #take(List)
      * @see     #takeNextSample(Sample)
-     * @see     #read(List, Query)
-     * @see     #createQuery(InstanceHandle, int, boolean)
+     * @see     #read(List, Selector)
      */
     public List<Sample<TYPE>> take(
             List<Sample<TYPE>> samples,
-            Query<TYPE> query);
+            Selector<TYPE> query);
 
     /**
      * This operation copies the next, non-previously accessed sample from
      * this DataReader. The implied order among the samples stored in the
-     * DataReader is the same as for {@link #read(List, Query)}.
+     * DataReader is the same as for {@link #read(List, Selector)}.
      * 
      * This operation is semantically equivalent to
-     * {@link #read(List, Query)} where {@link Query#getMaxSamples()}
-     * is 1, {@link Query#getReaderState()} followed by
+     * {@link #read(List, Selector)} where {@link Selector#getMaxSamples()}
+     * is 1, {@link Selector#getReaderState()} followed by
      * {@link Subscriber.ReaderState#getSampleStates()} ==
-     * {@link SampleState#NOT_READ}, {@link Query#getReaderState()} followed by
+     * {@link SampleState#NOT_READ}, {@link Selector#getReaderState()} followed by
      * {@link Subscriber.ReaderState#getViewStates()} contains all view
-     * states, and {@link Query#getReaderState()} followed by
+     * states, and {@link Selector#getReaderState()} followed by
      * {@link Subscriber.ReaderState#getInstanceStates()} contains all
      * instance states.
      * 
@@ -612,9 +608,9 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @return  true if data was read or false if no data was available.
      * 
      * @see     #read()
-     * @see     #read(Query)
+     * @see     #read(Selector)
      * @see     #read(List)
-     * @see     #read(List, Query)
+     * @see     #read(List, Selector)
      * @see     #takeNextSample(Sample)
      */
     public boolean readNextSample(Sample<TYPE> sample);
@@ -627,12 +623,12 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * "removed" from the DataReader.
      * 
      * This operation is semantically equivalent to
-     * {@link #take(List, Query)} where {@link Query#getMaxSamples()}
-     * is 1, {@link Query#getReaderState()} followed by
+     * {@link #take(List, Selector)} where {@link Selector#getMaxSamples()}
+     * is 1, {@link Selector#getReaderState()} followed by
      * {@link Subscriber.ReaderState#getSampleStates()} ==
-     * {@link SampleState#NOT_READ}, {@link Query#getReaderState()} followed by
+     * {@link SampleState#NOT_READ}, {@link Selector#getReaderState()} followed by
      * {@link Subscriber.ReaderState#getViewStates()} contains all view
-     * states, and {@link Query#getReaderState()} followed by
+     * states, and {@link Selector#getReaderState()} followed by
      * {@link Subscriber.ReaderState#getInstanceStates()} contains all
      * instance states.
      * 
@@ -645,9 +641,9 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @return  true if data was taken or false if no data was available.
      * 
      * @see     #take()
-     * @see     #take(Query)
+     * @see     #take(Selector)
      * @see     #take(List)
-     * @see     #take(List, Query)
+     * @see     #take(List, Selector)
      * @see     #readNextSample(Sample)
      */
     public boolean takeNextSample(Sample<TYPE> sample);
@@ -725,264 +721,59 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
 
     public Subscriber getParent();
 
-
-    // --- Query: ------------------------------------------------------------
-
+    public Selector<TYPE> select();
+    
     /**
-     * Create and return a new query to read or take samples of the
-     * identified instance (or the "next" instance), regardless of
-     * {@link Subscriber.ReaderState}.
+     * Selector class encapsulates different ways of selecting samples from a {@link DataReader}.
+     * Selector can be used with {@link DataReader#read(Selector)} and {@link DataReader#take(Selector)}
+     * or it can be used stand-alone as it provides {@link #read} and {@link #take} functions.
      * 
-     * If isReadOrTakeNext is true, the actual instance is not directly
-     * specified. Rather the samples will all belong to the "next" instance
-     * with instance handle "greater" (according to some service-defined
-     * order) than the specified handle that has available samples.
-     * 
-     * The behavior of isReadOrTakeNext implies the existence of a total
-     * order "greater-than" relationship between the instance handles. The
-     * specifics of this relationship are not all important and are
-     * implementation specific. The important thing is that, according to the
-     * middleware, all instances are ordered relative to each other. This
-     * ordering is between the instance handles: It should not depend on the
-     * state of the instance (e.g., whether it has data or not) and must be
-     * defined even for instance handles that do not correspond to instances
-     * currently managed by the DataReader. For the purposes of the ordering
-     * it should be "as if" each instance handle was represented as a unique
-     * integer.
-     * 
-     * The behavior of {@link #read(Query)} or {@link #take(Query)} with
-     * isReadOrTakeNext == true is "as if" isReadOrTakeNext == false and the
-     * application passed the smallest instance handle among all the ones
-     * that (a) are greater than the given handle and (b) have available
-     * samples (i.e., samples that meet the constraints imposed by the
-     * Query).
-     * 
-     * A nil handle is guaranteed to be "less than" any valid instance
-     * handle. So the use of the parameter value handle ==
-     * {@link InstanceHandle#nilHandle(org.omg.dds.core.ServiceEnvironment)}
-     * will return the samples for the instance which has the smallest
-     * instance handle among all the instances that contain available
-     * samples.
-     * 
-     * A value of isReadOrTakeNext == true is intended to be used in an
-     * application-driven iteration where the application starts by passing
-     * a nil handle, examines the samples returned, and then uses the
-     * instance handle returned in the {@link Sample} as the value of the
-     * handle argument to the next call to read or take. The iteration
-     * continues until no data remains.
-     * 
-     * Note that it is possible to pass isReadOrTakeNext == true with a
-     * non-nil handle that does not correspond to an instance currently
-     * managed by the DataReader. This is because as stated earlier the
-     * "greater-than" relationship is defined even for handles not managed by
-     * the DataReader. One practical situation where this may occur is when
-     * an application is iterating through all the instances, takes all the
-     * samples of a NOT_ALIVE_NO_WRITERS instance, returns the loan (at which
-     * point the instance information may be removed, and thus the handle
-     * becomes invalid), and tries to read the next instance.
-     * 
-     * @param handle            The instance to read or take. If this handle
-     *                          is null, or if it is nil and isReadOrTakeNext
-     *                          is false, the read or take will return samples
-     *                          of all available instances.
-     * @param maxSamples        The maximum number of samples to read or take
-     *                          at one time, or {@link Integer#MAX_VALUE} if
-     *                          all available samples should be returned.
-     * @param isReadOrTakeNext  If this flag is set to false,
-     *                          the read or take will return samples of the
-     *                          identified instance. If it is true, the read
-     *                          or take will return samples of the "next"
-     *                          instance in order. This behavior allows
-     *                          applications to easily iterate over the
-     *                          available data one instance at a time.
-     * 
-     * @return  a new Query.
-     * 
-     * @throws  IllegalArgumentException    if the handle is null and
-     *                                      isReadOrTakeNext is true, or if
-     *                                      the handle does not correspond to
-     *                                      an existing data object known to
-     *                                      this DataReader.
-     * 
-     * @see     #createQuery(InstanceHandle, int, boolean, ReadCondition)
-     * @see     #createQuery(InstanceHandle, int, boolean, org.omg.dds.sub.Subscriber.ReaderState)
-     * @see     #read(Query)
-     * @see     #take(Query)
+     * {@link DataReader#select} creates a Selector that is bound to the {@link DataReader}.
+     *  
+     * A Selector may encapsulate any combination of {@link InstanceHandle}, 
+     * {@link Subscriber.ReaderState}, a query filter. It can be used to bound the maximum
+     * number of samples retrieved.
+     *      
+     * @param <TYPE>    The concrete type of the data to be read.
      */
-    public Query<TYPE> createQuery(
-            InstanceHandle handle,
-            int maxSamples,
-            boolean isReadOrTakeNext);
+    public static interface Selector<T> extends DDSObject {
+    	
+    	// --- Setters ----------------------------------------------
+    	
+    	public Selector<T> instance(InstanceHandle handle);
+    	
+    	public Selector<T> nextInstance(boolean retrieveNextInstance);
+    	
+    	public Selector<T> readerState(Subscriber.ReaderState state);
+    	
+    	public Selector<T> filterContent(String queryExpression, List<String> queryParameters);
+    	
+    	public Selector<T> maxSamples(int max);
+    	
+    	// --- Getters ----------------------------------------------    	
+    	
+    	public InstanceHandle getInstance();
+    	
+    	public boolean retrieveNextInstance();
+    	
+    	public Subscriber.ReaderState getReaderState();
+    	
+    	public String getQueryExpression();
+    	
+    	public List<String> getQueryParameters();
+    	
+    	public int getMaxSamples();
+    	
+    	public ReadCondition<T> getCondition();
+    	
+        // --- read/take operations ----------------------------------
+    	
+    	public Sample.Iterator<T> read();
+        
+        public List<Sample<T>> read(List<Sample<T>> samples);        
 
-    /**
-     * Create and return a new query to read or take samples of the
-     * identified instance (or the "next" instance) and with the given
-     * {@link Subscriber.ReaderState}.
-     * 
-     * The behavior of isReadOrTakeNext is the same as in
-     * {@link #createQuery(InstanceHandle, int, boolean)}.
-     * 
-     * @param handle            The instance to read or take. If this handle
-     *                          is null, or if it is nil and isReadOrTakeNext
-     *                          is false, the read or take will return samples
-     *                          of all available instances.
-     * @param maxSamples        The maximum number of samples to read or take
-     *                          at one time, or {@link Integer#MAX_VALUE} if
-     *                          all available samples should be returned.
-     * @param isReadOrTakeNext  If this flag is set to false,
-     *                          the read or take will return samples of the
-     *                          identified instance. If it is true, the read
-     *                          or take will return samples of the "next"
-     *                          instance in order. This behavior allows
-     *                          applications to easily iterate over the
-     *                          available data one instance at a time.
-     * @param state             The read or take will only return samples
-     *                          match these states.
-     * 
-     * @return  a new Query.
-     * 
-     * @throws  IllegalArgumentException    if the handle is null and
-     *                                      isReadOrTakeNext is true, or if
-     *                                      the handle does not correspond to
-     *                                      an existing data object known to
-     *                                      this DataReader.
-     * 
-     * @see     #createQuery(InstanceHandle, int, boolean)
-     * @see     #createQuery(InstanceHandle, int, boolean, ReadCondition)
-     * @see     #read(Query)
-     * @see     #take(Query)
-     */
-    public Query<TYPE> createQuery(
-            InstanceHandle handle,
-            int maxSamples,
-            boolean isReadOrTakeNext,
-            Subscriber.ReaderState state);
-
-    /**
-     * Create and return a new query to read or take samples of the
-     * identified instance (or the "next" instance), the availability of
-     * which would cause the given {@link ReadCondition} or
-     * {@link QueryCondition} to trigger.
-     * 
-     * In case the ReadCondition is a "plain" ReadCondition and not the
-     * specialized QueryCondition, this method is equivalent to calling
-     * {@link #createQuery(InstanceHandle, int, boolean, org.omg.dds.sub.Subscriber.ReaderState)}
-     * and passing a ReaderState consisting of the sample states, view
-     * states, and instance states from the corresponding attributes in the
-     * read condition. Using this operation, the application can avoid
-     * repeating the same parameters specified when creating the
-     * ReadCondition.
-     * 
-     * The behavior of isReadOrTakeNext is the same as in
-     * {@link #createQuery(InstanceHandle, int, boolean)}.
-     * 
-     * @param handle            The instance to read or take. If this handle
-     *                          is null, or if it is nil and isReadOrTakeNext
-     *                          is false, the read or take will return samples
-     *                          of all available instances.
-     * @param maxSamples        The maximum number of samples to read or take
-     *                          at one time, or {@link Integer#MAX_VALUE} if
-     *                          all available samples should be returned.
-     * @param isReadOrTakeNext  If this flag is set to false,
-     *                          the read or take will return samples of the
-     *                          identified instance. If it is true, the read
-     *                          or take will return samples of the "next"
-     *                          instance in order. This behavior allows
-     *                          applications to easily iterate over the
-     *                          available data one instance at a time.
-     * @param cond              The read or take will return those samples,
-     *                          the availability of which would cause this
-     *                          condition to trigger. A
-     *                          {@link QueryCondition}, to filter data
-     *                          samples based on the content, is especially
-     *                          useful.
-     * 
-     * @return  a new Query.
-     * 
-     * @throws  IllegalArgumentException        if the handle is null and
-     *                                          isReadOrTakeNext is true, or
-     *                                          if the handle does not
-     *                                          correspond to an existing
-     *                                          data object known to this
-     *                                          DataReader.
-     * @throws  PreconditionNotMetException     if the given condition is not
-     *                                          attached to this DataReader.
-     * 
-     * @see     #createQuery(InstanceHandle, int, boolean)
-     * @see     #createQuery(InstanceHandle, int, boolean, org.omg.dds.sub.Subscriber.ReaderState)
-     * @see     #read(Query)
-     * @see     #take(Query)
-     */
-    public Query<TYPE> createQuery(
-            InstanceHandle handle,
-            int maxSamples,
-            boolean isReadOrTakeNext,
-            ReadCondition<TYPE> cond);
-
-
-    /**
-     * A DataReader.Query encapsulates the various ways that an application
-     * can search for data to read or take from a {@link DataReader}.
-     */
-    public static interface Query<T> extends DDSObject, Cloneable {
-        // --- Query Access: --- //
-
-        /**
-         * If this method returns a non-nil handle, the application intends
-         * to read or take only those samples pertaining to the given
-         * instance (or the "next" instance). If it returns a nil handle, the
-         * application intends to read or take samples pertaining to all
-         * available instances.
-         * 
-         * This method shall never return null.
-         */
-        public InstanceHandle getInstance();
-
-        /**
-         * @return      the maximum number of samples to read or take at one
-         *              time, or {@link Integer#MAX_VALUE} if all available
-         *              samples should be returned.
-         */
-        public int getMaxSamples();
-
-        /**
-         * If this flag is set to false, the read or take will return samples
-         * of the identified instance. If it is true, the read or take will
-         * return samples of the "next" instance in order. This behavior
-         * allows applications to easily iterate over the available data one
-         * instance at a time.
-         * 
-         * If no particular instance is specified, this method shall always
-         * return false.
-         */
-        public boolean isReadOrTakeNext();
-
-        /**
-         * The application intends to read or take only those samples with
-         * the given ReaderState.
-         * 
-         * If this Query was initialized with a {@link ReadCondition} or
-         * {@link QueryCondition}, this method shall return the
-         * ReaderState associated with that condition.
-         * 
-         * The result shall be unmodifiable.
-         */
-        public Subscriber.ReaderState getReaderState();
-
-        /**
-         * The application intends only to read or take those samples, the
-         * availability of which would cause the given {@link ReadCondition}
-         * or {@link QueryCondition} to trigger.
-         */
-        public ReadCondition<T> getCondition();
-
-
-        // --- From Object: --------------------------------------------------
-
-        public Query<T> clone();
-
-        public boolean equals(Object other);
-
-        public int hashCode();
+        public Sample.Iterator<T> take();
+        
+        public List<Sample<T>> take(List<Sample<T>> samples);                
     }
 }
