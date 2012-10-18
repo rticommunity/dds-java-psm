@@ -32,7 +32,7 @@ public abstract interface QosProvider extends DDSObject {
 	/**
 	 * Get default domain paricipant QoS 
 	 * @return Default domain participant QoS defined in the uri passed to 
-	 *         the { @link ServiceEnvironement.newQosProvider} method. 
+	 *         the {@link org.omg.dds.core.ServiceEnvironment#newQosProvider(String, String)} method. 
 	 */
 	
 	public DomainParticipantFactoryQos getDomainParticipantFactoryQos();
