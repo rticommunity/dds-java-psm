@@ -31,20 +31,6 @@ package org.omg.dds.core;
  */
 public abstract class GuardCondition implements Condition
 {
-    // -----------------------------------------------------------------------
-    // Factory Methods
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static GuardCondition newGuardCondition(ServiceEnvironment env)
-    {
-        return env.getSPI().newGuardCondition();
-    }
-
-
 
     // -----------------------------------------------------------------------
     // Instance Methods

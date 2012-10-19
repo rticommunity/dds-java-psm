@@ -270,29 +270,6 @@ public abstract class ServiceEnvironment implements DDSObject {
          * propagate up the call stack as-is.
          */
     }
-
-    // --- QoS Provider --------------------------------------------------
-    /** Create a QosProvider fetching QoS configuration from the specified URI.    
-     *  The URI determines the how the Qos configuration is fetched and the    
-     *  format in which it is represented. This specification requires compliant   
-     *  implementations to support at least one file based configuration using    
-     *  the XML syntax defined as part of the DDS for CCM specification (formal/12.02.01).
-     *  
-     *  @param uri The uniform resource identifier. For example,
-     *             "file:///somewhere/on/disk/qos-config.xml"
-     *             "http:///somewhere.org/here/json-config.json"      
-     *  @param profile Name of a profile in the document obtained via the uri
-     *  @return a new QosProvider object
-     */
-    public abstract QosProvider newQosProvider(String uri, String profile);
-
-    // --- PolicyFactory -----------------------------------------------------
-    
-    /**
-     * Provides an instance of {@link PolicyFactory}.
-     * @return An instance of {@link PolicyFactory}
-     */
-    public abstract PolicyFactory getPolicyFactory();
     
     // -----------------------------------------------------------------------
     // Instance Methods
@@ -487,5 +464,28 @@ public abstract class ServiceEnvironment implements DDSObject {
         public abstract Set<Class<? extends Status>> allStatusKinds();
 
         public abstract Set<Class<? extends Status>> noStatusKinds();
+        
+        // --- QoS Provider --------------------------------------------------
+        /** Create a QosProvider fetching QoS configuration from the specified URI.    
+         *  The URI determines the how the Qos configuration is fetched and the    
+         *  format in which it is represented. This specification requires compliant   
+         *  implementations to support at least one file based configuration using    
+         *  the XML syntax defined as part of the DDS for CCM specification (formal/12.02.01).
+         *  
+         *  @param uri The uniform resource identifier. For example,
+         *             "file:///somewhere/on/disk/qos-config.xml"
+         *             "http:///somewhere.org/here/json-config.json"      
+         *  @param profile Name of a profile in the document obtained via the uri
+         *  @return a new QosProvider object
+         */
+        public abstract QosProvider newQosProvider(String uri, String profile);
+
+        // --- PolicyFactory -----------------------------------------------------
+        
+        /**
+         * Provides an instance of {@link PolicyFactory}.
+         * @return An instance of {@link PolicyFactory}
+         */
+        public abstract PolicyFactory getPolicyFactory();
     }
 }

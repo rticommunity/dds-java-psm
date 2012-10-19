@@ -19,12 +19,24 @@
 package org.omg.dds.domain;
 
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 import org.omg.dds.core.DDSObject;
+import org.omg.dds.core.Duration;
 import org.omg.dds.core.Entity;
+import org.omg.dds.core.GuardCondition;
 import org.omg.dds.core.InconsistentPolicyException;
+import org.omg.dds.core.InstanceHandle;
+import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.core.ModifiableTime;
+import org.omg.dds.core.QosProvider;
 import org.omg.dds.core.ServiceEnvironment;
+import org.omg.dds.core.Time;
+import org.omg.dds.core.WaitSet;
+import org.omg.dds.core.policy.PolicyFactory;
 import org.omg.dds.core.status.Status;
+import org.omg.dds.type.TypeSupport;
+import org.omg.dds.type.dynamic.DynamicTypeFactory;
 
 
 /**
@@ -166,6 +178,125 @@ public abstract class DomainParticipantFactory implements DDSObject
      *
      * @see     #getDefaultParticipantQos()
      */
+    
     public abstract void setDefaultParticipantQos(DomainParticipantQos qos);
+    
+    /**
+     * Create a new TypeSupport object for the given physical type.
+     * 
+     * @return A DynamicTypeFactory instance
+     */
+    public abstract DynamicTypeFactory getDynamicTypeFactory();
+    
+    /**
+     * Create a new WaitSet.
+     * @return A new WaitSet.
+     */
+    
+    public abstract WaitSet createWaitSet();
 
+    /**
+     * Create a new Guard condition
+     * @return A new GuardCondition
+     */
+    public abstract GuardCondition createGuardCondition();
+
+    /**
+     * Create a new TypeSupport object for the given physical type.
+     * 
+     * @see #createTypeSupport(Class, String)
+     */
+    public abstract <TYPE> TypeSupport<TYPE> createTypeSupport(Class<TYPE> type);
+    
+    /**
+     * Create a new TypeSupport object for the given physical type.
+     * The Service will register this type under the given name with any
+     * participant with which the TypeSupport is used.
+     * 
+     * @param <TYPE>    The physical type of all samples read or written by
+     *                  any {@link org.omg.dds.sub.DataReader} or
+     *                  {@link org.omg.dds.pub.DataWriter} typed by the
+     *                  resulting <code>TypeSupport</code>.
+     * @param type      The physical type of all samples read or written by
+     *                  any {@link org.omg.dds.sub.DataReader} or
+     *                  {@link org.omg.dds.pub.DataWriter} typed by the
+     *                  resulting <code>TypeSupport</code>.
+     * @param registeredName    The logical name under which this type will
+     *                          be registered with any
+     *                          {@link org.omg.dds.domain.DomainParticipant}
+     *                          with which the resulting
+     *                          <code>TypeSupport</code> is used.
+     * 
+     * @return          A new <code>TypeSupport</code> object, which can
+     *                  subsequently be used to create one or more
+     *                  {@link org.omg.dds.topic.Topic}s.
+     * 
+     * @see #createTypeSupport(Class)
+     */
+    public abstract <TYPE> TypeSupport<TYPE> createTypeSupport(
+            Class<TYPE> type,
+            String registeredName);
+    
+    /**
+     * Construct a specific instant in time.
+     * 
+     * Negative values are considered invalid and will result in the
+     * construction of a time <code>t</code> such that:
+     * 
+     * @see     org.omg.dds.core.Time#isValid()
+     */
+    public abstract ModifiableTime createTime(long time, TimeUnit units);
+
+    /**
+     * @return      An unmodifiable {@link Time} that is not valid.
+     */
+    public abstract Time invalidTime();
+
+    /**
+     * Construct a time duration of the given magnitude.
+     * 
+     * A duration of magnitude {@link Long#MAX_VALUE} indicates an infinite
+     * duration, regardless of the units specified.
+     * 
+     * @see     org.omg.dds.core.Duration#isInfinite()
+     * @see     #infiniteDuration()
+     */
+    public abstract Duration createDuration(
+            long duration,
+            TimeUnit unit);
+
+    /**
+     * @return  An unmodifiable {@link Duration} of infinite length.
+     */
+    public abstract Duration infiniteDuration();
+
+    /**
+     * @return  A {@link Duration} of zero length.
+     */
+    public abstract Duration zeroDuration();
+
+    /**
+     * 
+     * @return A modifiable instance handle.
+     */
+    public abstract ModifiableInstanceHandle createInstanceHandle();
+
+    /**
+     * @return  An unmodifiable nil instance handle.
+     */
+    public abstract InstanceHandle nilHandle();
+    
+    /**
+     * 
+     * @return Create a new policy  factory
+     */
+    public abstract PolicyFactory createPolicyFactory();	
+    
+    /**
+     * 
+     * @param uri The source of Qos configuration file
+     * @param profile The name of the profile in the file specified by uri.
+     * @return A new QoSProvider
+     */
+    public abstract QosProvider createQosProvider(String uri, String profile);	
 }
