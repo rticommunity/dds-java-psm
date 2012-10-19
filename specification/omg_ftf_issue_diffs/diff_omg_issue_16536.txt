@@ -1,0 +1,316 @@
+Index: org/omg/dds/core/policy/History.java
+===================================================================
+--- org/omg/dds/core/policy/History.java	(revision 197)
++++ org/omg/dds/core/policy/History.java	(working copy)
+@@ -109,9 +109,19 @@
+      * @return  a new policy
+      */
+     public History withDepth(int depth);
+-
+-
+-
++    
++    /**
++     * 
++     * @return History with keep-all policy
++     */
++    public History withKeepAll();
++    
++    /**
++     * 
++     * @return History with keep-last policy
++     */
++    public History withKeepLast();
++    
+     // -----------------------------------------------------------------------
+     // Types
+     // -----------------------------------------------------------------------
+Index: org/omg/dds/core/policy/Durability.java
+===================================================================
+--- org/omg/dds/core/policy/Durability.java	(revision 197)
++++ org/omg/dds/core/policy/Durability.java	(working copy)
+@@ -149,8 +149,26 @@
+      */
+     public Durability withKind(Kind kind);
+ 
++    /**
++     * @return Volatile durability policy. 
++     */
++    public Durability withVolatile();
++    
++    /**
++     * @return Transient-local durability policy. 
++     */
++    public Durability withTransientLocal();
++    
++    /**
++     * @return Transient durability policy. 
++     */
++    public Durability withTransient();
++    
++    /**
++     * @return Persistent durability policy. 
++     */
++    public Durability withPersitent();
+ 
+-
+     // -----------------------------------------------------------------------
+     // Types
+     // -----------------------------------------------------------------------
+Index: org/omg/dds/core/policy/Reliability.java
+===================================================================
+--- org/omg/dds/core/policy/Reliability.java	(revision 197)
++++ org/omg/dds/core/policy/Reliability.java	(working copy)
+@@ -111,8 +111,10 @@
+             long maxBlockingTime,
+             TimeUnit unit);
+ 
++    public Reliability withBestEffort();
++    
++    public Reliability withReliable();
+ 
+-
+     // -----------------------------------------------------------------------
+     // Types
+     // -----------------------------------------------------------------------
+Index: org/omg/dds/core/policy/Presentation.java
+===================================================================
+--- org/omg/dds/core/policy/Presentation.java	(revision 197)
++++ org/omg/dds/core/policy/Presentation.java	(working copy)
+@@ -181,8 +181,12 @@
+      */
+     public Presentation withOrderedAccess(boolean orderedAccess);
+ 
++    public Presentation withInstance();
++    
++    public Presentation withTopic();
++    
++    public Presentation withGroup();
+ 
+-
+     // -----------------------------------------------------------------------
+     // Types
+     // -----------------------------------------------------------------------
+Index: org/omg/dds/core/policy/DestinationOrder.java
+===================================================================
+--- org/omg/dds/core/policy/DestinationOrder.java	(revision 197)
++++ org/omg/dds/core/policy/DestinationOrder.java	(working copy)
+@@ -86,7 +86,15 @@
+      */
+     public DestinationOrder withKind(Kind kind);
+ 
++    /**
++     * @return A new DestinationPolicy with reception timestamp ordering.
++     */
++    public DestinationOrder withReceptionTimestamp();
+ 
++    /**
++     * @return A new DestinationPolicy with source timestamp ordering.
++     */
++    public DestinationOrder withSourceTimestamp();
+ 
+     // -----------------------------------------------------------------------
+     // Types
+Index: org/omg/dds/core/policy/Liveliness.java
+===================================================================
+--- org/omg/dds/core/policy/Liveliness.java	(revision 197)
++++ org/omg/dds/core/policy/Liveliness.java	(working copy)
+@@ -147,8 +147,13 @@
+             long leaseDuration,
+             TimeUnit unit);
+ 
++    public Liveliness withAutomatic();
++    
++    public Liveliness withManualByParticipant();
++    
++    public Liveliness withManualByTopic();
++    
+ 
+-
+     // -----------------------------------------------------------------------
+     // Types
+     // -----------------------------------------------------------------------
+Index: org/omg/dds/core/policy/Ownership.java
+===================================================================
+--- org/omg/dds/core/policy/Ownership.java	(revision 197)
++++ org/omg/dds/core/policy/Ownership.java	(working copy)
+@@ -61,8 +61,10 @@
+      */
+     public Ownership withKind(Kind kind);
+ 
++    public Ownership withShared();
++    
++    public Ownership withExclusive();
+ 
+-
+     // -----------------------------------------------------------------------
+     // Types
+     // -----------------------------------------------------------------------
+Index: org/omg/dds/core/policy/PolicyFactory.java
+===================================================================
+--- org/omg/dds/core/policy/PolicyFactory.java	(revision 0)
++++ org/omg/dds/core/policy/PolicyFactory.java	(revision 0)
+@@ -0,0 +1,115 @@
++package org.omg.dds.core.policy;
++
++public interface PolicyFactory extends org.omg.dds.core.DDSObject {
++
++    /**
++     * @return the durability
++     */
++    public Durability Durability();
++
++    /**
++     * @return the deadline
++     */
++    public Deadline Deadline();
++
++    /**
++     * @return the latencyBudget
++     */
++    public LatencyBudget LatencyBudget();
++
++    /**
++     * @return the liveliness
++     */
++    public Liveliness Liveliness();
++
++    /**
++     * @return the destinationOrder
++     */
++    public DestinationOrder DestinationOrder();
++
++    /**
++     * @return the history
++     */
++    public History History();
++
++    /**
++     * @return the resourceLimits
++     */
++    public ResourceLimits ResourceLimits();
++
++    /**
++     * @return the userData
++     */
++    public UserData UserData();
++
++    /**
++     * @return the ownership
++     */
++    public Ownership Ownership();
++
++    /**
++     * @return the timeBasedFilter
++     */
++    public TimeBasedFilter TimeBasedFilter();
++
++    /**
++     * @return the readerDataLifecycle
++     */
++    public ReaderDataLifecycle ReaderDataLifecycle();
++
++    /**
++     * @return the Representation
++     */
++    public DataRepresentation Representation();
++
++    /**
++     * @return the typeConsistency
++     */
++    public TypeConsistencyEnforcement TypeConsistency();
++
++    /**
++     * @return the durabilityService
++     */
++    public DurabilityService DurabilityService();
++
++    /**
++     * @return the reliability
++     */
++    public Reliability Reliability();
++
++    /**
++     * @return the transportPriority
++     */
++    public TransportPriority TransportPriority();
++
++    /**
++     * @return the lifespan
++     */
++    public Lifespan Lifespan();
++
++    /**
++     * @return the ownershipStrength
++     */
++    public OwnershipStrength OwnershipStrength();
++
++    /**
++     * @return the writerDataLifecycle
++     */
++    public WriterDataLifecycle WriterDataLifecycle();
++
++    /**
++     * @return the partition
++     */
++    public Partition getPartition();
++
++    /**
++     * @return the groupData
++     */
++    public GroupData getGroupData();
++
++    /**
++     * @return the entityFactory
++     */
++    public EntityFactory getEntityFactory();
++}
++
+Index: org/omg/dds/core/policy/TypeConsistencyEnforcement.java
+===================================================================
+--- org/omg/dds/core/policy/TypeConsistencyEnforcement.java	(revision 197)
++++ org/omg/dds/core/policy/TypeConsistencyEnforcement.java	(working copy)
+@@ -43,8 +43,14 @@
+      */
+     public TypeConsistencyEnforcement withKind(Kind kind);
+ 
++    public TypeConsistencyEnforcement withExactTypeTypeConsistency();
++    
++    public TypeConsistencyEnforcement withExactNameTypeConsistency();
++    
++    public TypeConsistencyEnforcement withDeclaredTypeConsistency();
++    
++    public TypeConsistencyEnforcement withAssignableTypeConsistency();
+ 
+-
+     // -----------------------------------------------------------------------
+     // Types
+     // -----------------------------------------------------------------------
+Index: org/omg/dds/core/ServiceEnvironment.java
+===================================================================
+--- org/omg/dds/core/ServiceEnvironment.java	(revision 197)
++++ org/omg/dds/core/ServiceEnvironment.java	(working copy)
+@@ -30,6 +30,7 @@
+ import org.omg.dds.type.TypeSupport;
+ import org.omg.dds.type.dynamic.DynamicTypeFactory;
+ import org.omg.dds.core.QosProvider;
++import org.omg.dds.core.policy.PolicyFactory;
+ 
+ 
+ /**
+@@ -285,7 +286,14 @@
+      */
+     public abstract QosProvider newQosProvider(String uri, String profile);
+ 
+-
++    // --- PolicyFactory -----------------------------------------------------
++    
++    /**
++     * Provides an instance of {@link PolicyFactory}.
++     * @return An instance of {@link PolicyFactory}
++     */
++    public abstract PolicyFactory getPolicyFactory();
++    
+     // -----------------------------------------------------------------------
+     // Instance Methods
+     // -----------------------------------------------------------------------

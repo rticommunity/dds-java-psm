@@ -147,7 +147,12 @@ extends QosPolicy.ForTopic,
             long leaseDuration,
             TimeUnit unit);
 
-
+    public Liveliness withAutomatic();
+    
+    public Liveliness withManualByParticipant();
+    
+    public Liveliness withManualByTopic();
+    
 
     // -----------------------------------------------------------------------
     // Types

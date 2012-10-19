@@ -181,7 +181,11 @@ extends QosPolicy.ForPublisher,
      */
     public Presentation withOrderedAccess(boolean orderedAccess);
 
-
+    public Presentation withInstance();
+    
+    public Presentation withTopic();
+    
+    public Presentation withGroup();
 
     // -----------------------------------------------------------------------
     // Types

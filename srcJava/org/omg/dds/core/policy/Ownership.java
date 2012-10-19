@@ -61,7 +61,9 @@ extends QosPolicy.ForTopic,
      */
     public Ownership withKind(Kind kind);
 
-
+    public Ownership withShared();
+    
+    public Ownership withExclusive();
 
     // -----------------------------------------------------------------------
     // Types

@@ -149,7 +149,25 @@ extends QosPolicy.ForTopic,
      */
     public Durability withKind(Kind kind);
 
-
+    /**
+     * @return Volatile durability policy. 
+     */
+    public Durability withVolatile();
+    
+    /**
+     * @return Transient-local durability policy. 
+     */
+    public Durability withTransientLocal();
+    
+    /**
+     * @return Transient durability policy. 
+     */
+    public Durability withTransient();
+    
+    /**
+     * @return Persistent durability policy. 
+     */
+    public Durability withPersitent();
 
     // -----------------------------------------------------------------------
     // Types

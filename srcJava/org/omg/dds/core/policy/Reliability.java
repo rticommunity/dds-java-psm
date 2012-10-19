@@ -111,7 +111,9 @@ extends QosPolicy.ForTopic,
             long maxBlockingTime,
             TimeUnit unit);
 
-
+    public Reliability withBestEffort();
+    
+    public Reliability withReliable();
 
     // -----------------------------------------------------------------------
     // Types

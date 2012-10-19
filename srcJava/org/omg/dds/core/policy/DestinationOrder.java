@@ -86,7 +86,15 @@ extends QosPolicy.ForTopic,
      */
     public DestinationOrder withKind(Kind kind);
 
+    /**
+     * @return A new DestinationPolicy with reception timestamp ordering.
+     */
+    public DestinationOrder withReceptionTimestamp();
 
+    /**
+     * @return A new DestinationPolicy with source timestamp ordering.
+     */
+    public DestinationOrder withSourceTimestamp();
 
     // -----------------------------------------------------------------------
     // Types

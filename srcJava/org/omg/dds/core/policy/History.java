@@ -109,9 +109,19 @@ extends QosPolicy.ForTopic, QosPolicy.ForDataReader, QosPolicy.ForDataWriter
      * @return  a new policy
      */
     public History withDepth(int depth);
-
-
-
+    
+    /**
+     * 
+     * @return History with keep-all policy
+     */
+    public History withKeepAll();
+    
+    /**
+     * 
+     * @return History with keep-last policy
+     */
+    public History withKeepLast();
+    
     // -----------------------------------------------------------------------
     // Types
     // -----------------------------------------------------------------------

@@ -43,7 +43,13 @@ extends QosPolicy.ForTopic,
      */
     public TypeConsistencyEnforcement withKind(Kind kind);
 
-
+    public TypeConsistencyEnforcement withExactTypeTypeConsistency();
+    
+    public TypeConsistencyEnforcement withExactNameTypeConsistency();
+    
+    public TypeConsistencyEnforcement withDeclaredTypeConsistency();
+    
+    public TypeConsistencyEnforcement withAssignableTypeConsistency();
 
     // -----------------------------------------------------------------------
     // Types
