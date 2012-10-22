@@ -27,39 +27,41 @@ import org.omg.dds.core.DDSObject;
 import org.omg.dds.domain.DomainParticipantQos;
 import org.omg.dds.domain.DomainParticipantFactoryQos;
 
-public abstract interface QosProvider extends DDSObject {
+public abstract class QosProvider implements DDSObject {
 
-	/**
-	 * Get default domain paricipant QoS 
-	 * @return Default domain participant QoS defined in the uri passed to 
-	 *         the {@link org.omg.dds.core.ServiceEnvironment#newQosProvider(String, String)} method. 
-	 */
+	public static QosProvider newQosProvider(String uri, 
+			                                 String profile, 
+			                                 ServiceEnvironment env)
+	{
+		return env.getSPI().newQosProvider(uri, profile);
+	}
 	
-	public DomainParticipantFactoryQos getDomainParticipantFactoryQos();
+	public abstract DomainParticipantFactoryQos getDomainParticipantFactoryQos();
 
 	/**
-	 * Get the first domain paricipant QoS with identifier that matches the id.
+	 * Get the first domain participant QoS with identifier that matches the id.
+	 * 
 	 * @param id The identifier of the domain participant QoS of interest  
 	 * @return Domain participant QoS  
 	 */
 
-	public DomainParticipantFactoryQos getDomainParticipantFactoryQos(String id);
+	public abstract DomainParticipantFactoryQos getDomainParticipantFactoryQos(String id);
 	
-	public DomainParticipantQos getDomainParticipantQos();
-	public DomainParticipantQos getDomainParticipantQos(String id);
+	public abstract DomainParticipantQos getDomainParticipantQos();
+	public abstract DomainParticipantQos getDomainParticipantQos(String id);
 	
-	public TopicQos getTopicQos();
-	public TopicQos getTopicQos(String id);
+	public abstract TopicQos getTopicQos();
+	public abstract TopicQos getTopicQos(String id);
 	
-	public SubscriberQos getSubscriberQos();
-	public SubscriberQos getSubscriberQos(String id);
+	public abstract SubscriberQos getSubscriberQos();
+	public abstract SubscriberQos getSubscriberQos(String id);
 	
-	public PublisherQos getPublisherQos();
-	public PublisherQos getPublisherQos(String id);
+	public abstract PublisherQos getPublisherQos();
+	public abstract PublisherQos getPublisherQos(String id);
 	
-	public DataReaderQos getDataReaderQos();
-	public DataReaderQos getDataReaderQos(String id);
+	public abstract DataReaderQos getDataReaderQos();
+	public abstract DataReaderQos getDataReaderQos(String id);
 	
-	public DataWriterQos getDataWriterQos();
-	public DataWriterQos getDataWriterQos(String id);
+	public abstract DataWriterQos getDataWriterQos();
+	public abstract DataWriterQos getDataWriterQos(String id);
 }

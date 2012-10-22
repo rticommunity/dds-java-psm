@@ -42,6 +42,57 @@ implements Comparable<Duration>, Serializable, DDSObject
     private static final long serialVersionUID = 6926514364942353575L;
 
 
+
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * Construct a time duration of the given magnitude.
+     * 
+     * A duration of magnitude {@link Long#MAX_VALUE} indicates an infinite
+     * duration, regardless of the units specified.
+     * 
+     * @param env       Identifies the Service instance to which the new
+     *                  object will belong.
+     * 
+     * @see     #isInfinite()
+     * @see     #infiniteDuration(ServiceEnvironment)
+     */
+    public static Duration newDuration(
+            long duration,
+            TimeUnit unit,
+            ServiceEnvironment env)
+    {
+        return env.getSPI().newDuration(duration, unit);
+    }
+
+
+    /**
+     * @param env       Identifies the Service instance to which the
+     *                  object will belong.
+     * 
+     * @return  An unmodifiable {@link Duration} of infinite length.
+     */
+    public static Duration infiniteDuration(ServiceEnvironment env)
+    {
+        return env.getSPI().infiniteDuration();
+    }
+
+
+    /**
+     * @param env       Identifies the Service instance to which the
+     *                  object will belong.
+     * 
+     * @return  A {@link Duration} of zero length.
+     */
+    public static Duration zeroDuration(ServiceEnvironment env)
+    {
+        return env.getSPI().zeroDuration();
+    }
+
+
+
     // -----------------------------------------------------------------------
     // Instance Methods
     // -----------------------------------------------------------------------
@@ -126,6 +177,9 @@ implements Comparable<Duration>, Serializable, DDSObject
      * If this duration is infinite, the following relationship shall be
      * true:
      * 
+     * <code>this.equals(infiniteDuration(this.getEnvironment()))</code>
+     * 
+     * @see     #infiniteDuration(ServiceEnvironment)
      */
     public abstract boolean isInfinite();
 

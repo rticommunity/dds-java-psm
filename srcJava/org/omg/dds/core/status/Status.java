@@ -19,9 +19,11 @@
 package org.omg.dds.core.status;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.Entity;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.StatusCondition;
 
 
@@ -45,4 +47,31 @@ public abstract class Status implements Serializable, DDSObject
     // -----------------------------------------------------------------------
 
     private static final long serialVersionUID = 8294883446033723160L;
+
+
+
+    // -----------------------------------------------------------------------
+    // Object Life Cycle
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param env       Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static Set<Class<? extends Status>> allStatuses(
+            ServiceEnvironment env)
+    {
+        return env.getSPI().allStatusKinds();
+    }
+
+
+    /**
+     * @param env Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static Set<Class<? extends Status>> noStatuses(
+            ServiceEnvironment env)
+    {
+        return env.getSPI().noStatusKinds();
+    }
 }

@@ -19,11 +19,27 @@
 package org.omg.dds.type.dynamic;
 
 import org.omg.dds.core.DDSObject;
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.type.TypeKind;
 
 
 public abstract class DynamicTypeFactory implements DDSObject
 {
+    // -----------------------------------------------------------------------
+    // Singleton Access
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param env       Identifies the Service instance to which the
+     *                  object will belong.
+     */
+    public static DynamicTypeFactory getInstance(ServiceEnvironment env)
+    {
+        return env.getSPI().getTypeFactory();
+    }
+
+
+
     // -----------------------------------------------------------------------
     // Instance Methods
     // -----------------------------------------------------------------------

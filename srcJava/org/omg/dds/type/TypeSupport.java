@@ -18,6 +18,7 @@
 
 package org.omg.dds.type;
 
+import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.DDSObject;
 
 
@@ -31,6 +32,65 @@ import org.omg.dds.core.DDSObject;
  */
 public abstract class TypeSupport<TYPE> implements DDSObject
 {
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    // --- Types: ------------------------------------------------------------
+
+    /**
+     * Create a new TypeSupport object for the given physical type.
+     * This method is equivalent to:
+     * 
+     * <code>newTypeSupport(type, type.getClass().getName(), bootstrap)</code>
+     * 
+     * @see #newTypeSupport(Class, String, ServiceEnvironment)
+     */
+    public static <TYPE> TypeSupport<TYPE> newTypeSupport(
+            Class<TYPE> type,
+            ServiceEnvironment env)
+    {
+        return newTypeSupport(type, type.getClass().getName(), env);
+    }
+
+
+    /**
+     * Create a new TypeSupport object for the given physical type.
+     * The Service will register this type under the given name with any
+     * participant with which the TypeSupport is used.
+     * 
+     * @param <TYPE>    The physical type of all samples read or written by
+     *                  any {@link org.omg.dds.sub.DataReader} or
+     *                  {@link org.omg.dds.pub.DataWriter} typed by the
+     *                  resulting <code>TypeSupport</code>.
+     * @param type      The physical type of all samples read or written by
+     *                  any {@link org.omg.dds.sub.DataReader} or
+     *                  {@link org.omg.dds.pub.DataWriter} typed by the
+     *                  resulting <code>TypeSupport</code>.
+     * @param registeredName    The logical name under which this type will
+     *                          be registered with any
+     *                          {@link org.omg.dds.domain.DomainParticipant}
+     *                          with which the resulting
+     *                          <code>TypeSupport</code> is used.
+     * @param env       Identifies the Service instance to which the new
+     *                  object will belong.
+     * 
+     * @return          A new <code>TypeSupport</code> object, which can
+     *                  subsequently be used to create one or more
+     *                  {@link org.omg.dds.topic.Topic}s.
+     * 
+     * @see #newTypeSupport(Class, ServiceEnvironment)
+     */
+    public static <TYPE> TypeSupport<TYPE> newTypeSupport(
+            Class<TYPE> type,
+            String registeredName,
+            ServiceEnvironment env)
+    {
+        return env.getSPI().newTypeSupport(type, registeredName);
+    }
+
+
+
     // -----------------------------------------------------------------------
     // Instance Methods
     // -----------------------------------------------------------------------

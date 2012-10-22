@@ -29,7 +29,7 @@ package org.omg.dds.core.policy;
  * 
  * @param   <SELF>      The QoS policy interface that extends this interface.
  */
-public interface RequestedOffered<SELF>
+public interface RequestedOffered<SELF> extends Comparable<SELF>
 {
     /**
      * Use the object returned by this method to evaluate the Request/Offer

@@ -40,6 +40,47 @@ implements Comparable<Time>, Serializable, DDSObject
 
     private static final long serialVersionUID = -132361141453190372L;
 
+
+
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * Construct a specific instant in time.
+     * 
+     * Negative values are considered invalid and will result in the
+     * construction of a time <code>t</code> such that:
+     * 
+     * <code>t.isValid() == false</code>
+     * 
+     * @param env       Identifies the Service instance to which the new
+     *                  object will belong.
+     * 
+     * @see     #isValid()
+     */
+    public static ModifiableTime newTime(
+            long time,
+            TimeUnit units,
+            ServiceEnvironment env)
+    {
+        return env.getSPI().newTime(time, units);
+    }
+
+
+    /**
+     * @param env       Identifies the Service instance to which the
+     *                  object will belong.
+     *                  
+     * @return      An unmodifiable {@link Time} that is not valid.
+     */
+    public static Time invalidTime(ServiceEnvironment env)
+    {
+        return env.getSPI().invalidTime();
+    }
+
+
+
     // -----------------------------------------------------------------------
     // Instance Methods
     // -----------------------------------------------------------------------

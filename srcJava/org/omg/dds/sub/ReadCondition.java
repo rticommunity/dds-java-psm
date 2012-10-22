@@ -32,7 +32,7 @@ import org.omg.dds.core.WaitSet;
  * 
  * ReadCondition objects allow an application to specify the data samples it
  * is interested in by specifying the desired sample states, view states,
- * and instance states. (See {@link Subscriber.ReaderState}.)
+ * and instance states. (See {@link Subscriber.DataState}.)
  * This allows the middleware to enable the condition only when suitable
  * information is available. They are to be used in conjunction with a
  * {@link WaitSet} as normal conditions. More than one ReadCondition may be

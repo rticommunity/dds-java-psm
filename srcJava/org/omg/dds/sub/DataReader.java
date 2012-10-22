@@ -113,7 +113,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      *          instance states.
      */
     public ReadCondition<TYPE> createReadCondition(
-            Subscriber.ReaderState states);
+            Subscriber.DataState states);
 
     /**
      * This operation creates a QueryCondition. The returned QueryCondition
@@ -125,7 +125,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @param   queryParameters A set of parameter values for the
      *          queryExpression.
      *
-     * @see     #createQueryCondition(org.omg.dds.sub.Subscriber.ReaderState, String, List)
+     * @see     #createQueryCondition(org.omg.dds.sub.Subscriber.DataState, String, List)
      */
     public QueryCondition<TYPE> createQueryCondition(
             String queryExpression,
@@ -146,7 +146,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @see     #createQueryCondition(String, List)
      */
     public QueryCondition<TYPE> createQueryCondition(
-            Subscriber.ReaderState states,
+            Subscriber.DataState states,
             String queryExpression,
             List<String> queryParameters);
 
@@ -447,8 +447,31 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
     /**
      * This operation accesses a collection of samples from this DataReader.
      * It behaves exactly like {@link #read()} except that the returned
+     * samples are no more than #maxSamples.
+     * 
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     * 
+     * @see     #read()
+     * @see     #read(Selector)
+     * @see     #read(List, Selector)
+     * @see     #readNextSample(Sample)
+     * @see     #take(List)
+     */
+    public Sample.Iterator<TYPE> read(int maxSamples);
+
+    /**
+     * This operation accesses a collection of samples from this DataReader.
+     * It behaves exactly like {@link #read()} except that the returned
      * samples are not "on loan" from the Service; they are deeply copied to
-     * the application.
+     * the application. 
+     * 
+     * If the number of samples read are fewer than the current
+     * length of the list, the list will be trimmed to fit the 
+     * samples read. If list is null, a new list will be allocated 
+     * and its size may be zero or unbounded depending upon the 
+     * number of samples read. If there are no samples, the list 
+     * reference will be non-null and the list will contain zero 
+     * samples. 
      * 
      * The read operation will copy the data and meta-information into the
      * elements already inside the given collection, overwriting any samples
@@ -471,6 +494,16 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * It behaves exactly like {@link #read(Selector)} except that the returned
      * samples are not "on loan" from the Service; they are deeply copied to
      * the application.
+     * 
+     * The number of samples are specified as the minimum of 
+     * {@link Selector#getMaxSamples()} and the length of the list. 
+     * If the number of samples read are fewer than the current 
+     * length of the list, the list will be trimmed to fit the 
+     * samples read. If list is null, a new list will be allocated 
+     * and its size may be zero or unbounded depending upon the 
+     * number of samples read. If there are no samples, the list 
+     * reference will be non-null and the list will contain zero 
+     * samples. 
      * 
      * The read operation will copy the data and meta-information into the
      * elements already inside the given collection, overwriting any samples
@@ -504,6 +537,24 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @see     #read()
      */
     public Sample.Iterator<TYPE> take();
+
+    /**
+     * This operation accesses a collection of samples from this DataReader.
+     * It behaves exactly like {@link #take(Selector)} except that the
+     * collection of returned samples is not constrained by any Selector.
+     * 
+     * The number of samples accessible via the iterator will not be 
+     * more than #maxSamples.
+     * 
+     * @return  a non-null unmodifiable iterator over loaned samples.
+     * 
+     * @see     #take(Selector)
+     * @see     #take(List)
+     * @see     #take(List, Selector)
+     * @see     #takeNextSample(Sample)
+     * @see     #read()
+     */
+    public Sample.Iterator<TYPE> take(int maxSamples);
 
     /**
      * This operation accesses a collection of samples from this DataReader.
@@ -550,6 +601,8 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * but the application can control where the copy is placed and the
      * application will not need to "return the loan."
      * 
+     * 
+     * 
      * @return  <code>samples</code>, for convenience.
      * 
      * @see     #take()
@@ -591,12 +644,12 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * 
      * This operation is semantically equivalent to
      * {@link #read(List, Selector)} where {@link Selector#getMaxSamples()}
-     * is 1, {@link Selector#getReaderState()} followed by
-     * {@link Subscriber.ReaderState#getSampleStates()} ==
-     * {@link SampleState#NOT_READ}, {@link Selector#getReaderState()} followed by
-     * {@link Subscriber.ReaderState#getViewStates()} contains all view
-     * states, and {@link Selector#getReaderState()} followed by
-     * {@link Subscriber.ReaderState#getInstanceStates()} contains all
+     * is 1, {@link Selector#getDataState()} followed by
+     * {@link Subscriber.DataState#getSampleStates()} ==
+     * {@link SampleState#NOT_READ}, {@link Selector#getDataState()} followed by
+     * {@link Subscriber.DataState#getViewStates()} contains all view
+     * states, and {@link Selector#getDataState()} followed by
+     * {@link Subscriber.DataState#getInstanceStates()} contains all
      * instance states.
      * 
      * This operation provides a simplified API to "read" samples avoiding
@@ -624,12 +677,12 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * 
      * This operation is semantically equivalent to
      * {@link #take(List, Selector)} where {@link Selector#getMaxSamples()}
-     * is 1, {@link Selector#getReaderState()} followed by
-     * {@link Subscriber.ReaderState#getSampleStates()} ==
-     * {@link SampleState#NOT_READ}, {@link Selector#getReaderState()} followed by
-     * {@link Subscriber.ReaderState#getViewStates()} contains all view
-     * states, and {@link Selector#getReaderState()} followed by
-     * {@link Subscriber.ReaderState#getInstanceStates()} contains all
+     * is 1, {@link Selector#getDataState()} followed by
+     * {@link Subscriber.DataState#getSampleStates()} ==
+     * {@link SampleState#NOT_READ}, {@link Selector#getDataState()} followed by
+     * {@link Subscriber.DataState#getViewStates()} contains all view
+     * states, and {@link Selector#getDataState()} followed by
+     * {@link Subscriber.DataState#getInstanceStates()} contains all
      * instance states.
      * 
      * This operation provides a simplified API to "take" samples avoiding
@@ -726,7 +779,8 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * {@link #take} methods return. 
      * 
      * @return The {@link Selector} object returned by this method
-     *         is the default selector. By default it selects {@link Integer#MAX_VALUE} 
+     *         is the default selector. By default it selects 
+     *         {@link org.omg.dds.core.policy.ResourceLimits#LENGTH_UNLIMITED} 
      *         samples.  This is equivalent to calling {@link DataReader#read} without 
      *         any parameters. 
      * */
@@ -741,10 +795,10 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * {@link DataReader#select} creates a Selector that is bound to the {@link DataReader}.
      *  
      * A Selector may encapsulate any combination of {@link InstanceHandle}, 
-     * {@link Subscriber.ReaderState}, a query filter. It can be used to bound the maximum
+     * {@link Subscriber.DataState}, a query filter. It can be used to bound the maximum
      * number of samples retrieved.
      *      
-     * @param <TYPE>    The concrete type of the data to be read.
+     * @param <T>    The concrete type of the data to be read.
      */
     public static interface Selector<T> extends DDSObject {
     	
@@ -754,7 +808,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
     	
     	public Selector<T> nextInstance(boolean retrieveNextInstance);
     	
-    	public Selector<T> readerState(Subscriber.ReaderState state);
+    	public Selector<T> dataState(Subscriber.DataState state);
     	
     	public Selector<T> filterContent(String queryExpression, List<String> queryParameters);
     	
@@ -766,7 +820,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
     	
     	public boolean retrieveNextInstance();
     	
-    	public Subscriber.ReaderState getReaderState();
+    	public Subscriber.DataState getDataState();
     	
     	public String getQueryExpression();
     	

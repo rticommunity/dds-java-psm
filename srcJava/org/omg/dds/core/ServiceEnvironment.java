@@ -376,9 +376,9 @@ public abstract class ServiceEnvironment implements DDSObject {
     public static interface ServiceProviderInterface {
         // --- Singleton factories: ------------------------------------------
 
-        public abstract DomainParticipantFactory getParticipantFactory();
+        public DomainParticipantFactory getParticipantFactory();
 
-        public abstract DynamicTypeFactory getTypeFactory();
+        public DynamicTypeFactory getTypeFactory();
 
 
         // --- Types: --------------------------------------------------------
@@ -406,7 +406,7 @@ public abstract class ServiceEnvironment implements DDSObject {
          *                  subsequently be used to create one or more
          *                  {@link org.omg.dds.topic.Topic}s.
          */
-        public abstract <TYPE> TypeSupport<TYPE> newTypeSupport(
+        public <TYPE> TypeSupport<TYPE> newTypeSupport(
                 Class<TYPE> type, String registeredName);
 
 
@@ -418,17 +418,17 @@ public abstract class ServiceEnvironment implements DDSObject {
          * A duration of magnitude {@link Long#MAX_VALUE} indicates an
          * infinite duration, regardless of the units specified.
          */
-        public abstract Duration newDuration(long duration, TimeUnit unit);
+        public Duration newDuration(long duration, TimeUnit unit);
 
         /**
          * @return      A {@link Duration} of infinite length.
          */
-        public abstract Duration infiniteDuration();
+        public Duration infiniteDuration();
 
         /**
          * @return      A {@link Duration} of zero length.
          */
-        public abstract Duration zeroDuration();
+        public Duration zeroDuration();
 
         /**
          * Construct a specific instant in time.
@@ -438,32 +438,32 @@ public abstract class ServiceEnvironment implements DDSObject {
          * 
          * <code>t.isValid() == false</code>
          */
-        public abstract ModifiableTime newTime(long time, TimeUnit units);
+        public ModifiableTime newTime(long time, TimeUnit units);
 
         /**
          * @return      A {@link Time} that is not valid.
          */
-        public abstract Time invalidTime();
+        public Time invalidTime();
 
 
         // --- Instance handle: ----------------------------------------------
 
-        public abstract ModifiableInstanceHandle newInstanceHandle();
+        public ModifiableInstanceHandle newInstanceHandle();
 
-        public abstract InstanceHandle nilHandle();
+        public InstanceHandle nilHandle();
 
 
         // --- Conditions & WaitSet: -----------------------------------------
 
-        public abstract GuardCondition newGuardCondition();
+        public GuardCondition newGuardCondition();
 
-        public abstract WaitSet newWaitSet();
+        public WaitSet newWaitSet();
         
         // --- Status: -------------------------------------------------------
 
-        public abstract Set<Class<? extends Status>> allStatusKinds();
+        public Set<Class<? extends Status>> allStatusKinds();
 
-        public abstract Set<Class<? extends Status>> noStatusKinds();
+        public Set<Class<? extends Status>> noStatusKinds();
         
         // --- QoS Provider --------------------------------------------------
         /** Create a QosProvider fetching QoS configuration from the specified URI.    

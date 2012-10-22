@@ -1,115 +1,122 @@
 package org.omg.dds.core.policy;
 
-public interface PolicyFactory extends org.omg.dds.core.DDSObject {
+import org.omg.dds.core.ServiceEnvironment;
 
+public abstract class PolicyFactory implements org.omg.dds.core.DDSObject {
+
+	public static PolicyFactory getPolicyFactory(ServiceEnvironment env)
+	{
+		return env.getSPI().getPolicyFactory();
+	}
+	
     /**
      * @return the durability
      */
-    public Durability Durability();
+    public abstract Durability Durability();
 
     /**
      * @return the deadline
      */
-    public Deadline Deadline();
+    public abstract Deadline Deadline();
 
     /**
      * @return the latencyBudget
      */
-    public LatencyBudget LatencyBudget();
+    public abstract LatencyBudget LatencyBudget();
 
     /**
      * @return the liveliness
      */
-    public Liveliness Liveliness();
+    public abstract Liveliness Liveliness();
 
     /**
      * @return the destinationOrder
      */
-    public DestinationOrder DestinationOrder();
+    public abstract DestinationOrder DestinationOrder();
 
     /**
      * @return the history
      */
-    public History History();
+    public abstract History History();
 
     /**
      * @return the resourceLimits
      */
-    public ResourceLimits ResourceLimits();
+    public abstract ResourceLimits ResourceLimits();
 
     /**
      * @return the userData
      */
-    public UserData UserData();
+    public abstract UserData UserData();
 
     /**
      * @return the ownership
      */
-    public Ownership Ownership();
+    public abstract Ownership Ownership();
 
     /**
      * @return the timeBasedFilter
      */
-    public TimeBasedFilter TimeBasedFilter();
+    public abstract TimeBasedFilter TimeBasedFilter();
 
     /**
      * @return the readerDataLifecycle
      */
-    public ReaderDataLifecycle ReaderDataLifecycle();
+    public abstract ReaderDataLifecycle ReaderDataLifecycle();
 
     /**
      * @return the Representation
      */
-    public DataRepresentation Representation();
+    public abstract DataRepresentation Representation();
 
     /**
      * @return the typeConsistency
      */
-    public TypeConsistencyEnforcement TypeConsistency();
+    public abstract TypeConsistencyEnforcement TypeConsistency();
 
     /**
      * @return the durabilityService
      */
-    public DurabilityService DurabilityService();
+    public abstract DurabilityService DurabilityService();
 
     /**
      * @return the reliability
      */
-    public Reliability Reliability();
+    public abstract Reliability Reliability();
 
     /**
      * @return the transportPriority
      */
-    public TransportPriority TransportPriority();
+    public abstract TransportPriority TransportPriority();
 
     /**
      * @return the lifespan
      */
-    public Lifespan Lifespan();
+    public abstract Lifespan Lifespan();
 
     /**
      * @return the ownershipStrength
      */
-    public OwnershipStrength OwnershipStrength();
+    public abstract OwnershipStrength OwnershipStrength();
 
     /**
      * @return the writerDataLifecycle
      */
-    public WriterDataLifecycle WriterDataLifecycle();
+    public abstract WriterDataLifecycle WriterDataLifecycle();
 
     /**
      * @return the partition
      */
-    public Partition getPartition();
+    public abstract Partition getPartition();
 
     /**
      * @return the groupData
      */
-    public GroupData getGroupData();
+    public abstract GroupData getGroupData();
 
     /**
      * @return the entityFactory
      */
-    public EntityFactory getEntityFactory();
+    public abstract EntityFactory getEntityFactory();
 }
 

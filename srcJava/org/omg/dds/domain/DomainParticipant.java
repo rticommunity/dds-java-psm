@@ -788,18 +788,6 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      */
     public Time getCurrentTime();
 
-    /**
-     * 
-     * @return A Set of class objects representing all the {@link Status} types. 
-     */
-    public Set<Class<? extends Status>> allStatuses();
-    
-    /**
-     * 
-     * @return Am empty set of class objects representing all the {@link Status} types. 
-     */
-    public Set<Class<? extends Status>> noStatuses();
-    
 
     // --- From Entity: ------------------------------------------------------
 

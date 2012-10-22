@@ -90,6 +90,20 @@ import java.util.concurrent.TimeoutException;
  * once.
  */
 public abstract class WaitSet implements DDSObject {
+    // -----------------------------------------------------------------------
+    // Factory Methods
+    // -----------------------------------------------------------------------
+
+    /**
+     * @param env       Identifies the Service instance to which the new
+     *                  object will belong.
+     */
+    public static WaitSet newWaitSet(ServiceEnvironment env)
+    {
+        return env.getSPI().newWaitSet();
+    }
+
+
 
     // -----------------------------------------------------------------------
     // Instance Methods

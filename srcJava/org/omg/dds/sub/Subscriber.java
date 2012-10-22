@@ -342,10 +342,10 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
 
     /**
      * This operation is equivalent to calling
-     * {@link #getDataReaders(Collection, ReaderState)} with any sample state
-     * ({@link Subscriber.ReaderState#withAnySampleState()}), any view state
-     * ({@link Subscriber.ReaderState#withAnyViewState()}), and any instance
-     * state ({@link Subscriber.ReaderState#withAnyInstanceState()}).
+     * {@link #getDataReaders(Collection, DataState)} with any sample state
+     * ({@link Subscriber.DataState#withAnySampleState()}), any view state
+     * ({@link Subscriber.DataState#withAnyViewState()}), and any instance
+     * state ({@link Subscriber.DataState#withAnyInstanceState()}).
      * 
      * @param   readers         a container, into which this method will place
      *          its result.
@@ -359,7 +359,7 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      *          and this operation is not invoked inside a
      *          {@link #beginAccess()}/{@link #endAccess()} block.
      * 
-     * @see     #getDataReaders(Collection, ReaderState)
+     * @see     #getDataReaders(Collection, DataState)
      * @see     #beginAccess()
      * @see     #endAccess()
      * @see     Presentation
@@ -412,7 +412,7 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      * 
      * @param   readers         a container, into which this method will place
      *          its result.
-     * @param   readerState     a DataReader will only be placed into the
+     * @param   dataState     a DataReader will only be placed into the
      *          readers collection if it has data available with one of these
      *          sample states, view states, and instance states.
      * 
@@ -432,7 +432,7 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      */
     public Collection<DataReader<?>> getDataReaders(
             Collection<DataReader<?>> readers,
-            ReaderState readerState);
+            DataState dataState);
 
     /**
      * This operation invokes the operation
@@ -567,29 +567,29 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
     public DomainParticipant getParent();
 
 
-    // --- ReaderState: ------------------------------------------------------
+    // --- DataState: ------------------------------------------------------
 
     /**
-     * Create and return a new modifiable {@link ReaderState} object. This
+     * Create and return a new modifiable {@link DataState} object. This
      * object will be initialized with no sample states, no instance states,
      * and no view states.
      * 
      * This method shall never return null.
      * 
-     * @return  a new {@link ReaderState} object.
+     * @return  a new {@link DataState} object.
      */
-    public ReaderState createReaderState();
+    public DataState createDataState();
 
 
     /**
-     * A ReaderState encapsulates sets of sample states, view states, and
+     * A DataState encapsulates sets of sample states, view states, and
      * instance states as a convenience.
      * 
-     * Instances of ReaderState may be unmodifiable, in which case methods
+     * Instances of DataState may be unmodifiable, in which case methods
      * that would change them shall throw
      * {@link UnsupportedOperationException}.
      */
-    public static interface ReaderState extends DDSObject, Cloneable {
+    public static interface DataState extends DDSObject, Cloneable {
         // --- Accessors: ----------------------------------------------------
 
         /**
@@ -620,86 +620,86 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
         // --- Mutators: -----------------------------------------------------
 
         /**
-         * Add the given {@link SampleState} to this ReaderState.
+         * Add the given {@link SampleState} to this DataState.
          * 
          * @param state the state to add.
          * 
          * @return      this
          * 
-         * @throws      UnsupportedOperationException   if this ReaderState
+         * @throws      UnsupportedOperationException   if this DataState
          *                                              is unmodifiable.
          */
-        public ReaderState with(SampleState state);
+        public DataState with(SampleState state);
 
         /**
-         * Add the given {@link ViewState} to this ReaderState.
+         * Add the given {@link ViewState} to this DataState.
          * 
          * @param state the state to add.
          * 
          * @return      this
          * 
-         * @throws      UnsupportedOperationException   if this ReaderState
+         * @throws      UnsupportedOperationException   if this DataState
          *                                              is unmodifiable.
          */
-        public ReaderState with(ViewState state);
+        public DataState with(ViewState state);
 
         /**
-         * Add the given {@link InstanceState} to this ReaderState.
+         * Add the given {@link InstanceState} to this DataState.
          * 
          * @param state the state to add.
          * 
          * @return      this
          * 
-         * @throws      UnsupportedOperationException   if this ReaderState
+         * @throws      UnsupportedOperationException   if this DataState
          *                                              is unmodifiable.
          */
-        public ReaderState with(InstanceState state);
+        public DataState with(InstanceState state);
 
         /**
-         * Add all {@link SampleState} values to this ReaderState.
+         * Add all {@link SampleState} values to this DataState.
          * 
          * @return      this
          * 
-         * @throws      UnsupportedOperationException   if this ReaderState
+         * @throws      UnsupportedOperationException   if this DataState
          *                                              is unmodifiable.
          */
-        public ReaderState withAnySampleState();
+        public DataState withAnySampleState();
 
         /**
-         * Add all {@link ViewState} values to this ReaderState.
+         * Add all {@link ViewState} values to this DataState.
          * 
          * @return      this
          * 
-         * @throws      UnsupportedOperationException   if this ReaderState
+         * @throws      UnsupportedOperationException   if this DataState
          *                                              is unmodifiable.
          */
-        public ReaderState withAnyViewState();
+        public DataState withAnyViewState();
 
         /**
-         * Add all {@link InstanceState} values to this ReaderState.
+         * Add all {@link InstanceState} values to this DataState.
          * 
          * @return      this
          * 
-         * @throws      UnsupportedOperationException   if this ReaderState
+         * @throws      UnsupportedOperationException   if this DataState
          *                                              is unmodifiable.
          */
-        public ReaderState withAnyInstanceState();
+        public DataState withAnyInstanceState();
 
         /**
          * Add {@link InstanceState#NOT_ALIVE_DISPOSED} and
-         * {@link InstanceState#NOT_ALIVE_NO_WRITERS} to this ReaderState.
+         * {@link InstanceState#NOT_ALIVE_NO_WRITERS} to this DataState.
          * 
          * @return      this
          * 
-         * @throws      UnsupportedOperationException   if this ReaderState
+         * @throws      UnsupportedOperationException   if this DataState
          *                                              is unmodifiable.
          */
-        public ReaderState withNotAliveInstanceStates();
+        public DataState withNotAliveInstanceStates();
 
 
         // --- From Object: --------------------------------------------------
 
-        public ReaderState clone();
+        public DataState clone();
 
         public boolean equals(Object other);
 

@@ -24,9 +24,8 @@ import java.util.ListIterator;
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.ModifiableTime;
 import org.omg.dds.pub.DataWriter;
-
+import org.omg.dds.core.Time;
 
 /**
  * A Sample represents an atom of data information (i.e., one value for one
@@ -260,7 +259,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
      */
     public InstanceState getInstanceState();
 
-    public ModifiableTime getSourceTimestamp();
+    public Time getSourceTimestamp();
 
     public ModifiableInstanceHandle getInstanceHandle();
 
