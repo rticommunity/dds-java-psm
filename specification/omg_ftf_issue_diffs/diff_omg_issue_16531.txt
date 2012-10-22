@@ -1,0 +1,795 @@
+Index: org/omg/dds/core/QosProvider.java
+===================================================================
+--- org/omg/dds/core/QosProvider.java	(revision 200)
++++ org/omg/dds/core/QosProvider.java	(revision 202)
+@@ -27,39 +27,41 @@
+ import org.omg.dds.domain.DomainParticipantQos;
+ import org.omg.dds.domain.DomainParticipantFactoryQos;
+ 
+-public abstract interface QosProvider extends DDSObject {
++public abstract class QosProvider implements DDSObject {
+ 
+-	/**
+-	 * Get default domain paricipant QoS 
+-	 * @return Default domain participant QoS defined in the uri passed to 
+-	 *         the {@link org.omg.dds.core.ServiceEnvironment#newQosProvider(String, String)} method. 
+-	 */
++	public static QosProvider newQosProvider(String uri, 
++			                                 String profile, 
++			                                 ServiceEnvironment env)
++	{
++		return env.getSPI().newQosProvider(uri, profile);
++	}
+ 	
+-	public DomainParticipantFactoryQos getDomainParticipantFactoryQos();
++	public abstract DomainParticipantFactoryQos getDomainParticipantFactoryQos();
+ 
+ 	/**
+-	 * Get the first domain paricipant QoS with identifier that matches the id.
++	 * Get the first domain participant QoS with identifier that matches the id.
++	 * 
+ 	 * @param id The identifier of the domain participant QoS of interest  
+ 	 * @return Domain participant QoS  
+ 	 */
+ 
+-	public DomainParticipantFactoryQos getDomainParticipantFactoryQos(String id);
++	public abstract DomainParticipantFactoryQos getDomainParticipantFactoryQos(String id);
+ 	
+-	public DomainParticipantQos getDomainParticipantQos();
+-	public DomainParticipantQos getDomainParticipantQos(String id);
++	public abstract DomainParticipantQos getDomainParticipantQos();
++	public abstract DomainParticipantQos getDomainParticipantQos(String id);
+ 	
+-	public TopicQos getTopicQos();
+-	public TopicQos getTopicQos(String id);
++	public abstract TopicQos getTopicQos();
++	public abstract TopicQos getTopicQos(String id);
+ 	
+-	public SubscriberQos getSubscriberQos();
+-	public SubscriberQos getSubscriberQos(String id);
++	public abstract SubscriberQos getSubscriberQos();
++	public abstract SubscriberQos getSubscriberQos(String id);
+ 	
+-	public PublisherQos getPublisherQos();
+-	public PublisherQos getPublisherQos(String id);
++	public abstract PublisherQos getPublisherQos();
++	public abstract PublisherQos getPublisherQos(String id);
+ 	
+-	public DataReaderQos getDataReaderQos();
+-	public DataReaderQos getDataReaderQos(String id);
++	public abstract DataReaderQos getDataReaderQos();
++	public abstract DataReaderQos getDataReaderQos(String id);
+ 	
+-	public DataWriterQos getDataWriterQos();
+-	public DataWriterQos getDataWriterQos(String id);
++	public abstract DataWriterQos getDataWriterQos();
++	public abstract DataWriterQos getDataWriterQos(String id);
+ }
+Index: org/omg/dds/core/policy/PolicyFactory.java
+===================================================================
+--- org/omg/dds/core/policy/PolicyFactory.java	(revision 200)
++++ org/omg/dds/core/policy/PolicyFactory.java	(revision 202)
+@@ -1,115 +1,122 @@
+ package org.omg.dds.core.policy;
+ 
+-public interface PolicyFactory extends org.omg.dds.core.DDSObject {
++import org.omg.dds.core.ServiceEnvironment;
+ 
++public abstract class PolicyFactory implements org.omg.dds.core.DDSObject {
++
++	public static PolicyFactory getPolicyFactory(ServiceEnvironment env)
++	{
++		return env.getSPI().getPolicyFactory();
++	}
++	
+     /**
+      * @return the durability
+      */
+-    public Durability Durability();
++    public abstract Durability Durability();
+ 
+     /**
+      * @return the deadline
+      */
+-    public Deadline Deadline();
++    public abstract Deadline Deadline();
+ 
+     /**
+      * @return the latencyBudget
+      */
+-    public LatencyBudget LatencyBudget();
++    public abstract LatencyBudget LatencyBudget();
+ 
+     /**
+      * @return the liveliness
+      */
+-    public Liveliness Liveliness();
++    public abstract Liveliness Liveliness();
+ 
+     /**
+      * @return the destinationOrder
+      */
+-    public DestinationOrder DestinationOrder();
++    public abstract DestinationOrder DestinationOrder();
+ 
+     /**
+      * @return the history
+      */
+-    public History History();
++    public abstract History History();
+ 
+     /**
+      * @return the resourceLimits
+      */
+-    public ResourceLimits ResourceLimits();
++    public abstract ResourceLimits ResourceLimits();
+ 
+     /**
+      * @return the userData
+      */
+-    public UserData UserData();
++    public abstract UserData UserData();
+ 
+     /**
+      * @return the ownership
+      */
+-    public Ownership Ownership();
++    public abstract Ownership Ownership();
+ 
+     /**
+      * @return the timeBasedFilter
+      */
+-    public TimeBasedFilter TimeBasedFilter();
++    public abstract TimeBasedFilter TimeBasedFilter();
+ 
+     /**
+      * @return the readerDataLifecycle
+      */
+-    public ReaderDataLifecycle ReaderDataLifecycle();
++    public abstract ReaderDataLifecycle ReaderDataLifecycle();
+ 
+     /**
+      * @return the Representation
+      */
+-    public DataRepresentation Representation();
++    public abstract DataRepresentation Representation();
+ 
+     /**
+      * @return the typeConsistency
+      */
+-    public TypeConsistencyEnforcement TypeConsistency();
++    public abstract TypeConsistencyEnforcement TypeConsistency();
+ 
+     /**
+      * @return the durabilityService
+      */
+-    public DurabilityService DurabilityService();
++    public abstract DurabilityService DurabilityService();
+ 
+     /**
+      * @return the reliability
+      */
+-    public Reliability Reliability();
++    public abstract Reliability Reliability();
+ 
+     /**
+      * @return the transportPriority
+      */
+-    public TransportPriority TransportPriority();
++    public abstract TransportPriority TransportPriority();
+ 
+     /**
+      * @return the lifespan
+      */
+-    public Lifespan Lifespan();
++    public abstract Lifespan Lifespan();
+ 
+     /**
+      * @return the ownershipStrength
+      */
+-    public OwnershipStrength OwnershipStrength();
++    public abstract OwnershipStrength OwnershipStrength();
+ 
+     /**
+      * @return the writerDataLifecycle
+      */
+-    public WriterDataLifecycle WriterDataLifecycle();
++    public abstract WriterDataLifecycle WriterDataLifecycle();
+ 
+     /**
+      * @return the partition
+      */
+-    public Partition getPartition();
++    public abstract Partition getPartition();
+ 
+     /**
+      * @return the groupData
+      */
+-    public GroupData getGroupData();
++    public abstract GroupData getGroupData();
+ 
+     /**
+      * @return the entityFactory
+      */
+-    public EntityFactory getEntityFactory();
++    public abstract EntityFactory getEntityFactory();
+ }
+ 
+Index: org/omg/dds/core/policy/RequestedOffered.java
+===================================================================
+--- org/omg/dds/core/policy/RequestedOffered.java	(revision 200)
++++ org/omg/dds/core/policy/RequestedOffered.java	(revision 202)
+@@ -29,7 +29,7 @@
+  * 
+  * @param   <SELF>      The QoS policy interface that extends this interface.
+  */
+-public interface RequestedOffered<SELF>
++public interface RequestedOffered<SELF> extends Comparable<SELF>
+ {
+     /**
+      * Use the object returned by this method to evaluate the Request/Offer
+Index: org/omg/dds/core/ServiceEnvironment.java
+===================================================================
+--- org/omg/dds/core/ServiceEnvironment.java	(revision 200)
++++ org/omg/dds/core/ServiceEnvironment.java	(revision 202)
+@@ -270,30 +270,7 @@
+          * propagate up the call stack as-is.
+          */
+     }
+-
+-    // --- QoS Provider --------------------------------------------------
+-    /** Create a QosProvider fetching QoS configuration from the specified URI.    
+-     *  The URI determines the how the Qos configuration is fetched and the    
+-     *  format in which it is represented. This specification requires compliant   
+-     *  implementations to support at least one file based configuration using    
+-     *  the XML syntax defined as part of the DDS for CCM specification (formal/12.02.01).
+-     *  
+-     *  @param uri The uniform resource identifier. For example,
+-     *             "file:///somewhere/on/disk/qos-config.xml"
+-     *             "http:///somewhere.org/here/json-config.json"      
+-     *  @param profile Name of a profile in the document obtained via the uri
+-     *  @return a new QosProvider object
+-     */
+-    public abstract QosProvider newQosProvider(String uri, String profile);
+-
+-    // --- PolicyFactory -----------------------------------------------------
+     
+-    /**
+-     * Provides an instance of {@link PolicyFactory}.
+-     * @return An instance of {@link PolicyFactory}
+-     */
+-    public abstract PolicyFactory getPolicyFactory();
+-    
+     // -----------------------------------------------------------------------
+     // Instance Methods
+     // -----------------------------------------------------------------------
+@@ -399,9 +376,9 @@
+     public static interface ServiceProviderInterface {
+         // --- Singleton factories: ------------------------------------------
+ 
+-        public abstract DomainParticipantFactory getParticipantFactory();
++        public DomainParticipantFactory getParticipantFactory();
+ 
+-        public abstract DynamicTypeFactory getTypeFactory();
++        public DynamicTypeFactory getTypeFactory();
+ 
+ 
+         // --- Types: --------------------------------------------------------
+@@ -429,7 +406,7 @@
+          *                  subsequently be used to create one or more
+          *                  {@link org.omg.dds.topic.Topic}s.
+          */
+-        public abstract <TYPE> TypeSupport<TYPE> newTypeSupport(
++        public <TYPE> TypeSupport<TYPE> newTypeSupport(
+                 Class<TYPE> type, String registeredName);
+ 
+ 
+@@ -441,17 +418,17 @@
+          * A duration of magnitude {@link Long#MAX_VALUE} indicates an
+          * infinite duration, regardless of the units specified.
+          */
+-        public abstract Duration newDuration(long duration, TimeUnit unit);
++        public Duration newDuration(long duration, TimeUnit unit);
+ 
+         /**
+          * @return      A {@link Duration} of infinite length.
+          */
+-        public abstract Duration infiniteDuration();
++        public Duration infiniteDuration();
+ 
+         /**
+          * @return      A {@link Duration} of zero length.
+          */
+-        public abstract Duration zeroDuration();
++        public Duration zeroDuration();
+ 
+         /**
+          * Construct a specific instant in time.
+@@ -461,31 +438,54 @@
+          * 
+          * <code>t.isValid() == false</code>
+          */
+-        public abstract ModifiableTime newTime(long time, TimeUnit units);
++        public ModifiableTime newTime(long time, TimeUnit units);
+ 
+         /**
+          * @return      A {@link Time} that is not valid.
+          */
+-        public abstract Time invalidTime();
++        public Time invalidTime();
+ 
+ 
+         // --- Instance handle: ----------------------------------------------
+ 
+-        public abstract ModifiableInstanceHandle newInstanceHandle();
++        public ModifiableInstanceHandle newInstanceHandle();
+ 
+-        public abstract InstanceHandle nilHandle();
++        public InstanceHandle nilHandle();
+ 
+ 
+         // --- Conditions & WaitSet: -----------------------------------------
+ 
+-        public abstract GuardCondition newGuardCondition();
++        public GuardCondition newGuardCondition();
+ 
+-        public abstract WaitSet newWaitSet();
++        public WaitSet newWaitSet();
+         
+         // --- Status: -------------------------------------------------------
+ 
+-        public abstract Set<Class<? extends Status>> allStatusKinds();
++        public Set<Class<? extends Status>> allStatusKinds();
+ 
+-        public abstract Set<Class<? extends Status>> noStatusKinds();
++        public Set<Class<? extends Status>> noStatusKinds();
++        
++        // --- QoS Provider --------------------------------------------------
++        /** Create a QosProvider fetching QoS configuration from the specified URI.    
++         *  The URI determines the how the Qos configuration is fetched and the    
++         *  format in which it is represented. This specification requires compliant   
++         *  implementations to support at least one file based configuration using    
++         *  the XML syntax defined as part of the DDS for CCM specification (formal/12.02.01).
++         *  
++         *  @param uri The uniform resource identifier. For example,
++         *             "file:///somewhere/on/disk/qos-config.xml"
++         *             "http:///somewhere.org/here/json-config.json"      
++         *  @param profile Name of a profile in the document obtained via the uri
++         *  @return a new QosProvider object
++         */
++        public abstract QosProvider newQosProvider(String uri, String profile);
++
++        // --- PolicyFactory -----------------------------------------------------
++        
++        /**
++         * Provides an instance of {@link PolicyFactory}.
++         * @return An instance of {@link PolicyFactory}
++         */
++        public abstract PolicyFactory getPolicyFactory();
+     }
+ }
+Index: org/omg/dds/sub/Sample.java
+===================================================================
+--- org/omg/dds/sub/Sample.java	(revision 200)
++++ org/omg/dds/sub/Sample.java	(revision 202)
+@@ -24,10 +24,9 @@
+ import org.omg.dds.core.DDSObject;
+ import org.omg.dds.core.InstanceHandle;
+ import org.omg.dds.core.ModifiableInstanceHandle;
+-import org.omg.dds.core.ModifiableTime;
+ import org.omg.dds.pub.DataWriter;
++import org.omg.dds.core.Time;
+ 
+-
+ /**
+  * A Sample represents an atom of data information (i.e., one value for one
+  * instance) as returned by a {@link DataReader}'s read or take operations.
+@@ -260,7 +259,7 @@
+      */
+     public InstanceState getInstanceState();
+ 
+-    public ModifiableTime getSourceTimestamp();
++    public Time getSourceTimestamp();
+ 
+     public ModifiableInstanceHandle getInstanceHandle();
+ 
+Index: org/omg/dds/sub/ReadCondition.java
+===================================================================
+--- org/omg/dds/sub/ReadCondition.java	(revision 200)
++++ org/omg/dds/sub/ReadCondition.java	(revision 202)
+@@ -32,7 +32,7 @@
+  * 
+  * ReadCondition objects allow an application to specify the data samples it
+  * is interested in by specifying the desired sample states, view states,
+- * and instance states. (See {@link Subscriber.ReaderState}.)
++ * and instance states. (See {@link Subscriber.DataState}.)
+  * This allows the middleware to enable the condition only when suitable
+  * information is available. They are to be used in conjunction with a
+  * {@link WaitSet} as normal conditions. More than one ReadCondition may be
+Index: org/omg/dds/sub/Subscriber.java
+===================================================================
+--- org/omg/dds/sub/Subscriber.java	(revision 200)
++++ org/omg/dds/sub/Subscriber.java	(revision 202)
+@@ -342,10 +342,10 @@
+ 
+     /**
+      * This operation is equivalent to calling
+-     * {@link #getDataReaders(Collection, ReaderState)} with any sample state
+-     * ({@link Subscriber.ReaderState#withAnySampleState()}), any view state
+-     * ({@link Subscriber.ReaderState#withAnyViewState()}), and any instance
+-     * state ({@link Subscriber.ReaderState#withAnyInstanceState()}).
++     * {@link #getDataReaders(Collection, DataState)} with any sample state
++     * ({@link Subscriber.DataState#withAnySampleState()}), any view state
++     * ({@link Subscriber.DataState#withAnyViewState()}), and any instance
++     * state ({@link Subscriber.DataState#withAnyInstanceState()}).
+      * 
+      * @param   readers         a container, into which this method will place
+      *          its result.
+@@ -359,7 +359,7 @@
+      *          and this operation is not invoked inside a
+      *          {@link #beginAccess()}/{@link #endAccess()} block.
+      * 
+-     * @see     #getDataReaders(Collection, ReaderState)
++     * @see     #getDataReaders(Collection, DataState)
+      * @see     #beginAccess()
+      * @see     #endAccess()
+      * @see     Presentation
+@@ -412,7 +412,7 @@
+      * 
+      * @param   readers         a container, into which this method will place
+      *          its result.
+-     * @param   readerState     a DataReader will only be placed into the
++     * @param   dataState     a DataReader will only be placed into the
+      *          readers collection if it has data available with one of these
+      *          sample states, view states, and instance states.
+      * 
+@@ -432,7 +432,7 @@
+      */
+     public Collection<DataReader<?>> getDataReaders(
+             Collection<DataReader<?>> readers,
+-            ReaderState readerState);
++            DataState dataState);
+ 
+     /**
+      * This operation invokes the operation
+@@ -567,29 +567,29 @@
+     public DomainParticipant getParent();
+ 
+ 
+-    // --- ReaderState: ------------------------------------------------------
++    // --- DataState: ------------------------------------------------------
+ 
+     /**
+-     * Create and return a new modifiable {@link ReaderState} object. This
++     * Create and return a new modifiable {@link DataState} object. This
+      * object will be initialized with no sample states, no instance states,
+      * and no view states.
+      * 
+      * This method shall never return null.
+      * 
+-     * @return  a new {@link ReaderState} object.
++     * @return  a new {@link DataState} object.
+      */
+-    public ReaderState createReaderState();
++    public DataState createDataState();
+ 
+ 
+     /**
+-     * A ReaderState encapsulates sets of sample states, view states, and
++     * A DataState encapsulates sets of sample states, view states, and
+      * instance states as a convenience.
+      * 
+-     * Instances of ReaderState may be unmodifiable, in which case methods
++     * Instances of DataState may be unmodifiable, in which case methods
+      * that would change them shall throw
+      * {@link UnsupportedOperationException}.
+      */
+-    public static interface ReaderState extends DDSObject, Cloneable {
++    public static interface DataState extends DDSObject, Cloneable {
+         // --- Accessors: ----------------------------------------------------
+ 
+         /**
+@@ -620,86 +620,86 @@
+         // --- Mutators: -----------------------------------------------------
+ 
+         /**
+-         * Add the given {@link SampleState} to this ReaderState.
++         * Add the given {@link SampleState} to this DataState.
+          * 
+          * @param state the state to add.
+          * 
+          * @return      this
+          * 
+-         * @throws      UnsupportedOperationException   if this ReaderState
++         * @throws      UnsupportedOperationException   if this DataState
+          *                                              is unmodifiable.
+          */
+-        public ReaderState with(SampleState state);
++        public DataState with(SampleState state);
+ 
+         /**
+-         * Add the given {@link ViewState} to this ReaderState.
++         * Add the given {@link ViewState} to this DataState.
+          * 
+          * @param state the state to add.
+          * 
+          * @return      this
+          * 
+-         * @throws      UnsupportedOperationException   if this ReaderState
++         * @throws      UnsupportedOperationException   if this DataState
+          *                                              is unmodifiable.
+          */
+-        public ReaderState with(ViewState state);
++        public DataState with(ViewState state);
+ 
+         /**
+-         * Add the given {@link InstanceState} to this ReaderState.
++         * Add the given {@link InstanceState} to this DataState.
+          * 
+          * @param state the state to add.
+          * 
+          * @return      this
+          * 
+-         * @throws      UnsupportedOperationException   if this ReaderState
++         * @throws      UnsupportedOperationException   if this DataState
+          *                                              is unmodifiable.
+          */
+-        public ReaderState with(InstanceState state);
++        public DataState with(InstanceState state);
+ 
+         /**
+-         * Add all {@link SampleState} values to this ReaderState.
++         * Add all {@link SampleState} values to this DataState.
+          * 
+          * @return      this
+          * 
+-         * @throws      UnsupportedOperationException   if this ReaderState
++         * @throws      UnsupportedOperationException   if this DataState
+          *                                              is unmodifiable.
+          */
+-        public ReaderState withAnySampleState();
++        public DataState withAnySampleState();
+ 
+         /**
+-         * Add all {@link ViewState} values to this ReaderState.
++         * Add all {@link ViewState} values to this DataState.
+          * 
+          * @return      this
+          * 
+-         * @throws      UnsupportedOperationException   if this ReaderState
++         * @throws      UnsupportedOperationException   if this DataState
+          *                                              is unmodifiable.
+          */
+-        public ReaderState withAnyViewState();
++        public DataState withAnyViewState();
+ 
+         /**
+-         * Add all {@link InstanceState} values to this ReaderState.
++         * Add all {@link InstanceState} values to this DataState.
+          * 
+          * @return      this
+          * 
+-         * @throws      UnsupportedOperationException   if this ReaderState
++         * @throws      UnsupportedOperationException   if this DataState
+          *                                              is unmodifiable.
+          */
+-        public ReaderState withAnyInstanceState();
++        public DataState withAnyInstanceState();
+ 
+         /**
+          * Add {@link InstanceState#NOT_ALIVE_DISPOSED} and
+-         * {@link InstanceState#NOT_ALIVE_NO_WRITERS} to this ReaderState.
++         * {@link InstanceState#NOT_ALIVE_NO_WRITERS} to this DataState.
+          * 
+          * @return      this
+          * 
+-         * @throws      UnsupportedOperationException   if this ReaderState
++         * @throws      UnsupportedOperationException   if this DataState
+          *                                              is unmodifiable.
+          */
+-        public ReaderState withNotAliveInstanceStates();
++        public DataState withNotAliveInstanceStates();
+ 
+ 
+         // --- From Object: --------------------------------------------------
+ 
+-        public ReaderState clone();
++        public DataState clone();
+ 
+         public boolean equals(Object other);
+ 
+Index: org/omg/dds/sub/DataReader.java
+===================================================================
+--- org/omg/dds/sub/DataReader.java	(revision 200)
++++ org/omg/dds/sub/DataReader.java	(revision 202)
+@@ -113,7 +113,7 @@
+      *          instance states.
+      */
+     public ReadCondition<TYPE> createReadCondition(
+-            Subscriber.ReaderState states);
++            Subscriber.DataState states);
+ 
+     /**
+      * This operation creates a QueryCondition. The returned QueryCondition
+@@ -125,7 +125,7 @@
+      * @param   queryParameters A set of parameter values for the
+      *          queryExpression.
+      *
+-     * @see     #createQueryCondition(org.omg.dds.sub.Subscriber.ReaderState, String, List)
++     * @see     #createQueryCondition(org.omg.dds.sub.Subscriber.DataState, String, List)
+      */
+     public QueryCondition<TYPE> createQueryCondition(
+             String queryExpression,
+@@ -146,7 +146,7 @@
+      * @see     #createQueryCondition(String, List)
+      */
+     public QueryCondition<TYPE> createQueryCondition(
+-            Subscriber.ReaderState states,
++            Subscriber.DataState states,
+             String queryExpression,
+             List<String> queryParameters);
+ 
+@@ -447,9 +447,32 @@
+     /**
+      * This operation accesses a collection of samples from this DataReader.
+      * It behaves exactly like {@link #read()} except that the returned
++     * samples are no more than #maxSamples.
++     * 
++     * @return  a non-null unmodifiable iterator over loaned samples.
++     * 
++     * @see     #read()
++     * @see     #read(Selector)
++     * @see     #read(List, Selector)
++     * @see     #readNextSample(Sample)
++     * @see     #take(List)
++     */
++    public Sample.Iterator<TYPE> read(int maxSamples);
++
++    /**
++     * This operation accesses a collection of samples from this DataReader.
++     * It behaves exactly like {@link #read()} except that the returned
+      * samples are not "on loan" from the Service; they are deeply copied to
+-     * the application.
++     * the application. 
+      * 
++     * If the number of samples read are fewer than the current
++     * length of the list, the list will be trimmed to fit the 
++     * samples read. If list is null, a new list will be allocated 
++     * and its size may be zero or unbounded depending upon the 
++     * number of samples read. If there are no samples, the list 
++     * reference will be non-null and the list will contain zero 
++     * samples. 
++     * 
+      * The read operation will copy the data and meta-information into the
+      * elements already inside the given collection, overwriting any samples
+      * that might already be present. The use of this variant forces a copy
+@@ -472,6 +495,16 @@
+      * samples are not "on loan" from the Service; they are deeply copied to
+      * the application.
+      * 
++     * The number of samples are specified as the minimum of 
++     * {@link Selector#getMaxSamples()} and the length of the list. 
++     * If the number of samples read are fewer than the current 
++     * length of the list, the list will be trimmed to fit the 
++     * samples read. If list is null, a new list will be allocated 
++     * and its size may be zero or unbounded depending upon the 
++     * number of samples read. If there are no samples, the list 
++     * reference will be non-null and the list will contain zero 
++     * samples. 
++     * 
+      * The read operation will copy the data and meta-information into the
+      * elements already inside the given collection, overwriting any samples
+      * that might already be present. The use of this variant forces a copy
+@@ -507,6 +540,24 @@
+ 
+     /**
+      * This operation accesses a collection of samples from this DataReader.
++     * It behaves exactly like {@link #take(Selector)} except that the
++     * collection of returned samples is not constrained by any Selector.
++     * 
++     * The number of samples accessible via the iterator will not be 
++     * more than #maxSamples.
++     * 
++     * @return  a non-null unmodifiable iterator over loaned samples.
++     * 
++     * @see     #take(Selector)
++     * @see     #take(List)
++     * @see     #take(List, Selector)
++     * @see     #takeNextSample(Sample)
++     * @see     #read()
++     */
++    public Sample.Iterator<TYPE> take(int maxSamples);
++
++    /**
++     * This operation accesses a collection of samples from this DataReader.
+      * The number of samples returned is controlled by the
+      * {@link org.omg.dds.core.policy.Presentation} and other
+      * factors using the same logic as for {@link #read(Selector)}.
+@@ -550,6 +601,8 @@
+      * but the application can control where the copy is placed and the
+      * application will not need to "return the loan."
+      * 
++     * 
++     * 
+      * @return  <code>samples</code>, for convenience.
+      * 
+      * @see     #take()
+@@ -591,12 +644,12 @@
+      * 
+      * This operation is semantically equivalent to
+      * {@link #read(List, Selector)} where {@link Selector#getMaxSamples()}
+-     * is 1, {@link Selector#getReaderState()} followed by
+-     * {@link Subscriber.ReaderState#getSampleStates()} ==
+-     * {@link SampleState#NOT_READ}, {@link Selector#getReaderState()} followed by
+-     * {@link Subscriber.ReaderState#getViewStates()} contains all view
+-     * states, and {@link Selector#getReaderState()} followed by
+-     * {@link Subscriber.ReaderState#getInstanceStates()} contains all
++     * is 1, {@link Selector#getDataState()} followed by
++     * {@link Subscriber.DataState#getSampleStates()} ==
++     * {@link SampleState#NOT_READ}, {@link Selector#getDataState()} followed by
++     * {@link Subscriber.DataState#getViewStates()} contains all view
++     * states, and {@link Selector#getDataState()} followed by
++     * {@link Subscriber.DataState#getInstanceStates()} contains all
+      * instance states.
+      * 
+      * This operation provides a simplified API to "read" samples avoiding
+@@ -624,12 +677,12 @@
+      * 
+      * This operation is semantically equivalent to
+      * {@link #take(List, Selector)} where {@link Selector#getMaxSamples()}
+-     * is 1, {@link Selector#getReaderState()} followed by
+-     * {@link Subscriber.ReaderState#getSampleStates()} ==
+-     * {@link SampleState#NOT_READ}, {@link Selector#getReaderState()} followed by
+-     * {@link Subscriber.ReaderState#getViewStates()} contains all view
+-     * states, and {@link Selector#getReaderState()} followed by
+-     * {@link Subscriber.ReaderState#getInstanceStates()} contains all
++     * is 1, {@link Selector#getDataState()} followed by
++     * {@link Subscriber.DataState#getSampleStates()} ==
++     * {@link SampleState#NOT_READ}, {@link Selector#getDataState()} followed by
++     * {@link Subscriber.DataState#getViewStates()} contains all view
++     * states, and {@link Selector#getDataState()} followed by
++     * {@link Subscriber.DataState#getInstanceStates()} contains all
+      * instance states.
+      * 
+      * This operation provides a simplified API to "take" samples avoiding
+@@ -726,7 +779,8 @@
+      * {@link #take} methods return. 
+      * 
+      * @return The {@link Selector} object returned by this method
+-     *         is the default selector. By default it selects {@link Integer#MAX_VALUE} 
++     *         is the default selector. By default it selects 
++     *         {@link org.omg.dds.core.policy.ResourceLimits#LENGTH_UNLIMITED} 
+      *         samples.  This is equivalent to calling {@link DataReader#read} without 
+      *         any parameters. 
+      * */
+@@ -741,10 +795,10 @@
+      * {@link DataReader#select} creates a Selector that is bound to the {@link DataReader}.
+      *  
+      * A Selector may encapsulate any combination of {@link InstanceHandle}, 
+-     * {@link Subscriber.ReaderState}, a query filter. It can be used to bound the maximum
++     * {@link Subscriber.DataState}, a query filter. It can be used to bound the maximum
+      * number of samples retrieved.
+      *      
+-     * @param <TYPE>    The concrete type of the data to be read.
++     * @param <T>    The concrete type of the data to be read.
+      */
+     public static interface Selector<T> extends DDSObject {
+     	
+@@ -754,7 +808,7 @@
+     	
+     	public Selector<T> nextInstance(boolean retrieveNextInstance);
+     	
+-    	public Selector<T> readerState(Subscriber.ReaderState state);
++    	public Selector<T> dataState(Subscriber.DataState state);
+     	
+     	public Selector<T> filterContent(String queryExpression, List<String> queryParameters);
+     	
+@@ -766,7 +820,7 @@
+     	
+     	public boolean retrieveNextInstance();
+     	
+-    	public Subscriber.ReaderState getReaderState();
++    	public Subscriber.DataState getDataState();
+     	
+     	public String getQueryExpression();
+     	
