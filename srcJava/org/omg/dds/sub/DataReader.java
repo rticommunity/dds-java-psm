@@ -810,7 +810,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
     	
     	public Selector<T> dataState(Subscriber.DataState state);
     	
-    	public Selector<T> filterContent(String queryExpression, List<String> queryParameters);
+    	public Selector<T> Content(String queryExpression, List<String> queryParameters);
     	
     	public Selector<T> maxSamples(int max);
     	
