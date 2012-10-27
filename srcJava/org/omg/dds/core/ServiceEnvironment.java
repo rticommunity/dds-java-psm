@@ -29,6 +29,7 @@ import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.type.TypeSupport;
 import org.omg.dds.type.dynamic.DynamicTypeFactory;
+import org.omg.dds.type.dynamic.DynamicDataFactory;
 import org.omg.dds.core.QosProvider;
 import org.omg.dds.core.policy.PolicyFactory;
 
@@ -487,5 +488,7 @@ public abstract class ServiceEnvironment implements DDSObject {
          * @return An instance of {@link PolicyFactory}
          */
         public abstract PolicyFactory getPolicyFactory();
+        
+        public abstract DynamicDataFactory getDynamicDataFactory();
     }
 }

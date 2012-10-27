@@ -41,7 +41,13 @@ public interface DynamicData extends DDSObject, Cloneable
     public void clearAllValues();
     public void clearNonkeyValues();
     public void clearValue(int id);
-
+    public void clearValue(String name);
+    
+    public <T> void setValue (int id, T value, Class<T> type);
+    public <T> void setValue (String name, T value, Class<T> type);
+    
+    public <T> T getValue (int id, Class<T> type);
+    public <T> T getValue (String name, Class<T> type);
 
     public DynamicData loanValue(int id);
     public void returnLoanedValue(DynamicData value);
@@ -113,7 +119,9 @@ public interface DynamicData extends DDSObject, Cloneable
      */
     public DynamicData setStringValue(int id, CharSequence value);
 
-    public DynamicData getComplexValue(DynamicData value, int id);
+    public DynamicData getComplexValue(int id);
+    public DynamicData getComplexValue(String name);
+
     /**
      * @return  this
      */
