@@ -35,13 +35,6 @@ import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;
-import org.omg.dds.type.builtin.BytesDataReader;
-import org.omg.dds.type.builtin.KeyedBytes;
-import org.omg.dds.type.builtin.KeyedBytesDataReader;
-import org.omg.dds.type.builtin.KeyedString;
-import org.omg.dds.type.builtin.KeyedStringDataReader;
-import org.omg.dds.type.builtin.StringDataReader;
-
 
 /**
  * A Subscriber is the object responsible for the actual reception of the
@@ -132,111 +125,6 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
             DataReaderListener<TYPE> listener,
             Collection<Class<? extends Status>> statuses);
 
-
-    // --- Create DataReader of built-in bytes type: -------------------------
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @see     #createDataReader(TopicDescription)
-     */
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic);
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public BytesDataReader createBytesDataReader(
-            TopicDescription<byte[]> topic,
-            DataReaderQos qos,
-            DataReaderListener<byte[]> listener,
-            Collection<Class<? extends Status>> statuses);
-
-
-    // --- Create DataReader of built-in KeyedBytes type: --------------------
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @see     #createDataReader(TopicDescription)
-     */
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic);
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public KeyedBytesDataReader createKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic,
-            DataReaderQos qos,
-            DataReaderListener<KeyedBytes> listener,
-            Collection<Class<? extends Status>> statuses);
-
-
-    // --- Create DataReader of built-in string type: ------------------------
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @see     #createDataReader(TopicDescription)
-     */
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic);
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public StringDataReader createStringDataReader(
-            TopicDescription<String> topic,
-            DataReaderQos qos,
-            DataReaderListener<String> listener,
-            Collection<Class<? extends Status>> statuses);
-
-
-    // --- Create DataReader of built-in KeyedString type: -------------------
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @see     #createDataReader(TopicDescription)
-     */
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic);
-
-    /**
-     * Create a new data reader for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataReader(TopicDescription, DataReaderQos, DataReaderListener, Collection)
-     */
-    public KeyedStringDataReader createKeyedStringDataReader(
-            TopicDescription<KeyedString> topic,
-            DataReaderQos qos,
-            DataReaderListener<KeyedString> listener,
-            Collection<Class<? extends Status>> statuses);
-
-
     // --- Lookup operations: ------------------------------------------------
 
     /**
@@ -272,50 +160,6 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      */
     public <TYPE> DataReader<TYPE> lookupDataReader(
             TopicDescription<TYPE> topicName);
-
-    /**
-     * Look up a DataReader for the given built-in data type.
-     * 
-     * @throws  ClassCastException      if a DataReader exists on the given
-     *          TopicDescription but is of a different type.
-     *
-     * @see     #lookupDataReader(TopicDescription)
-     */
-    public BytesDataReader lookupBytesDataReader(
-            TopicDescription<byte[]> topic);
-
-    /**
-     * Look up a DataReader for the given built-in data type.
-     * 
-     * @throws  ClassCastException      if a DataReader exists on the given
-     *          TopicDescription but is of a different type.
-     *
-     * @see     #lookupDataReader(TopicDescription)
-     */
-    public KeyedBytesDataReader lookupKeyedBytesDataReader(
-            TopicDescription<KeyedBytes> topic);
-
-    /**
-     * Look up a DataReader for the given built-in data type.
-     * 
-     * @throws  ClassCastException      if a DataReader exists on the given
-     *          TopicDescription but is of a different type.
-     *
-     * @see     #lookupDataReader(TopicDescription)
-     */
-    public StringDataReader lookupStringDataReader(
-            TopicDescription<String> topic);
-
-    /**
-     * Look up a DataReader for the given built-in data type.
-     * 
-     * @throws  ClassCastException      if a DataReader exists on the given
-     *          TopicDescription but is of a different type.
-     *
-     * @see     #lookupDataReader(TopicDescription)
-     */
-    public KeyedStringDataReader lookupKeyedStringDataReader(
-            TopicDescription<KeyedString> topic);
 
 
     // --- Other operations: -------------------------------------------------

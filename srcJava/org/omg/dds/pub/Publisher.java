@@ -33,13 +33,6 @@ import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicQos;
-import org.omg.dds.type.builtin.BytesDataWriter;
-import org.omg.dds.type.builtin.KeyedBytes;
-import org.omg.dds.type.builtin.KeyedBytesDataWriter;
-import org.omg.dds.type.builtin.KeyedString;
-import org.omg.dds.type.builtin.KeyedStringDataWriter;
-import org.omg.dds.type.builtin.StringDataWriter;
-
 
 /**
  * A Publisher is the object responsible for the actual dissemination of
@@ -136,109 +129,6 @@ extends DomainEntity<PublisherListener, PublisherQos>
             Collection<Class<? extends Status>> statuses);
 
 
-    // --- Create DataWriter for built-in bytes type: ------------------------
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @see     #createDataWriter(Topic)
-     */
-    public BytesDataWriter createBytesDataWriter(
-            Topic<byte[]> topic);
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public BytesDataWriter createBytesDataWriter(
-            Topic<byte[]> topic,
-            DataWriterQos qos,
-            DataWriterListener<byte[]> listener,
-            Collection<Class<? extends Status>> statuses);
-
-
-    // --- Create DataWriter for built-in KeyedBytes type: -------------------
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @see     #createDataWriter(Topic)
-     */
-    public KeyedBytesDataWriter createKeyedBytesDataWriter(
-            Topic<KeyedBytes> topic);
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public KeyedBytesDataWriter createKeyedBytesDataWriter(
-            Topic<KeyedBytes> topic,
-            DataWriterQos qos,
-            DataWriterListener<KeyedBytes> listener,
-            Collection<Class<? extends Status>> statuses);
-
-
-    // --- Create DataWriter for built-in string type: -----------------------
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @see     #createDataWriter(Topic)
-     */
-    public StringDataWriter createStringDataWriter(
-            Topic<String> topic);
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public StringDataWriter createStringDataWriter(
-            Topic<String> topic,
-            DataWriterQos qos,
-            DataWriterListener<String> listener,
-            Collection<Class<? extends Status>> statuses);
-
-
-    // --- Create DataWriter for built-in KeyedString type: ------------------
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @see     #createDataWriter(Topic)
-     */
-    public KeyedStringDataWriter createKeyedStringDataWriter(
-            Topic<KeyedString> topic);
-
-    /**
-     * Create a new data writer for this built-in type.
-     * 
-     * @param statuses  Of which status changes the listener should be
-     *                  notified. A null collection signifies all status
-     *                  changes.
-     * 
-     * @see     #createDataWriter(Topic, DataWriterQos, DataWriterListener, Collection)
-     */
-    public KeyedStringDataWriter createKeyedStringDataWriter(
-            Topic<KeyedString> topic,
-            DataWriterQos qos,
-            DataWriterListener<KeyedString> listener,
-            Collection<Class<? extends Status>> statuses);
-
 
     // --- Lookup operations: ------------------------------------------------
 
@@ -269,49 +159,6 @@ extends DomainEntity<PublisherListener, PublisherQos>
      * @see     #lookupDataWriter(String)
      */
     public <TYPE> DataWriter<TYPE> lookupDataWriter(Topic<TYPE> topic);
-
-    /**
-     * Look up a DataWriter for the given built-in data type.
-     * 
-     * @throws  ClassCastException      if a DataWriter exists on the given
-     *          Topic but is of a different type.
-     *
-     * @see     #lookupDataWriter(Topic)
-     */
-    public BytesDataWriter lookupBytesDataWriter(Topic<byte[]> topic);
-
-    /**
-     * Look up a DataWriter for the given built-in data type.
-     * 
-     * @throws  ClassCastException      if a DataWriter exists on the given
-     *          Topic but is of a different type.
-     *
-     * @see     #lookupDataWriter(Topic)
-     */
-    public KeyedBytesDataWriter lookupKeyedBytesDataWriter(
-            Topic<KeyedBytes> topic);
-
-    /**
-     * Look up a DataWriter for the given built-in data type.
-     * 
-     * @throws  ClassCastException      if a DataWriter exists on the given
-     *          Topic but is of a different type.
-     *
-     * @see     #lookupDataWriter(Topic)
-     */
-    public StringDataWriter lookupStringDataWriter(Topic<String> topic);
-
-    /**
-     * Look up a DataWriter for the given built-in data type.
-     * 
-     * @throws  ClassCastException      if a DataWriter exists on the given
-     *          Topic but is of a different type.
-     *
-     * @see     #lookupDataWriter(Topic)
-     */
-    public KeyedStringDataWriter lookupKeyedStringDataWriter(
-            Topic<KeyedString> topic);
-
 
     // --- Other operations: -------------------------------------------------
 

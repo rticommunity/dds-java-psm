@@ -55,6 +55,7 @@ import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicListener;
 import org.omg.dds.topic.TopicQos;
 import org.omg.dds.type.TypeSupport;
+import org.omg.dds.type.dynamic.DynamicType;
 
 
 /**
@@ -254,6 +255,99 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
             TopicListener<TYPE> listener,
             Collection<Class<? extends Status>> statuses);
 
+    // --- Create Topic with implicit TypeSupport: ---------------------------
+
+    /**
+     * This operation creates a Topic with default QoS policies and no
+     * TopicListener.
+     * 
+     * The created Topic belongs to the DomainParticipant that is its
+     * factory.
+     * 
+     * @param   topicName   The name of the new Topic.
+     * @param   type        A {@link DynamicType} of all samples to be published and
+     *                      subscribed over the new Topic. The Service will
+     *                      attempt to locate an appropriate
+     *                      {@link TypeSupport} instance based on this type.
+     */
+    public Topic<DynamicType> createTopic(
+            String topicName,
+            DynamicType type);
+
+    /**
+     * This operation creates a Topic with the desired QoS policies and
+     * attaches to it the specified TopicListener.
+     * 
+     * The created Topic belongs to the DomainParticipant that is its
+     * factory.
+     * 
+     * @param   topicName   The name of the new Topic.
+     * @param   type        A {@link DynamicType} of all samples to be published and
+     *                      subscribed over the new Topic. The Service will
+     *                      attempt to locate an appropriate
+     *                      {@link TypeSupport} instance based on this type.
+     * @param   qos         The desired QoS policies. If the specified QoS
+     *                      policies are not consistent, the operation will
+     *                      fail and no Publisher will be created.
+     * @param   listener    The listener to be attached.
+     * @param   statuses    Of which status changes the listener should be
+     *                      notified. A null collection signifies all status
+     *                      changes.
+     */
+    public Topic<DynamicType> createTopic(
+            String topicName,
+            DynamicType type,
+            TopicQos qos,
+            TopicListener<DynamicType> listener,
+            Collection<Class<? extends Status>> statuses);
+
+    // --- Create Topic with explicit TypeSupport: ---------------------------
+
+    /**
+     * This operation creates a Topic with default QoS policies and no
+     * TopicListener.
+     * 
+     * The created Topic belongs to the DomainParticipant that is its
+     * factory.
+     * 
+     * @param   topicName    The name of the new Topic.
+     * @param   type         A {@link DynamicType} representing the type of
+     *                       all samples to be published and subscribed over
+     *                       the new Topic.
+     * @param   typeSupport  A {@link TypeSupport} for {@link DynamicType}.
+     */
+    public Topic<DynamicType> createTopic(
+            String topicName,
+            DynamicType type,
+            TypeSupport<DynamicType> typeSupport);
+
+    /**
+     * This operation creates a Topic with the desired QoS policies and
+     * attaches to it the specified TopicListener.
+     * 
+     * The created Topic belongs to the DomainParticipant that is its
+     * factory.
+     * 
+     * @param   topicName   The name of the new Topic.
+     * @param   type        A {@link DynamicType}
+     * @param   typeSupport A {@link TypeSupport} for {@link DynamicType}
+     * @param   qos         The desired QoS policies. If the specified QoS
+     *                      policies are not consistent, the operation will
+     *                      fail and no Publisher will be created.
+     * @param   listener    The listener to be attached.
+     * @param   statuses    Of which status changes the listener should be
+     *                      notified. A null collection signifies all status
+     *                      changes.
+     */
+    public Topic<DynamicType>createTopic(
+            String topicName,
+            DynamicType type,
+            TypeSupport<DynamicType> typeSupport,
+            TopicQos qos,
+            TopicListener<DynamicType> listener,
+            Collection<Class<? extends Status>> statuses);
+
+    
     // --- Other operations: -------------------------------------------------
 
     /**

@@ -21,33 +21,45 @@ package org.omg.dds.type.builtin;
 import java.io.Serializable;
 
 import org.omg.dds.core.DDSObject;
+import org.omg.dds.core.ServiceEnvironment;
 
 
-public interface KeyedString extends Cloneable, Serializable, DDSObject
+public abstract class KeyedString implements Cloneable, Serializable, DDSObject
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5185023295888681379L;
+
+	
+    public static KeyedString newKeyedString(ServiceEnvironment env)
+    {
+        return env.getSPI().newKeyedString();
+    }
+
+	/**
      * @param key the key to set
      * 
      * @return  this
      */
-    public KeyedString setKey(CharSequence key);
+    public abstract KeyedString setKey(CharSequence key);
 
     /**
      * @return the key
      */
-    public String getKey();
+    public abstract String getKey();
 
     /**
      * @param value the value to set
      * 
      * @return  this
      */
-    public KeyedString setValue(CharSequence value);
+    public abstract KeyedString setValue(CharSequence value);
 
     /**
      * @return the value
      */
-    public String getValue();
+    public abstract String getValue();
 
 
     // -----------------------------------------------------------------------
@@ -55,7 +67,7 @@ public interface KeyedString extends Cloneable, Serializable, DDSObject
     /**
      * Overwrite the state of this object with that of the given object.
      */
-    public void copyFrom(KeyedString src);
+    public abstract void copyFrom(KeyedString src);
 
-    public KeyedString clone();
+    public abstract KeyedString clone();
 }

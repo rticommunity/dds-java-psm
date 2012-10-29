@@ -32,6 +32,7 @@ import org.omg.dds.type.dynamic.DynamicTypeFactory;
 import org.omg.dds.type.dynamic.DynamicDataFactory;
 import org.omg.dds.core.QosProvider;
 import org.omg.dds.core.policy.PolicyFactory;
+import org.omg.dds.type.builtin.*;
 
 
 /**
@@ -490,5 +491,11 @@ public abstract class ServiceEnvironment implements DDSObject {
         public abstract PolicyFactory getPolicyFactory();
         
         public abstract DynamicDataFactory getDynamicDataFactory();
+        
+     // --- Built-in Types -----------------------------------------------------
+        
+        public abstract KeyedString newKeyedString();
+        
+        public abstract KeyedBytes newKeyedBytes();
     }
 }
