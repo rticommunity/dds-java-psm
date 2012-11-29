@@ -18,15 +18,14 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.policy.Deadline;
 import org.omg.dds.pub.DataWriter;
 
 
 /**
- * The deadline that the {@link DataWriter} has committed through its
- * {@link Deadline} was not respected for a specific instance.
+ * The deadline that the {@link org.omg.dds.pub.DataWriter} has committed through its
+ * {@link org.omg.dds.core.policy.Deadline} was not respected for a specific instance.
  *
- * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.pub.DataWriter}.
  * 
  * @see OfferedDeadlineMissedStatus
  * @see RequestedDeadlineMissedEvent

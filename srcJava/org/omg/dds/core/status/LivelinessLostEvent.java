@@ -18,17 +18,15 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.policy.Liveliness;
 import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
 
 
 /**
- * The liveliness that the {@link DataWriter} has committed through its
- * {@link Liveliness} was not respected; thus {@link DataReader}
+ * The liveliness that the {@link org.omg.dds.pub.DataWriter} has committed through its
+ * {@link org.omg.dds.core.policy.Liveliness} was not respected; thus {@link org.omg.dds.sub.DataReader}
  * entities will consider the DataWriter as no longer "active."
  *
- * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.pub.DataWriter}.
  * 
  * @see LivelinessLostStatus
  * @see LivelinessChangedEvent

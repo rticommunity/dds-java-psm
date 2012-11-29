@@ -20,30 +20,26 @@ package org.omg.dds.core.policy;
 
 import java.util.concurrent.TimeUnit;
 
-import org.omg.dds.core.Condition;
 import org.omg.dds.core.Duration;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
- * {@link DataReader} expects a new sample updating the value of each
- * instance at least once every deadline period. The {@link DataWriter}
+ * {@link org.omg.dds.sub.DataReader} expects a new sample updating the value of each
+ * instance at least once every deadline period. The {@link org.omg.dds.pub.DataWriter}
  * indicates that the application commits to write a new value (using the
  * DataWriter) for each instance managed by the DataWriter at least once
  * every deadline period. It is inconsistent for a DataReader to have a
  * deadline period less than the result of its
- * {@link TimeBasedFilter#getMinimumSeparation()}. The default value
+ * {@link org.omg.dds.core.policy.TimeBasedFilter#getMinimumSeparation()}. The default value
  * of the deadline period is infinite.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.sub.DataReader}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> Yes
  * 
  * <b>Changeable:</b> Yes
  * 
- * This policy is useful for cases where a {@link Topic} is expected to have
+ * This policy is useful for cases where a {@link org.omg.dds.topic.Topic} is expected to have
  * each instance updated periodically. On the publishing side this setting
  * establishes a contract that the application must meet. On the subscribing
  * side the setting establishes a minimum requirement for the remote
@@ -52,7 +48,7 @@ import org.omg.dds.topic.Topic;
  * When the Service "matches" a DataWriter and a DataReader it checks whether
  * the settings are compatible (i.e., offered deadline period<= requested
  * deadline period). If they are not, the two entities are informed (via the
- * listener or {@link Condition} mechanism) of the incompatibility of the QoS
+ * listener or {@link org.omg.dds.core.Condition} mechanism) of the incompatibility of the QoS
  * settings and communication will not occur.
  * 
  * Assuming that the reader and writer ends have compatible settings, the
@@ -65,7 +61,7 @@ import org.omg.dds.topic.Topic;
  * period" evaluates to true.
  * 
  * The setting of the DEADLINE policy must be set consistently with that of
- * the {@link TimeBasedFilter}. For these two policies to be
+ * the {@link org.omg.dds.core.policy.TimeBasedFilter}. For these two policies to be
  * consistent the settings must be such that "deadline period >=
  * minimum_separation."
  */

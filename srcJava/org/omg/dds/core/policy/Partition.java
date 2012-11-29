@@ -21,27 +21,22 @@ package org.omg.dds.core.policy;
 import java.util.Collection;
 import java.util.Set;
 
-import org.omg.dds.core.Entity;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.pub.Publisher;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.Subscriber;
 
 
 /**
  * This policy allows the introduction of a logical partition concept inside
  * the "physical" partition induced by a domain. It consists of a set of
  * strings that introduces a logical partition among the topics
- * visible by the {@link Publisher} and {@link Subscriber}.
+ * visible by the {@link org.omg.dds.pub.Publisher} and {@link org.omg.dds.sub.Subscriber}.
  * 
- * <b>Concerns:</b> {@link Publisher}, {@link Subscriber}
+ * <b>Concerns:</b> {@link org.omg.dds.pub.Publisher}, {@link org.omg.dds.sub.Subscriber}
  * 
  * <b>RxO:</b> No
  * 
  * <b>Changeable:</b> Yes
  * 
- * A {@link DataWriter} within a Publisher only communicates with a
- * {@link DataReader} in a Subscriber if (in addition to matching the Topic
+ * A {@link org.omg.dds.pub.DataWriter} within a Publisher only communicates with a
+ * {@link org.omg.dds.sub.DataReader} in a Subscriber if (in addition to matching the Topic
  * and having compatible QoS) the Publisher and Subscriber have a common
  * partition name string. Each string in the collection that defines this QoS
  * policy defines a partition name. A partition name may contain wild cards.
@@ -70,13 +65,13 @@ import org.omg.dds.sub.Subscriber;
  * 
  * PARTITION names can be regular expressions and include wild cards as
  * defined by the POSIX fnmatch API (1003.2-1992 section B.6). Either
- * {@link Publisher} or {@link Subscriber} may include regular expressions in
+ * {@link org.omg.dds.pub.Publisher} or {@link org.omg.dds.sub.Subscriber} may include regular expressions in
  * partition names, but no two names that both contain wild cards will ever
  * be considered to match. This means that although regular expressions may
  * be used both at publisher as well as subscriber side, the service will not
  * try to match two regular expressions (between publishers and subscribers).
  * 
- * Partitions are different from creating {@link Entity} objects in different
+ * Partitions are different from creating {@link org.omg.dds.core.Entity} objects in different
  * domains in several ways. First, entities belonging to different domains
  * are completely isolated from each other; there is no traffic, meta-traffic
  * or any other way for an application or the Service itself to see entities

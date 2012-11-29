@@ -21,9 +21,6 @@ package org.omg.dds.core.policy;
 import java.util.concurrent.TimeUnit;
 
 import org.omg.dds.core.Duration;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
@@ -32,15 +29,15 @@ import org.omg.dds.topic.Topic;
  * {@link Durability.Kind#TRANSIENT} and
  * {@link Durability.Kind#PERSISTENT}.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> No
  * 
  * <b>Changeable:</b> No
  * 
- * This policy is used to configure the {@link History} and the
- * {@link ResourceLimits} used by the fictitious {@link DataReader}
- * and {@link DataWriter} used by the "persistence service." The "persistence
+ * This policy is used to configure the {@link org.omg.dds.core.policy.History} and the
+ * {@link org.omg.dds.core.policy.ResourceLimits} used by the fictitious {@link org.omg.dds.sub.DataReader}
+ * and {@link org.omg.dds.pub.DataWriter} used by the "persistence service." The "persistence
  * service" is the one responsible for implementing
  * {@link Durability.Kind#TRANSIENT} and
  * {@link Durability.Kind#PERSISTENT}.

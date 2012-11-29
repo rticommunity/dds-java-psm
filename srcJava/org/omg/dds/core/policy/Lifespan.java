@@ -21,15 +21,13 @@ package org.omg.dds.core.policy;
 import java.util.concurrent.TimeUnit;
 
 import org.omg.dds.core.Duration;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.topic.Topic;
 
 
 /**
  * Specifies the maximum duration of validity of the data written by the
- * {@link DataWriter}. The default value of the lifespan duration is infinite.
+ * {@link org.omg.dds.pub.DataWriter}. The default value of the lifespan duration is infinite.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> N/A
  * 
@@ -45,8 +43,8 @@ import org.omg.dds.topic.Topic;
  * 
  * The "expiration time" of each sample is computed by adding the duration
  * specified by the LIFESPAN QoS to the source time stamp. As described in
- * {@link DataWriter#write(Object)} and
- * {@link DataWriter#write(Object, org.omg.dds.core.Time)}, the source time
+ * {@link org.omg.dds.pub.DataWriter#write(Object)} and
+ * {@link org.omg.dds.pub.DataWriter#write(Object, org.omg.dds.core.Time)}, the source time
  * stamp is either automatically computed by the Service each time the
  * write operation is called, or else supplied by the application.
  * 

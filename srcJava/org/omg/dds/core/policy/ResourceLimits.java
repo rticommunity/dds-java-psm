@@ -18,16 +18,13 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
  * Specifies the resources that the Service can consume in order to meet the
  * requested QoS.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.sub.DataReader}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> No
  * 
@@ -41,7 +38,7 @@ import org.omg.dds.topic.Topic;
  * hit against some of the QoS-imposed resource limits. Note that this may
  * occur when just a single DataReader cannot keep up with its corresponding
  * DataWriter. The behavior in this case depends on the setting for the
- * {@link Reliability}. If reliability is
+ * {@link org.omg.dds.core.policy.Reliability}. If reliability is
  * {@link Reliability.Kind#BEST_EFFORT}, then the Service is allowed
  * to drop samples. If the reliability is
  * {@link Reliability.Kind#RELIABLE}, the Service will block the

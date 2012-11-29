@@ -22,20 +22,18 @@ import java.io.Serializable;
 import java.util.Set;
 
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.Entity;
 import org.omg.dds.core.ServiceEnvironment;
-import org.omg.dds.core.StatusCondition;
 
 
 /**
  * Status is the abstract root class for all communication status objects.
  * All concrete kinds of Status classes extend this class.
  * 
- * Each concrete {@link Entity} is associated with a set of Status objects
+ * Each concrete {@link org.omg.dds.core.Entity} is associated with a set of Status objects
  * whose value represents the "communication status" of that entity. These
  * status values can be accessed with corresponding methods on the Entity.
  * The changes on these status values are the ones that both cause activation
- * of the corresponding {@link StatusCondition} objects and trigger invocation
+ * of the corresponding {@link org.omg.dds.core.StatusCondition} objects and trigger invocation
  * of the proper Listener objects to asynchronously inform the application.
  * 
  * @see StatusChangedEvent

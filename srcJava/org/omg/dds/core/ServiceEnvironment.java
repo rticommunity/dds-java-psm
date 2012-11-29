@@ -23,16 +23,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.lang.String;
 
+import org.omg.dds.core.policy.PolicyFactory;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.type.TypeSupport;
-import org.omg.dds.type.dynamic.DynamicTypeFactory;
+import org.omg.dds.type.builtin.KeyedBytes;
+import org.omg.dds.type.builtin.KeyedString;
 import org.omg.dds.type.dynamic.DynamicDataFactory;
-import org.omg.dds.core.QosProvider;
-import org.omg.dds.core.policy.PolicyFactory;
-import org.omg.dds.type.builtin.*;
+import org.omg.dds.type.dynamic.DynamicTypeFactory;
 
 
 /**
@@ -112,7 +111,7 @@ public abstract class ServiceEnvironment implements DDSObject {
      * invocations of this method. As a result, execution of this method is
      * expected to be relatively expensive. However, as any DDS object can
      * provide a reference to its creating ServiceEnvironment via
-     * {@link DDSObject#getEnvironment()}, executions of this method are also
+     * {@link org.omg.dds.core.DDSObject#getEnvironment()}, executions of this method are also
      * expected to be rare.
      * 
      * @param   implClassNameProperty       The name of a system property,
@@ -386,7 +385,7 @@ public abstract class ServiceEnvironment implements DDSObject {
         // --- Types: --------------------------------------------------------
 
         /**
-         * Create a new {@link TypeSupport} object for the given physical
+         * Create a new {@link org.omg.dds.type.TypeSupport} object for the given physical
          * type. The Service will register this type under the given name
          * with any participant with which the <code>TypeSupport</code> is
          * used.
@@ -415,7 +414,7 @@ public abstract class ServiceEnvironment implements DDSObject {
         // --- Time & Duration: ----------------------------------------------
 
         /**
-         * Construct a {@link Duration} of the given magnitude.
+         * Construct a {@link org.omg.dds.core.Duration} of the given magnitude.
          * 
          * A duration of magnitude {@link Long#MAX_VALUE} indicates an
          * infinite duration, regardless of the units specified.
@@ -423,12 +422,12 @@ public abstract class ServiceEnvironment implements DDSObject {
         public Duration newDuration(long duration, TimeUnit unit);
 
         /**
-         * @return      A {@link Duration} of infinite length.
+         * @return      A {@link org.omg.dds.core.Duration} of infinite length.
          */
         public Duration infiniteDuration();
 
         /**
-         * @return      A {@link Duration} of zero length.
+         * @return      A {@link org.omg.dds.core.Duration} of zero length.
          */
         public Duration zeroDuration();
 
@@ -443,7 +442,7 @@ public abstract class ServiceEnvironment implements DDSObject {
         public ModifiableTime newTime(long time, TimeUnit units);
 
         /**
-         * @return      A {@link Time} that is not valid.
+         * @return      A {@link org.omg.dds.core.Time} that is not valid.
          */
         public Time invalidTime();
 
@@ -485,8 +484,8 @@ public abstract class ServiceEnvironment implements DDSObject {
         // --- PolicyFactory -----------------------------------------------------
         
         /**
-         * Provides an instance of {@link PolicyFactory}.
-         * @return An instance of {@link PolicyFactory}
+         * Provides an instance of {@link org.omg.dds.core.policy.PolicyFactory}.
+         * @return An instance of {@link org.omg.dds.core.policy.PolicyFactory}
          */
         public abstract PolicyFactory getPolicyFactory();
         

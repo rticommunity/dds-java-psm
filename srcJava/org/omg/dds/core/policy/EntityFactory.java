@@ -18,24 +18,16 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.core.Entity;
-import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.domain.DomainParticipantFactory;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.pub.Publisher;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.Subscriber;
-import org.omg.dds.topic.Topic;
 
 
 /**
- * Controls the behavior of the {@link Entity} when acting as a factory for
+ * Controls the behavior of the {@link org.omg.dds.core.Entity} when acting as a factory for
  * other entities. In other words, configures the side-effects of the
  * <code>create_*</code> operations.
  * 
- * <b>Concerns:</b> {@link DomainParticipantFactory},
- *                  {@link DomainParticipant}, {@link Publisher},
- *                  {@link Subscriber}
+ * <b>Concerns:</b> {@link org.omg.dds.domain.DomainParticipantFactory},
+ *                  {@link org.omg.dds.domain.DomainParticipant}, {@link org.omg.dds.pub.Publisher},
+ *                  {@link org.omg.dds.sub.Subscriber}
  * 
  * <b>RxO:</b> No
  * 
@@ -44,15 +36,15 @@ import org.omg.dds.topic.Topic;
  * This policy controls the behavior of the Entity as a factory for other entities.
  * 
  * This policy concerns only DomainParticipant (as factory for Publisher,
- * Subscriber, and {@link Topic}), Publisher (as factory for
- * {@link DataWriter}), and Subscriber (as factory for {@link DataReader}).
+ * Subscriber, and {@link org.omg.dds.topic.Topic}), Publisher (as factory for
+ * {@link org.omg.dds.pub.DataWriter}), and Subscriber (as factory for {@link org.omg.dds.sub.DataReader}).
  * 
  * This policy is mutable. A change in the policy affects only the entities
  * created after the change; not the previously created entities.
  *  
  * The setting of autoenableCreatedEntities to true indicates that the
  * factory <code>create&lt;<i>entity</i>&gt;</code> operation will
- * automatically invoke the {@link Entity#enable()} operation each time a new
+ * automatically invoke the {@link org.omg.dds.core.Entity#enable()} operation each time a new
  * Entity is created. Therefore, the Entity returned by
  * <code>create&lt;<i>entity</i>&gt;</code> will already be enabled. A
  * setting of false indicates that the Entity will not be automatically

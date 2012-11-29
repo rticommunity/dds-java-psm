@@ -20,12 +20,9 @@ package org.omg.dds.core;
 
 import java.util.EventListener;
 
-import org.omg.dds.domain.DomainParticipant;
-
-
 /**
  * DomainEntity is the abstract base class for all DCPS entities, except for
- * the {@link DomainParticipant}. Its sole purpose is to express that
+ * the {@link org.omg.dds.domain.DomainParticipant}. Its sole purpose is to express that
  * DomainParticipant is a special kind of Entity, which acts as a container
  * of all other Entity, but itself cannot contain other DomainParticipant.
  * 

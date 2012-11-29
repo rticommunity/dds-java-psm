@@ -25,7 +25,7 @@ import java.util.concurrent.TimeoutException;
 
 /**
  * A WaitSet object allows an application to wait until one or more of the
- * attached {@link Condition} objects has a triggerValue of true or else until
+ * attached {@link org.omg.dds.core.Condition} objects has a triggerValue of true or else until
  * the timeout expires.
  * 
  * WaitSet is not necessarily associated with a single
@@ -37,8 +37,8 @@ import java.util.concurrent.TimeoutException;
  * 
  * <ul>
  *     <li>The application indicates which relevant information it wants to
- *         get by creating {@link Condition} objects
- *         ({@link StatusCondition}, {@link org.omg.dds.sub.ReadCondition} or
+ *         get by creating {@link org.omg.dds.core.Condition} objects
+ *         ({@link org.omg.dds.core.StatusCondition}, {@link org.omg.dds.sub.ReadCondition} or
  *         {@link org.omg.dds.sub.QueryCondition}) and attaching them to a
  *          WaitSet.</li>
  *     <li>It then waits on that WaitSet until the triggerValue of one or
@@ -46,13 +46,13 @@ import java.util.concurrent.TimeoutException;
  *     <li>It then uses the result of the wait (i.e., the list of Condition
  *         objects with triggerValue == true) to actually get the information
  *         by calling:<ul>
- *         <li>{@link Entity#getStatusChanges()} and then
+ *         <li>{@link org.omg.dds.core.Entity#getStatusChanges()} and then
  *             <code>get&lt;<i>CommunicationStatus</i>&gt;</code> on the
  *             relevant Entity.</li>
- *         <li>{@link Entity#getStatusChanges()} and then
+ *         <li>{@link org.omg.dds.core.Entity#getStatusChanges()} and then
  *             {@link org.omg.dds.sub.Subscriber#getDataReaders(Collection)}
  *             on the relevant Subscriber.</li>
- *         <li>{@link Entity#getStatusChanges()} and then
+ *         <li>{@link org.omg.dds.core.Entity#getStatusChanges()} and then
  *             {@link org.omg.dds.sub.DataReader#read()}/
  *             {@link org.omg.dds.sub.DataReader#take()} on the
  *             relevant DataReader.</li>
@@ -122,7 +122,7 @@ public abstract class WaitSet implements DDSObject {
      * It is not allowed for more than one application thread to be waiting
      * on the same WaitSet. If the operation is invoked on a WaitSet that
      * already has a thread blocking on it, the operation will fail with the
-     * value {@link PreconditionNotMetException}.
+     * value {@link org.omg.dds.core.PreconditionNotMetException}.
      */
     public abstract void waitForConditions();
 
@@ -139,7 +139,7 @@ public abstract class WaitSet implements DDSObject {
      * It is not allowed for more than one application thread to be waiting
      * on the same WaitSet. If the operation is invoked on a WaitSet that
      * already has a thread blocking on it, the operation will fail with the
-     * value {@link PreconditionNotMetException}.
+     * value {@link org.omg.dds.core.PreconditionNotMetException}.
      */
     public abstract void waitForConditions(
             Collection<Condition> activeConditions);
@@ -157,7 +157,7 @@ public abstract class WaitSet implements DDSObject {
      * It is not allowed for more than one application thread to be waiting
      * on the same WaitSet. If the operation is invoked on a WaitSet that
      * already has a thread blocking on it, the operation will fail with the
-     * value {@link PreconditionNotMetException}.
+     * value {@link org.omg.dds.core.PreconditionNotMetException}.
      * 
      * @throws  TimeoutException    if the timeout argument, which specifies
      *          the maximum duration for the wait, is exceeded and none of
@@ -179,7 +179,7 @@ public abstract class WaitSet implements DDSObject {
      * It is not allowed for more than one application thread to be waiting
      * on the same WaitSet. If the operation is invoked on a WaitSet that
      * already has a thread blocking on it, the operation will fail with the
-     * value {@link PreconditionNotMetException}.
+     * value {@link org.omg.dds.core.PreconditionNotMetException}.
      * 
      * @throws  TimeoutException    if the timeout argument, which specifies
      *          the maximum duration for the wait, is exceeded and none of
@@ -201,7 +201,7 @@ public abstract class WaitSet implements DDSObject {
      * It is not allowed for more than one application thread to be waiting
      * on the same WaitSet. If the operation is invoked on a WaitSet that
      * already has a thread blocking on it, the operation will fail with the
-     * value {@link PreconditionNotMetException}.
+     * value {@link org.omg.dds.core.PreconditionNotMetException}.
      * 
      * @throws  TimeoutException    if the timeout argument, which specifies
      *          the maximum duration for the wait, is exceeded and none of
@@ -225,7 +225,7 @@ public abstract class WaitSet implements DDSObject {
      * It is not allowed for more than one application thread to be waiting
      * on the same WaitSet. If the operation is invoked on a WaitSet that
      * already has a thread blocking on it, the operation will fail with the
-     * value {@link PreconditionNotMetException}.
+     * value {@link org.omg.dds.core.PreconditionNotMetException}.
      * 
      * @throws  TimeoutException    if the timeout argument, which specifies
      *          the maximum duration for the wait, is exceeded and none of

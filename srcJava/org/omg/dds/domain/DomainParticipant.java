@@ -26,23 +26,14 @@ import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.Entity;
-import org.omg.dds.core.InconsistentPolicyException;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ModifiableTime;
-import org.omg.dds.core.OutOfResourcesException;
-import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.Time;
-import org.omg.dds.core.policy.UserData;
 import org.omg.dds.core.status.Status;
-import org.omg.dds.pub.DataWriter;
 import org.omg.dds.pub.Publisher;
 import org.omg.dds.pub.PublisherListener;
 import org.omg.dds.pub.PublisherQos;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.QueryCondition;
-import org.omg.dds.sub.ReadCondition;
-import org.omg.dds.sub.Sample;
 import org.omg.dds.sub.Subscriber;
 import org.omg.dds.sub.SubscriberListener;
 import org.omg.dds.sub.SubscriberQos;
@@ -61,9 +52,9 @@ import org.omg.dds.type.dynamic.DynamicType;
 /**
  * The DomainParticipant object plays several roles:
  * <ul>
- * <li>It acts as a container for all other {@link Entity} objects.</li>
- * <li>It acts as factory for the {@link Publisher}, {@link Subscriber},
- *     {@link Topic}, {@link ContentFilteredTopic}, and {@link MultiTopic}
+ * <li>It acts as a container for all other {@link org.omg.dds.core.Entity} objects.</li>
+ * <li>It acts as factory for the {@link org.omg.dds.pub.Publisher}, {@link org.omg.dds.sub.Subscriber},
+ *     {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.topic.ContentFilteredTopic}, and {@link org.omg.dds.topic.MultiTopic}
  *     objects.</li>
  * <li>It represents the participation of the application on a communication
  *     plane that isolates applications running on the same set of physical
@@ -154,12 +145,12 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
 
     /**
      * This operation allows access to the built-in Subscriber. Each
-     * DomainParticipant contains several built-in {@link Topic} objects as
-     * well as corresponding {@link DataReader} objects to access them. All
+     * DomainParticipant contains several built-in {@link org.omg.dds.topic.Topic} objects as
+     * well as corresponding {@link org.omg.dds.sub.DataReader} objects to access them. All
      * these DataReader objects belong to a single built-in Subscriber.
      * 
      * The built-in Topics are used to communicate information about other
-     * DomainParticipant, Topic, {@link DataReader}, and {@link DataWriter}
+     * DomainParticipant, Topic, {@link org.omg.dds.sub.DataReader}, and {@link org.omg.dds.pub.DataWriter}
      * objects. 
      */
     public Subscriber getBuiltinSubscriber();
@@ -178,7 +169,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * @param   type        The type of all samples to be published and
      *                      subscribed over the new Topic. The Service will
      *                      attempt to locate an appropriate
-     *                      {@link TypeSupport} instance based on this type.
+     *                      {@link org.omg.dds.type.TypeSupport} instance based on this type.
      */
     public <TYPE> Topic<TYPE> createTopic(
             String topicName,
@@ -195,7 +186,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * @param   type        The type of all samples to be published and
      *                      subscribed over the new Topic. The Service will
      *                      attempt to locate an appropriate
-     *                      {@link TypeSupport} instance based on this type.
+     *                      {@link org.omg.dds.type.TypeSupport} instance based on this type.
      * @param   qos         The desired QoS policies. If the specified QoS
      *                      policies are not consistent, the operation will
      *                      fail and no Publisher will be created.
@@ -221,7 +212,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * factory.
      * 
      * @param   topicName   The name of the new Topic.
-     * @param   type        A {@link TypeSupport} representing the type of
+     * @param   type        A {@link org.omg.dds.type.TypeSupport} representing the type of
      *                      all samples to be published and subscribed over
      *                      the new Topic.
      */
@@ -237,7 +228,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * factory.
      * 
      * @param   topicName   The name of the new Topic.
-     * @param   type        A {@link TypeSupport} representing the type of
+     * @param   type        A {@link org.omg.dds.type.TypeSupport} representing the type of
      *                      all samples to be published and subscribed over
      *                      the new Topic.
      * @param   qos         The desired QoS policies. If the specified QoS
@@ -265,10 +256,10 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * factory.
      * 
      * @param   topicName   The name of the new Topic.
-     * @param   type        A {@link DynamicType} of all samples to be published and
+     * @param   type        A {@link org.omg.dds.type.dynamic.DynamicType} of all samples to be published and
      *                      subscribed over the new Topic. The Service will
      *                      attempt to locate an appropriate
-     *                      {@link TypeSupport} instance based on this type.
+     *                      {@link org.omg.dds.type.TypeSupport} instance based on this type.
      */
     public Topic<DynamicType> createTopic(
             String topicName,
@@ -282,10 +273,10 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * factory.
      * 
      * @param   topicName   The name of the new Topic.
-     * @param   type        A {@link DynamicType} of all samples to be published and
+     * @param   type        A {@link org.omg.dds.type.dynamic.DynamicType} of all samples to be published and
      *                      subscribed over the new Topic. The Service will
      *                      attempt to locate an appropriate
-     *                      {@link TypeSupport} instance based on this type.
+     *                      {@link org.omg.dds.type.TypeSupport} instance based on this type.
      * @param   qos         The desired QoS policies. If the specified QoS
      *                      policies are not consistent, the operation will
      *                      fail and no Publisher will be created.
@@ -311,10 +302,10 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * factory.
      * 
      * @param   topicName    The name of the new Topic.
-     * @param   type         A {@link DynamicType} representing the type of
+     * @param   type         A {@link org.omg.dds.type.dynamic.DynamicType} representing the type of
      *                       all samples to be published and subscribed over
      *                       the new Topic.
-     * @param   typeSupport  A {@link TypeSupport} for {@link DynamicType}.
+     * @param   typeSupport  A {@link org.omg.dds.type.TypeSupport} for {@link org.omg.dds.type.dynamic.DynamicType}.
      */
     public Topic<DynamicType> createTopic(
             String topicName,
@@ -329,8 +320,8 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * factory.
      * 
      * @param   topicName   The name of the new Topic.
-     * @param   type        A {@link DynamicType}
-     * @param   typeSupport A {@link TypeSupport} for {@link DynamicType}
+     * @param   type        A {@link org.omg.dds.type.dynamic.DynamicType}
+     * @param   typeSupport A {@link org.omg.dds.type.TypeSupport} for {@link org.omg.dds.type.dynamic.DynamicType}
      * @param   qos         The desired QoS policies. If the specified QoS
      *                      policies are not consistent, the operation will
      *                      fail and no Publisher will be created.
@@ -365,13 +356,13 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * locally available.
      * 
      * A Topic obtained by means of findTopic must also be closed by means of
-     * {@link Topic#close()} so that the local resources can be released. If
+     * {@link org.omg.dds.topic.Topic#close()} so that the local resources can be released. If
      * a Topic is obtained multiple times by means of findTopic or
      * {@link #createTopic(String, Class)}, it must also be closed that same
      * number of times.
      * 
      * Regardless of whether the middleware chooses to propagate topics, the
-     * {@link Topic#close()} operation disposes of only the local proxy.
+     * {@link org.omg.dds.topic.Topic#close()} operation disposes of only the local proxy.
      * 
      * @return  a non-null Topic.
      * 
@@ -399,13 +390,13 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * locally available.
      * 
      * A Topic obtained by means of findTopic must also be closed by means of
-     * {@link Topic#close()} so that the local resources can be released. If
+     * {@link org.omg.dds.topic.Topic#close()} so that the local resources can be released. If
      * a Topic is obtained multiple times by means of findTopic or
      * {@link #createTopic(String, Class)}, it must also be closed that same
      * number of times.
      * 
      * Regardless of whether the middleware chooses to propagate topics, the
-     * {@link Topic#close()} operation disposes of only the local proxy.
+     * {@link org.omg.dds.topic.Topic#close()} operation disposes of only the local proxy.
      * 
      * @return  a non-null Topic.
      * 
@@ -428,13 +419,13 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * If a TopicDescription of the same name already exists, it gives access
      * to it, otherwise it returns null. The operation never blocks.
      * 
-     * The operation may be used to locate any locally-created {@link Topic},
-     * {@link ContentFilteredTopic}, or {@link MultiTopic} object.
+     * The operation may be used to locate any locally-created {@link org.omg.dds.topic.Topic},
+     * {@link org.omg.dds.topic.ContentFilteredTopic}, or {@link org.omg.dds.topic.MultiTopic} object.
      * 
      * Unlike {@link #findTopic(String, Duration)}, the operation searches
      * only among the locally created topics. Therefore, it should never
      * create a new TopicDescription. The TopicDescription returned does not
-     * require an extra {@link TopicDescription#close()}. It is still
+     * require an extra {@link org.omg.dds.topic.TopicDescription#close()}. It is still
      * possible to close the TopicDescription returned by this method,
      * provided it has no readers or writers, but then it is really closed
      * and subsequent lookups will fail.
@@ -482,7 +473,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      *                  MultiTopic.
      * @param   name    The name of the new MultiTopic.
      * @param   type    The resulting type. The Service will attempt to
-     *                  locate an appropriate {@link TypeSupport} instance
+     *                  locate an appropriate {@link org.omg.dds.type.TypeSupport} instance
      *                  based on this type.
      * @param   subscriptionExpression  The list of topics and the logic used
      *          to combine filter and re-arrange the information from each
@@ -504,7 +495,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * @param   <TYPE>  The type of all samples subscribed to with the new
      *                  MultiTopic.
      * @param   name    The name of the new MultiTopic.
-     * @param   type    A {@link TypeSupport} representing the resulting
+     * @param   type    A {@link org.omg.dds.type.TypeSupport} representing the resulting
      *                  type.
      * @param   subscriptionExpression  The list of topics and the logic used
      *          to combine filter and re-arrange the information from each
@@ -520,8 +511,8 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
     /**
      * This operation deletes all the entities that were created by means of
      * the "create" operations on the DomainParticipant. That is, it deletes
-     * all contained {@link Publisher}, {@link Subscriber}, {@link Topic},
-     * {@link ContentFilteredTopic}, and {@link MultiTopic} objects.
+     * all contained {@link org.omg.dds.pub.Publisher}, {@link org.omg.dds.sub.Subscriber}, {@link org.omg.dds.topic.Topic},
+     * {@link org.omg.dds.topic.ContentFilteredTopic}, and {@link org.omg.dds.topic.MultiTopic} objects.
      * 
      * Prior to deleting each contained entity, this operation will
      * recursively call the corresponding closeContainedEntities operation on
@@ -529,8 +520,8 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * recursively. In this manner the operation closeContainedEntities on
      * the DomainParticipant will end up deleting all the entities
      * recursively contained in the DomainParticipant, that is also the
-     * {@link DataWriter}, {@link DataReader}, as well as the
-     * {@link QueryCondition} and {@link ReadCondition} objects belonging to
+     * {@link org.omg.dds.pub.DataWriter}, {@link org.omg.dds.sub.DataReader}, as well as the
+     * {@link org.omg.dds.sub.QueryCondition} and {@link org.omg.dds.sub.ReadCondition} objects belonging to
      * the contained DataReaders.
      * 
      * Once closeContainedEntities returns successfully, the application may
@@ -546,21 +537,21 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * This operation allows an application to instruct the Service to
      * locally ignore a remote domain participant. From that point onwards,
      * the Service will locally behave as if the remote participant did not
-     * exist. This means it will ignore any {@link Topic}, publication, or
+     * exist. This means it will ignore any {@link org.omg.dds.topic.Topic}, publication, or
      * subscription that originates on that domain participant.
      * 
      * This operation can be used, in conjunction with the discovery of
      * remote participants offered by means of the "DCPSParticipant" built-in
      * Topic, to provide, for example, access control. Application data can
      * be associated with a DomainParticipant by means of the
-     * {@link UserData}. This application data is propagated as a
+     * {@link org.omg.dds.core.policy.UserData}. This application data is propagated as a
      * field in the built-in topic and can be used by an application to
      * implement its own access control policy.
      * 
      * The domain participant to ignore is identified by the handle argument.
-     * This handle is the one that appears in the {@link Sample} retrieved
+     * This handle is the one that appears in the {@link org.omg.dds.sub.Sample} retrieved
      * when reading the data samples available for the built-in DataReader to
-     * the "DCPSParticipant" topic. The built-in {@link DataReader} is read
+     * the "DCPSParticipant" topic. The built-in {@link org.omg.dds.sub.DataReader} is read
      * with the same read/take operations used for any DataReader.
      * 
      * This operation is not required to be reversible. The Service offers no
@@ -574,7 +565,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
 
     /**
      * This operation allows an application to instruct the Service to
-     * locally ignore a {@link Topic}. This means it will locally ignore any
+     * locally ignore a {@link org.omg.dds.topic.Topic}. This means it will locally ignore any
      * publication or subscription to the Topic.
      * 
      * This operation can be used to save local resources when the
@@ -582,8 +573,8 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * under certain topics.
      * 
      * The Topic to ignore is identified by the handle argument. This handle
-     * is the one that appears in the {@link Sample} retrieved when reading
-     * the data samples from the built-in {@link DataReader} to the
+     * is the one that appears in the {@link org.omg.dds.sub.Sample} retrieved when reading
+     * the data samples from the built-in {@link org.omg.dds.sub.DataReader} to the
      * "DCPSTopic" topic.
      * 
      * This operation is not required to be reversible. The Service offers no
@@ -599,12 +590,12 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * This operation allows an application to instruct the Service to
      * locally ignore a remote publication; a publication is defined by the
      * association of a topic name, and user data and partition set on the
-     * {@link Publisher}. After this call, any data written related to that
+     * {@link org.omg.dds.pub.Publisher}. After this call, any data written related to that
      * publication will be ignored.
      * 
-     * The {@link DataWriter} to ignore is identified by the handle argument.
-     * This handle is the one that appears in the {@link Sample} retrieved
-     * when reading the data samples from the built-in {@link DataReader} to
+     * The {@link org.omg.dds.pub.DataWriter} to ignore is identified by the handle argument.
+     * This handle is the one that appears in the {@link org.omg.dds.sub.Sample} retrieved
+     * when reading the data samples from the built-in {@link org.omg.dds.sub.DataReader} to
      * the "DCPSPublication" topic.
      * 
      * This operation is not required to be reversible. The Service offers no
@@ -620,11 +611,11 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * This operation allows an application to instruct the Service to
      * locally ignore a remote subscription; a subscription is defined by the
      * association of a topic name, and user data and partition set on the
-     * {@link Subscriber}. After this call, any data received related to that
+     * {@link org.omg.dds.sub.Subscriber}. After this call, any data received related to that
      * subscription will be ignored.
      * 
-     * The {@link DataReader} to ignore is identified by the handle argument.
-     * This handle is the one that appears in the {@link Sample} retrieved
+     * The {@link org.omg.dds.sub.DataReader} to ignore is identified by the handle argument.
+     * This handle is the one that appears in the {@link org.omg.dds.sub.Sample} retrieved
      * when reading the data samples from the built-in DataReader to the
      * "DCPSSubscription" topic.
      * 
@@ -652,14 +643,14 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * Service that the entity remains active.
      * 
      * This operation needs to only be used if the DomainParticipant contains
-     * {@link DataWriter} entities with the
+     * {@link org.omg.dds.pub.DataWriter} entities with the
      * {@link org.omg.dds.core.policy.Liveliness#getKind()} set to
      * {@link org.omg.dds.core.policy.Liveliness.Kind#MANUAL_BY_PARTICIPANT}
      * and it only
      * affects the liveliness of those DataWriter entities. Otherwise, it has
      * no effect.
      * 
-     * <b>Note</b> - Writing data via the {@link DataWriter#write(Object)}
+     * <b>Note</b> - Writing data via the {@link org.omg.dds.pub.DataWriter#write(Object)}
      * operation on a DataWriter asserts liveliness on the DataWriter itself
      * and its DomainParticipant. Consequently the use of assertLiveliness is
      * only needed if the application is not writing data regularly.
@@ -669,7 +660,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
     /**
      * This operation retrieves the default value of the Publisher QoS, that
      * is, the QoS policies which will be used for newly created
-     * {@link Publisher} entities in the case where the QoS policies are
+     * {@link org.omg.dds.pub.Publisher} entities in the case where the QoS policies are
      * defaulted in the {@link #createPublisher()} operation.
      * 
      * The values retrieved will match the set of values specified on the
@@ -683,11 +674,11 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
 
     /**
      * This operation sets a default value of the Publisher QoS policies,
-     * which will be used for newly created {@link Publisher} entities in the
+     * which will be used for newly created {@link org.omg.dds.pub.Publisher} entities in the
      * case where the QoS policies are defaulted in the
      * {@link #createPublisher()} operation.
      * 
-     * @throws  InconsistentPolicyException     if the resulting policies are
+     * @throws  InconsistentPolicyException if the resulting policies are
      *          not self consistent; in that case, the operation will have no
      *          effect.
      *
@@ -698,7 +689,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
     /**
      * This operation retrieves the default value of the Subscriber QoS, that
      * is, the QoS policies which will be used for newly created
-     * {@link Subscriber} entities in the case where the QoS policies are
+     * {@link org.omg.dds.sub.Subscriber} entities in the case where the QoS policies are
      * defaulted in the {@link #createSubscriber()} operation.
      * 
      * The values retrieved will match the set of values specified on the
@@ -713,7 +704,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
 
     /**
      * This operation sets a default value of the Subscriber QoS policies
-     * that will be used for newly created {@link Subscriber} entities in the
+     * that will be used for newly created {@link org.omg.dds.sub.Subscriber} entities in the
      * case where the QoS policies are defaulted in the
      * {@link #createSubscriber()} operation.
      * 
@@ -727,7 +718,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
 
     /**
      * This operation retrieves the default value of the Topic QoS, that is,
-     * the QoS policies which will be used for newly created {@link Topic}
+     * the QoS policies which will be used for newly created {@link org.omg.dds.topic.Topic}
      * entities in the case where the QoS policies are defaulted in the
      * {@link #createTopic(String, Class)} operation.
      * 
@@ -742,7 +733,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
 
     /**
      * This operation sets a default value of the Topic QoS policies, which
-     * will be used for newly created {@link Topic} entities in the case
+     * will be used for newly created {@link org.omg.dds.topic.Topic} entities in the case
      * where the QoS policies are defaulted in the
      * {@link #createTopic(String, Class)} operation.
      * 
@@ -798,7 +789,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
             InstanceHandle participantHandle);
 
     /**
-     * This operation retrieves the list of {@link Topic}s that have been
+     * This operation retrieves the list of {@link org.omg.dds.topic.Topic}s that have been
      * discovered in the domain and that the application has not indicated
      * should be "ignored" by means of the
      * {@link #ignoreTopic(InstanceHandle)} operation.
@@ -814,7 +805,7 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
     public Set<InstanceHandle> getDiscoveredTopics();
 
     /**
-     * This operation retrieves information on a {@link Topic} that has
+     * This operation retrieves information on a {@link org.omg.dds.topic.Topic} that has
      * been discovered on the network. The topic must be in the same
      * domain as the participant on which this operation is invoked and must
      * not have been "ignored" by means of the
@@ -843,16 +834,16 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
 
     /**
      * This operation checks whether or not the given handle represents an
-     * {@link Entity} that was created from the DomainParticipant. The
+     * {@link org.omg.dds.core.Entity} that was created from the DomainParticipant. The
      * containment applies recursively. That is, it applies both to entities
-     * ({@link TopicDescription}, {@link Publisher}, or {@link Subscriber})
+     * ({@link org.omg.dds.topic.TopicDescription}, {@link org.omg.dds.pub.Publisher}, or {@link org.omg.dds.sub.Subscriber})
      * created directly using the DomainParticipant as well as entities
      * created using a contained Publisher or Subscriber as the factory, and
      * so forth.
      * 
      * The instance handle for an Entity may be obtained from built-in topic
      * data, from various statuses, or from the Entity operation
-     * {@link Entity#getInstanceHandle()}.
+     * {@link org.omg.dds.core.Entity#getInstanceHandle()}.
      */
     public boolean containsEntity(InstanceHandle handle);
 

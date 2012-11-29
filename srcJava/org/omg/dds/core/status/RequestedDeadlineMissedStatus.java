@@ -19,13 +19,11 @@
 package org.omg.dds.core.status;
 
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.core.policy.Deadline;
-import org.omg.dds.sub.DataReader;
 
 
 /**
- * The deadline that the {@link DataReader} was expecting through its
- * {@link Deadline} was not respected for a specific instance.
+ * The deadline that the {@link org.omg.dds.sub.DataReader} was expecting through its
+ * {@link org.omg.dds.core.policy.Deadline} was not respected for a specific instance.
  *
  * @see RequestedDeadlineMissedEvent
  * @see OfferedDeadlineMissedStatus
@@ -46,7 +44,7 @@ public abstract class RequestedDeadlineMissedStatus extends Status
 
     /**
      * Total cumulative number of missed deadlines detected for any instance
-     * read by the {@link DataReader}. Missed deadlines accumulate; that is,
+     * read by the {@link org.omg.dds.sub.DataReader}. Missed deadlines accumulate; that is,
      * each deadline period the totalCount will be incremented by one for
      * each instance for which data was not received.
      */
@@ -59,7 +57,7 @@ public abstract class RequestedDeadlineMissedStatus extends Status
     public abstract int getTotalCountChange();
 
     /**
-     * Handle to the last instance in the {@link DataReader} for which a
+     * Handle to the last instance in the {@link org.omg.dds.sub.DataReader} for which a
      * deadline was detected.
      */
     public abstract InstanceHandle getLastInstanceHandle();

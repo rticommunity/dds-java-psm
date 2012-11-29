@@ -22,33 +22,31 @@ import java.io.Closeable;
 import java.util.Set;
 
 import org.omg.dds.core.Condition;
-import org.omg.dds.core.StatusCondition;
-import org.omg.dds.core.WaitSet;
 
 
 /**
  * ReadCondition objects are conditions specifically dedicated to read
- * operations and attached to one {@link DataReader}.
+ * operations and attached to one {@link org.omg.dds.sub.DataReader}.
  * 
  * ReadCondition objects allow an application to specify the data samples it
  * is interested in by specifying the desired sample states, view states,
  * and instance states. (See {@link Subscriber.DataState}.)
  * This allows the middleware to enable the condition only when suitable
  * information is available. They are to be used in conjunction with a
- * {@link WaitSet} as normal conditions. More than one ReadCondition may be
+ * {@link org.omg.dds.core.WaitSet} as normal conditions. More than one ReadCondition may be
  * attached to the same DataReader.
  * 
- * Similar to the {@link StatusCondition}, a ReadCondition also has a
- * triggerValue that determines whether the attached {@link WaitSet} is
+ * Similar to the {@link org.omg.dds.core.StatusCondition}, a ReadCondition also has a
+ * triggerValue that determines whether the attached {@link org.omg.dds.core.WaitSet} is
  * BLOCKED or UNBLOCKED. However, unlike the StatusCondition, the
  * triggerValue of the ReadCondition is tied to the presence of at least a
- * sample managed by the Service with {@link SampleState}, {@link ViewState},
- * and {@link InstanceState} matching those of the ReadCondition.
+ * sample managed by the Service with {@link org.omg.dds.sub.SampleState}, {@link org.omg.dds.sub.ViewState},
+ * and {@link org.omg.dds.sub.InstanceState} matching those of the ReadCondition.
  * 
  * The fact that the triggerValue of a ReadCondition is dependent on the
  * presence of samples on the associated DataReader implies that a single
- * {@link DataReader#take()} operation can potentially change the
- * triggerValue of several ReadCondition or {@link QueryCondition}
+ * {@link org.omg.dds.sub.DataReader#take()} operation can potentially change the
+ * triggerValue of several ReadCondition or {@link org.omg.dds.sub.QueryCondition}
  * conditions. For example, if all samples are taken, any ReadCondition and
  * QueryCondition conditions associated with the DataReader that had their
  * triggerValue == true before will see the triggerValue change to false.
@@ -67,7 +65,7 @@ import org.omg.dds.core.WaitSet;
  * has a sample state collection of {NOT_READ} will have triggerValue of true
  * whenever a new sample arrives and will transition to false as soon as all
  * the newly-arrived samples are either read (so their status changes to
- * {@link SampleState#READ}) or taken (so they are no longer managed by the
+ * {@link org.omg.dds.sub.SampleState#READ}) or taken (so they are no longer managed by the
  * Service). However if the same ReadCondition had a sample_statesample state
  * collection of {READ, NOT_READ}, then the triggerValue would only become
  * false once all the newly-arrived samples are taken (it is not sufficient
@@ -75,7 +73,7 @@ import org.omg.dds.core.WaitSet;
  * overlaps the collection on the ReadCondition.
  * 
  * @param <TYPE>    The concrete type of the data that can be read using the
- *                  the {@link DataReader} that created this ReadCondition.
+ *                  the {@link org.omg.dds.sub.DataReader} that created this ReadCondition.
  */
 public interface ReadCondition<TYPE> extends Closeable, Condition
 {

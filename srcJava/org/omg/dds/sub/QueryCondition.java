@@ -22,7 +22,7 @@ import java.util.List;
 
 
 /**
- * QueryCondition objects are specialized {@link ReadCondition} objects that
+ * QueryCondition objects are specialized {@link org.omg.dds.sub.ReadCondition} objects that
  * allow the application to also specify a filter on the locally available
  * data.
  * 
@@ -31,14 +31,14 @@ import java.util.List;
  * {@link #setQueryParameters(List)} operation.
  * 
  * This feature is optional. In the cases where it is not supported, the
- * {@link DataReader#createQueryCondition(String, List)} will return null.
+ * {@link org.omg.dds.sub.DataReader#createQueryCondition(String, List)} will return null.
  * 
  * The triggerValue of a QueryCondition is like that of a ReadCondition with
  * the additional condition that the data associated with at least one sample
  * must be such that the queryExpression evaluates to true.
  * 
  * @param <TYPE>    The concrete type of the data that can be read using the
- *                  the {@link DataReader} that created this QueryCondition.
+ *                  the {@link org.omg.dds.sub.DataReader} that created this QueryCondition.
  */
 public interface QueryCondition<TYPE> extends ReadCondition<TYPE> {
     /**

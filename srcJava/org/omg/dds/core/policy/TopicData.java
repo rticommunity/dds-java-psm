@@ -18,29 +18,25 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
  * User data not known by the middleware, but distributed by means of
  * built-in topics. The default value is an empty (zero-sized) sequence.
  * 
- * <b>Concerns:</b> {@link Topic}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}
  * 
  * <b>RxO:</b> No
  * 
  * <b>Changeable:</b> Yes
  * 
  * The purpose of this QoS is to allow the application to attach additional
- * information to the created {@link Topic}s such that when a remote
+ * information to the created {@link org.omg.dds.topic.Topic}s such that when a remote
  * application discovers their existence it can examine the information and
  * use it in an application-defined way. In combination with the listeners on
- * the {@link DataReader} and {@link DataWriter} as well as by means of
+ * the {@link org.omg.dds.sub.DataReader} and {@link org.omg.dds.pub.DataWriter} as well as by means of
  * operations such as
- * {@link DomainParticipant#ignoreTopic(org.omg.dds.core.InstanceHandle)},
+ * {@link org.omg.dds.domain.DomainParticipant#ignoreTopic(org.omg.dds.core.InstanceHandle)},
  * these QoS can assist an application to extend the provided QoS.
  */
 public interface TopicData extends QosPolicy.ForTopic

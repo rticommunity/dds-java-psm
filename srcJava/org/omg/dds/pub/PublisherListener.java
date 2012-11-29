@@ -20,7 +20,6 @@ package org.omg.dds.pub;
 
 import java.util.EventListener;
 
-import org.omg.dds.core.Entity;
 import org.omg.dds.core.status.LivelinessLostEvent;
 import org.omg.dds.core.status.OfferedDeadlineMissedEvent;
 import org.omg.dds.core.status.OfferedIncompatibleQosEvent;
@@ -28,7 +27,7 @@ import org.omg.dds.core.status.PublicationMatchedEvent;
 
 
 /**
- * Since a {@link Publisher} is a kind of {@link Entity}, it has the ability
+ * Since a {@link org.omg.dds.pub.Publisher} is a kind of {@link org.omg.dds.core.Entity}, it has the ability
  * to have a listener associated with it. In this case, the associated
  * listener must be of concrete type PublisherListener.
  */

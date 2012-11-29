@@ -72,7 +72,7 @@ implements Comparable<Time>, Serializable, DDSObject
      * @param env       Identifies the Service instance to which the
      *                  object will belong.
      *                  
-     * @return      An unmodifiable {@link Time} that is not valid.
+     * @return      An unmodifiable {@link org.omg.dds.core.Time} that is not valid.
      */
     public static Time invalidTime(ServiceEnvironment env)
     {

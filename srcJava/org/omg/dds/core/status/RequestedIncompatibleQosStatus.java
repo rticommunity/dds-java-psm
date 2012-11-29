@@ -22,13 +22,10 @@ import java.util.Set;
 
 import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.core.policy.QosPolicyCount;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
- * A {@link QosPolicy} value was incompatible with what is offered.
+ * A {@link org.omg.dds.core.policy.QosPolicy} value was incompatible with what is offered.
  *
  * @see RequestedIncompatibleQosEvent
  * @see OfferedIncompatibleQosStatus
@@ -48,8 +45,8 @@ public abstract class RequestedIncompatibleQosStatus extends Status
     // -----------------------------------------------------------------------
 
     /**
-     * Total cumulative number of times the concerned {@link DataReader}
-     * discovered a {@link DataWriter} for the same {@link Topic} with an
+     * Total cumulative number of times the concerned {@link org.omg.dds.sub.DataReader}
+     * discovered a {@link org.omg.dds.pub.DataWriter} for the same {@link org.omg.dds.topic.Topic} with an
      * offered QoS that was incompatible with that requested by the
      * DataReader.
      */
@@ -69,8 +66,8 @@ public abstract class RequestedIncompatibleQosStatus extends Status
 
     /**
      * A list containing for each policy the total number of times that the
-     * concerned {@link DataReader} discovered a {@link DataWriter} for the
-     * same {@link Topic} with an offered QoS that is incompatible with that
+     * concerned {@link org.omg.dds.sub.DataReader} discovered a {@link org.omg.dds.pub.DataWriter} for the
+     * same {@link org.omg.dds.topic.Topic} with an offered QoS that is incompatible with that
      * requested by the DataReader.
      * 
      * @return  an unmodifiable set.

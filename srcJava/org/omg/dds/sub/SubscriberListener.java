@@ -20,7 +20,6 @@ package org.omg.dds.sub;
 
 import java.util.EventListener;
 
-import org.omg.dds.core.Entity;
 import org.omg.dds.core.status.DataAvailableEvent;
 import org.omg.dds.core.status.DataOnReadersEvent;
 import org.omg.dds.core.status.LivelinessChangedEvent;
@@ -32,7 +31,7 @@ import org.omg.dds.core.status.SubscriptionMatchedEvent;
 
 
 /**
- * Since a {@link Subscriber} is a kind of {@link Entity}, it has the ability
+ * Since a {@link org.omg.dds.sub.Subscriber} is a kind of {@link org.omg.dds.core.Entity}, it has the ability
  * to have an associated listener. In this case, the associated listener must
  * be of concrete type SubscriberListener.
  */

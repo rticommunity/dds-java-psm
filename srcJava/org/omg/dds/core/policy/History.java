@@ -18,9 +18,6 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
@@ -32,11 +29,11 @@ import org.omg.dds.topic.Topic;
  * publishing side this policy controls the samples that should be maintained
  * by the DataWriter on behalf of existing DataReader entities. The behavior
  * with regards to a DataReader entities discovered after a sample is written
- * is controlled by the {@link Durability}. On the subscribing side
+ * is controlled by the {@link org.omg.dds.core.policy.Durability}. On the subscribing side
  * it controls the samples that should be maintained until the application
- * "takes" them from the Service via {@link DataReader#take()}.
+ * "takes" them from the Service via {@link org.omg.dds.sub.DataReader#take()}.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.sub.DataReader}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> No
  * 
@@ -59,9 +56,9 @@ import org.omg.dds.topic.Topic;
  *         attempt to maintain and deliver all the values of the instance to
  *         existing subscribers. The resources that the Service can use to
  *         keep this history are limited by the settings of the
- *         {@link ResourceLimits}. If the limit is reached, then the
+ *         {@link org.omg.dds.core.policy.ResourceLimits}. If the limit is reached, then the
  *         behavior of the Service will depend on the
- *         {@link Reliability}. If the reliability kind is
+ *         {@link org.omg.dds.core.policy.Reliability}. If the reliability kind is
  *         {@link Reliability.Kind#BEST_EFFORT}, then the old values
  *         will be discarded. If reliability is
  *         {@link Reliability.Kind#RELIABLE}, then the Service will
@@ -129,29 +126,29 @@ extends QosPolicy.ForTopic, QosPolicy.ForDataReader, QosPolicy.ForDataWriter
     public enum Kind {
         /**
          * On the publishing side, the Service will only attempt to keep the
-         * most recent "depth" samples ({@link History#getDepth()})
+         * most recent "depth" samples ({@link org.omg.dds.core.policy.History#getDepth()})
          * of each instance of data (identified by its key) managed by the
-         * {@link DataWriter}. On the subscribing side, the DataReader will
+         * {@link org.omg.dds.pub.DataWriter}. On the subscribing side, the DataReader will
          * only attempt to keep the most recent "depth" samples received for
          * each instance (identified by its key) until the application
-         * "takes" them via {@link DataReader#take()}. KEEP_LAST is the
+         * "takes" them via {@link org.omg.dds.sub.DataReader#take()}. KEEP_LAST is the
          * default kind. The default value of depth is 1. If a value other
          * than 1 is specified, it must be consistent with the settings of
-         * the {@link ResourceLimits}.
+         * the {@link org.omg.dds.core.policy.ResourceLimits}.
          */
         KEEP_LAST,
 
         /**
          * On the publishing side, the Service will attempt to keep all
          * samples (representing each value written) of each instance of data
-         * (identified by its key) managed by the {@link DataWriter} until
+         * (identified by its key) managed by the {@link org.omg.dds.pub.DataWriter} until
          * they can be delivered to all subscribers. On the subscribing side,
          * the Service will attempt to keep all samples of each instance of
-         * data (identified by its key) managed by the {@link DataReader}.
+         * data (identified by its key) managed by the {@link org.omg.dds.sub.DataReader}.
          * These samples are kept until the application "takes" them from the
-         * Service via {@link DataReader#take()}. The setting of depth has no
+         * Service via {@link org.omg.dds.sub.DataReader#take()}. The setting of depth has no
          * effect. Its implied value is
-         * {@link ResourceLimits#LENGTH_UNLIMITED}.
+         * {@link org.omg.dds.core.policy.ResourceLimits#LENGTH_UNLIMITED}.
          */
         KEEP_ALL
     }

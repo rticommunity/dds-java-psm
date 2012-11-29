@@ -21,16 +21,14 @@ package org.omg.dds.domain;
 import java.util.Collection;
 
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.Entity;
-import org.omg.dds.core.InconsistentPolicyException;
 import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.status.Status;
 
 
 /**
  * The sole purpose of this class is to allow the creation and destruction of
- * {@link DomainParticipant} objects. DomainParticipantFactory itself has no
- * factory. It is a pre-existing per-{@link ServiceEnvironment} singleton
+ * {@link org.omg.dds.domain.DomainParticipant} objects. DomainParticipantFactory itself has no
+ * factory. It is a pre-existing per-{@link org.omg.dds.core.ServiceEnvironment} singleton
  * object that can be accessed by means of the
  * {@link #getInstance(ServiceEnvironment)} operation.
  */
@@ -128,7 +126,7 @@ public abstract class DomainParticipantFactory implements DDSObject
      * for entities.
      * 
      * Note that despite having QoS, the DomainParticipantFactory is not an
-     * {@link Entity}.
+     * {@link org.omg.dds.core.Entity}.
      * 
      * @throws  InconsistentPolicyException     if the resulting policies are
      *          not self consistent; in that case, the operation will have no
@@ -141,7 +139,7 @@ public abstract class DomainParticipantFactory implements DDSObject
     /**
      * This operation retrieves the default value of the DomainParticipant
      * QoS, that is, the QoS policies which will be used for newly created
-     * {@link DomainParticipant} entities in the case where the QoS policies
+     * {@link org.omg.dds.domain.DomainParticipant} entities in the case where the QoS policies
      * are defaulted in the {@link #createParticipant()} operation.
      * 
      * The values retrieved will match the set of values specified on the
@@ -157,7 +155,7 @@ public abstract class DomainParticipantFactory implements DDSObject
     /**
      * This operation sets a default value of the DomainParticipant QoS
      * policies which will be used for newly created
-     * {@link DomainParticipant} entities in the case where the QoS policies
+     * {@link org.omg.dds.domain.DomainParticipant} entities in the case where the QoS policies
      * are defaulted in the {@link #createParticipant()} operation.
      * 
      * @throws  InconsistentPolicyException     if the resulting policies are

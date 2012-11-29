@@ -26,7 +26,7 @@ import org.omg.dds.core.status.Status;
 
 /**
  * A StatusCondition object is a specific Condition that is associated with
- * each {@link Entity}. The triggerValue of the StatusCondition depends on
+ * each {@link org.omg.dds.core.Entity}. The triggerValue of the StatusCondition depends on
  * the communication status of that entity (e.g., arrival of data, loss of
  * information, etc.), "filtered" by the set of enabledStatuses on the
  * StatusCondition.
@@ -65,7 +65,7 @@ extends Condition {
      * StatusCondition. This operation may change the triggerValue of the
      * StatusCondition.
      * 
-     * {@link WaitSet} objects behavior depend on the changes of the
+     * {@link org.omg.dds.core.WaitSet} objects behavior depend on the changes of the
      * triggerValue of their attached conditions. Therefore, any WaitSet to
      * which the StatusCondition is attached is potentially affected by this
      * operation.

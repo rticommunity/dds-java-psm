@@ -21,9 +21,6 @@ package org.omg.dds.core.policy;
 import java.util.concurrent.TimeUnit;
 
 import org.omg.dds.core.Duration;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
@@ -35,7 +32,7 @@ import org.omg.dds.topic.Topic;
  * value of the duration is zero indicating that the delay should be
  * minimized.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.sub.DataReader}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> Yes
  * 

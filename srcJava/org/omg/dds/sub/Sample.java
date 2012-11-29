@@ -22,14 +22,13 @@ import java.io.Serializable;
 import java.util.ListIterator;
 
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.pub.DataWriter;
 import org.omg.dds.core.Time;
+
 
 /**
  * A Sample represents an atom of data information (i.e., one value for one
- * instance) as returned by a {@link DataReader}'s read or take operations.
+ * instance) as returned by a {@link org.omg.dds.sub.DataReader}'s read or take operations.
  * It consists of two parts: the Data ({@link #getData()}) and the "Sample
  * Info" (the remainder of the methods defined by this interface).
  * 
@@ -40,17 +39,17 @@ import org.omg.dds.core.Time;
  * 
  * <ul>
  *      <li>The sampleState ({@link #getSampleState()}) of the Data value
- *          (i.e., if the sample has already been {@link SampleState#READ} or
- *          {@link SampleState#NOT_READ} by that same {@link DataReader}).
+ *          (i.e., if the sample has already been {@link org.omg.dds.sub.SampleState#READ} or
+ *          {@link org.omg.dds.sub.SampleState#NOT_READ} by that same {@link org.omg.dds.sub.DataReader}).
  *          </li>
  *      <li>The viewState ({@link #getViewState()}) of the related instance
  *          (i.e., if the current generation of the instance is
- *          {@link ViewState#NEW} or {@link ViewState#NOT_NEW} for that
+ *          {@link org.omg.dds.sub.ViewState#NEW} or {@link org.omg.dds.sub.ViewState#NOT_NEW} for that
  *          DataReader).</li>
  *      <li>The instanceState ({@link #getInstanceState()}) of the related
- *          instance (i.e., if the instance is {@link InstanceState#ALIVE},
- *          {@link InstanceState#NOT_ALIVE_DISPOSED}, or
- *          {@link InstanceState#NOT_ALIVE_NO_WRITERS}).</li>
+ *          instance (i.e., if the instance is {@link org.omg.dds.sub.InstanceState#ALIVE},
+ *          {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_DISPOSED}, or
+ *          {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_NO_WRITERS}).</li>
  *      <li>The "valid data" flag, corresponding to whether {@link #getData()}
  *          return a non-null value. Some samples do not contain data, instead
  *          indicating only a change on the instanceState of the corresponding
@@ -60,30 +59,30 @@ import org.omg.dds.core.Time;
  *          noWritersGenerationCount ({@link #getNoWritersGenerationCount()})
  *          for the related instance at the time the sample was received.
  *          These counters indicate the number of times the instance had
- *          become ALIVE (with instanceState = {@link InstanceState#ALIVE})
+ *          become ALIVE (with instanceState = {@link org.omg.dds.sub.InstanceState#ALIVE})
  *          at the time the sample was received.</li>
  *      <li>The sampleRank ({@link #getSampleRank()}) and generationRank
  *          ({@link #getGenerationRank()}) of the sample within the returned
  *          sequence. These ranks provide a preview of the samples that
  *          follow within the sequence returned by the
- *          {@link DataReader#read()} or {@link DataReader#take()}
+ *          {@link org.omg.dds.sub.DataReader#read()} or {@link org.omg.dds.sub.DataReader#take()}
  *          operations.</li>
  *      <li>The absoluteGenerationRank ({@link #getAbsoluteGenerationRank()})
  *          of the sample within the DataReader. This rank provides a preview
  *          of what is available within the DataReader.</li>
  *      <li>The sourceTimestamp ({@link #getSourceTimestamp()}) of the sample.
- *          This is the time stamp provided by the {@link DataWriter} at the
+ *          This is the time stamp provided by the {@link org.omg.dds.pub.DataWriter} at the
  *          time the sample was produced.</li>
  *      <li>The instanceHandle ({@link #getInstanceHandle()}) that identifies
  *          locally the corresponding instance.</li>
  *      <li>The publicationHandle ({@link #getPublicationHandle()}) that
- *          identifies locally the {@link DataWriter} that modified the
- *          instance. The publicationHandle is the same {@link InstanceHandle}
+ *          identifies locally the {@link org.omg.dds.pub.DataWriter} that modified the
+ *          instance. The publicationHandle is the same {@link org.omg.dds.core.InstanceHandle}
  *          that is returned by the operation
- *          {@link DataReader#getMatchedPublications()}
+ *          {@link org.omg.dds.sub.DataReader#getMatchedPublications()}
  *          on the DataReader and can also be used as a parameter to the
  *          operation
- *          {@link DataReader#getMatchedPublicationData(InstanceHandle)}.</li>
+ *          {@link org.omg.dds.sub.DataReader#getMatchedPublicationData(InstanceHandle)}.</li>
  * </ul>
  * 
  * <b>Interpretation of the Counters and Ranks</b>
@@ -97,7 +96,7 @@ import org.omg.dds.core.Time;
  * to different 'generations' of the instance. Note that it is possible for
  * an instance to transition from not-alive to alive (and back) several times
  * before the application accesses the data by means of
- * {@link DataReader#read()} or {@link DataReader#take()}. In this case the
+ * {@link org.omg.dds.sub.DataReader#read()} or {@link org.omg.dds.sub.DataReader#take()}. In this case the
  * returned collection may contain samples that cross generations (i.e., some
  * samples were received before the instance became not-alive, others after
  * the instance reappeared again). Using the information in the Sample the
@@ -134,7 +133,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
      * timeout) for which there is no associated data. An example of this
      * situation is when the Service detects that an instance has no writers
      * and changes the corresponding instanceState to
-     * {@link InstanceState#NOT_ALIVE_NO_WRITERS}.
+     * {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_NO_WRITERS}.
      * 
      * The actual set of scenarios under which the middleware returns Samples
      * containing no data is implementation dependent. The application can
@@ -157,29 +156,29 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
 
     /**
      * For each sample received, the middleware internally maintains a
-     * sampleState relative to each {@link DataReader}. The sampleState can
-     * either be {@link SampleState#READ} or {@link SampleState#NOT_READ}.
+     * sampleState relative to each {@link org.omg.dds.sub.DataReader}. The sampleState can
+     * either be {@link org.omg.dds.sub.SampleState#READ} or {@link org.omg.dds.sub.SampleState#NOT_READ}.
      * 
      * <ul>
      *     <li>READ indicates that the DataReader has already accessed that
-     *         sample by means of {@link DataReader#read()}. (Had the sample
-     *         been accessed by {@link DataReader#take()}, it would no longer
+     *         sample by means of {@link org.omg.dds.sub.DataReader#read()}. (Had the sample
+     *         been accessed by {@link org.omg.dds.sub.DataReader#take()}, it would no longer
      *         be available to the DataReader.)</li>
      *     <li>NOT_READ indicates that the DataReader has not accessed that
      *         sample before.</li>
      * </ul>
      * 
      * The sampleState will, in general, be different for each sample in the
-     * collection returned by {@link DataReader#read()} or
-     * {@link DataReader#take()}.
+     * collection returned by {@link org.omg.dds.sub.DataReader#read()} or
+     * {@link org.omg.dds.sub.DataReader#take()}.
      */
     public SampleState getSampleState();
 
     /**
      * For each instance (identified by the key), the middleware internally
-     * maintains a viewState relative to each {@link DataReader}. The
-     * viewState can either be {@link ViewState#NEW} or
-     * {@link ViewState#NOT_NEW}.
+     * maintains a viewState relative to each {@link org.omg.dds.sub.DataReader}. The
+     * viewState can either be {@link org.omg.dds.sub.ViewState#NEW} or
+     * {@link org.omg.dds.sub.ViewState#NOT_NEW}.
      * 
      * <ul>
      *     <li>NEW indicates that either this is the first time that the
@@ -197,7 +196,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
      * The viewState available in the Sample is a snapshot of the viewState
      * of the instance relative to the DataReader used to access the samples
      * at the time the collection was obtained (i.e., at the time
-     * {@link DataReader#read()} or {@link DataReader#take()} was called).
+     * {@link org.omg.dds.sub.DataReader#read()} or {@link org.omg.dds.sub.DataReader#take()} was called).
      * The viewState is therefore the same for all samples in the returned
      * collection that refer to the same instance.
      * 
@@ -210,21 +209,21 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
 
     /**
      * For each instance the middleware internally maintains an
-     * instanceState. The instanceState can be {@link InstanceState#ALIVE},
-     * {@link InstanceState#NOT_ALIVE_DISPOSED}, or
-     * {@link InstanceState#NOT_ALIVE_NO_WRITERS}.
+     * instanceState. The instanceState can be {@link org.omg.dds.sub.InstanceState#ALIVE},
+     * {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_DISPOSED}, or
+     * {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_NO_WRITERS}.
      * 
      * <ul>
      *     <li>ALIVE indicates that (a) samples have been received for the
-     *         instance, (b) there are live {@link DataWriter} entities
+     *         instance, (b) there are live {@link org.omg.dds.pub.DataWriter} entities
      *         writing the instance, and (c) the instance has not been
      *         explicitly disposed (or else more samples have been received
      *         after it was disposed).</li>
      *     <li>NOT_ALIVE_DISPOSED indicates the instance was explicitly
      *         disposed by a DataWriter by means of
-     *         {@link DataWriter#dispose(InstanceHandle)}.</li>
+     *         {@link org.omg.dds.pub.DataWriter#dispose(InstanceHandle)}.</li>
      *     <li>NOT_ALIVE_NO_WRITERS indicates the instance has been declared
-     *         as not-alive by the {@link DataReader} because it detected
+     *         as not-alive by the {@link org.omg.dds.sub.DataReader} because it detected
      *         that there are no live DataWriter entities writing that
      *         instance.
      * </ul>
@@ -252,8 +251,8 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
      * 
      * The instanceState available in the Sample is a snapshot of the
      * instanceState of the instance at the time the collection was obtained
-     * (i.e., at the time {@link DataReader#read()} or
-     * {@link DataReader#take()} was called). The instanceState is therefore
+     * (i.e., at the time {@link org.omg.dds.sub.DataReader#read()} or
+     * {@link org.omg.dds.sub.DataReader#take()} was called). The instanceState is therefore
      * the same for all samples in the returned collection that refer to the
      * same instance.
      */
@@ -268,7 +267,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
     /**
      * For each instance the middleware internally maintains two counts: the
      * disposedGenerationCount and noWritersGenerationCount, relative to each
-     * {@link DataReader}:
+     * {@link org.omg.dds.sub.DataReader}:
      * 
      * <ul>
      *     <li>The disposedGenerationCount and noWritersGenerationCount are
@@ -293,7 +292,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
     /**
      * For each instance the middleware internally maintains two counts: the
      * disposedGenerationCount and noWritersGenerationCount, relative to each
-     * {@link DataReader}:
+     * {@link org.omg.dds.sub.DataReader}:
      * 
      * <ul>
      *     <li>The disposedGenerationCount and noWritersGenerationCount are
@@ -318,7 +317,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
     /**
      * The sampleRank and generationRank available in the Sample are computed
      * based solely on the actual samples in the ordered collection returned
-     * by {@link DataReader#read()} or {@link DataReader#take()}.
+     * by {@link org.omg.dds.sub.DataReader#read()} or {@link org.omg.dds.sub.DataReader#take()}.
      * 
      * <ul>
      *     <li>The sampleRank indicates the number of samples of the same
@@ -339,7 +338,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
     /**
      * The sampleRank and generationRank available in the Sample are computed
      * based solely on the actual samples in the ordered collection returned
-     * by {@link DataReader#read()} or {@link DataReader#take()}.
+     * by {@link org.omg.dds.sub.DataReader#read()} or {@link org.omg.dds.sub.DataReader#take()}.
      * 
      * <ul>
      *     <li>The sampleRank indicates the number of samples of the same
@@ -369,7 +368,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
     /**
      * The sampleRank and generationRank available in the Sample are computed
      * based solely on the actual samples in the ordered collection returned
-     * by {@link DataReader#read()} or {@link DataReader#take()}.
+     * by {@link org.omg.dds.sub.DataReader#read()} or {@link org.omg.dds.sub.DataReader#take()}.
      * 
      * <ul>
      *     <li>The sampleRank indicates the number of samples of the same
@@ -387,7 +386,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
      * Sample of the same instance that the middleware has received (MRS).
      * That is, it counts the number of times the instance transitioned from
      * not-alive to alive in the time from the reception of S to the time
-     * when {@link DataReader#read()} or {@link DataReader#take()} was
+     * when {@link org.omg.dds.sub.DataReader#read()} or {@link org.omg.dds.sub.DataReader#take()} was
      * called.
      * 
      * <code>
@@ -418,7 +417,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
         /**
          * This operation indicates to that the application is done accessing
          * the list of Samples obtained by some earlier invocation of
-         * {@link DataReader#read()} or {@link DataReader#take()}.
+         * {@link org.omg.dds.sub.DataReader#read()} or {@link org.omg.dds.sub.DataReader#take()}.
          * 
          * The operation allows implementations to "loan" buffers from the
          * DataReader to the application and in this manner provide
@@ -434,7 +433,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
          * The use of the operation is only necessary if the read or take
          * calls "loaned" buffers to the application. The situations in which
          * this occurs are described in the documentation for
-         * {@link DataReader#read()} and {@link DataReader#take()}. However,
+         * {@link org.omg.dds.sub.DataReader#read()} and {@link org.omg.dds.sub.DataReader#take()}. However,
          * calling close on a collection that does not have a loan is
          * safe and has no side effects.
          * 

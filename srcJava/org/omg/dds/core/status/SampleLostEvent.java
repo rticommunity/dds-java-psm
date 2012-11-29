@@ -24,7 +24,7 @@ import org.omg.dds.sub.DataReader;
 /**
  * A sample has been lost (never received).
  *
- * @param <TYPE>    The data type of the source {@link DataReader}.
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.sub.DataReader}.
  * 
  * @see SampleLostStatus
  */

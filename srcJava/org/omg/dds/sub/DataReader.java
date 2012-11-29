@@ -28,31 +28,24 @@ import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.NotEnabledException;
-import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.StatusCondition;
-import org.omg.dds.core.policy.History;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
 import org.omg.dds.core.status.RequestedIncompatibleQosStatus;
 import org.omg.dds.core.status.SampleLostStatus;
 import org.omg.dds.core.status.SampleRejectedStatus;
 import org.omg.dds.core.status.SubscriptionMatchedStatus;
-import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.topic.ContentFilteredTopic;
-import org.omg.dds.topic.MultiTopic;
 import org.omg.dds.topic.PublicationBuiltinTopicData;
-import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicDescription;
 
 
 /**
  * A DataReader allows the application (1) to declare the data it wishes to
  * receive (i.e., make a subscription) and (2) to access the data received by
- * the attached {@link Subscriber}.
+ * the attached {@link org.omg.dds.sub.Subscriber}.
  * 
- * A DataReader refers to exactly one {@link TopicDescription} (either a
- * {@link Topic}, a {@link ContentFilteredTopic}, or a {@link MultiTopic})
+ * A DataReader refers to exactly one {@link org.omg.dds.topic.TopicDescription} (either a
+ * {@link org.omg.dds.topic.Topic}, a {@link org.omg.dds.topic.ContentFilteredTopic}, or a {@link org.omg.dds.topic.MultiTopic})
  * that identifies the data to be read. The subscription has a unique
  * resulting type. The data reader may give access to several instances of
  * the resulting type, which can be distinguished from each other by their
@@ -62,11 +55,11 @@ import org.omg.dds.topic.TopicDescription;
  * {@link #setQos(org.omg.dds.core.EntityQos)}, {@link #getQos()},
  * {@link #setListener(java.util.EventListener)}, {@link #getListener()},
  * {@link #enable()}, {@link #getStatusCondition()}, and {@link #close()} may
- * fail with the exception {@link NotEnabledException}.
+ * fail with the exception {@link org.omg.dds.core.NotEnabledException}.
  * 
  * All sample-accessing operations, namely all variants of {@link #read()} or
  * {@link #take()}, may fail with the exception
- * {@link PreconditionNotMetException}.
+ * {@link org.omg.dds.core.PreconditionNotMetException}.
  * 
  * <b>Access to the Data</b>
  * 
@@ -81,12 +74,12 @@ import org.omg.dds.topic.TopicDescription;
  * DataReader to access the same sample multiple times but only if all
  * previous accesses were read operations.
  * 
- * Each of these operations returns an ordered collection of {@link Sample}s
+ * Each of these operations returns an ordered collection of {@link org.omg.dds.sub.Sample}s
  * (data values and associated meta-information). Each data value represents
  * an atom of data information (i.e., a value for one instance). This
  * collection may contain samples related to the same or different instances
  * (identified by the key). Multiple samples can refer to the same instance
- * if the settings of the {@link History} allow for it.
+ * if the settings of the {@link org.omg.dds.core.policy.History} allow for it.
  * 
  * @param <TYPE>    The concrete type of the data to be read.
  */
@@ -267,14 +260,14 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
     /**
      * This operation retrieves the list of publications currently
      * "associated" with the DataReader; that is, publications that have a
-     * matching {@link Topic} and compatible QoS that the application has not
+     * matching {@link org.omg.dds.topic.Topic} and compatible QoS that the application has not
      * indicated should be "ignored" by means of
-     * {@link DomainParticipant#ignorePublication(InstanceHandle)}.
+     * {@link org.omg.dds.domain.DomainParticipant#ignorePublication(InstanceHandle)}.
      * 
      * The handles returned in the 'publicationHandles' list are the ones
      * that are used by the DDS implementation to locally identify the
      * corresponding matched DataWriter entities. These handles match the
-     * ones that appear in {@link Sample#getInstanceHandle()} when reading
+     * ones that appear in {@link org.omg.dds.sub.Sample#getInstanceHandle()} when reading
      * the "DCPSPublications" built-in topic.
      * 
      * The operation may fail if the infrastructure does not locally maintain
@@ -289,9 +282,9 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
     /**
      * This operation retrieves information on a publication that is
      * currently "associated" with the DataReader; that is, a publication
-     * with a matching {@link Topic} and compatible QoS that the application
+     * with a matching {@link org.omg.dds.topic.Topic} and compatible QoS that the application
      * has not indicated should be "ignored" by means of
-     * {@link DomainParticipant#ignorePublication(InstanceHandle)}.
+     * {@link org.omg.dds.domain.DomainParticipant#ignorePublication(InstanceHandle)}.
      * 
      * The operation {@link #getMatchedPublications()} can be used
      * to find the publications that are currently matched with the
@@ -403,12 +396,12 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      *         {@link org.omg.dds.core.policy.DestinationOrder.Kind#BY_SOURCE_TIMESTAMP},
      *         samples belonging to the same instances will appear in the
      *         relative order implied by the result of
-     *         {@link Sample#getSourceTimestamp()} (FIFO, smaller values of
+     *         {@link org.omg.dds.sub.Sample#getSourceTimestamp()} (FIFO, smaller values of
      *         the source time stamp ahead of the larger values).<li>
      * </ul>
      * 
      * In addition to the sample data, the read operation also provides
-     * sample meta-information ("sample info"). See {@link Sample}.
+     * sample meta-information ("sample info"). See {@link org.omg.dds.sub.Sample}.
      * 
      * The returned samples are "loaned" by the DataReader. The use of this
      * variant allows for zero-copy (assuming the implementation supports it)
@@ -418,17 +411,17 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * 
      * Some elements in the returned collection may not have valid data. If
      * the instance state in the Sample is
-     * {@link InstanceState#NOT_ALIVE_DISPOSED} or
-     * {@link InstanceState#NOT_ALIVE_NO_WRITERS}, then the last sample for
+     * {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_DISPOSED} or
+     * {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_NO_WRITERS}, then the last sample for
      * that instance in the collection, that is, the one with
-     * {@link Sample#getSampleRank()} == 0, does not contain valid data.
+     * {@link org.omg.dds.sub.Sample#getSampleRank()} == 0, does not contain valid data.
      * Samples that contain no data do not count towards the limits imposed
      * by the {@link org.omg.dds.core.policy.ResourceLimits}.
      * 
      * The act of reading a sample sets its sample state to
-     * {@link SampleState#READ}. If the sample belongs to the most recent
+     * {@link org.omg.dds.sub.SampleState#READ}. If the sample belongs to the most recent
      * generation of the instance, it will also set the view state of the
-     * instance to {@link ViewState#NOT_NEW}. It will not affect the
+     * instance to {@link org.omg.dds.sub.ViewState#NOT_NEW}. It will not affect the
      * instance state of the instance.
      * 
      * If the DataReader has no samples that meet the constraints, the
@@ -565,7 +558,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * The act of taking a sample removes it from the DataReader so it cannot
      * be "read" or "taken" again. If the sample belongs to the most recent
      * generation of the instance, it will also set the view state of the
-     * instance to {@link ViewState#NOT_NEW}. It will not affect the
+     * instance to {@link org.omg.dds.sub.ViewState#NOT_NEW}. It will not affect the
      * instance state of the instance.
      * 
      * The behavior of the take operation follows the same rules than the
@@ -646,7 +639,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * {@link #read(List, Selector)} where {@link Selector#getMaxSamples()}
      * is 1, {@link Selector#getDataState()} followed by
      * {@link Subscriber.DataState#getSampleStates()} ==
-     * {@link SampleState#NOT_READ}, {@link Selector#getDataState()} followed by
+     * {@link org.omg.dds.sub.SampleState#NOT_READ}, {@link Selector#getDataState()} followed by
      * {@link Subscriber.DataState#getViewStates()} contains all view
      * states, and {@link Selector#getDataState()} followed by
      * {@link Subscriber.DataState#getInstanceStates()} contains all
@@ -679,7 +672,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * {@link #take(List, Selector)} where {@link Selector#getMaxSamples()}
      * is 1, {@link Selector#getDataState()} followed by
      * {@link Subscriber.DataState#getSampleStates()} ==
-     * {@link SampleState#NOT_READ}, {@link Selector#getDataState()} followed by
+     * {@link org.omg.dds.sub.SampleState#NOT_READ}, {@link Selector#getDataState()} followed by
      * {@link Subscriber.DataState#getViewStates()} contains all view
      * states, and {@link Selector#getDataState()} followed by
      * {@link Subscriber.DataState#getInstanceStates()} contains all
@@ -713,7 +706,7 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      *
      * @return  keyHolder, as a convenience to facilitate chaining.
      * 
-     * @throws  IllegalArgumentException        if the {@link InstanceHandle}
+     * @throws  IllegalArgumentException        if the {@link org.omg.dds.core.InstanceHandle}
      *          does not correspond to an existing data object known to the
      *          DataReader. If the implementation is not able to check
      *          invalid handles, then the result in this situation is
@@ -781,20 +774,20 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
      * @return The {@link Selector} object returned by this method
      *         is the default selector. By default it selects 
      *         {@link org.omg.dds.core.policy.ResourceLimits#LENGTH_UNLIMITED} 
-     *         samples.  This is equivalent to calling {@link DataReader#read} without 
+     *         samples.  This is equivalent to calling {@link org.omg.dds.sub.DataReader#read} without 
      *         any parameters. 
      * */
     
     public Selector<TYPE> select();
     
     /**
-     * Selector class encapsulates different ways of selecting samples from a {@link DataReader}.
-     * Selector can be used with {@link DataReader#read(Selector)} and {@link DataReader#take(Selector)}
+     * Selector class encapsulates different ways of selecting samples from a {@link org.omg.dds.sub.DataReader}.
+     * Selector can be used with {@link org.omg.dds.sub.DataReader#read(Selector)} and {@link org.omg.dds.sub.DataReader#take(Selector)}
      * or it can be used stand-alone as it provides {@link #read} and {@link #take} functions.
      * 
-     * {@link DataReader#select} creates a Selector that is bound to the {@link DataReader}.
+     * {@link org.omg.dds.sub.DataReader#select} creates a Selector that is bound to the {@link org.omg.dds.sub.DataReader}.
      *  
-     * A Selector may encapsulate any combination of {@link InstanceHandle}, 
+     * A Selector may encapsulate any combination of {@link org.omg.dds.core.InstanceHandle}, 
      * {@link Subscriber.DataState}, a query filter. It can be used to bound the maximum
      * number of samples retrieved.
      *      

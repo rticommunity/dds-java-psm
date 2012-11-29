@@ -24,7 +24,7 @@ package org.omg.dds.core;
  */
 public interface DDSObject {
     /**
-     * @return  the {@link ServiceEnvironment} object that directly or
+     * @return  the {@link org.omg.dds.core.ServiceEnvironment} object that directly or
      *          indirectly was used to create this object.
      */
     public ServiceEnvironment getEnvironment();

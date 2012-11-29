@@ -24,7 +24,7 @@ import org.omg.dds.sub.DataReader;
 /**
  * New information is available.
  *
- * @param <TYPE>    The data type of the source {@link DataReader}.
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.sub.DataReader}.
  * 
  * @see DataOnReadersEvent
  */

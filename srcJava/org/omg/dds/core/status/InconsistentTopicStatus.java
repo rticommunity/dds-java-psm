@@ -18,7 +18,7 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.topic.Topic;
+
 
 
 /**
@@ -41,7 +41,7 @@ public abstract class InconsistentTopicStatus extends Status
     // -----------------------------------------------------------------------
 
     /**
-     * Total cumulative count of the {@link Topic}s discovered whose name
+     * Total cumulative count of the {@link org.omg.dds.topic.Topic}s discovered whose name
      * matches the Topic to which this status is attached and whose type is
      * inconsistent with the Topic.
      */

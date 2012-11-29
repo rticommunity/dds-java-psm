@@ -18,16 +18,15 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
 
 
 /**
- * The liveliness of one or more {@link DataWriter}s that were writing
- * instances read through the {@link DataReader} has changed. Some
+ * The liveliness of one or more {@link org.omg.dds.pub.DataWriter}s that were writing
+ * instances read through the {@link org.omg.dds.sub.DataReader} has changed. Some
  * DataWriter(s) have become "active" or "inactive."
  *
- * @param <TYPE>    The data type of the source {@link DataReader}.
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.sub.DataReader}.
  * 
  * @see LivelinessChangedStatus
  * @see LivelinessLostEvent

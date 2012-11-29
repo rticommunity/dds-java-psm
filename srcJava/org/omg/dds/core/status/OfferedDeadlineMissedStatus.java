@@ -19,13 +19,11 @@
 package org.omg.dds.core.status;
 
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.core.policy.Deadline;
-import org.omg.dds.pub.DataWriter;
 
 
 /**
- * The deadline that the {@link DataWriter} has committed through its
- * {@link Deadline} was not respected for a specific instance.
+ * The deadline that the {@link org.omg.dds.pub.DataWriter} has committed through its
+ * {@link org.omg.dds.core.policy.Deadline} was not respected for a specific instance.
  *
  * @see OfferedDeadlineMissedEvent
  * @see RequestedDeadlineMissedStatus
@@ -59,7 +57,7 @@ public abstract class OfferedDeadlineMissedStatus extends Status
     public abstract int getTotalCountChange();
 
     /**
-     * Handle to the last instance in the {@link DataWriter} for which an
+     * Handle to the last instance in the {@link org.omg.dds.pub.DataWriter} for which an
      * offered deadline was missed.
      */
     public abstract InstanceHandle getLastInstanceHandle();

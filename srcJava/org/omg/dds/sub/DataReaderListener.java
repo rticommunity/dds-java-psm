@@ -20,7 +20,7 @@ package org.omg.dds.sub;
 
 import java.util.EventListener;
 
-import org.omg.dds.core.Entity;
+
 import org.omg.dds.core.status.DataAvailableEvent;
 import org.omg.dds.core.status.LivelinessChangedEvent;
 import org.omg.dds.core.status.RequestedDeadlineMissedEvent;
@@ -28,22 +28,22 @@ import org.omg.dds.core.status.RequestedIncompatibleQosEvent;
 import org.omg.dds.core.status.SampleLostEvent;
 import org.omg.dds.core.status.SampleRejectedEvent;
 import org.omg.dds.core.status.SubscriptionMatchedEvent;
-import org.omg.dds.pub.DataWriter;
+
 
 
 /**
- * Since a {@link DataReader} is a kind of {@link Entity}, it has the ability
+ * Since a {@link org.omg.dds.sub.DataReader} is a kind of {@link org.omg.dds.core.Entity}, it has the ability
  * to have an associated listener. In this case, the associated listener must
  * be of concrete type DataReaderListener.
  * 
  * The operation {@link #onSubscriptionMatched(SubscriptionMatchedEvent)} is
- * intended to inform the application of the discovery of {@link DataWriter}
+ * intended to inform the application of the discovery of {@link org.omg.dds.pub.DataWriter}
  * entities that match the DataReader. Some implementations of the service
  * may not propagate this information. In that case the DDS specification
  * does not require this listener operation to be called.
  * 
  * @param <TYPE>    The concrete type of the data that can be delivered by
- *                  the {@link DataReader}.
+ *                  the {@link org.omg.dds.sub.DataReader}.
  */
 public interface DataReaderListener<TYPE> extends EventListener {
     public void onRequestedDeadlineMissed(

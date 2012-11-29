@@ -18,14 +18,13 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.pub.DataWriter;
 
 
 /**
- * A {@link QosPolicy} value was incompatible with what was requested.
+ * A {@link org.omg.dds.core.policy.QosPolicy} value was incompatible with what was requested.
  *
- * @param <TYPE>    The data type of the source {@link DataWriter}.
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.pub.DataWriter}.
  * 
  * @see OfferedIncompatibleQosStatus
  * @see RequestedIncompatibleQosEvent

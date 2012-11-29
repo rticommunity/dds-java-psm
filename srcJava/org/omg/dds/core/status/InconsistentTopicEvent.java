@@ -24,7 +24,7 @@ import org.omg.dds.topic.Topic;
 /**
  * Another topic exists with the same name but different characteristics.
  * 
- * @param <TYPE>    The data type of the source {@link Topic}
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.topic.Topic}
  * 
  * @see InconsistentTopicStatus
  */

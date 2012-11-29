@@ -19,7 +19,7 @@
 package org.omg.dds.core.status;
 
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.sub.DataReader;
+
 
 
 /**
@@ -42,7 +42,7 @@ public abstract class SampleRejectedStatus extends Status
     // -----------------------------------------------------------------------
 
     /**
-     * Total cumulative count of samples rejected by the {@link DataReader}.
+     * Total cumulative count of samples rejected by the {@link org.omg.dds.sub.DataReader}.
      */
     public abstract int getTotalCount();
 

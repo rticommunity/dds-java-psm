@@ -24,13 +24,9 @@ import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.InconsistentPolicyException;
-import org.omg.dds.core.NotEnabledException;
-import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.sub.DataReader;
 import org.omg.dds.topic.Topic;
 import org.omg.dds.topic.TopicQos;
 
@@ -38,7 +34,7 @@ import org.omg.dds.topic.TopicQos;
  * A Publisher is the object responsible for the actual dissemination of
  * publications.
  * 
- * The Publisher acts on the behalf of one or several {@link DataWriter}
+ * The Publisher acts on the behalf of one or several {@link org.omg.dds.pub.DataWriter}
  * objects that belong to it. When it is informed of a change to the data
  * associated with one of its DataWriter objects, it decides when it is
  * appropriate to actually send the data-update message. In making this
@@ -53,8 +49,8 @@ import org.omg.dds.topic.TopicQos;
  * {@link org.omg.dds.core.Entity#getListener()},
  * {@link org.omg.dds.core.Entity#enable()},
  * {@link org.omg.dds.core.Entity#getStatusCondition()},
- * {@link #createDataWriter(Topic)}, and {@link Publisher#close()} may fail
- * with the exception {@link NotEnabledException}.
+ * {@link #createDataWriter(Topic)}, and {@link org.omg.dds.pub.Publisher#close()} may fail
+ * with the exception {@link org.omg.dds.core.NotEnabledException}.
  */
 public interface Publisher
 extends DomainEntity<PublisherListener, PublisherQos>
@@ -69,10 +65,10 @@ extends DomainEntity<PublisherListener, PublisherQos>
      * DataWriter is to:
      * 
      * <ul>
-     *     <li>Retrieve the QoS policies on the associated {@link Topic} by
-     *         means of {@link Topic#getQos()}.</li>
+     *     <li>Retrieve the QoS policies on the associated {@link org.omg.dds.topic.Topic} by
+     *         means of {@link org.omg.dds.topic.Topic#getQos()}.</li>
      *     <li>Retrieve the default DataWriter QoS by means of
-     *         {@link Publisher#getDefaultDataWriterQos()}.</li>
+     *         {@link org.omg.dds.pub.Publisher#getDefaultDataWriterQos()}.</li>
      *     <li>Combine those two QoS policies and selectively modify policies
      *         as desired -- see
      *         {@link #copyFromTopicQos(DataWriterQos, TopicQos)}.
@@ -81,8 +77,8 @@ extends DomainEntity<PublisherListener, PublisherQos>
      *         </li>
      * </ul>
      * 
-     * The {@link Topic} passed to this operation must have been created from
-     * the same {@link DomainParticipant} that was used to create this
+     * The {@link org.omg.dds.topic.Topic} passed to this operation must have been created from
+     * the same {@link org.omg.dds.domain.DomainParticipant} that was used to create this
      * Publisher. If the Topic was created from a different
      * DomainParticipant, the operation will fail.
      * 
@@ -99,10 +95,10 @@ extends DomainEntity<PublisherListener, PublisherQos>
      * DataWriter is to:
      * 
      * <ul>
-     *     <li>Retrieve the QoS policies on the associated {@link Topic} by
-     *         means of {@link Topic#getQos()}.</li>
+     *     <li>Retrieve the QoS policies on the associated {@link org.omg.dds.topic.Topic} by
+     *         means of {@link org.omg.dds.topic.Topic#getQos()}.</li>
      *     <li>Retrieve the default DataWriter QoS by means of
-     *         {@link Publisher#getDefaultDataWriterQos()}.</li>
+     *         {@link org.omg.dds.pub.Publisher#getDefaultDataWriterQos()}.</li>
      *     <li>Combine those two QoS policies and selectively modify policies
      *         as desired -- see
      *         {@link #copyFromTopicQos(DataWriterQos, TopicQos)}.
@@ -111,8 +107,8 @@ extends DomainEntity<PublisherListener, PublisherQos>
      *         </li>
      * </ul>
      * 
-     * The {@link Topic} passed to this operation must have been created from
-     * the same {@link DomainParticipant} that was used to create this
+     * The {@link org.omg.dds.topic.Topic} passed to this operation must have been created from
+     * the same {@link org.omg.dds.domain.DomainParticipant} that was used to create this
      * Publisher. If the Topic was created from a different
      * DomainParticipant, the operation will fail.
      * 
@@ -133,8 +129,8 @@ extends DomainEntity<PublisherListener, PublisherQos>
     // --- Lookup operations: ------------------------------------------------
 
     /**
-     * This operation retrieves a previously created {@link DataWriter}
-     * belonging to the Publisher that is attached to a {@link Topic} with a
+     * This operation retrieves a previously created {@link org.omg.dds.pub.DataWriter}
+     * belonging to the Publisher that is attached to a {@link org.omg.dds.topic.Topic} with a
      * matching name. If no such DataWriter exists, the operation will return
      * null.
      * 
@@ -147,9 +143,9 @@ extends DomainEntity<PublisherListener, PublisherQos>
     public <TYPE> DataWriter<TYPE> lookupDataWriter(String topicName);
 
     /**
-     * This operation retrieves a previously created {@link DataWriter}
+     * This operation retrieves a previously created {@link org.omg.dds.pub.DataWriter}
      * belonging to the Publisher that is attached to the given
-     * {@link Topic}. If no such DataWriter exists, the operation will return
+     * {@link org.omg.dds.topic.Topic}. If no such DataWriter exists, the operation will return
      * null.
      * 
      * If multiple DataWriters attached to the Publisher satisfy this
@@ -165,7 +161,7 @@ extends DomainEntity<PublisherListener, PublisherQos>
     /**
      * This operation closes all the entities that were created by means of
      * the "create" operations on the Publisher. That is, it closes all
-     * contained {@link DataWriter} objects.
+     * contained {@link org.omg.dds.pub.DataWriter} objects.
      * 
      * @throws  PreconditionNotMetException     if the any of the contained
      *          entities is in a state where it cannot be deleted.
@@ -210,7 +206,7 @@ extends DomainEntity<PublisherListener, PublisherQos>
 
     /**
      * This operation requests that the application will begin a 'coherent
-     * set' of modifications using {@link DataWriter} objects attached to the
+     * set' of modifications using {@link org.omg.dds.pub.DataWriter} objects attached to the
      * Publisher. The 'coherent set' will be completed by a matching call to
      * {@link #endCoherentChanges()}.
      * 
@@ -258,8 +254,8 @@ extends DomainEntity<PublisherListener, PublisherQos>
 
     /**
      * This operation blocks the calling thread until either all data
-     * written by the reliable {@link DataWriter} entities is acknowledged by
-     * all matched reliable {@link DataReader} entities, or else the duration
+     * written by the reliable {@link org.omg.dds.pub.DataWriter} entities is acknowledged by
+     * all matched reliable {@link org.omg.dds.sub.DataReader} entities, or else the duration
      * specified elapses, whichever happens first.
      * 
      * @throws  TimeoutException        if maxWait elapsed before all the
@@ -270,8 +266,8 @@ extends DomainEntity<PublisherListener, PublisherQos>
 
     /**
      * This operation blocks the calling thread until either all data
-     * written by the reliable {@link DataWriter} entities is acknowledged by
-     * all matched reliable {@link DataReader} entities, or else the duration
+     * written by the reliable {@link org.omg.dds.pub.DataWriter} entities is acknowledged by
+     * all matched reliable {@link org.omg.dds.sub.DataReader} entities, or else the duration
      * specified elapses, whichever happens first.
      * 
      * @throws  TimeoutException        if maxWait elapsed before all the
@@ -283,7 +279,7 @@ extends DomainEntity<PublisherListener, PublisherQos>
     /**
      * This operation retrieves the default value of the DataWriter QoS, that
      * is, the QoS policies which will be used for newly created
-     * {@link DataWriter} entities in the case where the QoS policies are
+     * {@link org.omg.dds.pub.DataWriter} entities in the case where the QoS policies are
      * defaulted in the {@link #createDataWriter(Topic)} operation.
      * 
      * The values retrieved will match the set of values specified on the
@@ -298,7 +294,7 @@ extends DomainEntity<PublisherListener, PublisherQos>
 
     /**
      * This operation sets a default value of the DataWriter QoS policies,
-     * which will be used for newly created {@link DataWriter} entities in
+     * which will be used for newly created {@link org.omg.dds.pub.DataWriter} entities in
      * the case where the QoS policies are defaulted in the
      * {@link #createDataWriter(Topic)} operation.
      * 
@@ -311,13 +307,13 @@ extends DomainEntity<PublisherListener, PublisherQos>
     public void setDefaultDataWriterQos(DataWriterQos qos);
 
     /**
-     * This operation copies the policies in the {@link Topic} QoS to the
-     * corresponding policies in the {@link DataWriter} QoS (replacing values
+     * This operation copies the policies in the {@link org.omg.dds.topic.Topic} QoS to the
+     * corresponding policies in the {@link org.omg.dds.pub.DataWriter} QoS (replacing values
      * in the DataWriter QoS, if present).
      * 
      * This is a "convenience" operation most useful in combination with the
      * operations {@link #getDefaultDataWriterQos()} and
-     * {@link Topic#getQos()}. The operation can be used to merge the
+     * {@link org.omg.dds.topic.Topic#getQos()}. The operation can be used to merge the
      * DataWriter default QoS policies with the corresponding ones on the
      * Topic. The resulting QoS can then be used to create a new DataWriter
      * or set its QoS.

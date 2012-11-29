@@ -26,31 +26,21 @@ import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ModifiableInstanceHandle;
-import org.omg.dds.core.NotEnabledException;
-import org.omg.dds.core.OutOfResourcesException;
-import org.omg.dds.core.PreconditionNotMetException;
 import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.Time;
-import org.omg.dds.core.policy.DestinationOrder;
-import org.omg.dds.core.policy.Ownership;
-import org.omg.dds.core.policy.ResourceLimits;
 import org.omg.dds.core.status.LivelinessLostStatus;
 import org.omg.dds.core.status.OfferedDeadlineMissedStatus;
 import org.omg.dds.core.status.OfferedIncompatibleQosStatus;
 import org.omg.dds.core.status.PublicationMatchedStatus;
-import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.InstanceState;
-import org.omg.dds.sub.Sample;
 import org.omg.dds.topic.SubscriptionBuiltinTopicData;
 import org.omg.dds.topic.Topic;
 
 
 /**
  * DataWriter allows the application to set the value of the data to be
- * published under a given {@link Topic}.
+ * published under a given {@link org.omg.dds.topic.Topic}.
  * 
- * A DataWriter is attached to exactly one {@link Publisher} that acts as a
+ * A DataWriter is attached to exactly one {@link org.omg.dds.pub.Publisher} that acts as a
  * factory for it. A DataWriter is bound to exactly one Topic and therefore
  * to exactly one data type. The Topic must exist prior to the DataWriter's
  * creation.
@@ -59,7 +49,7 @@ import org.omg.dds.topic.Topic;
  * {@link #setQos(org.omg.dds.core.EntityQos)}, {@link #getQos()},
  * {@link #setListener(java.util.EventListener)},{@link #getListener()},
  * {@link #enable()}, {@link #getStatusCondition()}, and {@link #close()} may
- * fail with the exception {@link NotEnabledException}.
+ * fail with the exception {@link org.omg.dds.core.NotEnabledException}.
  * 
  * @param <TYPE>    The concrete type of the data to be published over the
  *                  the topic.
@@ -79,7 +69,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
     public <OTHER> DataWriter<OTHER> cast();
 
     /**
-     * @return  the {@link Topic} associated with the DataWriter. This is the
+     * @return  the {@link org.omg.dds.topic.Topic} associated with the DataWriter. This is the
      *          same Topic that was used to create the DataWriter.
      */
     public Topic<TYPE> getTopic();
@@ -91,7 +81,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * Otherwise the operation will return immediately.
      * 
      * The operation blocks the calling thread until either all data written
-     * by the DataWriter is acknowledged by all matched {@link DataReader}
+     * by the DataWriter is acknowledged by all matched {@link org.omg.dds.sub.DataReader}
      * entities that have
      * {@link org.omg.dds.core.policy.Reliability#getKind()} set to
      * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE},
@@ -114,7 +104,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * Otherwise the operation will return immediately.
      * 
      * The operation blocks the calling thread until either all data written
-     * by the DataWriter is acknowledged by all matched {@link DataReader}
+     * by the DataWriter is acknowledged by all matched {@link org.omg.dds.sub.DataReader}
      * entities that have
      * {@link org.omg.dds.core.policy.Reliability#getKind()} set to
      * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE},
@@ -185,14 +175,14 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
     /**
      * This operation retrieves the list of subscriptions currently
      * "associated" with the DataWriter; that is, subscriptions that have a
-     * matching {@link Topic} and compatible QoS that the application has not
+     * matching {@link org.omg.dds.topic.Topic} and compatible QoS that the application has not
      * indicated should be "ignored" by means of
-     * {@link DomainParticipant#ignoreSubscription(InstanceHandle)}.
+     * {@link org.omg.dds.domain.DomainParticipant#ignoreSubscription(InstanceHandle)}.
      * 
      * The handles returned in the 'subscriptionHandles' list are the ones
      * that are used by the DDS implementation to locally identify the
-     * corresponding matched {@link DataReader} entities. These handles match
-     * the ones that appear in {@link Sample#getInstanceHandle()} when
+     * corresponding matched {@link org.omg.dds.sub.DataReader} entities. These handles match
+     * the ones that appear in {@link org.omg.dds.sub.Sample#getInstanceHandle()} when
      * reading the "DCPSSubscriptions" built-in topic.
      * 
      * The operation may fail if the infrastructure does not locally maintain
@@ -207,9 +197,9 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
     /**
      * This operation retrieves information on a subscription that is
      * currently "associated" with the DataWriter; that is, a subscription
-     * with a matching {@link Topic} and compatible QoS that the application
+     * with a matching {@link org.omg.dds.topic.Topic} and compatible QoS that the application
      * has not indicated should be "ignored" by means of
-     * {@link DomainParticipant#ignoreSubscription(InstanceHandle)}.
+     * {@link org.omg.dds.domain.DomainParticipant#ignoreSubscription(InstanceHandle)}.
      * 
      * The operation {@link #getMatchedSubscriptions()} can be used
      * to find the subscriptions that are currently matched with the
@@ -280,7 +270,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * where the application desires to specify the value for the source
      * time stamp. The source time stamp potentially affects the relative
      * order in which readers observe events from multiple writers. For
-     * details see {@link DestinationOrder}.
+     * details see {@link org.omg.dds.core.policy.DestinationOrder}.
      * 
      * This operation may block and exit with {@link TimeoutException} under
      * the same circumstances described for the {@link #write(Object)}.
@@ -304,7 +294,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * where the application desires to specify the value for the source
      * time stamp. The source time stamp potentially affects the relative
      * order in which readers observe events from multiple writers. For
-     * details see {@link DestinationOrder}.
+     * details see {@link org.omg.dds.core.policy.DestinationOrder}.
      * 
      * This operation may block and exit with {@link TimeoutException} under
      * the same circumstances described for the {@link #write(Object)}.
@@ -350,12 +340,12 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * the purpose of dispose). The operation just indicates that the
      * DataWriter no longer has 'anything to say' about the instance.
      * DataReader entities that are reading the instance will eventually
-     * receive a sample with a {@link InstanceState#NOT_ALIVE_NO_WRITERS}
+     * receive a sample with a {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_NO_WRITERS}
      * instance state if no other DataWriter entities are writing the
      * instance.
      * 
      * This operation can affect the ownership of the data instance (see
-     * {@link Ownership}). If the DataWriter was the exclusive owner
+     * {@link org.omg.dds.core.policy.Ownership}). If the DataWriter was the exclusive owner
      * of the instance, then calling this method will relinquish that
      * ownership.
      * 
@@ -406,12 +396,12 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * the purpose of dispose). The operation just indicates that the
      * DataWriter no longer has 'anything to say' about the instance.
      * DataReader entities that are reading the instance will eventually
-     * receive a sample with a {@link InstanceState#NOT_ALIVE_NO_WRITERS}
+     * receive a sample with a {@link org.omg.dds.sub.InstanceState#NOT_ALIVE_NO_WRITERS}
      * instance state if no other DataWriter entities are writing the
      * instance.
      * 
      * This operation can affect the ownership of the data instance (see
-     * {@link Ownership}). If the DataWriter was the exclusive owner
+     * {@link org.omg.dds.core.policy.Ownership}). If the DataWriter was the exclusive owner
      * of the instance, then calling this method will relinquish that
      * ownership.
      * 
@@ -444,7 +434,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * instead in the cases where the application desires to specify the
      * value for the source time stamp. The source time stamp potentially
      * affects the relative order in which readers observe events from
-     * multiple writers. For details see {@link DestinationOrder}.
+     * multiple writers. For details see {@link org.omg.dds.core.policy.DestinationOrder}.
      * 
      * The constraints on the values of the handle parameter and the
      * corresponding error behavior are the same specified for the
@@ -469,7 +459,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * instead in the cases where the application desires to specify the
      * value for the source time stamp. The source time stamp potentially
      * affects the relative order in which readers observe events from
-     * multiple writers. For details see {@link DestinationOrder}.
+     * multiple writers. For details see {@link org.omg.dds.core.policy.DestinationOrder}.
      * 
      * The constraints on the values of the handle parameter and the
      * corresponding error behavior are the same specified for the
@@ -492,19 +482,19 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
     /**
      * This operation modifies the value of a data instance. When this
      * operation is used, the Service will automatically supply the value of
-     * the source time stamp that is made available to {@link DataReader}
-     * objects by means of {@link Sample#getSourceTimestamp()}. See also
-     * {@link DestinationOrder}.
+     * the source time stamp that is made available to {@link org.omg.dds.sub.DataReader}
+     * objects by means of {@link org.omg.dds.sub.Sample#getSourceTimestamp()}. See also
+     * {@link org.omg.dds.core.policy.DestinationOrder}.
      * 
      * As a side effect, this operation asserts liveliness on the DataWriter
-     * itself, the {@link Publisher} and the {@link DomainParticipant}.
+     * itself, the {@link org.omg.dds.pub.Publisher} and the {@link org.omg.dds.domain.DomainParticipant}.
      * 
      * If {@link org.omg.dds.core.policy.Reliability#getKind()} kind
      * is set to
      * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE},
      * the operation may block if
      * the modification would cause data to be lost or else cause one of the
-     * limits specified in {@link ResourceLimits} to be exceeded.
+     * limits specified in {@link org.omg.dds.core.policy.ResourceLimits} to be exceeded.
      * Under these circumstances,
      * {@link org.omg.dds.core.policy.Reliability#getMaxBlockingTime()}
      * configures the
@@ -519,8 +509,8 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * {@link org.omg.dds.core.policy.History.Kind#KEEP_LAST}.
      * 
      * <ul>
-     *     <li>If ({@link ResourceLimits#getMaxSamples()} &lt;
-     *         {@link ResourceLimits#getMaxInstances()} *
+     *     <li>If ({@link org.omg.dds.core.policy.ResourceLimits#getMaxSamples()} &lt;
+     *         {@link org.omg.dds.core.policy.ResourceLimits#getMaxInstances()} *
      *         {@link org.omg.dds.core.policy.History#getDepth()}),
      *         then in the situation
      *         where the max samples resource limit is exhausted the Service
@@ -528,13 +518,13 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      *         as at least one sample remains for such an instance. If it is
      *         still not possible to make space available to store the
      *         modification, the writer is allowed to block.</li>
-     *     <li>If ({@link ResourceLimits#getMaxSamples()} &lt;
-     *         {@link ResourceLimits#getMaxInstances()}), then the
+     *     <li>If ({@link org.omg.dds.core.policy.ResourceLimits#getMaxSamples()} &lt;
+     *         {@link org.omg.dds.core.policy.ResourceLimits#getMaxInstances()}), then the
      *         DataWriter may block regardless of the HISTORY depth.</li>
      * </ul>
      * 
      * Instead of blocking, the operation is allowed to fail immediately
-     * with {@link OutOfResourcesException} provided the following two
+     * with {@link org.omg.dds.core.OutOfResourcesException} provided the following two
      * conditions are met:
      * 
      * <ol>
@@ -570,12 +560,12 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
     /**
      * This operation modifies the value of a data instance. When this
      * operation is used, the Service will automatically supply the value of
-     * the source time stamp that is made available to {@link DataReader}
-     * objects by means of {@link Sample#getSourceTimestamp()}. See also
-     * {@link DestinationOrder}.
+     * the source time stamp that is made available to {@link org.omg.dds.sub.DataReader}
+     * objects by means of {@link org.omg.dds.sub.Sample#getSourceTimestamp()}. See also
+     * {@link org.omg.dds.core.policy.DestinationOrder}.
      * 
      * As a side effect, this operation asserts liveliness on the DataWriter
-     * itself, the {@link Publisher} and the {@link DomainParticipant}.
+     * itself, the {@link org.omg.dds.pub.Publisher} and the {@link org.omg.dds.domain.DomainParticipant}.
      * 
      * A nil handle can be used for the parameter handle. This indicates that
      * the identity of the instance should be automatically deduced from the
@@ -588,7 +578,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * {@link org.omg.dds.core.policy.Reliability.Kind#RELIABLE},
      * the operation may block if
      * the modification would cause data to be lost or else cause one of the
-     * limits specified in {@link ResourceLimits} to be exceeded.
+     * limits specified in {@link org.omg.dds.core.policy.ResourceLimits} to be exceeded.
      * Under these circumstances,
      * {@link org.omg.dds.core.policy.Reliability#getMaxBlockingTime()}
      * configures the
@@ -603,8 +593,8 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * {@link org.omg.dds.core.policy.History.Kind#KEEP_LAST}.
      * 
      * <ul>
-     *     <li>If ({@link ResourceLimits#getMaxSamples()} &lt;
-     *         {@link ResourceLimits#getMaxInstances()} *
+     *     <li>If ({@link org.omg.dds.core.policy.ResourceLimits#getMaxSamples()} &lt;
+     *         {@link org.omg.dds.core.policy.ResourceLimits#getMaxInstances()} *
      *         {@link org.omg.dds.core.policy.History#getDepth()}),
      *         then in the situation
      *         where the max samples resource limit is exhausted the Service
@@ -612,13 +602,13 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      *         as at least one sample remains for such an instance. If it is
      *         still not possible to make space available to store the
      *         modification, the writer is allowed to block.</li>
-     *     <li>If ({@link ResourceLimits#getMaxSamples()} &lt;
-     *         {@link ResourceLimits#getMaxInstances()}), then the
+     *     <li>If ({@link org.omg.dds.core.policy.ResourceLimits#getMaxSamples()} &lt;
+     *         {@link org.omg.dds.core.policy.ResourceLimits#getMaxInstances()}), then the
      *         DataWriter may block regardless of the HISTORY depth.</li>
      * </ul>
      * 
      * Instead of blocking, the operation is allowed to fail immediately
-     * with {@link OutOfResourcesException} provided the following two
+     * with {@link org.omg.dds.core.OutOfResourcesException} provided the following two
      * conditions are met:
      * 
      * <ol>
@@ -659,9 +649,9 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * This operation performs the same function as
      * {@link #write(Object, InstanceHandle)} except that it also provides
      * the value for the source time stamp that is made available to
-     * {@link DataReader} objects by means of
-     * {@link Sample#getSourceTimestamp()}. See also
-     * {@link DestinationOrder}.
+     * {@link org.omg.dds.sub.DataReader} objects by means of
+     * {@link org.omg.dds.sub.Sample#getSourceTimestamp()}. See also
+     * {@link org.omg.dds.core.policy.DestinationOrder}.
      * 
      * The constraints on the values of the handle parameter and the
      * corresponding error behavior are the same specified for
@@ -693,9 +683,9 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * This operation performs the same function as
      * {@link #write(Object, InstanceHandle)} except that it also provides
      * the value for the source time stamp that is made available to
-     * {@link DataReader} objects by means of
-     * {@link Sample#getSourceTimestamp()}. See also
-     * {@link DestinationOrder}.
+     * {@link org.omg.dds.sub.DataReader} objects by means of
+     * {@link org.omg.dds.sub.Sample#getSourceTimestamp()}. See also
+     * {@link org.omg.dds.core.policy.DestinationOrder}.
      * 
      * The constraints on the values of the handle parameter and the
      * corresponding error behavior are the same specified for
@@ -728,13 +718,13 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * This operation requests the middleware to delete the data (the actual
      * deletion is postponed until there is no more use for that data in the
      * whole system). In general, applications are made aware of the deletion
-     * by means of operations on the {@link DataReader} objects that already
+     * by means of operations on the {@link org.omg.dds.sub.DataReader} objects that already
      * knew that instance. DataReader objects that didn't know the instance
      * will never see it.
      * 
      * When this operation is used, the Service will automatically supply the
      * value of the source time stamp that is made available to DataReader
-     * objects by means of {@link Sample#getSourceTimestamp()}.
+     * objects by means of {@link org.omg.dds.sub.Sample#getSourceTimestamp()}.
      * 
      * The constraints on the values of the instanceHandle parameter and the
      * corresponding error behavior are the same specified for
@@ -759,7 +749,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * This operation requests the middleware to delete the data (the actual
      * deletion is postponed until there is no more use for that data in the
      * whole system). In general, applications are made aware of the deletion
-     * by means of operations on the {@link DataReader} objects that already
+     * by means of operations on the {@link org.omg.dds.sub.DataReader} objects that already
      * knew that instance. DataReader objects that didn't know the instance
      * will never see it.
      * 
@@ -769,7 +759,7 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * 
      * When this operation is used, the Service will automatically supply the
      * value of the source time stamp that is made available to DataReader
-     * objects by means of {@link Sample#getSourceTimestamp()}.
+     * objects by means of {@link org.omg.dds.sub.Sample#getSourceTimestamp()}.
      * 
      * The constraints on the values of the instanceHandle parameter and the
      * corresponding error behavior are the same specified for
@@ -796,8 +786,8 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * This operation performs the same functions as
      * {@link #dispose(InstanceHandle, Object)} except that the application
      * provides the value for the source time stamp that is made available to
-     * {@link DataReader} objects by means of
-     * {@link Sample#getSourceTimestamp()}.
+     * {@link org.omg.dds.sub.DataReader} objects by means of
+     * {@link org.omg.dds.sub.Sample#getSourceTimestamp()}.
      * 
      * The constraints on the values of the instanceHandle parameter and the
      * corresponding error behavior are the same specified for
@@ -829,8 +819,8 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * This operation performs the same functions as
      * {@link #dispose(InstanceHandle, Object)} except that the application
      * provides the value for the source time stamp that is made available to
-     * {@link DataReader} objects by means of
-     * {@link Sample#getSourceTimestamp()}.
+     * {@link org.omg.dds.sub.DataReader} objects by means of
+     * {@link org.omg.dds.sub.Sample#getSourceTimestamp()}.
      * 
      * The constraints on the values of the instanceHandle parameter and the
      * corresponding error behavior are the same specified for

@@ -18,17 +18,15 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.pub.DataWriter;
 import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
- * The {@link DataReader} has found a {@link DataWriter} that matches the
- * {@link Topic} and has compatible QoS, or has ceased to be matched with a
+ * The {@link org.omg.dds.sub.DataReader} has found a {@link org.omg.dds.pub.DataWriter} that matches the
+ * {@link org.omg.dds.topic.Topic} and has compatible QoS, or has ceased to be matched with a
  * DataWriter that was previously considered to be matched.
  *
- * @param <TYPE>    The data type of the source {@link DataReader}.
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.sub.DataReader}.
  * 
  * @see SubscriptionMatchedStatus
  * @see PublicationMatchedEvent

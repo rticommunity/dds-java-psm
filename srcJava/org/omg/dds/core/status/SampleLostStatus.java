@@ -18,7 +18,6 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.topic.Topic;
 
 
 /**
@@ -42,7 +41,7 @@ public abstract class SampleLostStatus extends Status
 
     /**
      * Total cumulative count of all samples lost across all instances of
-     * data published under the {@link Topic}.
+     * data published under the {@link org.omg.dds.topic.Topic}.
      */
     public abstract int getTotalCount();
 

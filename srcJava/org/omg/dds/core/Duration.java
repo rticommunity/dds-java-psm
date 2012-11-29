@@ -72,7 +72,7 @@ implements Comparable<Duration>, Serializable, DDSObject
      * @param env       Identifies the Service instance to which the
      *                  object will belong.
      * 
-     * @return  An unmodifiable {@link Duration} of infinite length.
+     * @return  An unmodifiable {@link org.omg.dds.core.Duration} of infinite length.
      */
     public static Duration infiniteDuration(ServiceEnvironment env)
     {
@@ -84,7 +84,7 @@ implements Comparable<Duration>, Serializable, DDSObject
      * @param env       Identifies the Service instance to which the
      *                  object will belong.
      * 
-     * @return  A {@link Duration} of zero length.
+     * @return  A {@link org.omg.dds.core.Duration} of zero length.
      */
     public static Duration zeroDuration(ServiceEnvironment env)
     {

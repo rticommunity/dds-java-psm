@@ -19,14 +19,11 @@
 package org.omg.dds.core.status;
 
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
- * The liveliness of one or more {@link DataWriter}s that were writing
- * instances read through the {@link DataReader} has changed. Some
+ * The liveliness of one or more {@link org.omg.dds.pub.DataWriter}s that were writing
+ * instances read through the {@link org.omg.dds.sub.DataReader} has changed. Some
  * DataWriter(s) have become "active" or "inactive."
  *
  * @see LivelinessChangedEvent
@@ -47,8 +44,8 @@ public abstract class LivelinessChangedStatus extends Status
     // -----------------------------------------------------------------------
 
     /**
-     * The total number of currently active {@link DataWriter}s that write
-     * the Topic read by the {@link DataReader}. This count increases when a
+     * The total number of currently active {@link org.omg.dds.pub.DataWriter}s that write
+     * the Topic read by the {@link org.omg.dds.sub.DataReader}. This count increases when a
      * newly matched DataWriter asserts its liveliness for the first time or
      * when a DataWriter previously considered to be not alive reasserts its
      * liveliness. The count decreases when a DataWriter considered alive
@@ -58,8 +55,8 @@ public abstract class LivelinessChangedStatus extends Status
     public abstract int getAliveCount();
 
     /**
-     * The total count of currently {@link DataWriter}s that write the
-     * {@link Topic} read by the {@link DataReader} that are no longer
+     * The total count of currently {@link org.omg.dds.pub.DataWriter}s that write the
+     * {@link org.omg.dds.topic.Topic} read by the {@link org.omg.dds.sub.DataReader} that are no longer
      * asserting their liveliness. This count increases when a DataWriter
      * considered alive fails to assert its liveliness and becomes not alive
      * for some reason other than the normal deletion of that DataWriter.
@@ -81,7 +78,7 @@ public abstract class LivelinessChangedStatus extends Status
     public abstract int getNotAliveCountChange();
 
     /**
-     * Handle to the last {@link DataWriter} whose change in liveliness
+     * Handle to the last {@link org.omg.dds.pub.DataWriter} whose change in liveliness
      * caused this status to change.
      */
     public abstract InstanceHandle getLastPublicationHandle();

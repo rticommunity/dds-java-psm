@@ -18,20 +18,15 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.pub.Publisher;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.Subscriber;
-import org.omg.dds.topic.Topic;
 
 
 /**
  * Controls the criteria used to determine the logical order among changes
- * made by {@link Publisher} entities to the same instance of data (i.e.,
+ * made by {@link org.omg.dds.pub.Publisher} entities to the same instance of data (i.e.,
  * matching Topic and key). The default kind is
  * {@link DestinationOrder.Kind#BY_RECEPTION_TIMESTAMP}.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.sub.DataReader}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> Yes
  * 
@@ -42,12 +37,12 @@ import org.omg.dds.topic.Topic;
  * associated with different Publisher objects) running on different nodes.
  * 
  * The setting {@link Kind#BY_RECEPTION_TIMESTAMP} indicates that, assuming
- * the {@link Ownership} allows it, the latest received value for
+ * the {@link org.omg.dds.core.policy.Ownership} allows it, the latest received value for
  * the instance should be the one whose value is kept. This is the default
  * value.
  * 
  * The setting {@link Kind#BY_SOURCE_TIMESTAMP} indicates that, assuming the
- * {@link Ownership} allows it, a time stamp placed at the source
+ * {@link org.omg.dds.core.policy.Ownership} allows it, a time stamp placed at the source
  * should be used. This is the only setting that, in the case of concurrent
  * same-strength DataWriter objects updating the same instance, ensures all
  * subscribers will end up with the same final value for the instance. The
@@ -103,7 +98,7 @@ extends QosPolicy.ForTopic,
     public enum Kind {
         /**
          * Indicates that data is ordered based on the reception time at each
-         * {@link Subscriber}. Since each subscriber may receive the data at
+         * {@link org.omg.dds.sub.Subscriber}. Since each subscriber may receive the data at
          * different times there is no guaranteed that the changes will be
          * seen in the same order. Consequently, it is possible for each
          * subscriber to end up with a different final value for the data.

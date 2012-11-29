@@ -21,21 +21,18 @@ package org.omg.dds.topic;
 import java.io.Closeable;
 
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.Entity;
 import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
 import org.omg.dds.type.TypeSupport;
 
 
 /**
- * This interface is the base for {@link Topic}, {@link ContentFilteredTopic},
- * and {@link MultiTopic}.
+ * This interface is the base for {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.topic.ContentFilteredTopic},
+ * and {@link org.omg.dds.topic.MultiTopic}.
  * 
  * TopicDescription represents the fact that both publications and
  * subscriptions are tied to a single data type. Its attribute typeName
  * defines a unique resulting type for the publication or the subscription
- * and therefore creates an implicit association with a {@link TypeSupport}.
+ * and therefore creates an implicit association with a {@link org.omg.dds.type.TypeSupport}.
  * TopicDescription has also a name that allows it to be retrieved locally.
  *
  * @param <TYPE>    The concrete type of the data that will be published and/
@@ -45,7 +42,7 @@ import org.omg.dds.type.TypeSupport;
 public interface TopicDescription<TYPE> extends Closeable, DDSObject
 {
     /**
-     * @return  the {@link TypeSupport} used to create this TopicDescription.
+     * @return  the {@link org.omg.dds.type.TypeSupport} used to create this TopicDescription.
      */
     public TypeSupport<TYPE> getTypeSupport();
 
@@ -71,7 +68,7 @@ public interface TopicDescription<TYPE> extends Closeable, DDSObject
     public String getName();
 
     /**
-     * @return  the {@link DomainParticipant} to which the TopicDescription
+     * @return  the {@link org.omg.dds.domain.DomainParticipant} to which the TopicDescription
      *          belongs.
      */
     public DomainParticipant getParent();
@@ -80,12 +77,12 @@ public interface TopicDescription<TYPE> extends Closeable, DDSObject
      * Dispose the resources held by this object.
      * 
      * A TopicDescription cannot be closed if it is in use by any
-     * {@link DataWriter}s or {@link DataReader}s. With respect to
-     * {@link Topic}s specifically: a Topic cannot be closed if it has any
-     * remaining {@link ContentFilteredTopic}s or {@link MultiTopic}s related
+     * {@link org.omg.dds.pub.DataWriter}s or {@link org.omg.dds.sub.DataReader}s. With respect to
+     * {@link org.omg.dds.topic.Topic}s specifically: a Topic cannot be closed if it has any
+     * remaining {@link org.omg.dds.topic.ContentFilteredTopic}s or {@link org.omg.dds.topic.MultiTopic}s related
      * to it.
      * 
-     * @see     Entity#close()
+     * @see     org.omg.dds.core.Entity#close()
      */
     public void close();
 }

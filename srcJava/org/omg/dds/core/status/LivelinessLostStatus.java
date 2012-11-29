@@ -18,14 +18,11 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.policy.Liveliness;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
 
 
 /**
- * The liveliness that the {@link DataWriter} has committed through its
- * {@link Liveliness} was not respected; thus {@link DataReader}
+ * The liveliness that the {@link org.omg.dds.pub.DataWriter} has committed through its
+ * {@link org.omg.dds.core.policy.Liveliness} was not respected; thus {@link org.omg.dds.sub.DataReader}
  * entities will consider the DataWriter as no longer "active."
  *
  * @see LivelinessLostEvent
@@ -48,7 +45,7 @@ public abstract class LivelinessLostStatus extends Status
 
     /**
      * Total cumulative number of times that a previously-alive
-     * {@link DataWriter} became not alive due to a failure to actively
+     * {@link org.omg.dds.pub.DataWriter} became not alive due to a failure to actively
      * signal its liveliness within its offered liveliness period. This count
      * does not change when an already not alive DataWriter simply remains
      * not alive for another liveliness period.

@@ -18,8 +18,8 @@
 
 package org.omg.dds.type;
 
-import org.omg.dds.core.ServiceEnvironment;
 import org.omg.dds.core.DDSObject;
+import org.omg.dds.core.ServiceEnvironment;
 
 
 /**

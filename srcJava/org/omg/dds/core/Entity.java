@@ -23,18 +23,7 @@ import java.util.Collection;
 import java.util.EventListener;
 import java.util.Set;
 
-import org.omg.dds.core.policy.EntityFactory;
-import org.omg.dds.core.policy.WriterDataLifecycle;
 import org.omg.dds.core.status.Status;
-import org.omg.dds.domain.DomainParticipant;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.pub.Publisher;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.Subscriber;
-import org.omg.dds.topic.ContentFilteredTopic;
-import org.omg.dds.topic.MultiTopic;
-import org.omg.dds.topic.Topic;
-import org.omg.dds.topic.TopicDescription;
 
 
 /**
@@ -98,9 +87,9 @@ extends Closeable, DDSObject
     /**
      * This operation allows access to the existing set of QoS policies for
      * the Entity. This operation must be provided by each of the derived
-     * Entity classes ({@link DomainParticipant}, {@link Topic},
-     * {@link Publisher}, {@link DataWriter}, {@link Subscriber},
-     * {@link DataReader}) so that the policies meaningful to the particular
+     * Entity classes ({@link org.omg.dds.domain.DomainParticipant}, {@link org.omg.dds.topic.Topic},
+     * {@link org.omg.dds.pub.Publisher}, {@link org.omg.dds.pub.DataWriter}, {@link org.omg.dds.sub.Subscriber},
+     * {@link org.omg.dds.sub.DataReader}) so that the policies meaningful to the particular
      * Entity are retrieved.
      * 
      * @see     #setQos(EntityQos)
@@ -110,8 +99,8 @@ extends Closeable, DDSObject
     /**
      * This operation is used to set the QoS policies of the Entity. This
      * operation must be provided by each of the derived Entity classes
-     * ({@link DomainParticipant}, {@link Topic}, {@link Publisher},
-     * {@link DataWriter}, {@link Subscriber}, {@link DataReader}) so that
+     * ({@link org.omg.dds.domain.DomainParticipant}, {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.pub.Publisher},
+     * {@link org.omg.dds.pub.DataWriter}, {@link org.omg.dds.sub.Subscriber}, {@link org.omg.dds.sub.DataReader}) so that
      * the policies that are meaningful to each Entity can be set.
      * 
      * The set of policies specified as the parameter are applied on top of
@@ -121,13 +110,13 @@ extends Closeable, DDSObject
      * creation time, or before the entity is made enabled. If setQos is
      * invoked after the Entity is enabled and it attempts to change the
      * value of an "immutable" policy, the operation will fail with
-     * {@link ImmutablePolicyException}.
+     * {@link org.omg.dds.core.ImmutablePolicyException}.
      * 
      * Certain values of QoS policies can be incompatible with the settings
      * of the other policies. The setQos operation will also fail if it
      * specifies a set of values that once combined with the existing values
      * would result in an inconsistent set of policies. In this case, it
-     * shall fail with {@link InconsistentPolicyException}.
+     * shall fail with {@link org.omg.dds.core.InconsistentPolicyException}.
      * 
      * If the application supplies a non-default value for a QoS policy that
      * is not supported by the implementation of the service, the setQos
@@ -163,10 +152,10 @@ extends Closeable, DDSObject
     /**
      * This operation enables the Entity. Entity objects can be created
      * either enabled or disabled. This is controlled by the value of the
-     * {@link EntityFactory} on the corresponding factory for the
+     * {@link org.omg.dds.core.policy.EntityFactory} on the corresponding factory for the
      * Entity.
      * 
-     * The default setting of {@link EntityFactory} is such that, by
+     * The default setting of {@link org.omg.dds.core.policy.EntityFactory} is such that, by
      * default, it is not necessary to explicitly call enable on newly
      * created entities.
      * 
@@ -189,30 +178,30 @@ extends Closeable, DDSObject
      * 
      * Other operations may explicitly state that they may be called on
      * disabled entities; those that do not will fail with
-     *  {@link NotEnabledException}.
+     *  {@link org.omg.dds.core.NotEnabledException}.
      *  
      *  It is legal to delete an Entity that has not been enabled by calling
      *  {@link #close()}. Entities created from a factory that is disabled
      *  are created disabled regardless of the setting of
-     *  {@link EntityFactory}.
+     *  {@link org.omg.dds.core.policy.EntityFactory}.
      *  
      *  Calling enable on an Entity whose factory is not enabled will fail
-     *  with {@link PreconditionNotMetException}.
+     *  with {@link org.omg.dds.core.PreconditionNotMetException}.
      *  
-     *  If {@link EntityFactory#isAutoEnableCreatedEntities()} is
+     *  If {@link org.omg.dds.core.policy.EntityFactory#isAutoEnableCreatedEntities()} is
      *  true, the enable operation on the factory will automatically enable
      *  all entities created from the factory.
      *  
      *  The Listeners associated with an entity are not called until the
-     *  entity is enabled. {@link Condition}s associated with an entity that
+     *  entity is enabled. {@link org.omg.dds.core.Condition}s associated with an entity that
      *  is not enabled are "inactive," that is, have a triggerValue == false.
      */
     public void enable();
 
     /**
-     * This operation allows access to the {@link StatusCondition} associated
+     * This operation allows access to the {@link org.omg.dds.core.StatusCondition} associated
      * with the Entity. The returned condition can then be added to a
-     * {@link WaitSet} so that the application can wait for specific status
+     * {@link org.omg.dds.core.WaitSet} so that the application can wait for specific status
      * changes that affect the Entity.
      */
     public StatusCondition<?> getStatusCondition();
@@ -235,7 +224,7 @@ extends Closeable, DDSObject
     public Set<Class<? extends Status>> getStatusChanges();
 
     /**
-     * @return  the {@link InstanceHandle} that represents the Entity.
+     * @return  the {@link org.omg.dds.core.InstanceHandle} that represents the Entity.
      */
     public InstanceHandle getInstanceHandle();
 
@@ -250,26 +239,26 @@ extends Closeable, DDSObject
      * not including contained objects. These include the following:
      * 
      * <ul>
-     *     <li>A {@link Topic} cannot be closed if it is still in use by any
-     *         {@link ContentFilteredTopic}s or {@link MultiTopic}s.</li>
-     *     <li>A Topic cannot be closed if any {@link DataWriter}s or
-     *         {@link DataReader} is still using it.</li>
+     *     <li>A {@link org.omg.dds.topic.Topic} cannot be closed if it is still in use by any
+     *         {@link org.omg.dds.topic.ContentFilteredTopic}s or {@link org.omg.dds.topic.MultiTopic}s.</li>
+     *     <li>A Topic cannot be closed if any {@link org.omg.dds.pub.DataWriter}s or
+     *         {@link org.omg.dds.sub.DataReader} is still using it.</li>
      *     <li>A DataReader cannot be closed if it has any outstanding loans
-     *         as a result of a call to {@link DataReader#read()},
-     *         {@link DataReader#take()}, or one of the variants thereof.
+     *         as a result of a call to {@link org.omg.dds.sub.DataReader#read()},
+     *         {@link org.omg.dds.sub.DataReader#take()}, or one of the variants thereof.
      *         </li>
      * </ul>
      * 
-     * The deletion of a {@link DataWriter} will automatically unregister all
+     * The deletion of a {@link org.omg.dds.pub.DataWriter} will automatically unregister all
      * instances. Depending on the settings of the
-     * {@link WriterDataLifecycle}, the deletion of the DataWriter
+     * {@link org.omg.dds.core.policy.WriterDataLifecycle}, the deletion of the DataWriter
      * may also dispose all instances.
      * 
      * @throws  PreconditionNotMetException     if close is called on an
      *          Entity with unclosed dependent object(s), not including
      *          contained objects.
      * 
-     * @see     TopicDescription#close()
+     * @see     org.omg.dds.topic.TopicDescription#close()
      */
     public void close();
 

@@ -20,12 +20,12 @@ package org.omg.dds.topic;
 
 import java.util.EventListener;
 
-import org.omg.dds.core.Entity;
+
 import org.omg.dds.core.status.InconsistentTopicEvent;
 
 
 /**
- * Since {@link Topic} is a kind of {@link Entity}, it has the ability to
+ * Since {@link org.omg.dds.topic.Topic} is a kind of {@link org.omg.dds.core.Entity}, it has the ability to
  * have an associated listener. In this case, the associated listener must be
  * of concrete type TopicListener.
  * 

@@ -18,16 +18,12 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.topic.Topic;
-
-
 /**
  * This policy is a hint to the infrastructure as to how to set the priority
  * of the underlying transport used to send the data. The default value is
  * zero.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> N/A
  * 

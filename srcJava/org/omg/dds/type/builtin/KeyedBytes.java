@@ -19,6 +19,7 @@
 package org.omg.dds.type.builtin;
 
 import java.io.Serializable;
+
 import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.ServiceEnvironment;
 

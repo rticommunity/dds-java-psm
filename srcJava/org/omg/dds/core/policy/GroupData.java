@@ -18,33 +18,27 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.pub.DataWriterListener;
-import org.omg.dds.pub.Publisher;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.sub.DataReaderListener;
-import org.omg.dds.sub.Subscriber;
 
 
 /**
  * User data not known by the middleware, but distributed by means of
  * built-in topics. The default value is an empty (zero-sized) sequence.
  * 
- * <b>Concerns:</b> {@link Publisher}, {@link Subscriber}
+ * <b>Concerns:</b> {@link org.omg.dds.pub.Publisher}, {@link org.omg.dds.sub.Subscriber}
  * 
  * <b>RxO:</b> No
  * 
  * <b>Changeable:</b> Yes
  * 
  * The purpose of this QoS is to allow the application to attach additional
- * information to the created {@link Publisher} or {@link Subscriber}. The
+ * information to the created {@link org.omg.dds.pub.Publisher} or {@link org.omg.dds.sub.Subscriber}. The
  * value of the GROUP_DATA is available to the application on the
- * {@link DataReader} and {@link DataWriter} entities and is propagated by
+ * {@link org.omg.dds.sub.DataReader} and {@link org.omg.dds.pub.DataWriter} entities and is propagated by
  * means of the built-in topics.
  * 
  * This QoS can be used by an application combination with the
- * {@link DataReaderListener} and {@link DataWriterListener} to implement
- * matching policies similar to those of the {@link Partition}
+ * {@link org.omg.dds.sub.DataReaderListener} and {@link org.omg.dds.pub.DataWriterListener} to implement
+ * matching policies similar to those of the {@link org.omg.dds.core.policy.Partition}
  * except the decision can be made based on an application-defined policy.
  */
 public interface GroupData

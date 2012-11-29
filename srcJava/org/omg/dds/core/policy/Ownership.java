@@ -18,17 +18,14 @@
 
 package org.omg.dds.core.policy;
 
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
 
 
 /**
- * [optional] Specifies whether it is allowed for multiple {@link DataWriter}s
+ * [optional] Specifies whether it is allowed for multiple {@link org.omg.dds.pub.DataWriter}s
  * to write the same instance of the data and if so, how these modifications
  * should be arbitrated.
  * 
- * <b>Concerns:</b> {@link Topic}, {@link DataReader}, {@link DataWriter}
+ * <b>Concerns:</b> {@link org.omg.dds.topic.Topic}, {@link org.omg.dds.sub.DataReader}, {@link org.omg.dds.pub.DataWriter}
  * 
  * <b>RxO:</b> Yes
  * 
@@ -80,12 +77,12 @@ extends QosPolicy.ForTopic,
 
         /**
          * Indicates each instance can only be owned by one
-         * {@link DataWriter}, but the owner of an instance can change
+         * {@link org.omg.dds.pub.DataWriter}, but the owner of an instance can change
          * dynamically. The selection of the owner is controlled by the
-         * setting of the {@link OwnershipStrength}. The owner is
+         * setting of the {@link org.omg.dds.core.policy.OwnershipStrength}. The owner is
          * always set to be the highest-strength DataWriter object among the
          * ones currently "active" (as determined by the
-         * {@link Liveliness}).
+         * {@link org.omg.dds.core.policy.Liveliness}).
          */
         EXCLUSIVE
     }

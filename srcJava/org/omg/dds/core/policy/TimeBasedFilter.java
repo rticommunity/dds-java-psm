@@ -21,22 +21,19 @@ package org.omg.dds.core.policy;
 import java.util.concurrent.TimeUnit;
 
 import org.omg.dds.core.Duration;
-import org.omg.dds.core.Entity;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
 
 
 /**
- * Filter that allows a {@link DataReader} to specify that it is interested
+ * Filter that allows a {@link org.omg.dds.sub.DataReader} to specify that it is interested
  * only in (potentially) a subset of the values of the data. The filter
  * states that the DataReader does not want to receive more than one value
  * each minimumSeparation, regardless of how fast the changes occur. It is
  * inconsistent for a DataReader to have a minimumSeparation longer than the
- * result of its {@link Deadline#getPeriod()}. By default,
+ * result of its {@link org.omg.dds.core.policy.Deadline#getPeriod()}. By default,
  * minimumSeparation = 0, indicating that the DataReader is potentially
  * interested in all values.
  * 
- * <b>Concerns:</b> {@link DataReader}
+ * <b>Concerns:</b> {@link org.omg.dds.sub.DataReader}
  * 
  * <b>RxO:</b> N/A
  * 
@@ -47,7 +44,7 @@ import org.omg.dds.sub.DataReader;
  * sample of each instance per minumumSeparation period.
  * 
  * This setting allows a DataReader to further decouple itself from the
- * {@link DataWriter} objects. It can be used to protect applications that
+ * {@link org.omg.dds.pub.DataWriter} objects. It can be used to protect applications that
  * are running on a heterogeneous network where some nodes are capable of
  * generating data much faster than others can consume it. It also
  * accommodates the fact that for fast-changing data different subscribers
@@ -71,7 +68,7 @@ import org.omg.dds.sub.DataReader;
  * with the DEADLINE period. For these two QoS policies to be consistent they
  * must verify that "period >= minimumSeparation." An attempt to set these
  * policies in an inconsistent manner when an entity is created via a
- * {@link Entity#setQos(org.omg.dds.core.EntityQos)} operation will cause the
+ * {@link org.omg.dds.core.Entity#setQos(org.omg.dds.core.EntityQos)} operation will cause the
  * operation to fail.
  * 
  * @see Deadline

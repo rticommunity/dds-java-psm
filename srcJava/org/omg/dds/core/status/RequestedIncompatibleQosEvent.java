@@ -18,14 +18,13 @@
 
 package org.omg.dds.core.status;
 
-import org.omg.dds.core.policy.QosPolicy;
 import org.omg.dds.sub.DataReader;
 
 
 /**
- * A {@link QosPolicy} value was incompatible with what is offered.
+ * A {@link org.omg.dds.core.policy.QosPolicy} value was incompatible with what is offered.
  *
- * @param <TYPE>    The data type of the source {@link DataReader}.
+ * @param <TYPE>    The data type of the source {@link org.omg.dds.sub.DataReader}.
  * 
  * @see RequestedIncompatibleQosStatus
  * @see OfferedIncompatibleQosEvent

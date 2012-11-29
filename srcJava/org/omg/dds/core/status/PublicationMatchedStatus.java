@@ -19,14 +19,12 @@
 package org.omg.dds.core.status;
 
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.pub.DataWriter;
-import org.omg.dds.sub.DataReader;
-import org.omg.dds.topic.Topic;
+
 
 
 /**
- * The {@link DataWriter} has found a {@link DataReader} that matches the
- * {@link Topic} and has compatible QoS, or has ceased to be matched with a
+ * The {@link org.omg.dds.pub.DataWriter} has found a {@link org.omg.dds.sub.DataReader} that matches the
+ * {@link org.omg.dds.topic.Topic} and has compatible QoS, or has ceased to be matched with a
  * DataReader that was previously considered to be matched.
  *
  * @see PublicationMatchedEvent
@@ -47,9 +45,9 @@ public abstract class PublicationMatchedStatus extends Status
     // -----------------------------------------------------------------------
 
     /**
-     * Total cumulative count the concerned {@link DataWriter} discovered a
-     * "match" with a {@link DataReader}. That is, it found a DataReader for
-     * the same {@link Topic} with a requested QoS that is compatible with
+     * Total cumulative count the concerned {@link org.omg.dds.pub.DataWriter} discovered a
+     * "match" with a {@link org.omg.dds.sub.DataReader}. That is, it found a DataReader for
+     * the same {@link org.omg.dds.topic.Topic} with a requested QoS that is compatible with
      * that offered by the DataWriter.
      */
     public abstract int getTotalCount();
@@ -61,8 +59,8 @@ public abstract class PublicationMatchedStatus extends Status
     public abstract int getTotalCountChange();
 
     /**
-     * The number of {@link DataReader}s currently matched to the concerned
-     * {@link DataWriter}.
+     * The number of {@link org.omg.dds.sub.DataReader}s currently matched to the concerned
+     * {@link org.omg.dds.pub.DataWriter}.
      */
     public abstract int getCurrentCount();
 
@@ -73,8 +71,8 @@ public abstract class PublicationMatchedStatus extends Status
     public abstract int getCurrentCountChange();
 
     /**
-     * Handle to the last {@link DataReader} that matched the
-     * {@link DataWriter}, causing the status to change.
+     * Handle to the last {@link org.omg.dds.sub.DataReader} that matched the
+     * {@link org.omg.dds.pub.DataWriter}, causing the status to change.
      */
     public abstract InstanceHandle getLastSubscriptionHandle();
 }
