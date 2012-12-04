@@ -18,19 +18,19 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.core.status.DataAvailableEvent;
-import org.omg.dds.core.status.DataOnReadersEvent;
-import org.omg.dds.core.status.InconsistentTopicEvent;
-import org.omg.dds.core.status.LivelinessChangedEvent;
-import org.omg.dds.core.status.LivelinessLostEvent;
-import org.omg.dds.core.status.OfferedDeadlineMissedEvent;
-import org.omg.dds.core.status.OfferedIncompatibleQosEvent;
-import org.omg.dds.core.status.PublicationMatchedEvent;
-import org.omg.dds.core.status.RequestedDeadlineMissedEvent;
-import org.omg.dds.core.status.RequestedIncompatibleQosEvent;
-import org.omg.dds.core.status.SampleLostEvent;
-import org.omg.dds.core.status.SampleRejectedEvent;
-import org.omg.dds.core.status.SubscriptionMatchedEvent;
+import org.omg.dds.core.event.DataAvailableEvent;
+import org.omg.dds.core.event.DataOnReadersEvent;
+import org.omg.dds.core.event.InconsistentTopicEvent;
+import org.omg.dds.core.event.LivelinessChangedEvent;
+import org.omg.dds.core.event.LivelinessLostEvent;
+import org.omg.dds.core.event.OfferedDeadlineMissedEvent;
+import org.omg.dds.core.event.OfferedIncompatibleQosEvent;
+import org.omg.dds.core.event.PublicationMatchedEvent;
+import org.omg.dds.core.event.RequestedDeadlineMissedEvent;
+import org.omg.dds.core.event.RequestedIncompatibleQosEvent;
+import org.omg.dds.core.event.SampleLostEvent;
+import org.omg.dds.core.event.SampleRejectedEvent;
+import org.omg.dds.core.event.SubscriptionMatchedEvent;
 
 
 public class DomainParticipantAdapter implements DomainParticipantListener

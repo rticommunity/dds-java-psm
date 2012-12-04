@@ -4,8 +4,8 @@
  * <ul>
  *     <li>Read communication statuses: i.e., those that are related to
  *         arrival of data, namely
- *         {@link org.omg.dds.core.status.DataOnReadersEvent} and
- *         {@link org.omg.dds.core.status.DataAvailableEvent}.</li>
+ *         {@link org.omg.dds.core.event.DataOnReadersEvent} and
+ *         {@link org.omg.dds.core.event.DataAvailableEvent}.</li>
  *     <li>Plain communication statuses: i.e., all the others.</li>
  * </ul>
  * 

@@ -21,7 +21,7 @@ package org.omg.dds.topic;
 import java.util.EventListener;
 
 
-import org.omg.dds.core.status.InconsistentTopicEvent;
+import org.omg.dds.core.event.InconsistentTopicEvent;
 
 
 /**

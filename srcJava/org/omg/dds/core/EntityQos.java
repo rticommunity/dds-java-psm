@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.omg.dds.core.policy.QosPolicy;
+import org.omg.dds.core.policy.PolicyFactory;
 import org.omg.dds.type.Extensibility;
 
 
@@ -82,4 +83,10 @@ extends Map<Class<? extends P>, P>, Serializable, DDSObject
      * @see     #withPolicy(QosPolicy)
      */
     public EntityQos<P> withPolicies(P... policy);
+    
+    /**
+     * Provides an instance of {@link org.omg.dds.core.policy.PolicyFactory}.
+     * @return An instance of {@link org.omg.dds.core.policy.PolicyFactory}
+     */
+    public PolicyFactory getPolicyFactory();
 }

@@ -24,7 +24,7 @@ package org.omg.dds.core.status;
 /**
  * Another topic exists with the same name but different characteristics.
  * 
- * @see InconsistentTopicEvent
+ * @see org.omg.dds.core.event.InconsistentTopicEvent
  */
 public abstract class InconsistentTopicStatus extends Status
 {

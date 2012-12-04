@@ -27,7 +27,7 @@ import org.omg.dds.core.policy.QosPolicyCount;
 /**
  * A {@link org.omg.dds.core.policy.QosPolicy} value was incompatible with what is offered.
  *
- * @see RequestedIncompatibleQosEvent
+ * @see org.omg.dds.core.event.RequestedIncompatibleQosEvent
  * @see OfferedIncompatibleQosStatus
  */
 public abstract class RequestedIncompatibleQosStatus extends Status

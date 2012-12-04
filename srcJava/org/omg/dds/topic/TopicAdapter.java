@@ -18,7 +18,7 @@
 
 package org.omg.dds.topic;
 
-import org.omg.dds.core.status.InconsistentTopicEvent;
+import org.omg.dds.core.event.InconsistentTopicEvent;
 
 
 public class TopicAdapter<TYPE> implements TopicListener<TYPE> {

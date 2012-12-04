@@ -27,7 +27,7 @@ import org.omg.dds.core.InstanceHandle;
  * {@link org.omg.dds.topic.Topic} and has compatible QoS, or has ceased to be matched with a
  * DataReader that was previously considered to be matched.
  *
- * @see PublicationMatchedEvent
+ * @see org.omg.dds.core.event.PublicationMatchedEvent
  * @see SubscriptionMatchedStatus
  */
 public abstract class PublicationMatchedStatus extends Status

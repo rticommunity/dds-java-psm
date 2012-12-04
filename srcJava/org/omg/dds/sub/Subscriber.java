@@ -273,13 +273,13 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
 
     /**
      * This operation invokes the operation
-     * {@link org.omg.dds.sub.DataReaderListener#onDataAvailable(org.omg.dds.core.status.DataAvailableEvent)}
+     * {@link org.omg.dds.sub.DataReaderListener#onDataAvailable(org.omg.dds.core.event.DataAvailableEvent)}
      * on the DataReaderListener objects attached to contained DataReader
-     * entities with a {@link org.omg.dds.core.status.DataAvailableEvent} that is considered
+     * entities with a {@link org.omg.dds.core.event.DataAvailableEvent} that is considered
      * changed.
      * 
      * This operation is typically invoked from
-     * {@link org.omg.dds.sub.SubscriberListener#onDataOnReaders(org.omg.dds.core.status.DataOnReadersEvent)}.
+     * {@link org.omg.dds.sub.SubscriberListener#onDataOnReaders(org.omg.dds.core.event.DataOnReadersEvent)}.
      * That way the SubscriberListener can delegate to the DataReaderListener
      * objects the handling of the data.
      */

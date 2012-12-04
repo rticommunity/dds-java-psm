@@ -18,14 +18,14 @@
 
 package org.omg.dds.sub;
 
-import org.omg.dds.core.status.DataAvailableEvent;
-import org.omg.dds.core.status.DataOnReadersEvent;
-import org.omg.dds.core.status.LivelinessChangedEvent;
-import org.omg.dds.core.status.RequestedDeadlineMissedEvent;
-import org.omg.dds.core.status.RequestedIncompatibleQosEvent;
-import org.omg.dds.core.status.SampleLostEvent;
-import org.omg.dds.core.status.SampleRejectedEvent;
-import org.omg.dds.core.status.SubscriptionMatchedEvent;
+import org.omg.dds.core.event.DataAvailableEvent;
+import org.omg.dds.core.event.DataOnReadersEvent;
+import org.omg.dds.core.event.LivelinessChangedEvent;
+import org.omg.dds.core.event.RequestedDeadlineMissedEvent;
+import org.omg.dds.core.event.RequestedIncompatibleQosEvent;
+import org.omg.dds.core.event.SampleLostEvent;
+import org.omg.dds.core.event.SampleRejectedEvent;
+import org.omg.dds.core.event.SubscriptionMatchedEvent;
 
 
 public class SubscriberAdapter implements SubscriberListener

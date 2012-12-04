@@ -107,16 +107,16 @@ public abstract class PolicyFactory implements org.omg.dds.core.DDSObject {
     /**
      * @return the partition
      */
-    public abstract Partition getPartition();
+    public abstract Partition Partition();
 
     /**
      * @return the groupData
      */
-    public abstract GroupData getGroupData();
+    public abstract GroupData GroupData();
 
     /**
      * @return the entityFactory
      */
-    public abstract EntityFactory getEntityFactory();
+    public abstract EntityFactory EntityFactory();
 }
 

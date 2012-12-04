@@ -26,7 +26,7 @@ import org.omg.dds.core.InstanceHandle;
  * instances read through the {@link org.omg.dds.sub.DataReader} has changed. Some
  * DataWriter(s) have become "active" or "inactive."
  *
- * @see LivelinessChangedEvent
+ * @see org.omg.dds.core.event.LivelinessChangedEvent
  * @see LivelinessLostStatus
  */
 public abstract class LivelinessChangedStatus extends Status

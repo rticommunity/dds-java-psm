@@ -18,7 +18,7 @@
 
 package org.omg.dds.domain;
 
-import org.omg.dds.core.status.InconsistentTopicEvent;
+import org.omg.dds.core.event.InconsistentTopicEvent;
 import org.omg.dds.pub.PublisherListener;
 import org.omg.dds.sub.SubscriberListener;
 

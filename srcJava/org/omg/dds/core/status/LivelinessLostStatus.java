@@ -25,7 +25,7 @@ package org.omg.dds.core.status;
  * {@link org.omg.dds.core.policy.Liveliness} was not respected; thus {@link org.omg.dds.sub.DataReader}
  * entities will consider the DataWriter as no longer "active."
  *
- * @see LivelinessLostEvent
+ * @see org.omg.dds.core.event.LivelinessLostEvent
  * @see LivelinessChangedStatus
  * @see SubscriptionMatchedStatus
  */

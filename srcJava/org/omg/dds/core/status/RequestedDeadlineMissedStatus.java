@@ -25,7 +25,7 @@ import org.omg.dds.core.InstanceHandle;
  * The deadline that the {@link org.omg.dds.sub.DataReader} was expecting through its
  * {@link org.omg.dds.core.policy.Deadline} was not respected for a specific instance.
  *
- * @see RequestedDeadlineMissedEvent
+ * @see org.omg.dds.core.event.RequestedDeadlineMissedEvent
  * @see OfferedDeadlineMissedStatus
  */
 public abstract class RequestedDeadlineMissedStatus extends Status

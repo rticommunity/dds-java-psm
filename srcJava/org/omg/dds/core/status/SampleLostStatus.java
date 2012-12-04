@@ -23,7 +23,7 @@ package org.omg.dds.core.status;
 /**
  * A sample has been lost (never received).
  *
- * @see SampleLostEvent
+ * @see org.omg.dds.core.event.SampleLostEvent
  */
 public abstract class SampleLostStatus extends Status
 {

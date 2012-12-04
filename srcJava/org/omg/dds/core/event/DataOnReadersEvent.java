@@ -16,26 +16,25 @@
  * limitations under the License.
  */
 
-package org.omg.dds.core.status;
+package org.omg.dds.core.event;
 
-import org.omg.dds.sub.DataReader;
+import org.omg.dds.sub.Subscriber;
+import org.omg.dds.core.status.DataOnReadersStatus;
 
 
 /**
- * A sample has been lost (never received).
- *
- * @param <TYPE>    The data type of the source {@link org.omg.dds.sub.DataReader}.
+ * New information is available.
  * 
- * @see SampleLostStatus
+ * @see DataAvailableEvent
  */
-public abstract class SampleLostEvent<TYPE>
-extends StatusChangedEvent<DataReader<TYPE>>
+public abstract class DataOnReadersEvent
+extends StatusChangedEvent<Subscriber>
 {
     // -----------------------------------------------------------------------
     // Constants
     // -----------------------------------------------------------------------
 
-    private static final long serialVersionUID = 5998068582940180285L;
+    private static final long serialVersionUID = -4742886897100340499L;
 
 
 
@@ -43,12 +42,11 @@ extends StatusChangedEvent<DataReader<TYPE>>
     // Methods
     // -----------------------------------------------------------------------
 
-    public abstract SampleLostStatus getStatus();
-
-
+    public abstract DataOnReadersStatus getStatus();
+    
     // --- Object Life Cycle: ------------------------------------------------
 
-    protected SampleLostEvent(DataReader<TYPE> source) {
+    protected DataOnReadersEvent(Subscriber source) {
         super(source);
     }
 
@@ -56,5 +54,5 @@ extends StatusChangedEvent<DataReader<TYPE>>
     // --- From Object: ------------------------------------------------------
 
     @Override
-    public abstract SampleLostEvent<TYPE> clone();
+    public abstract DataOnReadersEvent clone();
 }

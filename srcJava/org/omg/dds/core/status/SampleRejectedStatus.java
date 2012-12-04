@@ -25,7 +25,7 @@ import org.omg.dds.core.InstanceHandle;
 /**
  * A (received) sample has been rejected.
  * 
- * @see SampleRejectedEvent
+ * @see org.omg.dds.core.event.SampleRejectedEvent
  */
 public abstract class SampleRejectedStatus extends Status
 {

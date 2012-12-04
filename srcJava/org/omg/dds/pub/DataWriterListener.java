@@ -21,10 +21,10 @@ package org.omg.dds.pub;
 import java.util.EventListener;
 
 
-import org.omg.dds.core.status.LivelinessLostEvent;
-import org.omg.dds.core.status.OfferedDeadlineMissedEvent;
-import org.omg.dds.core.status.OfferedIncompatibleQosEvent;
-import org.omg.dds.core.status.PublicationMatchedEvent;
+import org.omg.dds.core.event.LivelinessLostEvent;
+import org.omg.dds.core.event.OfferedDeadlineMissedEvent;
+import org.omg.dds.core.event.OfferedIncompatibleQosEvent;
+import org.omg.dds.core.event.PublicationMatchedEvent;
 
 
 /**

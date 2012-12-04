@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.omg.dds.core.status;
+package org.omg.dds.core.event;
 
 import java.util.EventObject;
 
@@ -27,7 +27,7 @@ import org.omg.dds.core.Entity;
 /**
  * The status of an Entity changed.
  * 
- * @see Status
+ * @see org.omg.dds.core.status.Status
  */
 public abstract class StatusChangedEvent<SOURCE extends Entity<?, ?>>
 extends EventObject implements Cloneable, DDSObject {

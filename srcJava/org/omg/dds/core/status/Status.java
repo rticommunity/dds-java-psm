@@ -36,7 +36,7 @@ import org.omg.dds.core.ServiceEnvironment;
  * of the corresponding {@link org.omg.dds.core.StatusCondition} objects and trigger invocation
  * of the proper Listener objects to asynchronously inform the application.
  * 
- * @see StatusChangedEvent
+ * @see org.omg.dds.core.event.StatusChangedEvent
  */
 public abstract class Status implements Serializable, DDSObject
 {

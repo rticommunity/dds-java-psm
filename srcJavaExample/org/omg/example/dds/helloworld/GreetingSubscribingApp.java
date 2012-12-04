@@ -23,7 +23,7 @@ import java.util.concurrent.TimeoutException;
 
 import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.ServiceEnvironment;
-import org.omg.dds.core.status.DataAvailableEvent;
+import org.omg.dds.core.event.DataAvailableEvent;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.domain.DomainParticipantFactory;
 import org.omg.dds.sub.DataReader;

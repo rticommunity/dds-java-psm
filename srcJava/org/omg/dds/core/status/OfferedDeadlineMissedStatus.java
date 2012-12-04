@@ -25,7 +25,7 @@ import org.omg.dds.core.InstanceHandle;
  * The deadline that the {@link org.omg.dds.pub.DataWriter} has committed through its
  * {@link org.omg.dds.core.policy.Deadline} was not respected for a specific instance.
  *
- * @see OfferedDeadlineMissedEvent
+ * @see org.omg.dds.core.event.OfferedDeadlineMissedEvent
  * @see RequestedDeadlineMissedStatus
  */
 public abstract class OfferedDeadlineMissedStatus extends Status

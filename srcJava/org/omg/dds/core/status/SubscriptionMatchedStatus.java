@@ -26,7 +26,7 @@ import org.omg.dds.core.InstanceHandle;
  * {@link org.omg.dds.topic.Topic} and has compatible QoS, or has ceased to be matched with a
  * DataWriter that was previously considered to be matched.
  *
- * @see SubscriptionMatchedEvent
+ * @see org.omg.dds.core.event.SubscriptionMatchedEvent
  * @see PublicationMatchedStatus
  */
 public abstract class SubscriptionMatchedStatus extends Status
