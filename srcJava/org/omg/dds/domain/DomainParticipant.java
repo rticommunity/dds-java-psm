@@ -97,6 +97,20 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * @param   qos     The desired QoS policies. If the specified QoS
      *                  policies are not consistent, the operation will
      *                  fail and no Publisher will be created.
+     *
+     * @see     #createPublisher()
+     */
+    public Publisher createPublisher(PublisherQos qos);
+
+    /**
+     * This operation creates a Publisher.
+     * 
+     * The created Publisher belongs to the DomainParticipant that is its
+     * factory.
+     * 
+     * @param   qos     The desired QoS policies. If the specified QoS
+     *                  policies are not consistent, the operation will
+     *                  fail and no Publisher will be created.
      * @param   listener    The listener to be attached.
      * @param   statuses    Of which status changes the listener should be
      *                      notified. A null collection signifies all status
@@ -121,6 +135,20 @@ extends Entity<DomainParticipantListener, DomainParticipantQos>
      * @see     #createSubscriber(SubscriberQos, SubscriberListener, Collection)
      */
     public Subscriber createSubscriber();
+
+    /**
+     * This operation creates a Subscriber.
+     * 
+     * The created Subscriber belongs to the DomainParticipant that is its
+     * factory.
+     * 
+     * @param   qos     The desired QoS policies. If the specified QoS
+     *                  policies are not consistent, the operation will
+     *                  fail and no Subscriber will be created.
+     *
+     * @see     #createSubscriber()
+     */
+    public Subscriber createSubscriber(SubscriberQos qos);
 
     /**
      * This operation creates a Subscriber.

@@ -28,6 +28,7 @@ import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.Topic;
+import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;
 
 /**
@@ -124,7 +125,20 @@ extends DomainEntity<PublisherListener, PublisherQos>
             DataWriterListener<TYPE> listener,
             Collection<Class<? extends Status>> statuses);
 
-
+    /**
+     * This operation creates a {@link org.omg.dds.pub.DataWriter}. The returned DataWriter
+     * will be attached and belong to the Publisher.
+     * 
+     * @param topic The {@link org.omg.dds.topic.Topic} created from the same 
+     * {@link org.omg.dds.domain.DomainParticipant} that was used to create this Publisher.
+     * @param qos An instance of (@link org.omg.dds.sub.DataWriterQos} or null.
+     * @return DataWriter
+     * @see #createDataWriter(Topic)
+     */
+   
+    public <TYPE> DataWriter<TYPE> createDataWriter(
+            Topic<TYPE> topic,
+            DataWriterQos qos);
 
     // --- Lookup operations: ------------------------------------------------
 

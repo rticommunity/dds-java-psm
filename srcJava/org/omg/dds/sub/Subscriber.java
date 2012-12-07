@@ -117,7 +117,21 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
             DataReaderQos qos,
             DataReaderListener<TYPE> listener,
             Collection<Class<? extends Status>> statuses);
-
+    /**
+     * This operation creates a {@link org.omg.dds.sub.DataReader}. The returned DataReader
+     * will be attached and belong to the Subscriber.
+     * 
+     * @param topic The {@link org.omg.dds.topic.TopicDescription} created from the same 
+     * {@link org.omg.dds.domain.DomainParticipant} that was used to create this Subscriber.
+     * @param qos An instance of (@link org.omg.dds.sub.DataReaderQos} or null.
+     * @return DataReader
+     * @see #createDataReader(TopicDescription)
+     */
+    
+    public <TYPE> DataReader<TYPE> createDataReader(
+            TopicDescription<TYPE> topic,
+            DataReaderQos qos);
+    
     // --- Lookup operations: ------------------------------------------------
 
     /**
