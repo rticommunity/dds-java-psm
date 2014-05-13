@@ -33,23 +33,6 @@ implements Comparable<InstanceHandle>, Serializable, DDSObject
 
     private static final long serialVersionUID = 4987266126475078295L;
 
-
-
-    // -----------------------------------------------------------------------
-    // Factory Methods
-    // -----------------------------------------------------------------------
-
-    /**
-     * @param env       Identifies the Service instance to which the new
-     *                  object will belong.
-     */
-    public static ModifiableInstanceHandle newInstanceHandle(
-            ServiceEnvironment env)
-    {
-        return env.getSPI().newInstanceHandle();
-    }
-
-
     /**
      * @param env       Identifies the Service instance to which the
      *                  object will belong.
@@ -68,12 +51,4 @@ implements Comparable<InstanceHandle>, Serializable, DDSObject
     // -----------------------------------------------------------------------
 
     public abstract boolean isNil();
-
-
-    // --- Modification: -----------------------------------------------------
-
-    /**
-     * @return  a modifiable copy of this object's state.
-     */
-    public abstract ModifiableInstanceHandle modifiableCopy();
 }

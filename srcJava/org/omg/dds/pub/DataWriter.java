@@ -901,36 +901,11 @@ extends DomainEntity<DataWriterListener<TYPE>, DataWriterQos>
      * reason the Service is unable to provide an instance handle, the
      * Service will return a nil handle.
      * 
-     * @param   handle  a container, into which this method shall place its
-     *          result.
-     * @param   keyHolder       a sample of the instance whose handle this
-     *          method should look up.
-     *
-     * @return  handle, if it is non-null, or a new object otherwise.
-     * 
-     * @see     #lookupInstance(Object)
-     */
-    public ModifiableInstanceHandle lookupInstance(
-            ModifiableInstanceHandle handle,
-            TYPE keyHolder);
-
-    /**
-     * This operation takes as a parameter an instance and returns a handle
-     * that can be used in subsequent operations that accept an instance
-     * handle as an argument. The instance parameter is only used for the
-     * purpose of examining the fields that define the key.
-     * 
-     * This operation does not register the instance in question. If the
-     * instance has not been previously registered, or if for any other
-     * reason the Service is unable to provide an instance handle, the
-     * Service will return a nil handle.
-     * 
      * @param   keyHolder       a sample of the instance whose handle this
      *          method should look up.
      *
      * @return  an immutable handle to the instance.
      * 
-     * @see     #lookupInstance(ModifiableInstanceHandle, Object)
      */
     public InstanceHandle lookupInstance(TYPE keyHolder);
 

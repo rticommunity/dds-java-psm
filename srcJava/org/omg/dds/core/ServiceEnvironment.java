@@ -449,8 +449,6 @@ public abstract class ServiceEnvironment implements DDSObject {
 
         // --- Instance handle: ----------------------------------------------
 
-        public ModifiableInstanceHandle newInstanceHandle();
-
         public InstanceHandle nilHandle();
 
 

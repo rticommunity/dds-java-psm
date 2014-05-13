@@ -1,0 +1,217 @@
+Index: trunk/specification/omg_rtf_issue_diffs/diff_omg_issue_18420.txt
+===================================================================
+Index: trunk/srcJava/org/omg/dds/core/InstanceHandle.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/InstanceHandle.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/core/InstanceHandle.java	(working copy)
+@@ -33,24 +33,7 @@
+ 
+     private static final long serialVersionUID = 4987266126475078295L;
+ 
+-
+-
+-    // -----------------------------------------------------------------------
+-    // Factory Methods
+-    // -----------------------------------------------------------------------
+-
+     /**
+-     * @param env       Identifies the Service instance to which the new
+-     *                  object will belong.
+-     */
+-    public static ModifiableInstanceHandle newInstanceHandle(
+-            ServiceEnvironment env)
+-    {
+-        return env.getSPI().newInstanceHandle();
+-    }
+-
+-
+-    /**
+      * @param env       Identifies the Service instance to which the
+      *                  object will belong.
+      * 
+@@ -68,12 +51,4 @@
+     // -----------------------------------------------------------------------
+ 
+     public abstract boolean isNil();
+-
+-
+-    // --- Modification: -----------------------------------------------------
+-
+-    /**
+-     * @return  a modifiable copy of this object's state.
+-     */
+-    public abstract ModifiableInstanceHandle modifiableCopy();
+ }
+Index: trunk/srcJava/org/omg/dds/core/ModifiableInstanceHandle.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/ModifiableInstanceHandle.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/core/ModifiableInstanceHandle.java	(working copy)
+@@ -1,45 +0,0 @@
+-/* Copyright 2010, Object Management Group, Inc.
+- * Copyright 2010, PrismTech, Inc.
+- * Copyright 2010, Real-Time Innovations, Inc.
+- * All rights reserved.
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-package org.omg.dds.core;
+-
+-
+-public abstract class ModifiableInstanceHandle extends InstanceHandle
+-{
+-    // -----------------------------------------------------------------------
+-    // Private Constants
+-    // -----------------------------------------------------------------------
+-
+-    private static final long serialVersionUID = 4589938527533296265L;
+-
+-
+-
+-    // -----------------------------------------------------------------------
+-    // Instance Methods
+-    // -----------------------------------------------------------------------
+-
+-    /**
+-     * Overwrite the state of this object with that of the given object.
+-     */
+-    public abstract void copyFrom(InstanceHandle src);
+-
+-    /**
+-     * @return  an immutable copy of this object's state.
+-     */
+-    public abstract InstanceHandle immutableCopy();
+-}
+Index: trunk/srcJava/org/omg/dds/core/ServiceEnvironment.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/ServiceEnvironment.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/core/ServiceEnvironment.java	(working copy)
+@@ -449,8 +449,6 @@
+ 
+         // --- Instance handle: ----------------------------------------------
+ 
+-        public ModifiableInstanceHandle newInstanceHandle();
+-
+         public InstanceHandle nilHandle();
+ 
+ 
+Index: trunk/srcJava/org/omg/dds/pub/DataWriter.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/pub/DataWriter.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/pub/DataWriter.java	(working copy)
+@@ -901,36 +901,11 @@
+      * reason the Service is unable to provide an instance handle, the
+      * Service will return a nil handle.
+      * 
+-     * @param   handle  a container, into which this method shall place its
+-     *          result.
+      * @param   keyHolder       a sample of the instance whose handle this
+      *          method should look up.
+      *
+-     * @return  handle, if it is non-null, or a new object otherwise.
+-     * 
+-     * @see     #lookupInstance(Object)
+-     */
+-    public ModifiableInstanceHandle lookupInstance(
+-            ModifiableInstanceHandle handle,
+-            TYPE keyHolder);
+-
+-    /**
+-     * This operation takes as a parameter an instance and returns a handle
+-     * that can be used in subsequent operations that accept an instance
+-     * handle as an argument. The instance parameter is only used for the
+-     * purpose of examining the fields that define the key.
+-     * 
+-     * This operation does not register the instance in question. If the
+-     * instance has not been previously registered, or if for any other
+-     * reason the Service is unable to provide an instance handle, the
+-     * Service will return a nil handle.
+-     * 
+-     * @param   keyHolder       a sample of the instance whose handle this
+-     *          method should look up.
+-     *
+      * @return  an immutable handle to the instance.
+      * 
+-     * @see     #lookupInstance(ModifiableInstanceHandle, Object)
+      */
+     public InstanceHandle lookupInstance(TYPE keyHolder);
+ 
+Index: trunk/srcJava/org/omg/dds/pub/Publisher.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/pub/Publisher.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/pub/Publisher.java	(working copy)
+@@ -28,7 +28,6 @@
+ import org.omg.dds.core.status.Status;
+ import org.omg.dds.domain.DomainParticipant;
+ import org.omg.dds.topic.Topic;
+-import org.omg.dds.topic.TopicDescription;
+ import org.omg.dds.topic.TopicQos;
+ 
+ /**
+Index: trunk/srcJava/org/omg/dds/sub/DataReader.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/sub/DataReader.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/sub/DataReader.java	(working copy)
+@@ -727,36 +727,11 @@
+      * reason the Service is unable to provide an instance handle, the
+      * Service will return a nil handle.
+      * 
+-     * @param   handle  a container, into which this method shall place its
+-     *          result.
+      * @param   keyHolder       a sample of the instance whose handle this
+      *          method should look up.
+      *
+-     * @return  handle, if it is non-null, or a new object otherwise.
+-     *
+-     * @see     #lookupInstance(Object)
+-     */
+-    public ModifiableInstanceHandle lookupInstance(
+-            ModifiableInstanceHandle handle,
+-            TYPE keyHolder);
+-
+-    /**
+-     * This operation takes as a parameter an instance and returns a handle
+-     * that can be used in subsequent operations that accept an instance
+-     * handle as an argument. The instance parameter is only used for the
+-     * purpose of examining the fields that define the key.
+-     * 
+-     * This operation does not register the instance in question. If the
+-     * instance has not been previously registered, or if for any other
+-     * reason the Service is unable to provide an instance handle, the
+-     * Service will return a nil handle.
+-     * 
+-     * @param   keyHolder       a sample of the instance whose handle this
+-     *          method should look up.
+-     *
+      * @return  an immutable handle to the instance.
+      * 
+-     * @see     #lookupInstance(ModifiableInstanceHandle, Object)
+      */
+     public InstanceHandle lookupInstance(TYPE keyHolder);
+ 
+Index: trunk/srcJava/org/omg/dds/sub/Sample.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/sub/Sample.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/sub/Sample.java	(working copy)
+@@ -260,9 +260,9 @@
+ 
+     public Time getSourceTimestamp();
+ 
+-    public ModifiableInstanceHandle getInstanceHandle();
++    public InstanceHandle getInstanceHandle();
+ 
+-    public ModifiableInstanceHandle getPublicationHandle();
++    public InstanceHandle getPublicationHandle();
+ 
+     /**
+      * For each instance the middleware internally maintains two counts: the

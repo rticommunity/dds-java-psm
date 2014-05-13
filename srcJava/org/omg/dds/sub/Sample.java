@@ -260,9 +260,9 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
 
     public Time getSourceTimestamp();
 
-    public ModifiableInstanceHandle getInstanceHandle();
+    public InstanceHandle getInstanceHandle();
 
-    public ModifiableInstanceHandle getPublicationHandle();
+    public InstanceHandle getPublicationHandle();
 
     /**
      * For each instance the middleware internally maintains two counts: the

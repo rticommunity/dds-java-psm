@@ -28,7 +28,6 @@ import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.status.Status;
 import org.omg.dds.domain.DomainParticipant;
 import org.omg.dds.topic.Topic;
-import org.omg.dds.topic.TopicDescription;
 import org.omg.dds.topic.TopicQos;
 
 /**
