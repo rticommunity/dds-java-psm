@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.ListIterator;
 
 import org.omg.dds.core.DDSObject;
-import org.omg.dds.core.ModifiableInstanceHandle;
+import org.omg.dds.core.InstanceHandle;
 import org.omg.dds.core.Time;
 
 

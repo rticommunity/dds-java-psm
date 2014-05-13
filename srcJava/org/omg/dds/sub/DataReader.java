@@ -27,7 +27,6 @@ import org.omg.dds.core.DDSObject;
 import org.omg.dds.core.DomainEntity;
 import org.omg.dds.core.Duration;
 import org.omg.dds.core.InstanceHandle;
-import org.omg.dds.core.ModifiableInstanceHandle;
 import org.omg.dds.core.StatusCondition;
 import org.omg.dds.core.status.LivelinessChangedStatus;
 import org.omg.dds.core.status.RequestedDeadlineMissedStatus;
