@@ -35,8 +35,8 @@ extends EntityQos<QosPolicy.ForDomainParticipantFactory>
     // --- Modification: -----------------------------------------------------
 
     public DomainParticipantFactoryQos withPolicy(
-            QosPolicy.ForDataWriter policy);
+            QosPolicy.ForDomainParticipantFactory policy);
 
     public DomainParticipantFactoryQos withPolicies(
-            QosPolicy.ForDataWriter... policy);
+            QosPolicy.ForDomainParticipantFactory... policy);
 }

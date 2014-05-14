@@ -1,0 +1,15 @@
+Index: trunk/srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/domain/DomainParticipantFactoryQos.java	(working copy)
+@@ -35,8 +35,8 @@
+     // --- Modification: -----------------------------------------------------
+ 
+     public DomainParticipantFactoryQos withPolicy(
+-            QosPolicy.ForDataWriter policy);
++            QosPolicy.ForDomainParticipantFactory policy);
+ 
+     public DomainParticipantFactoryQos withPolicies(
+-            QosPolicy.ForDataWriter... policy);
++            QosPolicy.ForDomainParticipantFactory... policy);
+ }
