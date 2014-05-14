@@ -50,7 +50,7 @@ public abstract class TypeSupport<TYPE> implements DDSObject
             Class<TYPE> type,
             ServiceEnvironment env)
     {
-        return newTypeSupport(type, type.getClass().getName(), env);
+        return newTypeSupport(type, type.getName(), env);
     }
 
 

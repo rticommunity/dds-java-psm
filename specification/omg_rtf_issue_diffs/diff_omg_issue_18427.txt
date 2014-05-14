@@ -1,0 +1,13 @@
+Index: trunk/srcJava/org/omg/dds/type/TypeSupport.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/type/TypeSupport.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/type/TypeSupport.java	(working copy)
+@@ -50,7 +50,7 @@
+             Class<TYPE> type,
+             ServiceEnvironment env)
+     {
+-        return newTypeSupport(type, type.getClass().getName(), env);
++        return newTypeSupport(type, type.getName(), env);
+     }
+ 
+ 
