@@ -440,7 +440,7 @@ public interface Sample<TYPE> extends Cloneable, Serializable, DDSObject
          * @see DataReader#read()
          * @see DataReader#take()
          */
-        public void close() throws java.io.IOException;
+        public abstract void close() throws java.io.IOException;
 
         // --- From ListIterator: --------------------------------------------
         /**

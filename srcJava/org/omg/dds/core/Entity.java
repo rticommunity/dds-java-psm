@@ -260,7 +260,7 @@ extends Closeable, DDSObject
      * 
      * @see     org.omg.dds.topic.TopicDescription#close()
      */
-    public void close();
+    public abstract void close() throws java.io.IOException;
 
     /**
      * Indicates that references to this object may go out of scope but that

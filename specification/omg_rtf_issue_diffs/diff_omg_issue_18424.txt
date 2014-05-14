@@ -1,0 +1,26 @@
+Index: trunk/srcJava/org/omg/dds/core/Entity.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/Entity.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/core/Entity.java	(working copy)
+@@ -260,7 +260,7 @@
+      * 
+      * @see     org.omg.dds.topic.TopicDescription#close()
+      */
+-    public void close();
++    public abstract void close() throws java.io.IOException;
+ 
+     /**
+      * Indicates that references to this object may go out of scope but that
+Index: trunk/srcJava/org/omg/dds/sub/Sample.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/sub/Sample.java	(revision 222)
++++ trunk/srcJava/org/omg/dds/sub/Sample.java	(working copy)
+@@ -440,7 +440,7 @@
+          * @see DataReader#read()
+          * @see DataReader#take()
+          */
+-        public void close() throws java.io.IOException;
++        public abstract void close() throws java.io.IOException;
+ 
+         // --- From ListIterator: --------------------------------------------
+         /**
