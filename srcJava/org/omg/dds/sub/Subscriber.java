@@ -193,15 +193,12 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
 
     /**
      * This operation is equivalent to calling
-     * {@link #getDataReaders(Collection, DataState)} with any sample state
+     * {@link #getDataReaders(DataState)} with any sample state
      * ({@link Subscriber.DataState#withAnySampleState()}), any view state
      * ({@link Subscriber.DataState#withAnyViewState()}), and any instance
      * state ({@link Subscriber.DataState#withAnyInstanceState()}).
      * 
-     * @param   readers         a container, into which this method will place
-     *          its result.
-     * 
-     * @return  readers, as a convenience to facilitate chaining.
+     * @return  A collection of DataReaders that belong to this Subscriber.
      * 
      * @throws  PreconditionNotMetException     if the Subscriber has
      *          {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
@@ -210,13 +207,12 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      *          and this operation is not invoked inside a
      *          {@link #beginAccess()}/{@link #endAccess()} block.
      * 
-     * @see     #getDataReaders(Collection, DataState)
+     * @see     #getDataReaders(DataState)
      * @see     #beginAccess()
      * @see     #endAccess()
      * @see     org.omg.dds.core.policy.Presentation
      */
-    public Collection<DataReader<?>> getDataReaders(
-            Collection<DataReader<?>> readers);
+    public Collection<DataReader<?>> getDataReaders();
 
     /**
      * This operation allows the application to access the {@link org.omg.dds.sub.DataReader}
@@ -261,13 +257,12 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      * process each DataReader in the same order it appears in the 'list' and
      * read or take exactly one sample from each DataReader.
      * 
-     * @param   readers         a container, into which this method will place
-     *          its result.
      * @param   dataState     a DataReader will only be placed into the
      *          readers collection if it has data available with one of these
      *          sample states, view states, and instance states.
      * 
-     * @return  readers, as a convenience to facilitate chaining.
+     * @return  A collection of DataReaders that contain 
+     *          samples with the specified sample states.
      * 
      * @throws  PreconditionNotMetException     if the Subscriber has
      *          {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
@@ -276,14 +271,12 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      *          and this operation is not invoked inside a
      *          {@link #beginAccess()}/{@link #endAccess()} block.
      * 
-     * @see     #getDataReaders(Collection)
+     * @see     #getDataReaders()
      * @see     #beginAccess()
      * @see     #endAccess()
      * @see     org.omg.dds.core.policy.Presentation
      */
-    public Collection<DataReader<?>> getDataReaders(
-            Collection<DataReader<?>> readers,
-            DataState dataState);
+    public Collection<DataReader<?>> getDataReaders(DataState dataState);
 
     /**
      * This operation invokes the operation

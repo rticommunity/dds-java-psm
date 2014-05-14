@@ -716,6 +716,24 @@ extends DomainEntity<DataReaderListener<TYPE>, DataReaderQos>
             InstanceHandle handle);
 
     /**
+     * This operation can be used to retrieve the instance key that
+     * corresponds to an instance handle. The operation will only fill the
+     * fields that form the key inside the keyHolder instance.
+     * 
+     * @param   handle          a handle indicating the instance whose value
+     *          this method should get.
+     *
+     * @return  An instance with key fields populated.
+     * 
+     * @throws  IllegalArgumentException        if the {@link org.omg.dds.core.InstanceHandle}
+     *          does not correspond to an existing data object known to the
+     *          DataReader. If the implementation is not able to check
+     *          invalid handles, then the result in this situation is
+     *          unspecified.
+     */
+    public TYPE getKeyValue(InstanceHandle handle);
+
+    /**
      * This operation takes as a parameter an instance and returns a handle
      * that can be used in subsequent operations that accept an instance
      * handle as an argument. The instance parameter is only used for the

@@ -1,0 +1,101 @@
+Index: trunk/srcJava/org/omg/dds/sub/DataReader.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/sub/DataReader.java	(revision 222)
++++ trunk/srcJava/org/omg/dds/sub/DataReader.java	(working copy)
+@@ -716,6 +716,24 @@
+             InstanceHandle handle);
+ 
+     /**
++     * This operation can be used to retrieve the instance key that
++     * corresponds to an instance handle. The operation will only fill the
++     * fields that form the key inside the keyHolder instance.
++     * 
++     * @param   handle          a handle indicating the instance whose value
++     *          this method should get.
++     *
++     * @return  An instance with key fields populated.
++     * 
++     * @throws  IllegalArgumentException        if the {@link org.omg.dds.core.InstanceHandle}
++     *          does not correspond to an existing data object known to the
++     *          DataReader. If the implementation is not able to check
++     *          invalid handles, then the result in this situation is
++     *          unspecified.
++     */
++    public TYPE getKeyValue(InstanceHandle handle);
++
++    /**
+      * This operation takes as a parameter an instance and returns a handle
+      * that can be used in subsequent operations that accept an instance
+      * handle as an argument. The instance parameter is only used for the
+Index: trunk/srcJava/org/omg/dds/sub/Subscriber.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/sub/Subscriber.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/sub/Subscriber.java	(working copy)
+@@ -193,16 +193,13 @@
+ 
+     /**
+      * This operation is equivalent to calling
+-     * {@link #getDataReaders(Collection, DataState)} with any sample state
++     * {@link #getDataReaders(DataState)} with any sample state
+      * ({@link Subscriber.DataState#withAnySampleState()}), any view state
+      * ({@link Subscriber.DataState#withAnyViewState()}), and any instance
+      * state ({@link Subscriber.DataState#withAnyInstanceState()}).
+      * 
+-     * @param   readers         a container, into which this method will place
+-     *          its result.
++     * @return  A collection of DataReaders that belong to this Subscriber.
+      * 
+-     * @return  readers, as a convenience to facilitate chaining.
+-     * 
+      * @throws  PreconditionNotMetException     if the Subscriber has
+      *          {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+      *          set to
+@@ -210,13 +207,12 @@
+      *          and this operation is not invoked inside a
+      *          {@link #beginAccess()}/{@link #endAccess()} block.
+      * 
+-     * @see     #getDataReaders(Collection, DataState)
++     * @see     #getDataReaders(DataState)
+      * @see     #beginAccess()
+      * @see     #endAccess()
+      * @see     org.omg.dds.core.policy.Presentation
+      */
+-    public Collection<DataReader<?>> getDataReaders(
+-            Collection<DataReader<?>> readers);
++    public Collection<DataReader<?>> getDataReaders();
+ 
+     /**
+      * This operation allows the application to access the {@link org.omg.dds.sub.DataReader}
+@@ -261,13 +257,12 @@
+      * process each DataReader in the same order it appears in the 'list' and
+      * read or take exactly one sample from each DataReader.
+      * 
+-     * @param   readers         a container, into which this method will place
+-     *          its result.
+      * @param   dataState     a DataReader will only be placed into the
+      *          readers collection if it has data available with one of these
+      *          sample states, view states, and instance states.
+      * 
+-     * @return  readers, as a convenience to facilitate chaining.
++     * @return  A collection of DataReaders that contain 
++     *          samples with the specified sample states.
+      * 
+      * @throws  PreconditionNotMetException     if the Subscriber has
+      *          {@link org.omg.dds.core.policy.Presentation#getAccessScope()}
+@@ -276,14 +271,12 @@
+      *          and this operation is not invoked inside a
+      *          {@link #beginAccess()}/{@link #endAccess()} block.
+      * 
+-     * @see     #getDataReaders(Collection)
++     * @see     #getDataReaders()
+      * @see     #beginAccess()
+      * @see     #endAccess()
+      * @see     org.omg.dds.core.policy.Presentation
+      */
+-    public Collection<DataReader<?>> getDataReaders(
+-            Collection<DataReader<?>> readers,
+-            DataState dataState);
++    public Collection<DataReader<?>> getDataReaders(DataState dataState);
+ 
+     /**
+      * This operation invokes the operation
