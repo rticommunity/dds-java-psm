@@ -80,10 +80,10 @@ public abstract class DomainParticipantFactory implements DDSObject
             int domainId);
 
     /**
-     * This operation creates a new DomainParticipant object having default
-     * QoS and no listener. The DomainParticipant signifies that the calling
-     * application intends to join the domain identified by the domainId
-     * argument.
+     * This operation creates a new DomainParticipant object with the 
+     * specified QoS, listener, and statuses. The DomainParticipant 
+     * signifies that the calling application intends to join the 
+     * domain identified by the domainId argument.
      * 
      * @param statuses  Of which status changes the listener should be
      *                  notified. A null collection signifies all status
