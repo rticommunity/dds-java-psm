@@ -1,0 +1,24 @@
+Index: trunk/srcJava/org/omg/dds/sub/DataReaderQos.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/sub/DataReaderQos.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/sub/DataReaderQos.java	(working copy)
+@@ -23,6 +23,7 @@
+ import org.omg.dds.core.policy.Deadline;
+ import org.omg.dds.core.policy.DestinationOrder;
+ import org.omg.dds.core.policy.Durability;
++import org.omg.dds.core.policy.Reliability;
+ import org.omg.dds.core.policy.History;
+ import org.omg.dds.core.policy.LatencyBudget;
+ import org.omg.dds.core.policy.Liveliness;
+@@ -44,6 +45,11 @@
+     public Durability getDurability();
+ 
+     /**
++     * @return the reliability
++     */
++    public Reliability getReliability();
++
++    /**
+      * @return the deadline
+      */
+     public Deadline getDeadline();

@@ -23,6 +23,7 @@ import org.omg.dds.core.policy.DataRepresentation;
 import org.omg.dds.core.policy.Deadline;
 import org.omg.dds.core.policy.DestinationOrder;
 import org.omg.dds.core.policy.Durability;
+import org.omg.dds.core.policy.Reliability;
 import org.omg.dds.core.policy.History;
 import org.omg.dds.core.policy.LatencyBudget;
 import org.omg.dds.core.policy.Liveliness;
@@ -42,6 +43,11 @@ extends EntityQos<QosPolicy.ForDataReader>
      * @return the durability
      */
     public Durability getDurability();
+
+    /**
+     * @return the reliability
+     */
+    public Reliability getReliability();
 
     /**
      * @return the deadline
