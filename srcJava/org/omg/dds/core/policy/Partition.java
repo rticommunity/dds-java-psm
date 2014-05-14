@@ -100,4 +100,11 @@ extends QosPolicy.ForPublisher, QosPolicy.ForSubscriber
      * @return  a new policy
      */
     public Partition withName(Collection<String> name);
+
+    /**
+     * Copy this policy and override the value of the property.
+     * 
+     * @return  a new policy
+     */
+    public Partition withName(String first, String... others);
 }

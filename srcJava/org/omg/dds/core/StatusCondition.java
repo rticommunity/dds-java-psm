@@ -60,6 +60,28 @@ extends Condition {
     public Set<Class<? extends Status>> getEnabledStatuses();
 
     /**
+     * This operation defines a variable number of communication statuses 
+     * that are taken into account to determine the triggerValue of the
+     * StatusCondition. This operation may change the triggerValue of the
+     * StatusCondition.
+     * 
+     * {@link org.omg.dds.core.WaitSet} objects behavior depend on the changes of the
+     * triggerValue of their attached conditions. Therefore, any WaitSet to
+     * which the StatusCondition is attached is potentially affected by this
+     * operation.
+     * 
+     * If this function is not invoked, the default list of enabled statuses
+     * includes all the statuses.
+     *
+     * @param statuses  For which status changes the condition should trigger.
+     *                  An empty parameter list signifies all status changes.
+     * 
+     * @see     #getEnabledStatuses()
+     */
+    
+    public void setEnabledStatuses(Class<? extends Status>... statuses);
+
+    /**
      * This operation defines the list of communication statuses that are
      * taken into account to determine the triggerValue of the
      * StatusCondition. This operation may change the triggerValue of the
