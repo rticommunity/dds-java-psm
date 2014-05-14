@@ -47,3 +47,21 @@ Index: trunk/srcJava/org/omg/dds/core/policy/Partition.java
 +     */
 +    public Partition withName(String first, String... others);
  }
+Index: trunk/srcJava/org/omg/dds/core/policy/Partition.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/policy/Partition.java	(revision 225)
++++ trunk/srcJava/org/omg/dds/core/policy/Partition.java	(working copy)
+@@ -106,5 +106,12 @@
+      * 
+      * @return  a new policy
+      */
+-    public Partition withName(String first, String... others);
++    public Partition withName(String name);
++
++    /**
++     * Copy this policy and override the value of the property.
++     * 
++     * @return  a new policy
++     */
++    public Partition withName(String... names);
+ }
