@@ -141,7 +141,7 @@ implements Comparable<Duration>, Serializable, DDSObject
      * 
      * If <code>remainderUnit</code> is represents a coarser granularity than
      * <code>primaryUnit</code> (for example, the former is
-     * {@link TimeUnit#HOURS} but the latter is {@link TimeUnit#SECONDS}),
+     * {@link TimeUnit#MILLISECONDS} but the latter is {@link TimeUnit#SECONDS}),
      * this method shall return <code>0</code>.
      * 
      * If the resulting duration cannot be expressed in the given units

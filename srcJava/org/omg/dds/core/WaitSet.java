@@ -50,7 +50,7 @@ import java.util.concurrent.TimeoutException;
  *             <code>get&lt;<i>CommunicationStatus</i>&gt;</code> on the
  *             relevant Entity.</li>
  *         <li>{@link org.omg.dds.core.Entity#getStatusChanges()} and then
- *             {@link org.omg.dds.sub.Subscriber#getDataReaders(Collection)}
+ *             {@link org.omg.dds.sub.Subscriber#getDataReaders()}
  *             on the relevant Subscriber.</li>
  *         <li>{@link org.omg.dds.core.Entity#getStatusChanges()} and then
  *             {@link org.omg.dds.sub.DataReader#read()}/

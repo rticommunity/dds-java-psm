@@ -39,7 +39,7 @@ import org.omg.dds.topic.TopicQos;
  * and then indicates to the application that data is available, through its
  * listener or by enabling related conditions. The application can access the
  * list of concerned DataReader objects through the operation
- * {@link #getDataReaders(Collection)} and then access the data available
+ * {@link #getDataReaders()} and then access the data available
  * through operations on the DataReaders.
  * 
  * All operations except for the inherited operations
@@ -306,7 +306,7 @@ extends DomainEntity<SubscriberListener, SubscriberQos>
      * 
      * In the aforementioned case, the operation must be called prior to
      * calling any of the sample-accessing operations, namely:
-     * {@link #getDataReaders(Collection)}, {@link org.omg.dds.sub.DataReader#read()},
+     * {@link #getDataReaders()}, {@link org.omg.dds.sub.DataReader#read()},
      * {@link org.omg.dds.sub.DataReader#take()}, or their overloads. Otherwise the
      * sample-accessing operations will fail with
      * {@link org.omg.dds.core.PreconditionNotMetException}. Once the application has

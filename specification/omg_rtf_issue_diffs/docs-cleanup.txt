@@ -1,0 +1,61 @@
+Index: trunk/srcJava/org/omg/dds/core/Duration.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/Duration.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/core/Duration.java	(working copy)
+@@ -141,7 +141,7 @@
+      * 
+      * If <code>remainderUnit</code> is represents a coarser granularity than
+      * <code>primaryUnit</code> (for example, the former is
+-     * {@link TimeUnit#HOURS} but the latter is {@link TimeUnit#SECONDS}),
++     * {@link TimeUnit#MILLISECONDS} but the latter is {@link TimeUnit#SECONDS}),
+      * this method shall return <code>0</code>.
+      * 
+      * If the resulting duration cannot be expressed in the given units
+Index: trunk/srcJava/org/omg/dds/core/Time.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/Time.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/core/Time.java	(working copy)
+@@ -128,7 +128,7 @@
+      * 
+      * If <code>remainderUnit</code> is represents a coarser granularity than
+      * <code>primaryUnit</code> (for example, the former is
+-     * {@link TimeUnit#HOURS} but the latter is {@link TimeUnit#SECONDS}),
++     * {@link TimeUnit#MILLISECONDS} but the latter is {@link TimeUnit#SECONDS}),
+      * this method shall return <code>0</code>.
+      * 
+      * If the resulting time cannot be expressed in the given units
+Index: trunk/srcJava/org/omg/dds/core/WaitSet.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/WaitSet.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/core/WaitSet.java	(working copy)
+@@ -50,7 +50,7 @@
+  *             <code>get&lt;<i>CommunicationStatus</i>&gt;</code> on the
+  *             relevant Entity.</li>
+  *         <li>{@link org.omg.dds.core.Entity#getStatusChanges()} and then
+- *             {@link org.omg.dds.sub.Subscriber#getDataReaders(Collection)}
++ *             {@link org.omg.dds.sub.Subscriber#getDataReaders()}
+  *             on the relevant Subscriber.</li>
+  *         <li>{@link org.omg.dds.core.Entity#getStatusChanges()} and then
+  *             {@link org.omg.dds.sub.DataReader#read()}/
+Index: trunk/srcJava/org/omg/dds/sub/Subscriber.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/sub/Subscriber.java	(revision 223)
++++ trunk/srcJava/org/omg/dds/sub/Subscriber.java	(working copy)
+@@ -39,7 +39,7 @@
+  * and then indicates to the application that data is available, through its
+  * listener or by enabling related conditions. The application can access the
+  * list of concerned DataReader objects through the operation
+- * {@link #getDataReaders(Collection)} and then access the data available
++ * {@link #getDataReaders()} and then access the data available
+  * through operations on the DataReaders.
+  * 
+  * All operations except for the inherited operations
+@@ -306,7 +306,7 @@
+      * 
+      * In the aforementioned case, the operation must be called prior to
+      * calling any of the sample-accessing operations, namely:
+-     * {@link #getDataReaders(Collection)}, {@link org.omg.dds.sub.DataReader#read()},
++     * {@link #getDataReaders()}, {@link org.omg.dds.sub.DataReader#read()},
+      * {@link org.omg.dds.sub.DataReader#take()}, or their overloads. Otherwise the
+      * sample-accessing operations will fail with
+      * {@link org.omg.dds.core.PreconditionNotMetException}. Once the application has
