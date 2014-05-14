@@ -65,9 +65,19 @@ public abstract class PolicyFactory implements org.omg.dds.core.DDSObject {
     public abstract ReaderDataLifecycle ReaderDataLifecycle();
 
     /**
-     * @return the Representation
+     * @return the DataRepresentation
      */
-    public abstract DataRepresentation Representation();
+    public abstract DataRepresentation DataRepresentation();
+
+    /**
+     * @return the Presentation
+     */
+    public abstract Presentation Presentation();
+
+    /**
+     * @return the TopicData
+     */
+    public abstract TopicData TopicData();
 
     /**
      * @return the typeConsistency

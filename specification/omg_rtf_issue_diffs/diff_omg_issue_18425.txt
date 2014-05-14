@@ -1,0 +1,28 @@
+Index: trunk/srcJava/org/omg/dds/core/policy/PolicyFactory.java
+===================================================================
+--- trunk/srcJava/org/omg/dds/core/policy/PolicyFactory.java	(revision 218)
++++ trunk/srcJava/org/omg/dds/core/policy/PolicyFactory.java	(working copy)
+@@ -65,11 +65,21 @@
+     public abstract ReaderDataLifecycle ReaderDataLifecycle();
+ 
+     /**
+-     * @return the Representation
++     * @return the DataRepresentation
+      */
+-    public abstract DataRepresentation Representation();
++    public abstract DataRepresentation DataRepresentation();
+ 
+     /**
++     * @return the Presentation
++     */
++    public abstract Presentation Presentation();
++
++    /**
++     * @return the TopicData
++     */
++    public abstract TopicData TopicData();
++
++    /**
+      * @return the typeConsistency
+      */
+     public abstract TypeConsistencyEnforcement TypeConsistency();
