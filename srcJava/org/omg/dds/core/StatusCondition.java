@@ -25,11 +25,11 @@ import org.omg.dds.core.status.Status;
 
 
 /**
- * A StatusCondition object is a specific Condition that is associated with
- * each {@link org.omg.dds.core.Entity}. The triggerValue of the StatusCondition depends on
- * the communication status of that entity (e.g., arrival of data, loss of
- * information, etc.), "filtered" by the set of enabledStatuses on the
- * StatusCondition.
+ * A StatusCondition object is an immutable object that specifies Condition 
+ * that is associated with each {@link org.omg.dds.core.Entity}. The 
+ * triggerValue of the StatusCondition depends on the communication status 
+ * of that entity (e.g., arrival of data, loss of information, etc.), 
+ * "filtered" by the set of enabledStatuses on the StatusCondition.
  * 
  * The triggerValue of a StatusCondition is the Boolean OR of the
  * ChangedStatusFlag of all the communication statuses to which it is
@@ -38,7 +38,7 @@ import org.omg.dds.core.status.Status;
  * 
  * The sensitivity of the StatusCondition to a particular communication
  * status is controlled by the list of enabledStatuses set on the condition
- * by means of {@link #setEnabledStatuses(Collection)}.
+ * by means of {@link #withEnabledStatuses(Collection)}.
  * 
  * @param <ENTITY>      The type of the entity with which this condition is
  *                      associated.
@@ -60,47 +60,38 @@ extends Condition {
     public Set<Class<? extends Status>> getEnabledStatuses();
 
     /**
-     * This operation defines a variable number of communication statuses 
-     * that are taken into account to determine the triggerValue of the
-     * StatusCondition. This operation may change the triggerValue of the
-     * StatusCondition.
-     * 
-     * {@link org.omg.dds.core.WaitSet} objects behavior depend on the changes of the
-     * triggerValue of their attached conditions. Therefore, any WaitSet to
-     * which the StatusCondition is attached is potentially affected by this
-     * operation.
+     * This operation accepts a variable number of statuses 
+     * that are encapsulated in a new StatusCondition object
      * 
      * If this function is not invoked, the default list of enabled statuses
      * includes all the statuses.
      *
      * @param statuses  For which status changes the condition should trigger.
      *                  An empty parameter list signifies all status changes.
+     *                  
+     * @return  A new StatusCondition with specified statuses enabled.
      * 
-     * @see     #getEnabledStatuses()
+     * @see     #withEnabledStatuses()
      */
     
-    public void setEnabledStatuses(Class<? extends Status>... statuses);
+    public StatusCondition<ENTITY> withEnabledStatuses(
+    		Class<? extends Status>... statuses);
 
     /**
-     * This operation defines the list of communication statuses that are
-     * taken into account to determine the triggerValue of the
-     * StatusCondition. This operation may change the triggerValue of the
-     * StatusCondition.
-     * 
-     * {@link org.omg.dds.core.WaitSet} objects behavior depend on the changes of the
-     * triggerValue of their attached conditions. Therefore, any WaitSet to
-     * which the StatusCondition is attached is potentially affected by this
-     * operation.
+     * This operation accepts a collection of statuses 
+     * that are encapsulated in a new StatusCondition object
      * 
      * If this function is not invoked, the default list of enabled statuses
      * includes all the statuses.
      *
      * @param statuses  For which status changes the condition should trigger.
      *                  A null collection signifies all status changes.
+     *                  
+     * @return  A new StatusCondition with specified statuses enabled.
      * 
-     * @see     #getEnabledStatuses()
+     * @see     #withEnabledStatuses()
      */
-    public void setEnabledStatuses(
+    public StatusCondition<ENTITY> withEnabledStatuses(
             Collection<Class<? extends Status>> statuses);
 
     /**
