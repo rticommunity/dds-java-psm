@@ -133,21 +133,8 @@ extends Closeable, DDSObject
      *                                          has a non-default value.
      * 
      * @see     #getQos()
-     * @see     #setQos(String, String)
      */
     public void setQos(QOS qos);
-
-    /**
-     * Set the QoS to that specified in the given QoS profile in the given
-     * QoS library.
-     * 
-     * @param qosLibraryName
-     * @param qosProfileName
-     * 
-     * @see     #getQos()
-     * @see     #setQos(EntityQos)
-     */
-    public void setQos(String qosLibraryName, String qosProfileName);
 
     /**
      * This operation enables the Entity. Entity objects can be created
