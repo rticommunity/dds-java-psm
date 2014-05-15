@@ -50,12 +50,12 @@ extends Condition {
      * taken into account to determine the triggerValue of the
      * StatusCondition. This operation returns the statuses that were
      * explicitly set on the last call to
-     * {@link #setEnabledStatuses(Collection)} or, if it was never called,
+     * {@link #withEnabledStatuses(Collection)} or, if it was never called,
      * the default list.
      * 
      * @return  a new Set of enabled statuses.
      * 
-     * @see     #setEnabledStatuses(Collection)
+     * @see     #withEnabledStatuses(Collection)
      */
     public Set<Class<? extends Status>> getEnabledStatuses();
 
@@ -71,7 +71,7 @@ extends Condition {
      *                  
      * @return  A new StatusCondition with specified statuses enabled.
      * 
-     * @see     #withEnabledStatuses()
+     * @see     #withEnabledStatuses(Collection)
      */
     
     public StatusCondition<ENTITY> withEnabledStatuses(
@@ -89,7 +89,7 @@ extends Condition {
      *                  
      * @return  A new StatusCondition with specified statuses enabled.
      * 
-     * @see     #withEnabledStatuses()
+     * @see     #withEnabledStatuses(Collection)
      */
     public StatusCondition<ENTITY> withEnabledStatuses(
             Collection<Class<? extends Status>> statuses);
